@@ -42,7 +42,6 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Custom Component Imports
 import Repeater from 'src/@core/components/repeater'
 import { useRouter } from 'next/router'
-import axiosIns from 'src/@fake-db/backend'
 import { useDropzone } from 'react-dropzone'
 
 const Img = styled('img')(({ theme }) => ({

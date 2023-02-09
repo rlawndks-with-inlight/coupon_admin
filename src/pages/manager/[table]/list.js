@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, forwardRef } from "react";
 import { getCookie } from "src/@core/utils/react-cookie";
-import axiosIns from "src/@fake-db/backend";
+import { axiosIns } from "src/@fake-db/backend";
 
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
@@ -81,7 +81,7 @@ const List = () => {
       setSearchObj({ ...search_obj });
       let query_str = await objToQuery(search_obj);
 
-      const response = await axiosIns.get(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}${query_str}`, {
+      const response = await axiosIns().get(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}${query_str}`, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
           "Accept": "application/json",

@@ -38,9 +38,9 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Demo Imports
 import AuthIllustrationV1Wrapper from 'src/views/pages/auth/AuthIllustrationV1Wrapper'
 import AnalyticsDashboard from '../dashboards/analytics'
-import axiosIns from 'src/@fake-db/backend'
+import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
-import { setCookie } from 'src/@core/utils/react-cookie'
+import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import FallbackSpinner from 'src/@core/components/spinner'
 import { setLocalStorage } from 'src/@core/utils/local-storage'
 
@@ -82,7 +82,6 @@ const LoginV1 = () => {
   }, [])
 
   const settings = async () => {
-    await settingDomain();
     await checkDns();
   }
 
@@ -92,18 +91,18 @@ const LoginV1 = () => {
       secure: true,
       sameSite: "none",
     });
-    console.log(`${window.location.protocol}//${window.location.host}`)
   }
 
   const checkDns = async () => {
     try {
       setLoading(true);
 
-      const response = await axiosIns.options('/api/v1/auth/domain', {
+      const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
           dns: location.hostname
         },
       });
+      console.log(response)
       setLocalStorage('dns_data', response?.data);
       setDnsData(response?.data);
       if (response?.status == 200) {
@@ -129,7 +128,7 @@ const LoginV1 = () => {
 
   const onLogin = async () => {
     try {
-      const response = await axiosIns.post('/api/v1/auth/sign-in', {
+      const response = await axiosIns().post('/api/v1/auth/sign-in', {
         brand_id: values?.brand_id,
         user_name: values?.id,
         user_pw: values?.password,

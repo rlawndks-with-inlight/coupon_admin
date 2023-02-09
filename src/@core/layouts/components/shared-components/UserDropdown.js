@@ -19,7 +19,7 @@ import Icon from 'src/@core/components/icon'
 
 // ** Context
 import { useAuth } from 'src/hooks/useAuth'
-import axiosIns from 'src/@fake-db/backend'
+import { axiosIns } from 'src/@fake-db/backend'
 import { deleteCookie, getCookie } from 'src/@core/utils/react-cookie'
 import { deleteLocalStorage, getLocalStorage } from 'src/@core/utils/local-storage'
 import { toast } from 'react-hot-toast'
@@ -90,7 +90,7 @@ const UserDropdown = props => {
 
   const handleLogout = async () => {
     try {
-      const response = await axiosIns.post('/api/v1/auth/sign-out', {
+      const response = await axiosIns().post('/api/v1/auth/sign-out', {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
           "Accept": "application/json",
@@ -100,7 +100,6 @@ const UserDropdown = props => {
       console.log(response)
       if (response?.status == 200) {
         await deleteCookie('o');
-        await deleteCookie('d');
         await deleteLocalStorage('user_auth');
         router.push('/manager/login');
       }

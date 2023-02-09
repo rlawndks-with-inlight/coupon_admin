@@ -15,7 +15,7 @@ import CustomChip from 'src/@core/components/mui/chip'
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 import { useRouter } from 'next/router'
-import axiosIns from 'src/@fake-db/backend'
+import { axiosIns } from 'src/@fake-db/backend'
 import { useEffect } from 'react'
 
 const getItemByType = (data, column, table, goTo, deleteItem) => {
@@ -122,7 +122,7 @@ const TrManager = (props) => {
     try {
       if (!window.confirm("정말 삭제 하시겠습니까?"))
         return;
-      const response = await axiosIns.delete(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${id}`)
+      const response = await axiosIns().delete(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${id}`)
       if (response?.status == 204) {
         toast.success("성공적으로 삭제되었습니다.");
         changePage(page);

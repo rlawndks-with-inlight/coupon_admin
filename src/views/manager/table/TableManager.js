@@ -11,7 +11,6 @@ import { useCallback, useEffect, useState } from 'react'
 import TrManager from './TrManager'
 import Icon from 'src/@core/components/icon'
 import { useRouter } from 'next/router'
-import axiosIns from 'src/@fake-db/backend'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import { toast } from "react-hot-toast";

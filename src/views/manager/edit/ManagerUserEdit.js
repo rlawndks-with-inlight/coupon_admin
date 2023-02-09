@@ -21,7 +21,6 @@ import { useEffect, useState } from 'react'
 import CardSnippet from 'src/@core/components/card-snippet'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import axiosIns from 'src/@fake-db/backend'
 import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 

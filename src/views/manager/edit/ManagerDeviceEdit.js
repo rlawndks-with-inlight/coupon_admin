@@ -21,7 +21,6 @@ import { useEffect, useState } from 'react'
 import CardSnippet from 'src/@core/components/card-snippet'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import axiosIns from 'src/@fake-db/backend'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
@@ -51,8 +50,9 @@ const ManagerDeviceEdit = (props) => {
 
   const onReset = () => {
     setValues({
-      ad_name: '',
-      ad_type: 0,
+      mcht_id: 0,
+      mac_addr: '',
+      appr_status: '',
     })
   }
 

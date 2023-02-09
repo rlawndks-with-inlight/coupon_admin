@@ -21,7 +21,6 @@ import { useEffect, useState } from 'react'
 import CardSnippet from 'src/@core/components/card-snippet'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import axiosIns from 'src/@fake-db/backend'
 
 const ManagerAdEdit = (props) => {
   const { getItem, editItem } = props;

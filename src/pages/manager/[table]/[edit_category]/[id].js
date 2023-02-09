@@ -42,7 +42,7 @@ import ManagerNoticeEdit from 'src/views/manager/edit/ManagerNoticeEdit'
 import ManagerBrandEdit from 'src/views/manager/edit/ManagerBrandEdit'
 import { CardHeader } from '@mui/material'
 import { objDataGridColumns } from 'src/data/manager-data'
-import axiosIns from 'src/@fake-db/backend'
+import { axiosIns } from 'src/@fake-db/backend'
 import DialogAlert from 'src/views/components/dialogs/DialogAlert'
 import { toast } from "react-hot-toast";
 import { getCookie } from 'src/@core/utils/react-cookie'
@@ -97,10 +97,10 @@ const Edit = () => {
         }
       };
       if (router.query?.edit_category == 'edit' && router.query?.id) {
-        response = await axiosIns.put(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${router.query?.id}`, formData, config);
+        response = await axiosIns().put(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${router.query?.id}`, formData, config);
       }
       else if (router.query?.edit_category == 'create')
-        response = await axiosIns.post(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}`, formData, config);
+        response = await axiosIns().post(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}`, formData, config);
       if (response?.status == 201) {
         toast.success("성공적으로 저장되었습니다.");
         setTimeout(() => {
@@ -119,7 +119,7 @@ const Edit = () => {
   const getItem = async () => {
     try {
       if (router.query?.edit_category == 'edit' && router.query?.id) {
-        const response = await axiosIns.get(`api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${router.query?.id}`);
+        const response = await axiosIns().get(`api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${router.query?.id}`);
 
         return { ...response?.data };
       } else {
