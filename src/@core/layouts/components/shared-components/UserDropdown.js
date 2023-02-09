@@ -100,6 +100,7 @@ const UserDropdown = props => {
       console.log(response)
       if (response?.status == 200) {
         await deleteCookie('o');
+        await deleteCookie('d');
         await deleteLocalStorage('user_auth');
         router.push('/manager/login');
       }

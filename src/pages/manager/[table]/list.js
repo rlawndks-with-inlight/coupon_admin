@@ -99,6 +99,7 @@ const List = () => {
       setLoading(false);
 
     } catch (err) {
+      console.log(err)
       setPosts([]);
       if (err?.response?.status == 401) {
         router.push('/manager/login')

@@ -82,3 +82,9 @@ export const commarNumber = (num) => {
 
   return result + decimal;
 }
+
+export const getDomain = () => {
+  let domain = window.location.hostname;
+
+  return domain();
+}

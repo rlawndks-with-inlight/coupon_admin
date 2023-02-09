@@ -78,8 +78,22 @@ const LoginV1 = () => {
   const theme = useTheme();
   const router = useRouter();
   useEffect(() => {
-    checkDns();
+    settings();
   }, [])
+
+  const settings = async () => {
+    await settingDomain();
+    await checkDns();
+  }
+
+  const settingDomain = async () => {
+    await setCookie('d', decodeURI(`${window.location.protocol}//${window.location.host}`), {
+      path: "/",
+      secure: true,
+      sameSite: "none",
+    });
+    console.log(`${window.location.protocol}//${window.location.host}`)
+  }
 
   const checkDns = async () => {
     try {
