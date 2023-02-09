@@ -616,30 +616,45 @@ const project_navigation = [
   {
     title: '브랜드관리',
     icon: 'tabler:layout-grid',
-    path: '/manager/brands'
+    path: '/manager/brands',
+    level: 40
   },
   {
     title: '광고관리',
     icon: 'tabler:ad',
-    path: '/manager/advertisements'
+    path: '/manager/advertisements',
+    level: 10
   },
   {
     title: '유저관리',
     icon: 'tabler:user',
-    path: '/manager/users'
+    children: [
+      {
+        title: '유저관리',
+        path: '/manager/users'
+      },
+      {
+        title: '포인트관리',
+        path: '/manager/points'
+      },
+    ]
   },
   {
-    title: '포인트관리',
-    icon: 'tabler:layout-grid',
-    path: '/manager/points'
-  },
-  {
-    title: '장비관리',
+    title: '가맹점관리',
     icon: 'tabler:user',
-    path: '/manager/devices'
+    children: [
+      {
+        title: '가맹점관리',
+        path: '/manager/merchandises'
+      },
+      {
+        title: '장비관리',
+        path: '/manager/devices'
+      },
+    ]
   },
   {
-    title: '게시판',
+    title: '게시판관리',
     icon: 'tabler:table',
     children: [
       {

@@ -50,7 +50,7 @@ const List = () => {
       router.back();
     }
     setParams(router?.query);
-    let is_not_need_call_list = ['users', 'points', 'devices'];
+    let is_not_need_call_list = ['points', 'devices'];
     if (!is_not_need_call_list.includes(router.query?.table)) {
       changePage(1, true);
     }
@@ -88,6 +88,7 @@ const List = () => {
           "Content-Type": "application/json",
         }
       });
+      console.log(response)
       let max_page = await makeMaxPage(response?.data?.total, response?.data?.page_size);
 
       setPage(parseInt(response?.data?.page));

@@ -48,11 +48,15 @@ import { toast } from "react-hot-toast";
 import { getCookie } from 'src/@core/utils/react-cookie'
 import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
 import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
+import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdit'
 
 const Edit = () => {
   const [editSetting, setEditSetting] = useState({
     posts: {}
   })
+  const theme = useTheme()
+  const { direction } = theme
+  const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
@@ -70,14 +74,17 @@ const Edit = () => {
       return <ManagerUserEdit {...common} />
     else if (router.query?.table == 'brands')
       return <ManagerBrandEdit {...common} />
-    else if (router.query?.table == 'notices')
-      return <ManagerNoticeEdit {...common} />
+
+    // else if (router.query?.table == 'notices')
+    //   return <ManagerNoticeEdit {...common} />
     else if (router.query?.table == 'devices')
       return <ManagerDeviceEdit {...common} />
     else if (router.query?.table == 'advertisements')
       return <ManagerAdEdit {...common} />
     else if (router.query?.table == 'points')
       return <ManagerPointEdit {...common} />
+    else if (router.query?.table == 'merchandises')
+      return <ManagerMerchandiseEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>
   }
@@ -154,6 +161,7 @@ const Edit = () => {
           table: objDataGridColumns[router.query?.table]?.table,
           editItem: editItem,
           getItem: getItem,
+          popperPlacement: popperPlacement,
           breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`
         })}
       </DatePickerWrapper>

@@ -26,7 +26,7 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
       result = data[column?.column];
     }
     if (column?.type == 'number') {
-      if (!data[column?.column]) {
+      if (typeof data[column?.column] != 'number') {
         return "---";
       }
       result = commarNumber(data[column?.column]);

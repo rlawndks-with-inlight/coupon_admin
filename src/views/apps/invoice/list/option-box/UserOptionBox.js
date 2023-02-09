@@ -46,8 +46,9 @@ const UserOptionBox = (props) => {
       }
     }
     setUserLevelList(user_level_list);
-    let obj = { ...defaultSearchObj, level: user_level_list[0]?.level };
-    changePage(1, false, obj);
+
+    //let obj = { ...defaultSearchObj, level: user_level_list[0]?.level };
+    //changePage(1, false, obj);
   }
 
   return (

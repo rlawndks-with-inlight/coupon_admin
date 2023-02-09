@@ -45,7 +45,7 @@ const isShowCell = (param_table, col, search_obj) => {
     }
   }
 
-  return show_flag;
+  return true;
 }
 
 const TableManager = (props) => {

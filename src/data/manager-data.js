@@ -28,13 +28,6 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
-      managerListFormat('상위아이디', 'group_id', 'text', ''),// 검색 level >=10 일시
-      managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
-      managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
-      managerListFormat('포인트사용여부', 'point_flag', 'use_status', ''),// 검색 level == 10일 경우에만
-      managerListFormat('포인트적립비율', 'point_rate', 'percent', ''),// 검색 level == 10일 경우에만
-      managerListFormat('스탬프사용여부', 'stamp_flag', 'use_status', ''),// 검색 level == 10일 경우에만
-      managerListFormat('스탬프저장갯수', 'stamp_save_count', 'number', ''),// 검색 level == 10일 경우에만
       managerListFormat('보유포인트', 'a', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유스탬프', 'b', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유쿠폰갯수', 'c', 'number', ''),// 검색 level == 0일 경우에만
@@ -42,8 +35,30 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],
+    table_width: '',
+    default_search_obj: {}
+  },
+  merchandises: {//param
+    table: 'merchandises',//ajax에 사용할 테이블
+    breadcrumb: '가맹점',//이름 사용할 것
+    is_add: true,
+    search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('유저아이디', 'user_name', 'text', ''),
+      managerListFormat('상위아이디', 'group_id', 'text', ''),// 검색 level >=10 일시
+      managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
+      managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
+      managerListFormat('포인트사용여부', 'point_flag', 'use_status', ''),// 검색 level == 10일 경우에만
+      managerListFormat('포인트적립비율', 'point_rate', 'percent', ''),// 검색 level == 10일 경우에만
+      managerListFormat('스탬프사용여부', 'stamp_flag', 'use_status', ''),// 검색 level == 10일 경우에만
+      managerListFormat('스탬프저장갯수', 'stamp_save_count', 'number', ''),// 검색 level == 10일 경우에만
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
     table_width: '150%',
-    default_search_obj: { level: 0 }
+    default_search_obj: {}
   },
   brands: {
     table: 'brands',
