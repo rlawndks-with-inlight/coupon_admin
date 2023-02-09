@@ -106,6 +106,7 @@ const PointOptionBox = (props) => {
               <DatePicker
                 selected={sDt}
                 dateFormat="yyyy-MM-dd"
+                id='month-year-dropdown'
                 popperPlacement={popperPlacement}
                 onChange={async (date) => {
                   try {
