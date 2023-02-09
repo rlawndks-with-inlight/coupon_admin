@@ -71,6 +71,7 @@ const UserOptionBox = (props) => {
             <FormControl>
               <InputLabel id='demo-simple-select-outlined-label'>유저레벨</InputLabel>
               <Select
+                size='small'
                 label='유저레벨'
                 value={searchObj?.level}
                 id='demo-simple-select-outlined'

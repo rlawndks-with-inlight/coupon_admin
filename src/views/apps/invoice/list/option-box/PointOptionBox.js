@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker'
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { useTheme } from '@mui/material/styles'
 import { returnMoment } from 'src/@core/utils/function'
+import $ from 'jquery';
 
 const PointOptionBox = (props) => {
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
@@ -22,6 +23,7 @@ const PointOptionBox = (props) => {
   const router = useRouter();
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
+  const isSeeRef = useRef([]);
 
   const pub_type_list = [
     { name: '전체', pub_type: 10 },
@@ -30,6 +32,11 @@ const PointOptionBox = (props) => {
     { name: '발급취소', pub_type: 2 },
     { name: '사용취소', pub_type: 3 },
   ]
+  useEffect(() => {
+    if ($('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
+      $('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').attr('style', 'padding: 8.5px 14px !important;');
+    }
+  }, [$('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()])
   const theme = useTheme()
   const { direction } = theme
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
@@ -64,7 +71,6 @@ const PointOptionBox = (props) => {
           display: 'flex',
           alignItems: 'center',
         }}
-        className='demo-space-x'
       >
         {loading ?
           <>
@@ -75,6 +81,7 @@ const PointOptionBox = (props) => {
             <FormControl sx={{ mr: 4 }}>
               <InputLabel id='demo-simple-select-outlined-label'>발급타입</InputLabel>
               <Select
+                size='small'
                 label='발급타입'
                 value={searchObj?.pub_type}
                 id='demo-simple-select-outlined'
@@ -95,10 +102,9 @@ const PointOptionBox = (props) => {
                 )}
               </Select>
             </FormControl>
-            <div style={{ marginRight: '1rem' }}>
+            <div style={{ marginRight: '1rem' }} >
               <DatePicker
                 selected={sDt}
-                id='basic-input'
                 dateFormat="yyyy-MM-dd"
                 popperPlacement={popperPlacement}
                 onChange={async (date) => {
@@ -113,7 +119,8 @@ const PointOptionBox = (props) => {
 
                 }}
                 placeholderText='Click to select a date'
-                customInput={<CustomInput label='시작일' />}
+                customInput={<CustomInput label='시작일' ref={(el) => (isSeeRef.current[0] = el)} />}
+
               />
             </div>
             <div>
@@ -128,7 +135,8 @@ const PointOptionBox = (props) => {
                   changePage(page, false, obj);
                 }}
                 placeholderText='Click to select a date'
-                customInput={<CustomInput label='종료일' />}
+                customInput={<CustomInput label='종료일' ref={(el) => (isSeeRef.current[1] = el)} />}
+
               />
             </div>
           </>}

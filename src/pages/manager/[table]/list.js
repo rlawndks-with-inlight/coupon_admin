@@ -88,7 +88,6 @@ const List = () => {
           "Content-Type": "application/json",
         }
       });
-      console.log(response)
       let max_page = await makeMaxPage(response?.data?.total, response?.data?.page_size);
 
       setPage(parseInt(response?.data?.page));

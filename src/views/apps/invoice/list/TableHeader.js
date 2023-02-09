@@ -12,6 +12,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
+import InputAdornment from '@mui/material/InputAdornment'
+import Icon from 'src/@core/components/icon'
 
 import UserOptionBox from './option-box/UserOptionBox'
 import PointOptionBox from './option-box/PointOptionBox'
@@ -53,6 +55,7 @@ const TableHeader = props => {
         <FormControl>
           <InputLabel id='demo-simple-select-outlined-label'>보여줄갯수</InputLabel>
           <Select
+            size='small'
             label='보여줄갯수'
             value={searchObj?.page_size}
             id='demo-simple-select-outlined'
@@ -78,6 +81,13 @@ const TableHeader = props => {
             onKeyPress={e => e.key == 'Enter' ? changePage(page) : console.log(null)}
             placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
             className="search"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <Icon icon='tabler:search' />
+                </InputAdornment>
+              )
+            }}
           />
           {objDataGridColumns[router.query?.table]?.is_add ?
             <>

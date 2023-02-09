@@ -71,7 +71,6 @@ const VerticalLayout = props => {
     subTitle: ""
   });
   useEffect(() => {
-    console.log(router)
     if (router.asPath.includes('edit')) {
       setBreadcumb({
         title: `${objEditColumns[router.query?.table]?.breadcrumb} 관리`,

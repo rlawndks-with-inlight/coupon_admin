@@ -25,7 +25,7 @@ import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { axiosIns } from 'src/@fake-db/backend'
 
-const ManagerDeviceEdit = (props) => {
+const ManagerPointEdit = (props) => {
   const { getItem, editItem } = props;
 
   const [loading, setLoading] = useState(false);
@@ -154,4 +154,4 @@ const ManagerDeviceEdit = (props) => {
   )
 }
 
-export default ManagerDeviceEdit;
+export default ManagerPointEdit;

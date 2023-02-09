@@ -47,6 +47,7 @@ import DialogAlert from 'src/views/components/dialogs/DialogAlert'
 import { toast } from "react-hot-toast";
 import { getCookie } from 'src/@core/utils/react-cookie'
 import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
+import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
 
 const Edit = () => {
   const [editSetting, setEditSetting] = useState({
@@ -75,6 +76,8 @@ const Edit = () => {
       return <ManagerDeviceEdit {...common} />
     else if (router.query?.table == 'advertisements')
       return <ManagerAdEdit {...common} />
+    else if (router.query?.table == 'points')
+      return <ManagerPointEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>
   }
@@ -84,6 +87,8 @@ const Edit = () => {
       if (!window.confirm("저장 하시겠습니까?"))
         return;
       let obj = { ...obj_ };
+      console.log(obj)
+
       let formData = new FormData();
       let keys = Object.keys(obj);
       for (var i = 0; i < keys.length; i++) {
