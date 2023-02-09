@@ -64,6 +64,7 @@ const PointOptionBox = (props) => {
           display: 'flex',
           alignItems: 'center',
         }}
+        className='demo-space-x'
       >
         {loading ?
           <>
@@ -97,6 +98,7 @@ const PointOptionBox = (props) => {
             <div style={{ marginRight: '1rem' }}>
               <DatePicker
                 selected={sDt}
+                id='basic-input'
                 dateFormat="yyyy-MM-dd"
                 popperPlacement={popperPlacement}
                 onChange={async (date) => {

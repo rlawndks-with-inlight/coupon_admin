@@ -46,6 +46,7 @@ import axiosIns from 'src/@fake-db/backend'
 import DialogAlert from 'src/views/components/dialogs/DialogAlert'
 import { toast } from "react-hot-toast";
 import { getCookie } from 'src/@core/utils/react-cookie'
+import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
 
 const Edit = () => {
   const [editSetting, setEditSetting] = useState({
@@ -70,6 +71,8 @@ const Edit = () => {
       return <ManagerBrandEdit {...common} />
     else if (router.query?.table == 'notices')
       return <ManagerNoticeEdit {...common} />
+    else if (router.query?.table == 'devices')
+      return <ManagerDeviceEdit {...common} />
     else if (router.query?.table == 'advertisements')
       return <ManagerAdEdit {...common} />
     else

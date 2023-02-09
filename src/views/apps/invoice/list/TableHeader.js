@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl'
 
 import UserOptionBox from './option-box/UserOptionBox'
 import PointOptionBox from './option-box/PointOptionBox'
+import DeviceOptionBox from './option-box/DeviceOptionBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -22,6 +23,8 @@ const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handl
     return <UserOptionBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
   else if (param_table == 'points')
     return <PointOptionBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  else if (param_table == 'devices')
+    return <DeviceOptionBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
 
 }
 

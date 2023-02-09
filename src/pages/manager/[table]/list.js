@@ -50,7 +50,7 @@ const List = () => {
       router.back();
     }
     setParams(router?.query);
-    let is_not_need_call_list = ['users', 'points'];
+    let is_not_need_call_list = ['users', 'points', 'devices'];
     if (!is_not_need_call_list.includes(router.query?.table)) {
       changePage(1, true);
     }
