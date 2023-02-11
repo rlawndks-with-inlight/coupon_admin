@@ -15,6 +15,8 @@ import themeConfig from 'src/configs/themeConfig'
 import logoSrc from 'src/data/data'
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
+import $ from 'jquery';
+
 
 // ** Styled Components
 const MenuHeaderWrapper = styled(Box)(({ theme }) => ({
@@ -98,9 +100,6 @@ const VerticalNavHeader = props => {
       }
     }
   }
-  useEffect(() => {
-    console.log(userMenuUnlockedIcon)
-  }, [userMenuUnlockedIcon])
   const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='tabler:circle-dot' />
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:circle' />
 
@@ -111,7 +110,7 @@ const VerticalNavHeader = props => {
         userNavMenuBranding(props)
       ) : (
         <LinkStyled href='/manager/users' style={{ marginLeft: `${navCollapsed ? '5px' : ''}` }}>
-          {navCollapsed ?
+          {navCollapsed && !navHover ?
             <>
               <img src={dnsData?.favicon_img} style={{ height: '22px', width: '22px' }} />
             </>
