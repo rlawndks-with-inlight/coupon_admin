@@ -50,28 +50,29 @@ const TableHeader = props => {
           justifyContent: 'space-between'
         }}
       >
-        <FormControl>
-          <InputLabel id='demo-simple-select-outlined-label'>보여줄갯수</InputLabel>
-          <Select
-            size='small'
-            label='보여줄갯수'
-            value={searchObj?.page_size}
-            id='demo-simple-select-outlined'
-            labelId='demo-simple-select-outlined-label'
-            onChange={async (e) => {
-              let obj = await handleChange('page_size', e.target.value);
-              changePage(page, false, obj);
-            }}
-          >
-            {page_size_list && page_size_list.map((item, idx) => {
-              return <MenuItem value={item} key={idx}>{item}</MenuItem>
-            }
-            )}
-          </Select>
-        </FormControl>
+        <div />
 
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+          <FormControl sx={{ mr: 4, mb: 2 }}>
+            <InputLabel id='demo-simple-select-outlined-label'>보여줄갯수</InputLabel>
+            <Select
+              size='small'
+              label='보여줄갯수'
+              value={searchObj?.page_size}
+              id='demo-simple-select-outlined'
+              labelId='demo-simple-select-outlined-label'
+              onChange={async (e) => {
+                let obj = await handleChange('page_size', e.target.value);
+                changePage(page, false, obj);
+              }}
+            >
+              {page_size_list && page_size_list.map((item, idx) => {
+                return <MenuItem value={item} key={idx}>{item}</MenuItem>
+              }
+              )}
+            </Select>
+          </FormControl>
           <TextField
             size='small'
             sx={{ mr: 4, mb: 2 }}
@@ -89,7 +90,7 @@ const TableHeader = props => {
           />
           {objDataGridColumns[router.query?.table]?.is_add ?
             <>
-              <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`}>
+              <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
                 {objDataGridColumns[router.query?.table]?.breadcrumb} 추가
               </Button>
             </>

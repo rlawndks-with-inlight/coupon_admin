@@ -97,10 +97,10 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('광고명', 'ad_name', 'text', ''),
-      managerListFormat('광고이미지', 'ad_img', 'img', ''),
       managerListFormat('광고타입', 'ad_type', 'ad_type', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('광고이미지', 'ad_img', 'img', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],
     table_width: '',

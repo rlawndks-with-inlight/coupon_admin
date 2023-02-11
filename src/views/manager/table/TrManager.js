@@ -38,7 +38,7 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
       result = commarNumber(data[column?.column]) + '%';
     }
     if (column?.type == 'img') {
-      let style = { height: '100px', width: 'auto' };
+      let style = { height: '50px', width: 'auto' };
       if (column?.type_option?.is_square) {
         style = {
           height: '56px', width: '56px'
@@ -144,7 +144,7 @@ const TrManager = (props) => {
           <>
             {isShowCell(router.query?.table, col, searchObj) ?
               <>
-                <TableCell align='center' style={{ maxWidth: '300px' }}>
+                <TableCell align='left' style={{ maxWidth: '300px' }}>
                   {getItemByType(post, col, router.query?.table, goTo, deleteItem)}
                 </TableCell>
               </>

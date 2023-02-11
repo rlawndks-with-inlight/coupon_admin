@@ -77,7 +77,7 @@ const TableManager = (props) => {
               <>
                 {isShowCell(param_table, col, searchObj) ?
                   <>
-                    <TableCell align='center' style={{ maxWidth: '300px' }}>{col?.title}</TableCell>
+                    <TableCell align='left' style={{ maxWidth: '300px' }}>{col?.title}</TableCell>
                   </>
                   :
                   <>

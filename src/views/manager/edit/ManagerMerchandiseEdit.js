@@ -43,8 +43,8 @@ const ManagerMerchandiseEdit = (props) => {
     addr: '',
     stamp_flag: 0,
     point_flag: 0,
-    stamp_save_count: '',
-    point_rate: '',
+    stamp_save_count: 0,
+    point_rate: 0,
   })
   useEffect(() => {
     getOneItem();
@@ -52,13 +52,19 @@ const ManagerMerchandiseEdit = (props) => {
 
   const getOneItem = async () => {
     let item = await getItem();
-    console.log(item)
     if (item) {
+      setBDt(new Date(item?.birth_date));
       setValues(item);
+    } else {
+      let dns_data = await getLocalStorage('dns_data');
+      dns_data = JSON.parse(dns_data);
+      console.log(dns_data);
+      setValues({ ...values, ['point_flag']: dns_data?.point_flag, ['point_rate']: dns_data?.point_rate, ['stamp_flag']: dns_data?.stamp_flag, ['stamp_save_count']: dns_data?.stamp_save_count });
     }
   }
 
   const handleTabsChange = (event, newValue) => {
+    console.log(values)
     setTabValue(newValue)
   }
 
@@ -78,8 +84,8 @@ const ManagerMerchandiseEdit = (props) => {
       addr: '',
       stamp_flag: 0,
       point_flag: 0,
-      stamp_save_count: '',
-      point_rate: '',
+      stamp_save_count: 0,
+      point_rate: 0,
     })
   }
 

@@ -98,19 +98,27 @@ const VerticalNavHeader = props => {
       }
     }
   }
+  useEffect(() => {
+    console.log(userMenuUnlockedIcon)
+  }, [userMenuUnlockedIcon])
   const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='tabler:circle-dot' />
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:circle' />
 
   return (
     <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft(), ...conditionalColors() }}>
+      <div style={{ width: '20px' }} />
       {userNavMenuBranding ? (
         userNavMenuBranding(props)
       ) : (
-        <LinkStyled href='/'>
-          <img src={dnsData?.logo_img} style={{ height: '48px', width: 'auto' }} />
-          <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2.5 }) }}>
-            {themeConfig.templateName}
-          </HeaderTitle>
+        <LinkStyled href='/manager/users' style={{ marginLeft: `${navCollapsed ? '5px' : ''}` }}>
+          {navCollapsed ?
+            <>
+              <img src={dnsData?.favicon_img} style={{ height: '22px', width: '22px' }} />
+            </>
+            :
+            <>
+              <img src={dnsData?.logo_img} style={{ height: '48px', width: 'auto' }} />
+            </>}
         </LinkStyled>
       )}
 

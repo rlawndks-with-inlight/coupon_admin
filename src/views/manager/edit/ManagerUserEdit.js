@@ -81,6 +81,7 @@ const ManagerUserEdit = (props) => {
     let item = await getItem();
     console.log(item)
     if (item) {
+      setBDt(new Date(item?.birth_date));
       setValues(item);
     }
   }
