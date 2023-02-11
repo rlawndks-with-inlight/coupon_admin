@@ -10,6 +10,10 @@ import Pagination from '@mui/material/Pagination'
 
 import TableHeader from 'src/views/apps/invoice/list/TableHeader'
 import Box from '@mui/material/Box'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
 
 // ** Styled Components
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
@@ -22,6 +26,7 @@ import { toast } from "react-hot-toast";
 import FallbackSpinner from "src/@core/components/spinner";
 import { objDataGridColumns } from "src/data/manager-data";
 import DialogAlert from "src/views/components/dialogs/DialogAlert";
+import TablePagination from '@mui/material/TablePagination'
 
 const List = () => {
   const router = useRouter();
@@ -33,6 +38,7 @@ const List = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(false);
+  const page_size_list = [10, 20, 25, 50, 100];
 
   const defaultSearchObj = {
     page: 1,
@@ -45,8 +51,10 @@ const List = () => {
     page_size: 10,
     search: ''
   });
+
   useEffect(() => {
-    if (!Object.keys(objDataGridColumns).includes(router.query.table)) {
+    console.log(router.query.table)
+    if (!Object.keys(objDataGridColumns).includes(router.query?.table)) {
       router.back();
     }
     setParams(router?.query);
@@ -54,7 +62,7 @@ const List = () => {
     if (!is_not_need_call_list.includes(router.query?.table)) {
       changePage(1, true);
     }
-  }, [router?.query])
+  }, [router?.query?.table])
 
   const handleChange = async (field, value) => {
     setSearchObj({ ...searchObj, [field]: value });
@@ -113,7 +121,16 @@ const List = () => {
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
-            <TableHeader defaultSearchObj={defaultSearchObj} loading={loading} page={page} changePage={changePage} handleChange={handleChange} searchObj={searchObj} setSearchObj={setSearchObj} />
+            <TableHeader
+              defaultSearchObj={defaultSearchObj}
+              loading={loading}
+              page={page}
+              changePage={changePage}
+              handleChange={handleChange}
+              searchObj={searchObj}
+              setSearchObj={setSearchObj}
+              page_size_list={page_size_list}
+            />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?
               <>
@@ -121,7 +138,6 @@ const List = () => {
               </>
               :
               <>
-
                 <TableManager
                   param_table={router.query?.table}//uri 에 사용할 것
                   table={objDataGridColumns[router.query?.table]?.table}//ajax에 사용할 것
@@ -145,16 +161,61 @@ const List = () => {
               }}
             >
               <div style={{ color: 'rgba(51, 48, 60, 0.38)', fontSize: '.875rem' }}>
-                총 {totalCount}개 항목 중 {pageSize * (page - 1) + 1} ~ {pageSize * (page)}개 표시
+                총 {totalCount}개 항목 중 {pageSize * (page - 1) + 1} ~ {totalCount <= (pageSize * (page)) ? totalCount : (pageSize * (page))}개 표시
               </div>
-              <Pagination
-                count={maxPage}
-                page={page}
-                variant='outlined' shape='rounded'
-                color='primary'
-                onChange={(_, num) => {
-                  changePage(num)
-                }} />
+              <Box sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+              }}>
+                {/* <FormControl sx={{ mr: 4 }}>
+                  <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
+                  <Select
+                    size='small'
+                    label=''
+                    sx={{ width: '72px' }}
+                    value={searchObj?.page_size}
+                    id='demo-simple-select-outlined'
+                    labelId='demo-simple-select-outlined-label'
+                    onChange={async (e) => {
+                      let obj = await handleChange('page_size', e.target.value);
+                      changePage(page, false, obj);
+                    }}
+                  >
+                    {page_size_list && page_size_list.map((item, idx) => {
+                      return <MenuItem value={item} key={idx}>{item}</MenuItem>
+                    }
+                    )}
+                  </Select>
+                </FormControl> */}
+                <Pagination
+                  count={maxPage}
+                  page={page}
+                  variant='outlined' shape='rounded'
+                  color='primary'
+                  onChange={(_, num) => {
+                    changePage(num)
+                  }} />
+                {/* <TablePagination
+                  rowsPerPageOptions={page_size_list}
+                  component='div'
+                  count={totalCount}
+                  rowsPerPage={pageSize}
+                  page={page - 1}
+                  onPageChange={(
+                    event,
+                    newPage
+                  ) => {
+                    console.log(newPage)
+                    changePage(newPage + 1)
+                  }}
+                  onRowsPerPageChange={async (event) => {
+                    let obj = await handleChange('page_size', event.target.value);
+                    changePage(1, false, obj);
+                  }}
+                /> */}
+              </Box>
+
             </Box>
           </Card>
         </Grid>

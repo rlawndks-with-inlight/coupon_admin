@@ -30,9 +30,9 @@ const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handl
 
 const TableHeader = props => {
   // ** Props
-  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props
+  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list } = props
   const router = useRouter();
-  const page_size_list = [10, 20, 25, 50, 100];
+
 
 
 
@@ -51,14 +51,11 @@ const TableHeader = props => {
         }}
       >
         <div />
-
-
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <FormControl sx={{ mr: 4, mb: 2 }}>
-            <InputLabel id='demo-simple-select-outlined-label'>보여줄갯수</InputLabel>
+          <FormControl sx={{ mr: 4, mb: 2, minWidth: '78px' }} size='small'>
+            <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
             <Select
-              size='small'
-              label='보여줄갯수'
+              label=''
               value={searchObj?.page_size}
               id='demo-simple-select-outlined'
               labelId='demo-simple-select-outlined-label'

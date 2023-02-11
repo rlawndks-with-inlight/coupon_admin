@@ -9,11 +9,7 @@ import TableContainer from '@mui/material/TableContainer'
 import { objDataGridColumns } from 'src/data/manager-data'
 import { useCallback, useEffect, useState } from 'react'
 import TrManager from './TrManager'
-import Icon from 'src/@core/components/icon'
-import { useRouter } from 'next/router'
-import Tooltip from '@mui/material/Tooltip'
-import IconButton from '@mui/material/IconButton'
-import { toast } from "react-hot-toast";
+import { useTheme } from '@emotion/react'
 
 
 const isShowCell = (param_table, col, search_obj) => {
@@ -50,6 +46,8 @@ const isShowCell = (param_table, col, search_obj) => {
 
 const TableManager = (props) => {
   const { param_table, posts, columns, changePage, page, searchObj } = props;
+
+  const theme = useTheme();
   useEffect(() => {
 
   }, [posts])
@@ -67,23 +65,86 @@ const TableManager = (props) => {
       />
     )
   }, [])
+  useEffect(() => {
+    console.log(objDataGridColumns[param_table]?.head_columns)
+    console.log(theme)
+  }, [])
 
   return (
     <TableContainer className='table-container' component={Paper}>
       <Table sx={{ minWidth: 1000, width: `${objDataGridColumns[param_table]?.table_width ? objDataGridColumns[param_table]?.table_width : "100%"}` }} aria-label='simple table'>
         <TableHead>
-          <TableRow>
+          {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.length > 0 ?
+            <>
+              <TableRow
+                sx={{
+                  borderTop: 'none',
+                  backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
+                }}>
+                {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.map((item, idx) => (
+                  <>
+                    <TableCell align='center'
+                      colSpan={item?.size}
+                      sx={{
+                        position: 'relative'
+                      }}>
+                      <div style={{
+                        position: 'absolute',
+                        width: '2px',
+                        height: '100%',
+                        display: 'flex',
+                        left: '0',
+                        top: '0'
+                      }}>
+                        <div style={{
+                          width: '2px',
+                          height: '14px',
+                          margin: 'auto 0',
+                          background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                        }} />
+                      </div>
+                      {item?.title}
+                    </TableCell>
+                  </>
+                ))}
+              </TableRow>
+            </>
+            :
+            <>
+            </>}
+          <TableRow
+            sx={{
+              borderTop: 'none',
+              backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
+            }}>
             {columns && columns.map((col, idx) => (
               <>
-                {isShowCell(param_table, col, searchObj) ?
-                  <>
-                    <TableCell align='left' style={{ maxWidth: '300px' }}>{col?.title}</TableCell>
-                  </>
-                  :
-                  <>
-                  </>}
+
+                <TableCell align='left'
+                  sx={{
+                    maxWidth: '300px',
+                    position: 'relative'
+                  }}>
+                  <div style={{
+                    position: 'absolute',
+                    width: '2px',
+                    height: '100%',
+                    display: 'flex',
+                    left: '0',
+                    top: '0'
+                  }}>
+                    <div style={{
+                      width: '2px',
+                      height: '14px',
+                      margin: 'auto 0',
+                      background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                    }} />
+                  </div>
+                  {col?.title}
+                </TableCell>
               </>
-            ))}
+            ))
+            }
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,7 +154,7 @@ const TableManager = (props) => {
         </TableBody>
       </Table>
 
-    </TableContainer>
+    </TableContainer >
   )
 }
 

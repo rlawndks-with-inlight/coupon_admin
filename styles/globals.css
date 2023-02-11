@@ -36,3 +36,9 @@ code[class*='language-'] {
 .public-DraftStyleDefault-block {
   margin: 0.5rem 0 !important;
 }
+.table-cell-hover-light:hover {
+  background-color: rgb(246, 246, 247);
+}
+.table-cell-hover-dark:hover {
+  background-color: rgb(74, 80, 114);
+}

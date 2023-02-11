@@ -30,8 +30,10 @@ const ManagerPointEdit = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   const [values, setValues] = useState({
+    user_name: '',
     mcht_id: 0,
     mac_addr: '',
     appr_status: 1,
@@ -49,12 +51,11 @@ const ManagerPointEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      let user = await getLocalStorage('user_auth');
-      user = JSON.parse(user);
-
-      const response = await axiosIns().get(`/api/v1/manager/users?page=1&page_size=10000&level=10`);
-      setMchtList(response?.data?.content);
-      setValues({ ...values, 'mcht_id': response?.data?.content[0]?.id });
+      const response_user = await axiosIns().get(`/api/v1/manager/users?page=1&page_size=1000000`);
+      setUserList(response_user?.data?.content);
+      const response_mcht = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=1000000`);
+      setMchtList(response_mcht?.data?.content);
+      setValues({ ...values, 'mcht_id': response_mcht?.data?.content[0]?.id });
     } catch (err) {
       console.log(err);
     }
@@ -78,6 +79,7 @@ const ManagerPointEdit = (props) => {
 
   const onReset = () => {
     setValues({
+      user_name: '',
       mcht_id: mchtList[0]?.id,
       mac_addr: '',
       appr_status: 1,
@@ -94,6 +96,9 @@ const ManagerPointEdit = (props) => {
           <Card>
             <CardContent>
               <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
@@ -139,10 +144,12 @@ const ManagerPointEdit = (props) => {
           </Card>
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
-              <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values })}>
+              <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => {
+                editItem({ ...values })
+              }}>
                 저장
               </Button>
-              <Button type='reset' size='large' variant='outlined' color='secondary' onClick={onReset}>
+              <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>
                 리셋
               </Button>
             </CardContent>

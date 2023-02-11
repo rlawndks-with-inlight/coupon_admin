@@ -190,13 +190,13 @@ const ManagerUserEdit = (props) => {
           </Card>
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
-              <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'
+              <Button type='submit' sx={{ mr: 2 }} variant='contained'
                 onClick={() => {
                   editItem({ ...values })
                 }}>
                 저장
               </Button>
-              <Button type='reset' size='large' variant='outlined' color='secondary' onClick={onReset}>
+              <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>
                 리셋
               </Button>
             </CardContent>

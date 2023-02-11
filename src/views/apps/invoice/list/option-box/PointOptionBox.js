@@ -26,11 +26,9 @@ const PointOptionBox = (props) => {
   const isSeeRef = useRef([]);
 
   const pub_type_list = [
-    { name: '전체', pub_type: 10 },
-    { name: '발급', pub_type: 0 },
-    { name: '사용', pub_type: 1 },
-    { name: '발급취소', pub_type: 2 },
-    { name: '사용취소', pub_type: 3 },
+    { name: '전체', is_cancel: -1 },
+    { name: '발급', is_cancel: 0 },
+    { name: '발급취소', is_cancel: 1 },
   ]
   useEffect(() => {
     if ($('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
@@ -44,7 +42,7 @@ const PointOptionBox = (props) => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.pub_type == 'number' && searchObj?.pub_type >= 0) {
+    if (typeof searchObj?.is_cancel == 'number') {
       setLoading(false);
     }
   }, [searchObj])
@@ -57,7 +55,7 @@ const PointOptionBox = (props) => {
     setSDt(first_day)
     setEDt(new Date())
     let today = returnMoment().substring(0, 10);
-    let obj = { ...defaultSearchObj, pub_type: pub_type_list[0]?.pub_type, s_dt: returnMoment(false, first_day).substring(0, 10), e_dt: today };
+    let obj = { ...defaultSearchObj, is_cancel: pub_type_list[0]?.is_cancel, s_dt: returnMoment(false, first_day).substring(0, 10), e_dt: today };
     changePage(1, false, obj);
   }
 
@@ -83,13 +81,13 @@ const PointOptionBox = (props) => {
               <Select
                 size='small'
                 label='발급타입'
-                value={searchObj?.pub_type}
+                value={searchObj?.is_cancel}
                 id='demo-simple-select-outlined'
                 labelId='demo-simple-select-outlined-label'
                 onChange={async (e) => {
                   try {
                     setLoading(true)
-                    let obj = await handleChange('pub_type', e.target.value);
+                    let obj = await handleChange('is_cancel', e.target.value);
                     changePage(page, false, obj);
                   } catch (err) {
                     console.log(err);
@@ -97,7 +95,7 @@ const PointOptionBox = (props) => {
                 }}
               >
                 {pub_type_list && pub_type_list.map((item, idx) => {
-                  return <MenuItem key={idx} value={parseInt(item?.pub_type)}>{item?.name}</MenuItem>
+                  return <MenuItem key={idx} value={parseInt(item?.is_cancel)}>{item?.name}</MenuItem>
                 }
                 )}
               </Select>

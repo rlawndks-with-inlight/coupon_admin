@@ -2,9 +2,9 @@ export default {
   MuiSelect: {
     styleOverrides: {
       select: {
-        minWidth: '6rem !important',
+        minWidth: '1.5rem !important',
         '&.MuiTablePagination-select': {
-          minWidth: '1.5rem !important'
+          minWidth: '2rem !important'
         }
       }
     }

@@ -17,6 +17,7 @@ import Icon from 'src/@core/components/icon'
 import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useEffect } from 'react'
+import { useTheme } from '@emotion/react'
 
 const getItemByType = (data, column, table, goTo, deleteItem) => {
   try {
@@ -104,6 +105,7 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
 const TrManager = (props) => {
   const { post, index, columns, changePage, page, isShowCell, searchObj } = props;
   const router = useRouter();
+  const theme = useTheme();
 
   const goTo = (link) => {
     router.push(link);
@@ -139,6 +141,7 @@ const TrManager = (props) => {
     <>
       <TableRow
         key={index}
+        className={`table-cell-hover-${theme.palette.mode}`}
       >
         {columns && columns.map((col, idx) => (
           <>

@@ -107,10 +107,10 @@ const ManagerAdEdit = (props) => {
       </Card>
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
-          <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, ad_img: (values?.ad_img[0] ?? undefined) })}>
+          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, ad_img: (values?.ad_img[0] ?? undefined) })}>
             저장
           </Button>
-          <Button type='reset' size='large' variant='outlined' color='secondary' onClick={onReset}>
+          <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>
             리셋
           </Button>
         </CardContent>
