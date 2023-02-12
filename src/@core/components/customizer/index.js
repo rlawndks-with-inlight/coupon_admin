@@ -94,10 +94,10 @@ const Customizer = () => {
     saveSettings({ ...settings, [field]: value })
   }
   useEffect(() => {
-    handleChange('footer', 'hidden');
     saveSettings({
       ...settings,
-      footer: 'hidden'
+      footer: 'hidden',
+      contentWidth: 'full',
     })
   }, [])
 

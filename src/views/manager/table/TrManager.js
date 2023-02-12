@@ -42,7 +42,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       let style = { height: '50px', width: 'auto' };
       if (column?.type_option?.is_square) {
         style = {
-          height: '56px', width: '56px'
+          height: '32px', width: '32px'
         }
       }
       result = (<img src={data[column?.column]} style={style} />);
