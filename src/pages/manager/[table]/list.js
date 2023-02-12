@@ -17,7 +17,7 @@ import FormControl from '@mui/material/FormControl'
 
 // ** Styled Components
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { makeMaxPage, objToQuery } from "src/@core/utils/function";
+import { excelDownload, makeMaxPage, objToQuery } from "src/@core/utils/function";
 import TableBasic from "src/views/table/data-grid/TableBasic";
 import TableManager from "src/views/manager/table/TableManager";
 import { Divider } from "@mui/material";
@@ -105,7 +105,6 @@ const List = () => {
       setTotalCount(response?.data?.total);
       setPosts(response?.data?.content ?? []);
       setLoading(false);
-
     } catch (err) {
       console.log(err)
       setPosts([]);
@@ -114,6 +113,20 @@ const List = () => {
       }
       toast.error(err?.response?.data?.message || err?.message);
     }
+  }
+
+  const exportExcel = async () => {
+    let obj = { ...searchObj, page_size: 1000000 };
+    let query_str = await objToQuery(obj);
+
+    const response = await axiosIns().get(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}${query_str}`, {
+      headers: {
+        "Authorization": `Bearer ${getCookie('o')}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      }
+    });
+    await excelDownload(response?.data?.content ?? [], objDataGridColumns, router.query?.table);
   }
 
   return (
@@ -130,6 +143,7 @@ const List = () => {
               searchObj={searchObj}
               setSearchObj={setSearchObj}
               page_size_list={page_size_list}
+              exportExcel={exportExcel}
             />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?

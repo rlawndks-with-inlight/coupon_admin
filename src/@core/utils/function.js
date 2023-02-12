@@ -1,3 +1,8 @@
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+import { getItemByType } from "src/views/manager/table/TrManager";
+import { objDataGridColumns } from "src/data/manager-data";
+import { getLocalStorage } from "./local-storage";
 
 export const objToQuery = (obj_) => {
   let obj = { ...obj_ };
@@ -87,4 +92,56 @@ export const getDomain = () => {
   let domain = window.location.hostname;
 
   return domain();
+}
+
+export const excelDownload = async (excelData, objDataGridColumns, param_table) => {
+  const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  const excelFileExtension = '.xlsx';
+  const excelFileName = param_table;
+  let ignore_name_list = ['맨위로', '수정', '삭제', '관리'];
+  let name_list = [];
+  let column_list = [];
+  for (var i = 0; i < objDataGridColumns[param_table].columns.length; i++) {
+    if (!ignore_name_list.includes(objDataGridColumns[param_table].columns[i].name)) {
+      name_list.push(objDataGridColumns[param_table].columns[i].title)
+      column_list.push(objDataGridColumns[param_table].columns[i])
+    }
+  }
+  let dns_data = await getLocalStorage('dns_data');
+  dns_data = JSON.parse(dns_data);
+
+  const ws = XLSX.utils.aoa_to_sheet([
+    [dns_data?.name]
+    , []
+    , name_list
+  ]);
+
+  let result = [...excelData];
+  let excel_list = [];
+  for (var i = 0; i < result.length; i++) {
+    excel_list[i] = [];
+    for (var j = 0; j < column_list.length; j++) {
+      let data = await getItemByType(result[i], column_list[j], param_table, undefined, undefined, true)
+      await excel_list[i].push(data);
+    }
+  }
+  await excel_list.map(async (data, idx) => {
+    XLSX.utils.sheet_add_aoa(
+      ws,
+      [
+        data
+      ],
+      { origin: -1 }
+    );
+    ws['!cols'] = [
+      { wpx: 50 },
+      { wpx: 50 }
+    ]
+
+    return false;
+  });
+  const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+  const excelButter = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  const excelFile = new Blob([excelButter], { type: excelFileType });
+  FileSaver.saveAs(excelFile, excelFileName + excelFileExtension);
 }

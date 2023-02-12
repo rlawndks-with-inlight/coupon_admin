@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useRouter } from 'next/router'
 
-const DeviceOptionBox = (props) => {
+const DeviceSameDateLineBox = (props) => {
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
   const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState([]);
@@ -91,4 +91,4 @@ const DeviceOptionBox = (props) => {
   )
 }
 
-export default DeviceOptionBox;
+export default DeviceSameDateLineBox;

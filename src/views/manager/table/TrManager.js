@@ -19,7 +19,7 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { useEffect } from 'react'
 import { useTheme } from '@emotion/react'
 
-const getItemByType = (data, column, table, goTo, deleteItem) => {
+export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) => {
   try {
     let result = "---";
 
@@ -46,6 +46,7 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
         }
       }
       result = (<img src={data[column?.column]} style={style} />);
+      if (is_excel) result = data[column?.column];
     }
     if (column?.type == 'datetime') {
       if (!data[column?.column]) {
@@ -61,6 +62,8 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
         <CustomChip rounded label='사용' skin='light' color='success' />
         :
         <CustomChip rounded label='사용안함' skin='light' color='error' />;
+      if (is_excel) result = data[column?.column] == 1 ? '사용' : '사용안함';
+
     }
     if (column?.type == 'ad_type') {
       if (data[column?.column] == 0)
@@ -73,7 +76,6 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
     if (column?.type == 'edit') {
       result = (
         <>
-
           <Tooltip title='수정'>
             <IconButton
               size='small'
@@ -90,6 +92,7 @@ const getItemByType = (data, column, table, goTo, deleteItem) => {
           </Tooltip>
         </>
       )
+      if (is_excel) result = '---';
     }
 
     return result;
