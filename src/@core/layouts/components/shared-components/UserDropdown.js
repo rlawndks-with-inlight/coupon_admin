@@ -23,6 +23,7 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { deleteCookie, getCookie } from 'src/@core/utils/react-cookie'
 import { deleteLocalStorage, getLocalStorage } from 'src/@core/utils/local-storage'
 import { toast } from 'react-hot-toast'
+import { LOCALSTORAGE } from 'src/data/data'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -69,7 +70,7 @@ const UserDropdown = props => {
   }, [])
 
   const getUser = async () => {
-    let auth = await getLocalStorage('user_auth') ?? "{}";
+    let auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH) ?? "{}";
     auth = JSON.parse(auth);
     setUser(auth);
   }
@@ -97,10 +98,9 @@ const UserDropdown = props => {
           "Content-Type": "application/json",
         }
       });
-      console.log(response)
       if (response?.status == 200) {
         await deleteCookie('o');
-        await deleteLocalStorage('user_auth');
+        await deleteLocalStorage(LOCALSTORAGE.USER_AUTH);
         router.push('/manager/login');
       }
     } catch (err) {

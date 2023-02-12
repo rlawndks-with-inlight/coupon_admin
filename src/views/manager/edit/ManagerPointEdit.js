@@ -24,19 +24,27 @@ import * as source from 'src/views/forms/form-elements/file-uploader/FileUploade
 import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { axiosIns } from 'src/@fake-db/backend'
+import DatePicker from 'react-datepicker'
+import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
+import { returnMoment } from 'src/@core/utils/function'
+import { toast } from 'react-hot-toast'
 
 const ManagerPointEdit = (props) => {
-  const { getItem, editItem } = props;
+  const { getItem, editItem, popperPlacement } = props;
 
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
   const [userList, setUserList] = useState([]);
+  const [pubDt, setPubDt] = useState(new Date())
 
   const [values, setValues] = useState({
     user_name: '',
-    mcht_id: 0,
-    mac_addr: '',
-    appr_status: 1,
+    mcht_id: mchtList[0]?.id,
+    purchase_price: 0,
+    use_amount: 0,
+    point_rate: 0,
+    pub_dttm: returnMoment(false, new Date()),
+    is_cancel: 0
   })
   useEffect(() => {
     if (mchtList.length > 0) {
@@ -73,6 +81,10 @@ const ManagerPointEdit = (props) => {
     setTabValue(newValue)
   }
 
+  const handleChange = async (field, value) => {
+    setValues({ ...values, [field]: value });
+  }
+
   const handleChangeValue = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
   }
@@ -81,9 +93,28 @@ const ManagerPointEdit = (props) => {
     setValues({
       user_name: '',
       mcht_id: mchtList[0]?.id,
-      mac_addr: '',
-      appr_status: 1,
+      purchase_price: 0,
+      use_amount: 0,
+      point_rate: 0,
+      pub_dttm: returnMoment(false, new Date()),
+      is_cancel: 0
     })
+    setPubDt(new Date());
+  }
+
+  const onSaveItem = async (obj_) => {
+    let obj = obj_;
+
+    let user_idx = userList.map(item => {
+      return item?.user_name
+    }).findIndex((e) => e == values?.user_name);
+    if (user_idx < 0) {
+      toast.error('유저아이디를 찾을 수 없습니다.');
+    } else {
+      obj['user_id'] = userList[user_idx]?.id;
+      delete obj['user_name'];
+    }
+    editItem(obj);
   }
 
   return (
@@ -118,26 +149,52 @@ const ManagerPointEdit = (props) => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField fullWidth label='맥주소' placeholder='맥주소를 입력해 주세요.' className='mac_addr' onChange={handleChangeValue('mac_addr')} defaultValue={values?.mac_addr} value={values?.mac_addr} />
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth label='결제금액' placeholder='결제금액을 입력해 주세요.' className='name' onChange={handleChangeValue('purchase_price')} defaultValue={values?.purchase_price} value={values?.purchase_price} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth label='적립포인트' placeholder='적립포인트를 입력해 주세요.' className='use_amount' onChange={handleChangeValue('use_amount')} defaultValue={values?.use_amount} value={values?.use_amount} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth label='포인트 변환률' placeholder='포인트 변환률을 입력해 주세요.' className='name' onChange={handleChangeValue('point_rate')} defaultValue={values?.point_rate} value={values?.point_rate} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>사용여부</InputLabel>
+                    <InputLabel id='form-layouts-tabs-select-label'>사용 타입</InputLabel>
                     <Select
                       label='Country'
                       id='form-layouts-tabs-select'
                       labelId='form-layouts-tabs-select-label'
-                      className='appr_status'
-                      onChange={handleChangeValue('appr_status')}
-                      defaultValue={values?.appr_status ?? 0}
-                      value={values?.appr_status}
+                      className='is_cancel'
+                      onChange={handleChangeValue('is_cancel')}
+                      defaultValue={values?.is_cancel ?? 0}
+                      value={values?.is_cancel}
                     >
-                      <MenuItem value={1}>{'사용'}</MenuItem>
-                      <MenuItem value={0}>{'사용안함'}</MenuItem>
-
+                      <MenuItem value={0} >{'적립'}</MenuItem>
+                      <MenuItem value={1} >{'적립취소'}</MenuItem>
                     </Select>
                   </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <DatePicker
+                    showTimeSelect
+                    timeFormat='HH:mm'
+                    timeIntervals={15}
+                    selected={pubDt}
+                    id='date-time-picker'
+                    dateFormat='yyyy-MM-dd h:mm aa'
+                    popperPlacement={popperPlacement}
+                    onChange={async (date) => {
+                      try {
+                        setPubDt(date);
+                        handleChange('pub_dttm', returnMoment(false, date));
+                      } catch (err) {
+                        console.log(err);
+                      }
+
+                    }}
+                    customInput={<CustomInput label='발행시간' />}
+                  />
                 </Grid>
               </Grid>
             </CardContent>
@@ -145,7 +202,7 @@ const ManagerPointEdit = (props) => {
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
               <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => {
-                editItem({ ...values })
+                onSaveItem({ ...values })
               }}>
                 저장
               </Button>

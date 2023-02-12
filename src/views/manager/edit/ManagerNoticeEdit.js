@@ -30,7 +30,6 @@ const ManagerNoticeEdit = (props) => {
 
   const getOneItem = async () => {
     let item = await getItem();
-    console.log(item)
     if (item) {
       setValues(item);
     }
@@ -38,13 +37,10 @@ const ManagerNoticeEdit = (props) => {
 
 
   const handleChangeValue = prop => event => {
-    console.log(values)
     setValues({ ...values, [prop]: event.target.value })
   }
 
   const handleChangeInputValue = (key, value) => {
-    console.log(key)
-    console.log(value)
     setValues({ ...values, [key]: value })
   }
 

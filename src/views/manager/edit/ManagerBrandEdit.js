@@ -52,7 +52,6 @@ const ManagerBrandEdit = (props) => {
 
   const getOneItem = async () => {
     let item = await getItem();
-    console.log(item)
     if (item) {
       setValues(item);
     }

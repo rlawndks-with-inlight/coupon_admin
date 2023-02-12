@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import { getItemByType } from "src/views/manager/table/TrManager";
 import { objDataGridColumns } from "src/data/manager-data";
 import { getLocalStorage } from "./local-storage";
+import { LOCALSTORAGE } from "src/data/data";
 
 export const objToQuery = (obj_) => {
   let obj = { ...obj_ };
@@ -107,7 +108,7 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
       column_list.push(objDataGridColumns[param_table].columns[i])
     }
   }
-  let dns_data = await getLocalStorage('dns_data');
+  let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
   dns_data = JSON.parse(dns_data);
 
   const ws = XLSX.utils.aoa_to_sheet([

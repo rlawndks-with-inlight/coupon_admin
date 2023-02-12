@@ -12,7 +12,7 @@ import Icon from 'src/@core/components/icon'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
-import logoSrc from 'src/data/data'
+import logoSrc, { LOCALSTORAGE } from 'src/data/data'
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import $ from 'jquery';
@@ -68,7 +68,7 @@ const VerticalNavHeader = props => {
   }, [])
 
   const getDnsData = async () => {
-    let data = await getLocalStorage('dns_data');
+    let data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
     data = JSON.parse(data);
     setDnsData(data);
   }

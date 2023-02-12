@@ -10,6 +10,7 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useRouter } from 'next/router'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const UserOptionBox = (props) => {
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
@@ -27,7 +28,7 @@ const UserOptionBox = (props) => {
 
   const settings = async () => {
     setLoading(true);
-    let user = await getLocalStorage('user_auth');
+    let user = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
     user = JSON.parse(user);
 
     let z_all_user = [
@@ -80,7 +81,6 @@ const UserOptionBox = (props) => {
                 onChange={async (e) => {
                   try {
                     setLoading(true)
-                    console.log(e.target.value)
                     let obj = await handleChange('level', e.target.value);
                     changePage(page, false, obj);
                   } catch (err) {

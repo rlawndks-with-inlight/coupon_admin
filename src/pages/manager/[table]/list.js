@@ -27,6 +27,7 @@ import FallbackSpinner from "src/@core/components/spinner";
 import { objDataGridColumns } from "src/data/manager-data";
 import DialogAlert from "src/views/components/dialogs/DialogAlert";
 import TablePagination from '@mui/material/TablePagination'
+import { useTheme } from "@emotion/react";
 
 const List = () => {
   const router = useRouter();
@@ -39,6 +40,10 @@ const List = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const page_size_list = [10, 20, 25, 50, 100];
+
+  const theme = useTheme()
+  const { direction } = theme
+  const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
 
   const defaultSearchObj = {
     page: 1,
@@ -53,7 +58,6 @@ const List = () => {
   });
 
   useEffect(() => {
-    console.log(router.query.table)
     if (!Object.keys(objDataGridColumns).includes(router.query?.table)) {
       router.back();
     }
@@ -96,7 +100,6 @@ const List = () => {
           "Content-Type": "application/json",
         }
       });
-      console.log(response)
       let max_page = await makeMaxPage(response?.data?.total, response?.data?.page_size);
 
       setPage(parseInt(response?.data?.page));
@@ -144,6 +147,7 @@ const List = () => {
               setSearchObj={setSearchObj}
               page_size_list={page_size_list}
               exportExcel={exportExcel}
+              popperPlacement={popperPlacement}
             />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?

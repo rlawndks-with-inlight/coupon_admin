@@ -150,7 +150,11 @@ const TrManager = (props) => {
           <>
             {isShowCell(router.query?.table, col, searchObj) ?
               <>
-                <TableCell align='left' style={{ maxWidth: '300px' }}>
+                <TableCell align='left'
+                  style={{
+                    maxWidth: '300px',
+                    color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
+                  }}>
                   {getItemByType(post, col, router.query?.table, goTo, deleteItem)}
                 </TableCell>
               </>

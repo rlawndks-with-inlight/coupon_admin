@@ -26,7 +26,6 @@ const FileUploaderSingle = (props) => {
   // ** Hooks
   const theme = useTheme()
   useEffect(() => {
-    console.log(typeof value == 'object')
     if (typeof value == 'object') {
       setFiles((value ?? []).map(file => Object.assign(file)))
     } else {

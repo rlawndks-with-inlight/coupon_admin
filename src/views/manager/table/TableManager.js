@@ -66,8 +66,6 @@ const TableManager = (props) => {
     )
   }, [])
   useEffect(() => {
-    console.log(objDataGridColumns[param_table]?.head_columns)
-    console.log(theme)
   }, [])
 
   return (

@@ -26,6 +26,7 @@ import DatePicker from 'react-datepicker'
 // ** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment } from 'src/@core/utils/function'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const ManagerMerchandiseEdit = (props) => {
   const { getItem, editItem, popperPlacement } = props;
@@ -56,15 +57,13 @@ const ManagerMerchandiseEdit = (props) => {
       setBDt(new Date(item?.birth_date));
       setValues(item);
     } else {
-      let dns_data = await getLocalStorage('dns_data');
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
-      console.log(dns_data);
       setValues({ ...values, ['point_flag']: dns_data?.point_flag, ['point_rate']: dns_data?.point_rate, ['stamp_flag']: dns_data?.stamp_flag, ['stamp_save_count']: dns_data?.stamp_save_count });
     }
   }
 
   const handleTabsChange = (event, newValue) => {
-    console.log(values)
     setTabValue(newValue)
   }
 

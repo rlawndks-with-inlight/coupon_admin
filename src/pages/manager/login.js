@@ -43,6 +43,7 @@ import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import FallbackSpinner from 'src/@core/components/spinner'
 import { setLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 
 // ** Styled Components
@@ -102,8 +103,7 @@ const LoginV1 = () => {
           dns: location.hostname
         },
       });
-      console.log(response)
-      setLocalStorage('dns_data', response?.data);
+      setLocalStorage(LOCALSTORAGE.DNS_DATA, response?.data);
       setDnsData(response?.data);
       if (response?.status == 200) {
         setValues({ ...values, ['brand_id']: response?.data?.id });
@@ -134,14 +134,13 @@ const LoginV1 = () => {
         user_pw: values?.password,
         login_type: 0,
       });
-      console.log(response)
       await setCookie('o', response?.data?.access_token, {
         path: "/",
         secure: true,
         sameSite: "none",
       });
       if (response?.status == 200 && response?.data?.user) {
-        await setLocalStorage('user_auth', response?.data?.user);
+        await setLocalStorage(LOCALSTORAGE.USER_AUTH, response?.data?.user);
         router.push('/manager/users');
       }
     } catch (err) {

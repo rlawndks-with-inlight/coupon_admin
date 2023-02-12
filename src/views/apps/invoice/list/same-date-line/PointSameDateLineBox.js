@@ -11,29 +11,28 @@ import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useRouter } from 'next/router'
 
-const DeviceSameDateLineBox = (props) => {
+const PointSameDateLineBox = (props) => {
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
   const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState([]);
   const router = useRouter();
+
+  const pub_type_list = [
+    { name: '전체', is_cancel: -1 },
+    { name: '발급', is_cancel: 0 },
+    { name: '발급취소', is_cancel: 1 },
+  ]
   useEffect(() => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.appr_status == 'number') {
+    if (typeof searchObj?.is_cancel == 'number') {
       setLoading(false);
     }
   }, [searchObj])
 
   const settings = async () => {
     setLoading(true);
-
-    let z_status = [
-      { appr_status: -1, name: '전체' },
-      { appr_status: 1, name: '사용' },
-      { appr_status: 0, name: '사용안함' },
-    ];
-    setStatusList(z_status);
   }
 
   return (
@@ -48,13 +47,14 @@ const DeviceSameDateLineBox = (props) => {
             <Select
               size='small'
               label='사용여부'
-              value={searchObj?.appr_status}
+              value={searchObj?.is_cancel}
               id='demo-simple-select-outlined'
               labelId='demo-simple-select-outlined-label'
               onChange={async (e) => {
                 try {
                   setLoading(true)
-                  let obj = await handleChange('appr_status', e.target.value);
+                  console.log(e.target.value)
+                  let obj = await handleChange('is_cancel', e.target.value);
                   changePage(1, false, obj);
                 } catch (err) {
                   console.log(err);
@@ -62,8 +62,8 @@ const DeviceSameDateLineBox = (props) => {
 
               }}
             >
-              {statusList && statusList.map((item, idx) => {
-                return <MenuItem key={idx} value={parseInt(item?.appr_status)}>{item?.name}</MenuItem>
+              {pub_type_list && pub_type_list.map((item, idx) => {
+                return <MenuItem key={idx} value={parseInt(item?.is_cancel)}>{item?.name}</MenuItem>
               }
               )}
             </Select>
@@ -75,4 +75,4 @@ const DeviceSameDateLineBox = (props) => {
   )
 }
 
-export default DeviceSameDateLineBox;
+export default PointSameDateLineBox;

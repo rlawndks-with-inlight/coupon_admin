@@ -23,6 +23,9 @@ import { Divider } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import $ from 'jquery';
 import { returnMoment } from 'src/@core/utils/function'
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import DeviceSameDateLineBox from './same-date-line/DeviceSameDateLineBox'
+import PointSameDateLineBox from './same-date-line/PointSameDateLineBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -33,26 +36,23 @@ const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handl
 
 }
 
+const sameDateLineBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
+  if (param_table == 'devices')
+    return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  else if (param_table == 'points')
+    return <PointSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+}
+
 const getOptionBoxBySameLineDate = (param_table,) => {
   let result = {
     value: {},
     tag: undefined
   }
   if (param_table == 'devices') {
-    let z_status = [
-      { appr_status: -1, name: '전체' },
-      { appr_status: 1, name: '사용' },
-      { appr_status: 0, name: '사용안함' },
-    ];
-    result.value['appr_status'] = z_status[0]?.appr_status;
+    result.value['appr_status'] = -1;
   }
   if (param_table == 'points') {
-    let pub_type_list = [
-      { name: '전체', is_cancel: -1 },
-      { name: '발급', is_cancel: 0 },
-      { name: '발급취소', is_cancel: 1 },
-    ];
-    result.value['is_cancel'] = pub_type_list[0]?.is_cancel;
+    result.value['is_cancel'] = -1;
   }
   if (param_table == 'users') {
 
@@ -63,14 +63,13 @@ const getOptionBoxBySameLineDate = (param_table,) => {
 
 const TableHeader = props => {
   // ** Props
-  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel } = props
+  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement } = props
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
   const [addSearchOption, setAddSearchOption] = useState({});
   const router = useRouter();
   const theme = useTheme()
   const { direction } = theme
-  const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
 
 
   useEffect(() => {
@@ -155,56 +154,60 @@ const TableHeader = props => {
     <>
 
       {/* {optionBox(router.query?.table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj)} */}
-      <Box
-        sx={{
-          p: 5,
-          pb: 3,
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ marginRight: '1rem' }} >
-          <DatePicker
-            selected={sDt}
-            dateFormat="yyyy-MM-dd"
-            id='month-year-dropdown'
-            popperPlacement={popperPlacement}
-            style={{ padding: '8.5px 32px' }}
+      <DatePickerWrapper>
+        <Box
+          sx={{
+            p: 5,
+            pb: 3,
+            width: '100%',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            rowGap: 2,
+          }}
+        >
+          <div style={{ marginRight: '1rem' }} >
+            <DatePicker
+              selected={sDt}
+              dateFormat="yyyy-MM-dd"
+              id='month-year-dropdown'
+              popperPlacement={popperPlacement}
+              style={{ padding: '8.5px 32px' }}
 
-            onChange={async (date) => {
-              try {
-                setSDt(date);
-                let obj = await handleChange('s_dt', returnMoment(false, date).substring(0, 10));
+              onChange={async (date) => {
+                try {
+                  setSDt(date);
+                  let obj = await handleChange('s_dt', returnMoment(false, date).substring(0, 10));
+                  changePage(1, false, obj);
+                } catch (err) {
+                  console.log(err);
+                }
+
+              }}
+              placeholderText='Click to select a date'
+              customInput={<CustomInput label='시작일' ref={(el) => (isSeeRef.current[0] = el)} />}
+
+            />
+          </div>
+          <div style={{ marginRight: '1rem' }}>
+            <DatePicker
+              selected={eDt}
+
+              dateFormat="yyyy-MM-dd"
+              popperPlacement={popperPlacement}
+              onChange={async (date) => {
+                setEDt(date);
+                let obj = await handleChange('e_dt', returnMoment(false, date).substring(0, 10));
                 changePage(1, false, obj);
-              } catch (err) {
-                console.log(err);
-              }
+              }}
+              placeholderText='Click to select a date'
+              customInput={<CustomInput label='종료일' ref={(el) => (isSeeRef.current[1] = el)} />}
 
-            }}
-            placeholderText='Click to select a date'
-            customInput={<CustomInput label='시작일' ref={(el) => (isSeeRef.current[0] = el)} />}
-
-          />
-        </div>
-        <div>
-          <DatePicker
-            selected={eDt}
-
-            dateFormat="yyyy-MM-dd"
-            popperPlacement={popperPlacement}
-            onChange={async (date) => {
-              setEDt(date);
-              let obj = await handleChange('e_dt', returnMoment(false, date).substring(0, 10));
-              changePage(1, false, obj);
-            }}
-            placeholderText='Click to select a date'
-            customInput={<CustomInput label='종료일' ref={(el) => (isSeeRef.current[1] = el)} />}
-
-          />
-        </div>
-        {getOptionBoxBySameLineDate(router.query?.table)?.tag ?? ""}
-        {/* <FormControl sx={{ mr: 4 }}>
+            />
+          </div>
+          {sameDateLineBox(router.query?.table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj)}
+          {getOptionBoxBySameLineDate(router.query?.table)?.tag ?? ""}
+          {/* <FormControl sx={{ mr: 4 }}>
           <InputLabel id='demo-simple-select-outlined-label'>발급타입</InputLabel>
           <Select
             size='small'
@@ -228,81 +231,83 @@ const TableHeader = props => {
             )}
           </Select>
         </FormControl> */}
-      </Box>
-      <Divider />
-      <Box
-        sx={{
-          p: 5,
-          pb: 3,
-          width: '100%',
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Button color='secondary' variant='outlined' sx={{ mr: 4 }} startIcon={<Icon icon='tabler:upload' />}
-            onClick={exportExcel}>
-            엑셀추출
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(0) }}>
-            당일
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(-1) }}>
-            어제
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(3) }}>
-            3일전
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(30) }}>
-            1개월
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(90) }}>
-            3개월
-          </Button>
-          <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { }}>
-            검색옵션
-          </Button>
         </Box>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <FormControl sx={{ mr: 4, mb: 2, minWidth: '78px' }} size='small'>
-            <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
-            <Select
-              label=''
-              value={searchObj?.page_size}
-              id='demo-simple-select-outlined'
-              labelId='demo-simple-select-outlined-label'
-              onChange={async (e) => {
-                let obj = await handleChange('page_size', e.target.value);
-                changePage(page, false, obj);
-              }}
-            >
-              {page_size_list && page_size_list.map((item, idx) => {
-                return <MenuItem value={item} key={idx}>{item}</MenuItem>
-              }
-              )}
-            </Select>
-          </FormControl>
-          <TextField
-            size='small'
-            sx={{ mr: 4, mb: 2 }}
-            onChange={e => handleChange('search', e.target.value)}
-            onKeyPress={e => e.key == 'Enter' ? changePage(1) : console.log(null)}
-            placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
-            className="search"
-          />
-          {objDataGridColumns[router.query?.table]?.is_add ?
-            <>
-              <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
-                {objDataGridColumns[router.query?.table]?.breadcrumb} 추가
-              </Button>
-            </>
-            :
-            <>
-            </>}
+        <Divider />
+        <Box
+          sx={{
+            p: 5,
+            pb: 3,
+            width: '100%',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            rowGap: 2,
+          }}
+        >
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', rowGap: 2, }}>
+            <Button color='secondary' variant='outlined' sx={{ mr: 4 }} startIcon={<Icon icon='tabler:upload' />}
+              onClick={exportExcel}>
+              엑셀추출
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(0) }}>
+              당일
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(-1) }}>
+              어제
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(3) }}>
+              3일전
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(30) }}>
+              1개월
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(90) }}>
+              3개월
+            </Button>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { }}>
+              검색옵션
+            </Button>
+          </Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', }}>
+            <FormControl sx={{ mr: 4, mb: 2, minWidth: '78px' }} size='small'>
+              <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
+              <Select
+                label=''
+                value={searchObj?.page_size}
+                id='demo-simple-select-outlined'
+                labelId='demo-simple-select-outlined-label'
+                onChange={async (e) => {
+                  let obj = await handleChange('page_size', e.target.value);
+                  changePage(page, false, obj);
+                }}
+              >
+                {page_size_list && page_size_list.map((item, idx) => {
+                  return <MenuItem value={item} key={idx}>{item}</MenuItem>
+                }
+                )}
+              </Select>
+            </FormControl>
+            <TextField
+              size='small'
+              sx={{ mr: 4, mb: 2 }}
+              onChange={e => handleChange('search', e.target.value)}
+              onKeyPress={e => e.key == 'Enter' ? changePage(1) : console.log(null)}
+              placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
+              className="search"
+            />
+            {objDataGridColumns[router.query?.table]?.is_add ?
+              <>
+                <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
+                  {objDataGridColumns[router.query?.table]?.breadcrumb} 추가
+                </Button>
+              </>
+              :
+              <>
+              </>}
+          </Box>
         </Box>
-      </Box>
+      </DatePickerWrapper>
     </>
   )
 }

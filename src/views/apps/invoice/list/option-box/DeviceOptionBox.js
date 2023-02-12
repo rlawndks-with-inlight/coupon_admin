@@ -6,7 +6,6 @@ import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import { Divider } from '@mui/material'
 import { useEffect, useState, useRef } from 'react'
-import { getLocalStorage } from 'src/@core/utils/local-storage'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useRouter } from 'next/router'
@@ -68,7 +67,6 @@ const DeviceOptionBox = (props) => {
                 onChange={async (e) => {
                   try {
                     setLoading(true)
-                    console.log(e.target.value)
                     let obj = await handleChange('appr_status', e.target.value);
                     changePage(page, false, obj);
                   } catch (err) {

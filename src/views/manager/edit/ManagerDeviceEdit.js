@@ -24,6 +24,7 @@ import * as source from 'src/views/forms/form-elements/file-uploader/FileUploade
 import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { axiosIns } from 'src/@fake-db/backend'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
@@ -49,11 +50,10 @@ const ManagerDeviceEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      let user = await getLocalStorage('user_auth');
+      let user = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
       user = JSON.parse(user);
 
       const response = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=10000`);
-      console.log(response)
       setMchtList(response?.data?.content);
 
       let item = await getItem();
