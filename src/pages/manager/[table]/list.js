@@ -58,14 +58,11 @@ const List = () => {
   });
 
   useEffect(() => {
-    if (!Object.keys(objDataGridColumns).includes(router.query?.table)) {
-      router.back();
-    }
+    // if (!Object.keys(objDataGridColumns).includes(router.query?.table)) {
+    //   router.back();
+    // }
     setParams(router?.query);
-    let is_not_need_call_list = ['points', 'devices'];
-    if (!is_not_need_call_list.includes(router.query?.table)) {
-      changePage(1, true);
-    }
+
   }, [router?.query?.table])
 
   const handleChange = async (field, value) => {
@@ -76,6 +73,9 @@ const List = () => {
 
   const changePage = async (num, is_first, insert_search_obj) => {
     try {
+      if (!objDataGridColumns[router.query?.table]) {
+        return;
+      }
       setLoading(true);
       setPage(num);
       let search_obj = { ...searchObj, page: num };
