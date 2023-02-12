@@ -69,7 +69,7 @@ const TableManager = (props) => {
   }, [])
 
   return (
-    <TableContainer className='table-container' component={Paper}>
+    <TableContainer className={`table-container${theme.palette.mode == 'dark' ? '-dark' : ''}`} component={Paper}>
       <Table sx={{ minWidth: 1000, width: `${objDataGridColumns[param_table]?.table_width ? objDataGridColumns[param_table]?.table_width : "100%"}` }} aria-label='simple table'>
         <TableHead>
           {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.length > 0 ?
@@ -146,7 +146,7 @@ const TableManager = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {posts.map((post, index, param_table) => (
+          {posts.map((post, index) => (
             renderCard(post, index, columns)
           ))}
         </TableBody>
