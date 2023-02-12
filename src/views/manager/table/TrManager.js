@@ -39,7 +39,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       result = commarNumber(data[column?.column]) + '%';
     }
     if (column?.type == 'img') {
-      let style = { height: '50px', width: 'auto' };
+      let style = { maxWidth: '128px', height: 'auto' };
       if (column?.type_option?.is_square) {
         style = {
           height: '32px', width: '32px'

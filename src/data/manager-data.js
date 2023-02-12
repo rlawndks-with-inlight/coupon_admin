@@ -85,7 +85,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('승인여부', 'is_addr', 'number', ''),
       managerListFormat('DNS', 'dns', 'text', ''),
-      managerListFormat('LOGO', 'logo_img', 'img', '', { is_square: true }),
+      managerListFormat('LOGO', 'logo_img', 'img', ''),
       managerListFormat('FAVICON', 'favicon_img', 'img', '', { is_square: true }),
       managerListFormat('템플릿ID', 'template_id', 'text', ''),
       managerListFormat('발행쿠폰명', 'coupon_model_id', 'text', ''),

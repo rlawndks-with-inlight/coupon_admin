@@ -200,7 +200,7 @@ const NotificationDropdown = props => {
           }}
         >
           <Button fullWidth variant='contained' onClick={handleDropdownClose}>
-            Read All Notifications
+            모든 알림 보기
           </Button>
         </MenuItem>
       </Menu>
