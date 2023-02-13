@@ -17,7 +17,7 @@ const Img = styled('img')(({ theme }) => ({
 }))
 
 const FileUploaderSingle = (props) => {
-  const { className, value, values, setValues } = props;
+  const { className, value, values, setValues, placeholder, sx } = props;
 
   // ** State
   const [files, setFiles] = useState([])
@@ -26,14 +26,26 @@ const FileUploaderSingle = (props) => {
   // ** Hooks
   const theme = useTheme()
   useEffect(() => {
-    if (typeof value == 'object') {
-      setFiles((value ?? []).map(file => Object.assign(file)))
-    } else {
-      if (typeof value == 'string') {
-        setUrl(value);
-      }
-    }
+    setImg();
   }, [value])
+
+  const setImg = async () => {
+    try {
+      console.log(className)
+      console.log(typeof value)
+      if (typeof value == 'object') {
+        setFiles((value ? value : []).map(file => Object.assign(file)))
+      } else {
+        if (typeof value == 'string') {
+          await setValues({ ...values, [`${className}`]: undefined })
+          setUrl(value);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -47,7 +59,7 @@ const FileUploaderSingle = (props) => {
   })
 
   const img = files.map(file => (
-    <img key={file.name} alt={file.name} className='single-file-image' style={{ margin: 'auto', height: '90%' }} src={URL.createObjectURL(file)} />
+    <img key={file.name} alt={file.name} className='single-file-image' style={{ margin: 'auto', ...sx }} src={URL.createObjectURL(file)} />
   ))
 
   return (
@@ -59,12 +71,13 @@ const FileUploaderSingle = (props) => {
         </> : <>
           {url ?
             <>
-              <img className='single-file-image' style={{ margin: 'auto', height: '90%' }} src={url} />
+              <img className='single-file-image' style={{ margin: 'auto', ...sx }} src={url} />
             </>
             :
             <>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column', margin: 'auto' }}>
                 <Img alt='Upload img' src={`/images/misc/upload-${theme.palette.mode}.png`} />
+                <div>{placeholder}</div>
               </Box>
             </>}
 

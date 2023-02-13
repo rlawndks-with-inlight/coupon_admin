@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react'
 import CardSnippet from 'src/@core/components/card-snippet'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
+import { useEditPageImg } from 'src/@core/utils/function'
 
 const ManagerAdEdit = (props) => {
   const { getItem, editItem } = props;
@@ -63,21 +64,15 @@ const ManagerAdEdit = (props) => {
 
           <Grid container spacing={5}>
             <Grid item xs={12}>
-              <InputLabel id='form-layouts-tabs-select-label'>광고 이미지</InputLabel>
-              <CardSnippet
-                title='Upload Single Files'
-                code={{
-                  tsx: null,
-                  jsx: source.FileUploaderSingleJSXCode
-                }}
-              >
-                <FileUploaderSingle
-                  className='ad_img'
-                  setValues={setValues}
-                  values={values}
-                  value={values?.ad_img}
-                />
-              </CardSnippet>
+              <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>광고 이미지</InputLabel>
+              <FileUploaderSingle
+                className='ad_img'
+                setValues={setValues}
+                values={values}
+                value={values?.ad_img}
+                placeholder={'max-width:1024px 이상은 리사이징 됩니다.'}
+                sx={{ height: '90%', width: 'auto' }}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField fullWidth label='광고명' placeholder='광고명을 입력해 주세요.' className='ad_name' onChange={handleChangeValue('ad_name')} defaultValue={values?.ad_name} value={values?.ad_name} />
@@ -105,7 +100,7 @@ const ManagerAdEdit = (props) => {
       </Card>
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
-          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, ad_img: (values?.ad_img[0] ?? undefined) })}>
+          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, ad_img: useEditPageImg(values?.ad_img) })}>
             저장
           </Button>
           <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>

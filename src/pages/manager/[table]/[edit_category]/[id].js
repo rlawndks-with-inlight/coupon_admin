@@ -23,7 +23,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import CardContent from '@mui/material/CardContent'
-
+import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 
 // ** Third Party Components
 import axios from 'axios'
@@ -60,13 +60,13 @@ const Edit = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    if (router.query?.edit_category == 'edit' && router.query?.id) {
-      console.log(1);
-    } else if (router.query?.edit_category == 'create') {
-      console.log(2);
-    } else {
-      router.back();
-    }
+    // if (router.query?.edit_category == 'edit' && router.query?.id) {
+    //   console.log(1);
+    // } else if (router.query?.edit_category == 'create') {
+    //   console.log(2);
+    // } else {
+    //   router.back();
+    // }
   }, [router.asPath])
 
   const renderPage = (common) => {
@@ -155,16 +155,18 @@ const Edit = () => {
 
   return (
     <>
-      <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
-        {renderPage({
-          posts: editSetting?.posts,
-          table: objDataGridColumns[router.query?.table]?.table,
-          editItem: editItem,
-          getItem: getItem,
-          popperPlacement: popperPlacement,
-          breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`
-        })}
-      </DatePickerWrapper>
+      <DropzoneWrapper>
+        <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
+          {renderPage({
+            posts: editSetting?.posts,
+            table: objDataGridColumns[router.query?.table]?.table,
+            editItem: editItem,
+            getItem: getItem,
+            popperPlacement: popperPlacement,
+            breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`
+          })}
+        </DatePickerWrapper>
+      </DropzoneWrapper>
       {/* <DialogAlert
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}

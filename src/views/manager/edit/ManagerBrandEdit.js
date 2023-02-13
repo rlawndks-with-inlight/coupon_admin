@@ -19,17 +19,23 @@ import { useEffect, useState } from 'react'
 import CardSnippet from 'src/@core/components/card-snippet'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
+import { useEditPageImg } from 'src/@core/utils/function'
 
 const ManagerBrandEdit = (props) => {
   const { getItem, editItem } = props;
 
-  const [tabValue, setTabValue] = useState('tab-0')
+  const [tabValue, setTabValue] = useState('tab-1')
 
   const [values, setValues] = useState({
     name: '',
     dns: '',
+    og_description: '',
     logo_img: undefined,
     favicon_img: undefined,
+    passbook_img: undefined,
+    contract_img: undefined,
+    id_img: undefined,
+    og_img: undefined,
     ceo_nm: '',
     addr: '',
     phone_num: '',
@@ -69,8 +75,13 @@ const ManagerBrandEdit = (props) => {
     setValues({
       name: '',
       dns: '',
+      og_description: '',
       logo_img: undefined,
       favicon_img: undefined,
+      passbook_img: undefined,
+      contract_img: undefined,
+      id_img: undefined,
+      og_img: undefined,
       ceo_nm: '',
       addr: '',
       phone_num: '',
@@ -99,46 +110,83 @@ const ManagerBrandEdit = (props) => {
             onChange={handleTabsChange}
             sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
           >
-            <Tab value='tab-0' label='이미지' />
             <Tab value='tab-1' label='기본정보' />
+            <Tab value='tab-0' label='이미지' />
             <Tab value='tab-2' label='적립설정' />
           </TabList>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='tab-0'>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <InputLabel id='form-layouts-tabs-select-label'>로고 이미지</InputLabel>
-                  <CardSnippet
-                    title='Upload Single Files'
-                    code={{
-                      tsx: null,
-                      jsx: source.FileUploaderSingleJSXCode
-                    }}
-                  >
-                    <FileUploaderSingle
-                      className='logo_img'
-                      setValues={setValues}
-                      values={values}
-                      value={values?.logo_img}
-                    />
-                  </CardSnippet>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>로고 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='logo_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.logo_img}
+                    sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                    placeholder={'max-width: 256px, 이상은 자동으로 리사이징 됩니다.'}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel id='form-layouts-tabs-select-label'>favicon 이미지</InputLabel>
-                  <CardSnippet
-                    title='Upload Single Files'
-                    code={{
-                      tsx: null,
-                      jsx: source.FileUploaderSingleJSXCode
-                    }}
-                  >
-                    <FileUploaderSingle
-                      className='favicon_img'
-                      setValues={setValues}
-                      values={values}
-                      value={values?.favicon_img}
-                    />
-                  </CardSnippet>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>favicon 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='favicon_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.favicon_img}
+                    sx={{ width: '120px', height: '120px' }}
+                    placeholder={'32px * 32px'}
+
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>통장 사본 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='passbook_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.passbook_img}
+                    sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                    placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>계약서 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='contract_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.contract_img}
+                    sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                    placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>신분증 사본 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='id_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.id_img}
+                    sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                    placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>메타태그 오픈그래프 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='og_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.og_img}
+                    sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                    placeholder={'max-width: 1200px, 이상은 자동으로 리사이징 됩니다.'}
+
+                  />
                 </Grid>
               </Grid>
 
@@ -173,6 +221,18 @@ const ManagerBrandEdit = (props) => {
                 <Grid item xs={12} sm={6}>
                   <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
                 </Grid>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    sx={{ width: '100%' }}
+                    onChange={handleChangeValue('og_description')} defaultValue={values?.og_description} value={values?.og_description}
+                    rows={4}
+                    multiline
+                    label='메타태그 오픈그래프 내용'
+                    variant='standard'
+                    id='textarea-standard-static'
+                  />
+                </Grid>
+
               </Grid>
             </TabPanel>
             <TabPanel sx={{ p: 0 }} value='tab-2'>
@@ -282,7 +342,18 @@ const ManagerBrandEdit = (props) => {
       </Card>
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
-          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, logo_img: (values?.logo_img[0] ?? undefined), favicon_img: (values?.favicon_img[0] ? values?.favicon_img[0] : undefined) })}>
+          <Button type='submit' sx={{ mr: 2 }} variant='contained'
+            onClick={() => {
+              editItem({
+                ...values,
+                logo_img: useEditPageImg(values?.logo_img),
+                favicon_img: useEditPageImg(values?.favicon_img),
+                passbook_img: useEditPageImg(values?.passbook_img),
+                contract_img: useEditPageImg(values?.contract_img),
+                id_img: useEditPageImg(values?.id_img),
+                og_img: useEditPageImg(values?.og_img),
+              })
+            }}>
             저장
           </Button>
           <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>

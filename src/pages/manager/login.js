@@ -103,12 +103,21 @@ const LoginV1 = () => {
           dns: location.hostname
         },
       });
+      console.log(response?.data)
       setLocalStorage(LOCALSTORAGE.DNS_DATA, response?.data);
       setDnsData(response?.data);
       if (response?.status == 200) {
         setValues({ ...values, ['brand_id']: response?.data?.id });
       } else {
         toast.error(response?.data?.statusText);
+      }
+      if (response?.data?.is_appr) {
+        let is_appr = Number(response?.data?.is_appr);
+
+        // if (is_appr != 1) {
+        //router.push('/manager/register');
+
+        // }
       }
       setLoading(false);
     } catch (err) {
@@ -156,7 +165,7 @@ const LoginV1 = () => {
       <Card>
         <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src={dnsData?.logo_img} style={{ height: '48px', width: 'auto' }} />
+            <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
             <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
               {themeConfig.templateName}
             </Typography>

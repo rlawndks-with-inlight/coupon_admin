@@ -27,7 +27,7 @@ import DatePicker from 'react-datepicker'
 
 // ** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
-import { returnMoment } from 'src/@core/utils/function'
+import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
 
 const ManagerUserEdit = (props) => {
   const { getItem, editItem, popperPlacement } = props;
@@ -38,6 +38,7 @@ const ManagerUserEdit = (props) => {
   const [bDt, setBDt] = useState(new Date())
 
   const [values, setValues] = useState({
+    profile_img: undefined,
     user_name: '',
     user_pw: '',
     nick_name: '',
@@ -97,6 +98,7 @@ const ManagerUserEdit = (props) => {
   const onReset = () => {
     setBDt(new Date());
     setValues({
+      profile_img: undefined,
       user_name: '',
       user_pw: '',
       nick_name: '',
@@ -111,87 +113,110 @@ const ManagerUserEdit = (props) => {
         </>
         :
         <>
-          <Card>
-            <CardHeader title='기본정보' />
-            <CardContent>
-              <Grid container spacing={5}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label='유저아이디'
-                    placeholder='유저아이디를 입력해 주세요.'
-                    onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <Icon icon='tabler:user' />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label='비밀번호'
-                    placeholder='****'
-                    type={'password'}
-                    autoComplete={'new-password'}
-                    onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <Icon icon='tabler:lock' />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label='유저명'
-                    placeholder='유저명를 입력해 주세요.'
-                    onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <Icon icon='tabler:user' />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <DatePicker
-                    showYearDropdown
-                    showMonthDropdown
-                    selected={bDt}
-                    id='month-year-dropdown'
-                    placeholderText='YYYY-MM-DD'
-                    dateFormat={'yyyy-MM-dd'}
-                    popperPlacement={popperPlacement}
-                    onChange={async (date) => {
-                      try {
-                        setBDt(date);
-                        handleChange('birth_date', returnMoment(false, date).substring(0, 10));
-                      } catch (err) {
-                        console.log(err);
-                      }
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={5}>
+              <Card>
+                <CardContent>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>프로필 이미지</InputLabel>
+                      <FileUploaderSingle
+                        className='profile_img'
+                        setValues={setValues}
+                        values={values}
+                        value={values?.profile_img}
+                        sx={{ width: '120px', height: '120px' }}
+                        placeholder={'120px * 120px'}
+                      />
+                    </Grid>
 
-                    }}
-                    customInput={<CustomInput label='유저 생년월일' />}
-                  />
-                </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={7}>
+              <Card>
+                <CardContent>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label='유저아이디'
+                        placeholder='유저아이디를 입력해 주세요.'
+                        onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <Icon icon='tabler:user' />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label='비밀번호'
+                        placeholder='****'
+                        type={'password'}
+                        autoComplete={'new-password'}
+                        onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <Icon icon='tabler:lock' />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label='유저명'
+                        placeholder='유저명를 입력해 주세요.'
+                        onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <Icon icon='tabler:user' />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <DatePicker
+                        showYearDropdown
+                        showMonthDropdown
+                        selected={bDt}
+                        id='month-year-dropdown'
+                        placeholderText='YYYY-MM-DD'
+                        dateFormat={'yyyy-MM-dd'}
+                        popperPlacement={popperPlacement}
+                        onChange={async (date) => {
+                          try {
+                            setBDt(date);
+                            handleChange('birth_date', returnMoment(false, date).substring(0, 10));
+                          } catch (err) {
+                            console.log(err);
+                          }
 
-              </Grid>
-            </CardContent>
-          </Card>
+                        }}
+                        customInput={<CustomInput label='유저 생년월일' />}
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
               <Button type='submit' sx={{ mr: 2 }} variant='contained'
                 onClick={() => {
-                  editItem({ ...values })
+                  editItem({ ...values, profile_img: useEditPageImg(values?.profile_img) })
                 }}>
                 저장
               </Button>

@@ -4,6 +4,7 @@ import { getItemByType } from "src/views/manager/table/TrManager";
 import { objDataGridColumns } from "src/data/manager-data";
 import { getLocalStorage } from "./local-storage";
 import { LOCALSTORAGE } from "src/data/data";
+import { t } from "i18next";
 
 export const objToQuery = (obj_) => {
   let obj = { ...obj_ };
@@ -145,4 +146,19 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   const excelButter = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   const excelFile = new Blob([excelButter], { type: excelFileType });
   FileSaver.saveAs(excelFile, excelFileName + excelFileExtension);
+}
+
+export const useEditPageImg = (img_) => {
+  try {
+    let img = img_ ? img_[0] : '';
+    if (typeof img == 'string') {
+      img = '';
+    }
+
+    return img;
+  } catch (err) {
+    console.log(err);
+
+    return '';
+  }
 }

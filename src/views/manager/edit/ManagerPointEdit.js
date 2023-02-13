@@ -59,15 +59,14 @@ const ManagerPointEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      const response_user = await axiosIns().get(`/api/v1/manager/users?page=1&page_size=1000000`);
-      setUserList(response_user?.data?.content);
-      const response_mcht = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=1000000`);
-      setMchtList(response_mcht?.data?.content);
-      setValues({ ...values, 'mcht_id': response_mcht?.data?.content[0]?.id });
+      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      console.log(response)
+      setMchtList(response?.data?.mcht_id);
+      setUserList(response?.data?.user_id?.normals);
+      setValues({ ...values, 'mcht_id': response?.data?.mcht_id[0]?.id });
     } catch (err) {
       console.log(err);
     }
-
   }
 
   const getOneItem = async () => {
