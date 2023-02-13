@@ -72,6 +72,7 @@ const ManagerPointEdit = (props) => {
   const getOneItem = async () => {
     let item = await getItem();
     if (item) {
+      console.log(item)
       setValues(item);
     }
   }
