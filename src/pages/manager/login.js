@@ -42,7 +42,7 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import FallbackSpinner from 'src/@core/components/spinner'
-import { setLocalStorage } from 'src/@core/utils/local-storage'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 
 
@@ -119,9 +119,22 @@ const LoginV1 = () => {
 
         // }
       }
+      let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+      user_auth = JSON.parse(user_auth);
+      if (user_auth?.id > 0) {
+        router.push('/manager/users')
+      }
+
+      // const response_auth = await axiosIns().post('/api/v1/auth/ok', {}, {
+      //   headers: {
+      //     "Authorization": `Bearer ${getCookie('o')}`,
+      //     "Accept": "application/json",
+      //     "Content-Type": "application/json",
+      //   }
+      // });
+      // console.log(response_auth)
       setLoading(false);
     } catch (err) {
-      console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
     }
 
@@ -154,7 +167,7 @@ const LoginV1 = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error(err?.message);
+      toast.error(err?.response?.data?.message || err?.message);
     }
 
   }

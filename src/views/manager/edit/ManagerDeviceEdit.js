@@ -53,15 +53,19 @@ const ManagerDeviceEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=10000`);
-      setMchtList(response?.data?.content);
+      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      console.log(response)
+      let mcht_list = [...response?.data?.mcht_id];
+      for (var i = 0; i < mcht_list.length; i++) {
+        mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
+      }
+      setMchtList(response?.data?.mcht_id);
 
       let item = await getItem();
       if (item) {
         setValues({ ...item });
       } else {
-        setValues({ ...values, 'mcht_id': response?.data?.content[0]?.mcht_id });
-
+        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
       }
     } catch (err) {
       console.log(err);
@@ -71,7 +75,12 @@ const ManagerDeviceEdit = (props) => {
   const getOneItem = async () => {
     let item = await getItem();
     if (item) {
-      setValues({ ...item });
+      let obj = {};
+      for (var i = 0; i < Object.keys(values).length; i++) {
+        let key = Object.keys(values)[i];
+        obj[key] = item[key];
+      }
+      setValues({ ...obj });
     }
   }
 

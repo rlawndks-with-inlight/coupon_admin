@@ -43,7 +43,7 @@ const ManagerPointEdit = (props) => {
     purchase_price: 0,
     use_amount: 0,
     point_rate: 0,
-    pub_dttm: returnMoment(false, new Date()),
+    created_at: returnMoment(false, new Date()),
     is_cancel: 0
   })
   useEffect(() => {
@@ -60,7 +60,6 @@ const ManagerPointEdit = (props) => {
     try {
       setLoading(true);
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
-      console.log(response)
       setMchtList(response?.data?.mcht_id);
       setUserList(response?.data?.user_id?.normals);
       setValues({ ...values, 'mcht_id': response?.data?.mcht_id[0]?.id });
@@ -72,8 +71,12 @@ const ManagerPointEdit = (props) => {
   const getOneItem = async () => {
     let item = await getItem();
     if (item) {
-      console.log(item)
-      setValues(item);
+      let obj = {};
+      for (var i = 0; i < Object.keys(values).length; i++) {
+        let key = Object.keys(values)[i];
+        obj[key] = item[key];
+      }
+      setValues({ ...obj });
     }
   }
 
@@ -96,7 +99,7 @@ const ManagerPointEdit = (props) => {
       purchase_price: 0,
       use_amount: 0,
       point_rate: 0,
-      pub_dttm: returnMoment(false, new Date()),
+      created_at: returnMoment(false, new Date()),
       is_cancel: 0
     })
     setPubDt(new Date());
@@ -187,7 +190,7 @@ const ManagerPointEdit = (props) => {
                     onChange={async (date) => {
                       try {
                         setPubDt(date);
-                        handleChange('pub_dttm', returnMoment(false, date));
+                        handleChange('created_at', returnMoment(false, date));
                       } catch (err) {
                         console.log(err);
                       }

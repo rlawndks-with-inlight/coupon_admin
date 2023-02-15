@@ -31,7 +31,12 @@ const ManagerNoticeEdit = (props) => {
   const getOneItem = async () => {
     let item = await getItem();
     if (item) {
-      setValues(item);
+      let obj = {};
+      for (var i = 0; i < Object.keys(values).length; i++) {
+        let key = Object.keys(values)[i];
+        obj[key] = item[key];
+      }
+      setValues({ ...obj });
     }
   }
 
