@@ -17,7 +17,7 @@ const Img = styled('img')(({ theme }) => ({
 }))
 
 const FileUploaderSingle = (props) => {
-  const { className, value, values, setValues, placeholder, sx } = props;
+  const { className, value, values, setValues, placeholder, sx, boxStyle } = props;
 
   // ** State
   const [files, setFiles] = useState([])
@@ -63,7 +63,7 @@ const FileUploaderSingle = (props) => {
   ))
 
   return (
-    <Box {...getRootProps({ className: 'dropzone' })} style={{ display: 'flex' }} sx={files.length ? { height: 200 } : {}}>
+    <Box {...getRootProps({ className: 'dropzone' })} style={{ display: 'flex', ...boxStyle }} sx={files.length ? { height: 200 } : {}}>
       <input {...getInputProps()} />
       {files.length ?
         <>

@@ -132,6 +132,7 @@ const ManagerBrandEdit = (props) => {
         >
           <Tab value='tab-1' label='기본정보' sx={{ mr: 2 }} />
           <Tab value='tab-2' label='적립설정' sx={{ mr: 2 }} />
+          <Tab value='tab-3' label='계약정보' sx={{ mr: 2 }} />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='tab-1'>
           <Grid container spacing={6}>
@@ -163,42 +164,6 @@ const ManagerBrandEdit = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>통장 사본 이미지</InputLabel>
-                      <FileUploaderSingle
-                        className='passbook_img'
-                        setValues={setValues}
-                        values={values}
-                        value={values?.passbook_img}
-                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
-                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>계약서 이미지</InputLabel>
-                      <FileUploaderSingle
-                        className='contract_img'
-                        setValues={setValues}
-                        values={values}
-                        value={values?.contract_img}
-                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
-                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>신분증 사본 이미지</InputLabel>
-                      <FileUploaderSingle
-                        className='id_img'
-                        setValues={setValues}
-                        values={values}
-                        value={values?.id_img}
-                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
-                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
                       <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>메타태그 오픈그래프 이미지</InputLabel>
                       <FileUploaderSingle
                         className='og_img'
@@ -207,7 +172,17 @@ const ManagerBrandEdit = (props) => {
                         value={values?.og_img}
                         sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
                         placeholder={'max-width: 1200px, 이상은 자동으로 리사이징 됩니다.'}
-
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        sx={{ width: '100%' }}
+                        onChange={handleChangeValue('og_description')} defaultValue={values?.og_description} value={values?.og_description}
+                        rows={4}
+                        multiline
+                        label='메타태그 오픈그래프 내용'
+                        variant='standard'
+                        id='textarea-standard-static'
                       />
                     </Grid>
                   </Grid>
@@ -245,17 +220,7 @@ const ManagerBrandEdit = (props) => {
                     <Grid item xs={12}>
                       <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        sx={{ width: '100%' }}
-                        onChange={handleChangeValue('og_description')} defaultValue={values?.og_description} value={values?.og_description}
-                        rows={4}
-                        multiline
-                        label='메타태그 오픈그래프 내용'
-                        variant='standard'
-                        id='textarea-standard-static'
-                      />
-                    </Grid>
+
                   </Grid>
                 </CardContent>
               </Card>
@@ -369,7 +334,69 @@ const ManagerBrandEdit = (props) => {
             </CardContent>
           </Card>
         </TabPanel>
-      </TabContext>
+        <TabPanel sx={{ p: 0 }} value='tab-3'>
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={6}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>계약서 이미지</InputLabel>
+                      <FileUploaderSingle
+                        className='contract_img'
+                        setValues={setValues}
+                        values={values}
+                        value={values?.contract_img}
+                        boxStyle={{ height: `${window.innerWidth >= 900 ? '195%' : ''}` }}
+                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>통장 사본 이미지</InputLabel>
+                      <FileUploaderSingle
+                        className='passbook_img'
+                        setValues={setValues}
+                        values={values}
+                        value={values?.passbook_img}
+                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>신분증 사본 이미지</InputLabel>
+                      <FileUploaderSingle
+                        className='id_img'
+                        setValues={setValues}
+                        values={values}
+                        value={values?.id_img}
+                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+
+
+
+
+        </TabPanel >
+      </TabContext >
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
           <Button type='submit' sx={{ mr: 2 }} variant='contained'

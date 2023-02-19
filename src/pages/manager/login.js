@@ -122,7 +122,7 @@ const LoginV1 = () => {
       let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
       user_auth = JSON.parse(user_auth);
       if (user_auth?.id > 0) {
-        router.push('/manager/users')
+        // router.push('/manager/users')
       }
 
       // const response_auth = await axiosIns().post('/api/v1/auth/ok', {}, {
