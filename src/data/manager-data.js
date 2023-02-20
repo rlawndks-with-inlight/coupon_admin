@@ -54,6 +54,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
+      managerListFormat('유저레벨', 'level', 'user_level', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),

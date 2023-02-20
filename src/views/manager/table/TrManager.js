@@ -6,7 +6,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import { objDataGridColumns } from 'src/data/manager-data'
-import { commarNumber } from 'src/@core/utils/function'
+import { commarNumber, getUserLevelByNumber } from 'src/@core/utils/function'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import { toast } from "react-hot-toast";
@@ -23,22 +23,22 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
   try {
     let result = "---";
 
-    if (column?.type == 'text') {
+    if (column?.type == 'text') {//
       result = data[column?.column];
     }
-    if (column?.type == 'number') {
+    if (column?.type == 'number') {//
       if (typeof data[column?.column] != 'number') {
         return "---";
       }
       result = commarNumber(data[column?.column]);
     }
-    if (column?.type == 'percent') {
+    if (column?.type == 'percent') {//
       if (!data[column?.column]) {
         return "---";
       }
       result = commarNumber(data[column?.column]) + '%';
     }
-    if (column?.type == 'img') {
+    if (column?.type == 'img') {//
       let style = { maxWidth: '128px', height: 'auto' };
       if (column?.type_option?.is_square) {
         style = {
@@ -53,7 +53,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       result = (<img src={data[column?.column]} style={style} />);
       if (is_excel) result = data[column?.column];
     }
-    if (column?.type == 'datetime') {
+    if (column?.type == 'datetime') {//
       if (!data[column?.column]) {
         return "---";
       }
@@ -62,7 +62,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       datetime = datetime.replace('T', ' ');
       result = datetime;
     }
-    if (column?.type == 'use_status') {
+    if (column?.type == 'use_status') {//
       result = data[column?.column] == 1 ?
         <CustomChip rounded label='사용' skin='light' color='success' />
         :
@@ -70,13 +70,16 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       if (is_excel) result = data[column?.column] == 1 ? '사용' : '사용안함';
 
     }
-    if (column?.type == 'ad_type') {
+    if (column?.type == 'ad_type') {//
       if (data[column?.column] == 0)
         result = '사용안함';
       if (data[column?.column] == 1)
         result = '메인광고';
       if (data[column?.column] == 2)
         result = '슬라이드광고';
+    }
+    if (column?.type == 'user_level') {
+      result = getUserLevelByNumber(data[column?.column]);
     }
     if (column?.type == 'edit') {
       result = (
