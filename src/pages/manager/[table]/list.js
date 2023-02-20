@@ -28,6 +28,7 @@ import { objDataGridColumns } from "src/data/manager-data";
 import DialogAlert from "src/views/components/dialogs/DialogAlert";
 import TablePagination from '@mui/material/TablePagination'
 import { useTheme } from "@emotion/react";
+import HeadContent from "src/@core/components/head";
 
 const List = () => {
   const router = useRouter();
@@ -134,6 +135,7 @@ const List = () => {
 
   return (
     <>
+      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>

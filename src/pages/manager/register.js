@@ -39,6 +39,7 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import { setCookie } from 'src/@core/utils/react-cookie'
+import HeadContent from 'src/@core/components/head'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -151,72 +152,75 @@ const RegisterV1 = () => {
   }
 
   return (
-    <Box className='content-center'>
-      <Card>
-        <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
-          <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
-          </Box>
-          <Box sx={{ mb: 6 }}>
-            <Typography variant='h6' sx={{ mb: 1.5 }}>
-              환영합니다 🚀
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>최초 접속으로 서비스를 운영할 본사를 등록합니다.</Typography>
-          </Box>
-          <TextField autoFocus fullWidth id='user_name' onChange={handleChange('user_name')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password').focus() : '' }} label='아이디' sx={{ mb: 4 }} />
-          <FormControl fullWidth sx={{ mb: 4 }}>
-            <InputLabel htmlFor='auth-register-password'>비밀번호</InputLabel>
-            <OutlinedInput
-              label='비밀번호'
-              value={values.user_pw}
-              id='auth-register-password'
-              onChange={handleChange('user_pw')}
-              type={values.showPassword ? 'text' : 'password'}
-              onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password-check').focus() : '' }}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    edge='end'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={e => e.preventDefault()}
-                    aria-label='toggle password visibility'
-                  >
-                    <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} fontSize={20} />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel htmlFor='auth-register-password'>비밀번호확인</InputLabel>
-            <OutlinedInput
-              label='비밀번호확인'
-              value={values.passwordCheck}
-              id='auth-register-password-check'
-              onChange={handleChange('passwordCheck')}
-              type={values.showPasswordCheck ? 'text' : 'password'}
-              onKeyPress={(e) => { e.key == 'Enter' ? onRegister() : '' }}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    edge='end'
-                    onClick={handleClickShowPasswordCheck}
-                    onMouseDown={e => e.preventDefault()}
-                    aria-label='toggle password visibility'
-                  >
-                    <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} fontSize={20} />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <div style={{ height: '42px' }} />
-          <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 4 }} onClick={onRegister}>
-            등록
-          </Button>
-        </CardContent>
-      </Card>
-    </Box>
+    <>
+      <HeadContent title={'등록'} />
+      <Box className='content-center'>
+        <Card>
+          <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
+            <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
+            </Box>
+            <Box sx={{ mb: 6 }}>
+              <Typography variant='h6' sx={{ mb: 1.5 }}>
+                환영합니다 🚀
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>최초 접속으로 서비스를 운영할 본사를 등록합니다.</Typography>
+            </Box>
+            <TextField autoFocus fullWidth id='user_name' onChange={handleChange('user_name')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password').focus() : '' }} label='아이디' sx={{ mb: 4 }} />
+            <FormControl fullWidth sx={{ mb: 4 }}>
+              <InputLabel htmlFor='auth-register-password'>비밀번호</InputLabel>
+              <OutlinedInput
+                label='비밀번호'
+                value={values.user_pw}
+                id='auth-register-password'
+                onChange={handleChange('user_pw')}
+                type={values.showPassword ? 'text' : 'password'}
+                onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password-check').focus() : '' }}
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={handleClickShowPassword}
+                      onMouseDown={e => e.preventDefault()}
+                      aria-label='toggle password visibility'
+                    >
+                      <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} fontSize={20} />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel htmlFor='auth-register-password'>비밀번호확인</InputLabel>
+              <OutlinedInput
+                label='비밀번호확인'
+                value={values.passwordCheck}
+                id='auth-register-password-check'
+                onChange={handleChange('passwordCheck')}
+                type={values.showPasswordCheck ? 'text' : 'password'}
+                onKeyPress={(e) => { e.key == 'Enter' ? onRegister() : '' }}
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={handleClickShowPasswordCheck}
+                      onMouseDown={e => e.preventDefault()}
+                      aria-label='toggle password visibility'
+                    >
+                      <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} fontSize={20} />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <div style={{ height: '42px' }} />
+            <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 4 }} onClick={onRegister}>
+              등록
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
+    </>
   )
 }
 RegisterV1.getLayout = page => <BlankLayout>{page}</BlankLayout>

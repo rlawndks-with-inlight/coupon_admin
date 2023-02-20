@@ -70,6 +70,14 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       if (is_excel) result = data[column?.column] == 1 ? '사용' : '사용안함';
 
     }
+    if (column?.type == 'appr_status') {//
+      result = data[column?.column] == 1 ?
+        <CustomChip rounded label='승인' skin='light' color='success' />
+        :
+        <CustomChip rounded label='승인안됨' skin='light' color='error' />;
+      if (is_excel) result = data[column?.column] == 1 ? '승인' : '승인안됨';
+
+    }
     if (column?.type == 'ad_type') {//
       if (data[column?.column] == 0)
         result = '사용안함';

@@ -44,6 +44,7 @@ import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import FallbackSpinner from 'src/@core/components/spinner'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import HeadContent from 'src/@core/components/head'
 
 
 // ** Styled Components
@@ -174,71 +175,73 @@ const LoginV1 = () => {
   }
 
   return (
-    <Box className='content-center'>
-      {/* <AuthIllustrationV1Wrapper> */}
-      <Card>
-        <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
-          <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
-            <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
-              {themeConfig.templateName}
-            </Typography>
-          </Box>
-          <Box sx={{ mb: 6 }}>
-            <Typography variant='h6' sx={{ mb: 1.5 }}>
-              {`Welcome ${themeConfig.templateName}! 👋🏻`}
-            </Typography>
-          </Box>
-          <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
-          <FormControl fullWidth sx={{ mb: 1.5 }}>
-            <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
-            <OutlinedInput
-              label='Password'
-              value={values.password}
-              id='auth-login-password'
-              onChange={handleChange('password')}
-              onKeyPress={(e) => { e.key == 'Enter' ? onLogin() : '' }}
-              type={values.showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    edge='end'
-                    onClick={handleClickShowPassword}
-                    aria-label='toggle password visibility'
-                  >
-                    <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
-                  </IconButton>
-                </InputAdornment>
+    <>
+      <HeadContent title={'로그인'} />
+      <Box className='content-center'>
+        {/* <AuthIllustrationV1Wrapper> */}
+        <Card>
+          <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
+            <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
+              <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
+                {themeConfig.templateName}
+              </Typography>
+            </Box>
+            <Box sx={{ mb: 6 }}>
+              <Typography variant='h6' sx={{ mb: 1.5 }}>
+                {`Welcome ${themeConfig.templateName}! 👋🏻`}
+              </Typography>
+            </Box>
+            <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
+            <FormControl fullWidth sx={{ mb: 1.5 }}>
+              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+              <OutlinedInput
+                label='Password'
+                value={values.password}
+                id='auth-login-password'
+                onChange={handleChange('password')}
+                onKeyPress={(e) => { e.key == 'Enter' ? onLogin() : '' }}
+                type={values.showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={handleClickShowPassword}
+                      aria-label='toggle password visibility'
+                    >
+                      <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <Box
+              sx={{
+                mb: 1.75,
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
+              <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled>
+            </Box>
+            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+              if (!loading) {
+                onLogin();
               }
-            />
-          </FormControl>
-          <Box
-            sx={{
-              mb: 1.75,
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
-            <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled>
-          </Box>
-          <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
-            if (!loading) {
-              onLogin();
-            }
-          }}>
-            {loading ?
-              <>
-                Loading...
-              </>
-              :
-              <>
-                로그인
-              </>}
-          </Button>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            }}>
+              {loading ?
+                <>
+                  Loading...
+                </>
+                :
+                <>
+                  로그인
+                </>}
+            </Button>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
                 <Typography>
                   <LinkStyled href='/pages/auth/register-v1' sx={{ fontSize: '1rem' }}>
@@ -246,7 +249,7 @@ const LoginV1 = () => {
                   </LinkStyled>
                 </Typography>
               </Box> */}
-          {/* <Divider
+            {/* <Divider
                 sx={{
                   fontSize: '0.875rem',
                   color: 'text.disabled',
@@ -256,7 +259,7 @@ const LoginV1 = () => {
               >
                 or
               </Divider> */}
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />
                 </IconButton>
@@ -275,10 +278,11 @@ const LoginV1 = () => {
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box> */}
-        </CardContent>
-      </Card>
-      {/* </AuthIllustrationV1Wrapper> */}
-    </Box>
+          </CardContent>
+        </Card>
+        {/* </AuthIllustrationV1Wrapper> */}
+      </Box>
+    </>
   )
 }
 LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>

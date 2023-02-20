@@ -50,6 +50,7 @@ import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
 import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
 import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdit'
 import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
+import HeadContent from 'src/@core/components/head'
 
 const Edit = () => {
   const [editSetting, setEditSetting] = useState({
@@ -154,9 +155,9 @@ const Edit = () => {
   const handleClickOpen = () => {
     setIsOpen(true);
   }
-
   return (
     <>
+      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} />
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({
