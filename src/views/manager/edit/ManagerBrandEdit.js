@@ -41,8 +41,7 @@ const ManagerBrandEdit = (props) => {
   const { getItem, editItem } = props;
 
   const [tabValue, setTabValue] = useState('tab-1')
-
-  const [values, setValues] = useState({
+  const defaultObj = {
     name: '',
     dns: '',
     og_description: '',
@@ -67,7 +66,8 @@ const ManagerBrandEdit = (props) => {
     stamp_save_count: '',
     coupon_model_id: '',
     point_rate: '',
-  })
+  }
+  const [values, setValues] = useState(defaultObj)
   useEffect(() => {
     getOneItem();
   }, [])
@@ -93,34 +93,20 @@ const ManagerBrandEdit = (props) => {
   }
 
   const onReset = () => {
-    setValues({
-      name: '',
-      dns: '',
-      og_description: '',
-      logo_img: undefined,
-      favicon_img: undefined,
-      passbook_img: undefined,
-      contract_img: undefined,
-      id_img: undefined,
-      og_img: undefined,
-      ceo_nm: '',
-      addr: '',
-      phone_num: '',
-      fax_num: '',
-      template_id: '',
-      theme_css: '',
-      company_nm: '',
-      pvcy_rep_nm: '',
-      business_num: '',
-      stamp_flag: 0,
-      point_flag: 0,
-      stamp_max_size: '',
-      stamp_save_count: '',
-      coupon_model_id: '',
-      point_rate: '',
-    })
+    setValues(defaultObj)
   }
-
+  const onEditItem = () => {
+    let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
+    let obj = { ...values };
+    for (var i = 0; i < img_key_list.length; i++) {
+      if (typeof obj[img_key_list[i]] != 'object') {
+        delete obj[img_key_list[i]];
+      } else {
+        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+      }
+    }
+    editItem(obj);
+  }
   return (
     <>
       <TabContext value={tabValue}>
@@ -400,17 +386,7 @@ const ManagerBrandEdit = (props) => {
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
           <Button type='submit' sx={{ mr: 2 }} variant='contained'
-            onClick={() => {
-              editItem({
-                ...values,
-                logo_img: useEditPageImg(values?.logo_img),
-                favicon_img: useEditPageImg(values?.favicon_img),
-                passbook_img: useEditPageImg(values?.passbook_img),
-                contract_img: useEditPageImg(values?.contract_img),
-                id_img: useEditPageImg(values?.id_img),
-                og_img: useEditPageImg(values?.og_img),
-              })
-            }}>
+            onClick={onEditItem}>
             저장
           </Button>
           <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>

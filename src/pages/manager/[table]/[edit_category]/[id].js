@@ -97,7 +97,6 @@ const Edit = () => {
       if (!window.confirm("저장 하시겠습니까?"))
         return;
       let obj = { ...obj_ };
-      console.log(obj)
 
       let formData = new FormData();
       let keys = Object.keys(obj);
@@ -166,7 +165,8 @@ const Edit = () => {
             editItem: editItem,
             getItem: getItem,
             popperPlacement: popperPlacement,
-            breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`
+            breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`,
+            editCategory: router.query?.edit_category
           })}
         </DatePickerWrapper>
       </DropzoneWrapper>

@@ -156,7 +156,7 @@ const ManagerPointEdit = (props) => {
                   <TextField fullWidth label='결제금액' placeholder='결제금액을 입력해 주세요.' className='name' onChange={handleChangeValue('purchase_price')} defaultValue={values?.purchase_price} value={values?.purchase_price} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label='적립포인트' placeholder='적립포인트를 입력해 주세요.' className='use_amount' onChange={handleChangeValue('use_amount')} defaultValue={values?.use_amount} value={values?.use_amount} />
+                  <TextField fullWidth label='사용포인트' placeholder='사용포인트를 입력해 주세요.' className='use_amount' onChange={handleChangeValue('use_amount')} defaultValue={values?.use_amount} value={values?.use_amount} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField fullWidth label='포인트 변환률' placeholder='포인트 변환률을 입력해 주세요.' className='name' onChange={handleChangeValue('point_rate')} defaultValue={values?.point_rate} value={values?.point_rate} />

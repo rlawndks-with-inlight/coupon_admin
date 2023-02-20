@@ -25,58 +25,59 @@ import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import DatePicker from 'react-datepicker'
 
-// ** Custom Component Imports
+//** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
 
 const ManagerOperatorEdit = (props) => {
-  const { getItem, editItem, popperPlacement } = props;
+  const { getItem, editItem, popperPlacement, editCategory } = props;
 
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
   const [bDt, setBDt] = useState(new Date())
-
-  const [values, setValues] = useState({
+  const defaultObj = {
     profile_img: undefined,
     user_name: '',
     user_pw: '',
     nick_name: '',
     birth_date: returnMoment(false, new Date()).substring(0, 10),
-  })
+  }
+  const [values, setValues] = useState(defaultObj);
   useEffect(() => {
     if (userLevelList.length > 0) {
       setLoading(false);
     }
   }, [userLevelList])
   useEffect(() => {
-    // settingPage();
+    settingPage();
     getOneItem();
   }, [])
 
-  // const settingPage = async () => {
-  //   setLoading(true);
-  //   let user = await getLocalStorage('user_auth');
-  //   user = JSON.parse(user);
+  const settingPage = async () => {
+    setLoading(true);
+    let user = await getLocalStorage('user_auth');
+    user = JSON.parse(user);
 
-  //   let z_all_user = [
-  //     { level: 50, name: '개발사' },
-  //     { level: 40, name: '본사' },
-  //     { level: 30, name: '지사' },
-  //     { level: 20, name: '총판' },
-  //     { level: 15, name: '대리점' },
-  //     { level: 10, name: '가맹점' },
-  //     { level: 0, name: '일반유저' },
-  //   ];
-  //   let user_level_list = [];
-  //   for (var i = 0; i < z_all_user.length; i++) {
-  //     if (z_all_user[i].level < user?.level) {
-  //       user_level_list.push(z_all_user[i]);
-  //     }
-  //   }
-  //   setValues({ ...values, 'level': user_level_list[0]?.level })
-  //   setUserLevelList(user_level_list);
-  // }
+    let z_all_user = [
+      { level: 50, name: '개발사' },
+      { level: 45, name: '협력사' },
+      { level: 40, name: '본사' },
+      // { level: 30, name: '지사' },
+      // { level: 20, name: '총판' },
+      // { level: 15, name: '대리점' },
+      // { level: 10, name: '가맹점' },
+      // { level: 0, name: '일반유저' },
+    ];
+    let user_level_list = [];
+    for (var i = 0; i < z_all_user.length; i++) {
+      if (z_all_user[i].level <= user?.level) {
+        user_level_list.push(z_all_user[i]);
+      }
+    }
+    setValues({ ...values, 'level': user_level_list[0]?.level });
+    setUserLevelList(user_level_list);
+  }
 
   const getOneItem = async () => {
     let item = await getItem();
@@ -100,17 +101,22 @@ const ManagerOperatorEdit = (props) => {
     setValues({ ...values, [prop]: event.target.value });
   }
 
-  const onReset = () => {
+  const onReset = async () => {
     setBDt(new Date());
-    setValues({
-      profile_img: undefined,
-      user_name: '',
-      user_pw: '',
-      nick_name: '',
-      birth_date: returnMoment(false, new Date()).substring(0, 10),
-    })
+    setValues({ ...defaultObj, level: userLevelList[0].level });
   }
-
+  const onEditItem = () => {
+    let img_key_list = ['profile_img'];
+    let obj = { ...values };
+    for (var i = 0; i < img_key_list.length; i++) {
+      if (typeof obj[img_key_list[i]] != 'object') {
+        delete obj[img_key_list[i]];
+      } else {
+        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+      }
+    }
+    editItem(obj);
+  }
   return (
     <>
       {loading ?
@@ -120,7 +126,7 @@ const ManagerOperatorEdit = (props) => {
         <>
           <Grid container spacing={6}>
             <Grid item xs={12} md={5}>
-              <Card>
+              <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
@@ -149,6 +155,7 @@ const ManagerOperatorEdit = (props) => {
                         fullWidth
                         label='유저아이디'
                         placeholder='유저아이디를 입력해 주세요.'
+                        disabled={editCategory == 'edit'}
                         onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name}
                         InputProps={{
                           startAdornment: (
@@ -192,6 +199,25 @@ const ManagerOperatorEdit = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>유저레벨</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='level'
+                          onChange={handleChangeValue('level')}
+                          defaultValue={values?.level}
+                          value={values?.level}
+                        >
+                          {userLevelList && userLevelList.map((item, idx) => {
+                            return <MenuItem value={item?.level} key={idx}>{item?.name}</MenuItem>
+                          })}
+
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
                       <DatePicker
                         showYearDropdown
                         showMonthDropdown
@@ -220,9 +246,7 @@ const ManagerOperatorEdit = (props) => {
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
               <Button type='submit' sx={{ mr: 2 }} variant='contained'
-                onClick={() => {
-                  editItem({ ...values, profile_img: useEditPageImg(values?.profile_img) })
-                }}>
+                onClick={onEditItem}>
                 저장
               </Button>
               <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>

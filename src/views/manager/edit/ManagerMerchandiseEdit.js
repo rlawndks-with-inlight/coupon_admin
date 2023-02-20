@@ -46,14 +46,13 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 }))
 
 const ManagerMerchandiseEdit = (props) => {
-  const { getItem, editItem, popperPlacement } = props;
+  const { getItem, editItem, popperPlacement, editCategory } = props;
 
   const [tabValue, setTabValue] = useState('tab-1')
   const [bDt, setBDt] = useState(new Date())
   const [mchtList, setMchtList] = useState([]);
   const [userList, setUserList] = useState([]);
-
-  const [values, setValues] = useState({
+  const defaultObj = {
     profile_img: undefined,
     user_name: '',
     user_pw: '',
@@ -66,7 +65,8 @@ const ManagerMerchandiseEdit = (props) => {
     point_flag: 0,
     stamp_save_count: 0,
     point_rate: 0,
-  })
+  }
+  const [values, setValues] = useState(defaultObj)
   useEffect(() => {
     settingPage();
     getOneItem();
@@ -119,22 +119,20 @@ const ManagerMerchandiseEdit = (props) => {
 
   const onReset = () => {
     setBDt(new Date());
-    setValues({
-      profile_img: undefined,
-      user_name: '',
-      user_pw: '',
-      nick_name: '',
-      birth_date: returnMoment(false, new Date()).substring(0, 10),
-      group_id: '',
-      mcht_name: '',
-      addr: '',
-      stamp_flag: 0,
-      point_flag: 0,
-      stamp_save_count: 0,
-      point_rate: 0,
-    })
+    setValues(defaultObj)
   }
-
+  const onEditItem = () => {
+    let img_key_list = ['profile_img'];
+    let obj = { ...values };
+    for (var i = 0; i < img_key_list.length; i++) {
+      if (typeof obj[img_key_list[i]] != 'object') {
+        delete obj[img_key_list[i]];
+      } else {
+        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+      }
+    }
+    editItem(obj);
+  }
   return (
     <>
 
@@ -197,7 +195,7 @@ const ManagerMerchandiseEdit = (props) => {
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
-                      <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                      <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField fullWidth label='유저 패스워드' placeholder='유저 패스워드를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
@@ -317,10 +315,7 @@ const ManagerMerchandiseEdit = (props) => {
       </TabContext>
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
-          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => {
-            console.log(values)
-            editItem({ ...values, profile_img: useEditPageImg(values?.profile_img) })
-          }}>
+          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={onEditItem}>
             저장
           </Button>
           <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>

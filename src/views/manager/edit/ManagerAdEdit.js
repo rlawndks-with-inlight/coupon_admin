@@ -25,12 +25,12 @@ import { useEditPageImg } from 'src/@core/utils/function'
 
 const ManagerAdEdit = (props) => {
   const { getItem, editItem } = props;
-
-  const [values, setValues] = useState({
+  const defaultObj = {
     ad_name: '',
     ad_img: undefined,
     ad_type: 0,
-  })
+  }
+  const [values, setValues] = useState(defaultObj)
   useEffect(() => {
     getOneItem();
   }, [])
@@ -53,59 +53,73 @@ const ManagerAdEdit = (props) => {
   }
 
   const onReset = () => {
-    setValues({
-      ad_name: '',
-      ad_img: undefined,
-      ad_type: 0,
-    })
+    setValues(defaultObj)
   }
-
+  const onEditItem = () => {
+    let img_key_list = ['ad_img'];
+    let obj = { ...values };
+    for (var i = 0; i < img_key_list.length; i++) {
+      if (typeof obj[img_key_list[i]] != 'object') {
+        delete obj[img_key_list[i]];
+      } else {
+        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+      }
+    }
+    editItem(obj);
+  }
   return (
     <>
-      <Card>
-
-
-        <CardContent>
-
-          <Grid container spacing={5}>
-            <Grid item xs={12}>
-              <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>광고 이미지</InputLabel>
-              <FileUploaderSingle
-                className='ad_img'
-                setValues={setValues}
-                values={values}
-                value={values?.ad_img}
-                placeholder={'max-width:1024px 이상은 리사이징 됩니다.'}
-                sx={{ height: '90%', width: 'auto' }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label='광고명' placeholder='광고명을 입력해 주세요.' className='ad_name' onChange={handleChangeValue('ad_name')} defaultValue={values?.ad_name} value={values?.ad_name} />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel id='form-layouts-tabs-select-label'>광고타입</InputLabel>
-                <Select
-                  label='Country'
-                  id='form-layouts-tabs-select'
-                  labelId='form-layouts-tabs-select-label'
-                  className='ad_type'
-                  onChange={handleChangeValue('ad_type')}
-                  defaultValue={values?.ad_type ?? 0}
-                  value={values?.ad_type}
-                >
-                  <MenuItem value={0}>사용안함</MenuItem>
-                  <MenuItem value={1}>메인광고</MenuItem>
-                  <MenuItem value={2}>슬라이드광고</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+      <Grid container spacing={6}>
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Grid item xs={12}>
+                <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>광고 이미지</InputLabel>
+                <FileUploaderSingle
+                  className='ad_img'
+                  setValues={setValues}
+                  values={values}
+                  value={values?.ad_img}
+                  placeholder={'max-width:1024px 이상은 리사이징 됩니다.'}
+                  sx={{ height: '90%', width: 'auto' }}
+                />
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='광고명' placeholder='광고명을 입력해 주세요.' className='ad_name' onChange={handleChangeValue('ad_name')} defaultValue={values?.ad_name} value={values?.ad_name} />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='form-layouts-tabs-select-label'>광고타입</InputLabel>
+                    <Select
+                      label='Country'
+                      id='form-layouts-tabs-select'
+                      labelId='form-layouts-tabs-select-label'
+                      className='ad_type'
+                      onChange={handleChangeValue('ad_type')}
+                      defaultValue={values?.ad_type ?? 0}
+                      value={values?.ad_type}
+                    >
+                      <MenuItem value={0}>사용안함</MenuItem>
+                      <MenuItem value={1}>메인광고</MenuItem>
+                      <MenuItem value={2}>슬라이드광고</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
-          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values, ad_img: useEditPageImg(values?.ad_img) })}>
+          <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={onEditItem}>
             저장
           </Button>
           <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>
