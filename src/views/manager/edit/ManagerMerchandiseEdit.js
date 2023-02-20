@@ -148,7 +148,7 @@ const ManagerMerchandiseEdit = (props) => {
         <TabPanel sx={{ p: 0 }} value='tab-1'>
           <Grid container spacing={6}>
             <Grid item xs={12} md={5}>
-              <Card>
+              <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>

@@ -622,10 +622,12 @@ const project_navigation = [
   {
     title: '오퍼레이터관리',
     icon: 'tabler:user',
+    level: 50,
     children: [
       {
         title: '오퍼레이터관리',
-        path: '/manager/operators'
+        path: '/manager/operators',
+        level: 50
       },
     ]
   },
@@ -638,38 +640,46 @@ const project_navigation = [
   {
     title: '유저관리',
     icon: 'tabler:user',
+    level: 10,
     children: [
       {
         title: '유저관리',
-        path: '/manager/users'
+        path: '/manager/users',
+        level: 10
       },
       {
         title: '포인트관리',
-        path: '/manager/points'
+        path: '/manager/points',
+        level: 10
       },
     ]
   },
   {
     title: '가맹점관리',
     icon: 'tabler:user',
+    level: 10,
     children: [
       {
         title: '가맹점관리',
-        path: '/manager/merchandises'
+        path: '/manager/merchandises',
+        level: 10
       },
       {
         title: '장비관리',
-        path: '/manager/devices'
+        path: '/manager/devices',
+        level: 10
       },
     ]
   },
   {
     title: '게시판관리',
     icon: 'tabler:table',
+    level: 10,
     children: [
       {
         title: '공지사항관리',
-        path: '/manager/notices'
+        path: '/manager/notices',
+        level: 10
       }
     ]
   },

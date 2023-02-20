@@ -18,6 +18,7 @@ import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useEffect } from 'react'
 import { useTheme } from '@emotion/react'
+import Avatar from '@mui/material/Avatar'
 
 export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) => {
   try {
@@ -45,12 +46,15 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
           height: '32px', width: '32px'
         }
       }
+      result = (<img src={data[column?.column]} style={style} />);
+
       if (column?.type_option?.is_profile) {
         style = {
           height: '64px', width: '64px'
         }
+        result = <Avatar alt='John Doe' src={data[column?.column]} sx={{ ...style, borderRadius: 0 }} />
       }
-      result = (<img src={data[column?.column]} style={style} />);
+
       if (is_excel) result = data[column?.column];
     }
     if (column?.type == 'datetime') {//

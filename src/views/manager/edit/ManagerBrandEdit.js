@@ -179,7 +179,7 @@ const ManagerBrandEdit = (props) => {
               </Card>
             </Grid>
             <Grid item xs={12} md={7}>
-              <Card>
+              <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
