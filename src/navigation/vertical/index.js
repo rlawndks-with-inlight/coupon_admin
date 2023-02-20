@@ -620,6 +620,16 @@ const project_navigation = [
     level: 40
   },
   {
+    title: '오퍼레이터관리',
+    icon: 'tabler:user',
+    children: [
+      {
+        title: '오퍼레이터관리',
+        path: '/manager/operators'
+      },
+    ]
+  },
+  {
     title: '광고관리',
     icon: 'tabler:ad',
     path: '/manager/advertisements',

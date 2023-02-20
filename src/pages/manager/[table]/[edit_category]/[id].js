@@ -49,6 +49,7 @@ import { getCookie } from 'src/@core/utils/react-cookie'
 import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
 import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
 import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdit'
+import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
 
 const Edit = () => {
   const [editSetting, setEditSetting] = useState({
@@ -85,6 +86,8 @@ const Edit = () => {
       return <ManagerPointEdit {...common} />
     else if (router.query?.table == 'merchandises')
       return <ManagerMerchandiseEdit {...common} />
+    else if (router.query?.table == 'operators')
+      return <ManagerOperatorEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>
   }

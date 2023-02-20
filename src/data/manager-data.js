@@ -24,9 +24,9 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'users',//ajax에 사용할 테이블
     breadcrumb: '유저',//이름 사용할 것
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '유저명 검색',//검색 placeholder
     head_columns: [
-
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
@@ -42,10 +42,30 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
+  operators: {//param
+    table: 'operators',//ajax에 사용할 테이블
+    breadcrumb: '오퍼레이터',//이름 사용할 것
+    is_add: true,
+    is_see_add_condition: 50,
+    search_placeholder: '유저ID 검색',//검색 placeholder
+    head_columns: [
+    ],
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_square: true }),
+      managerListFormat('유저아이디', 'user_name', 'text', ''),
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
   merchandises: {//param
     table: 'merchandises',//ajax에 사용할 테이블
     breadcrumb: '가맹점',//이름 사용할 것
     is_add: true,
+    is_see_add_condition: 40,
     head_columns: [
       { title: '가맹점정보', size: 6 },
       { title: '포인트정보', size: 2 },
@@ -75,6 +95,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'brands',
     breadcrumb: '브랜드',
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '브랜드명 검색',
     head_columns: [
       { title: '브랜드정보', size: 7 },
@@ -112,6 +133,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'advertisements',
     breadcrumb: '광고',
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '광고명 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
@@ -129,6 +151,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'notices',
     breadcrumb: '공지사항',
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '제목 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
@@ -145,6 +168,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'points',
     breadcrumb: '포인트',
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '유저명, 가맹점명 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
@@ -164,6 +188,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'devices',
     breadcrumb: '장비',
     is_add: true,
+    is_see_add_condition: 40,
     search_placeholder: '맥주소 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),

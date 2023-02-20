@@ -26,6 +26,9 @@ import { returnMoment } from 'src/@core/utils/function'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import DeviceSameDateLineBox from './same-date-line/DeviceSameDateLineBox'
 import PointSameDateLineBox from './same-date-line/PointSameDateLineBox'
+import OperatorSameDateLineBox from './same-date-line/OperatorSameDateLineBox'
+import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -41,6 +44,8 @@ const sameDateLineBox = (param_table, changePage, page, searchObj, setSearchObj,
     return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
   else if (param_table == 'points')
     return <PointSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  else if (param_table == 'operators')
+    return <OperatorSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
 }
 
 const getOptionBoxBySameLineDate = (param_table,) => {
@@ -54,8 +59,8 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   if (param_table == 'points') {
     result.value['is_cancel'] = -1;
   }
-  if (param_table == 'users') {
-
+  if (param_table == 'operators') {
+    result.value['level'] = 40;
   }
 
   return result;
@@ -148,6 +153,17 @@ const TableHeader = props => {
     changePage(1, false, obj);
     setSDt(new Date(s_dt));
     setEDt(new Date(e_dt));
+  }
+
+  const getIsSeeAddButton = async () => {
+    let param_table = router.query?.table;
+    let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+    user_auth = JSON.parse(user_auth);
+    if (user_auth?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
+      return true;
+    }
+
+    return false;
   }
 
   return (
@@ -296,7 +312,7 @@ const TableHeader = props => {
               placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
               className="search"
             />
-            {objDataGridColumns[router.query?.table]?.is_add ?
+            {objDataGridColumns[router.query?.table]?.is_add && getIsSeeAddButton() ?
               <>
                 <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
                   {objDataGridColumns[router.query?.table]?.breadcrumb} 추가

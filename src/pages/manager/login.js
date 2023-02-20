@@ -119,20 +119,23 @@ const LoginV1 = () => {
 
         // }
       }
-      let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
-      user_auth = JSON.parse(user_auth);
-      if (user_auth?.id > 0) {
-        // router.push('/manager/users')
-      }
 
-      // const response_auth = await axiosIns().post('/api/v1/auth/ok', {}, {
-      //   headers: {
-      //     "Authorization": `Bearer ${getCookie('o')}`,
-      //     "Accept": "application/json",
-      //     "Content-Type": "application/json",
-      //   }
-      // });
-      // console.log(response_auth)
+      // let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+      // user_auth = JSON.parse(user_auth);
+      // if (user_auth?.id > 0) {
+      //   // router.push('/manager/users')
+      // }
+
+      const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
+        headers: {
+          "Authorization": `Bearer ${getCookie('o')}`,
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        }
+      });
+      if (response_auth?.level > 0) {
+        router.push('/manager/users');
+      }
       setLoading(false);
     } catch (err) {
       toast.error(err?.response?.data?.message || err?.message);
