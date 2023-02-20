@@ -3,13 +3,18 @@ import { Fragment, useState } from 'react'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
 import TextField from '@mui/material/TextField'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
-
+import MuiDialog from '@mui/material/Dialog'
+import { styled } from '@mui/material/styles'
+const Dialog = styled(MuiDialog)({
+  '& .MuiBackdrop-root': {
+    backdropFilter: 'blur(2px)'
+  },
+})
 const DialogForm = (props) => {
   const { open, setOpen, handleClickOpen, handleClose, data, changePassword } = props;
 
