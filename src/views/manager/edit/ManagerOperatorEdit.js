@@ -42,6 +42,7 @@ const ManagerOperatorEdit = (props) => {
     user_pw: '',
     nick_name: '',
     birth_date: returnMoment(false, new Date()).substring(0, 10),
+    level: 0,
   }
   const [values, setValues] = useState(defaultObj);
   useEffect(() => {

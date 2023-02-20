@@ -60,7 +60,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
     result.value['is_cancel'] = -1;
   }
   if (param_table == 'operators') {
-    result.value['level'] = 40;
+    result.value['level'] = -1;
   }
 
   return result;

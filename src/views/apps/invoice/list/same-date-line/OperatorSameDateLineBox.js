@@ -18,6 +18,7 @@ const OperatorSameDateLineBox = (props) => {
   const router = useRouter();
 
   const pub_type_list = [
+    { name: '전체', level: -1 },
     { name: '본사', level: 40 },
     { name: '협력사', level: 45 },
     { name: '개발사', level: 50 },
