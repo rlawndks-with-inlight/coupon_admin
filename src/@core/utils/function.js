@@ -147,7 +147,26 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   const excelFile = new Blob([excelButter], { type: excelFileType });
   FileSaver.saveAs(excelFile, excelFileName + excelFileExtension);
 }
-
+export const getUserLevelByNumber = (num) => {
+  if (num == 0)
+    return '일반유저'
+  else if (num == 10)
+    return '가맹점'
+  else if (num == 15)
+    return '대리점'
+  else if (num == 20)
+    return '지사'
+  else if (num == 30)
+    return '총판'
+  else if (num == 40)
+    return '본사'
+  else if (num == 45)
+    return '협력사'
+  else if (num == 50)
+    return '개발사'
+  else
+    return '잘못된레벨'
+}
 export const useEditPageImg = (img_) => {
   try {
     let img = img_ ? img_[0] : '';

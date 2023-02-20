@@ -45,6 +45,11 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
           height: '32px', width: '32px'
         }
       }
+      if (column?.type_option?.is_profile) {
+        style = {
+          height: '64px', width: '64px'
+        }
+      }
       result = (<img src={data[column?.column]} style={style} />);
       if (is_excel) result = data[column?.column];
     }

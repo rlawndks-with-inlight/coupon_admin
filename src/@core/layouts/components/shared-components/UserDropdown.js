@@ -24,6 +24,7 @@ import { deleteCookie, getCookie } from 'src/@core/utils/react-cookie'
 import { deleteLocalStorage, getLocalStorage } from 'src/@core/utils/local-storage'
 import { toast } from 'react-hot-toast'
 import { LOCALSTORAGE } from 'src/data/data'
+import { getUserLevelByNumber } from 'src/@core/utils/function'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -72,6 +73,7 @@ const UserDropdown = props => {
   const getUser = async () => {
     let auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH) ?? "{}";
     auth = JSON.parse(auth);
+    auth['level'] = await getUserLevelByNumber(auth['level']);
     setUser(auth);
   }
 
@@ -116,8 +118,17 @@ const UserDropdown = props => {
         onClick={handleDropdownOpen}
         sx={{ ml: 2, cursor: 'pointer' }}
         badgeContent={<BadgeContentSpan />}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
       >
-        <Icon fontSize='1.5rem' icon={'tabler:user'} onClick={handleDropdownOpen} />
+        <Avatar
+          alt='John Doe'
+          onClick={handleDropdownOpen}
+          sx={{ width: 40, height: 40 }}
+          src={user.profile_img}
+        />
       </Badge>
       <Menu
         anchorEl={anchorEl}
@@ -129,7 +140,7 @@ const UserDropdown = props => {
       >
         <Box sx={{ py: 1.75, px: 6 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {/* <Badge
+            <Badge
               overlap='circular'
               badgeContent={<BadgeContentSpan />}
               anchorOrigin={{
@@ -137,12 +148,11 @@ const UserDropdown = props => {
                 horizontal: 'right'
               }}
             >
-              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
-            </Badge> */}
-            <Icon fontSize='1.5rem' icon={'tabler:user'} onClick={handleDropdownOpen} />
+              <Avatar alt='John Doe' src={user.profile_img} sx={{ width: '2.5rem', height: '2.5rem' }} />
+            </Badge>
             <Box sx={{ display: 'flex', ml: 2.5, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 500 }}>{user?.user_name}</Typography>
-              <Typography variant='body2'>{user?.nick_name}</Typography>
+              <Typography variant='body2'>{user?.level}</Typography>
             </Box>
           </Box>
         </Box>

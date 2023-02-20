@@ -30,7 +30,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
-      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_square: true }),
+      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('보유포인트', 'point_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유스탬프', 'stamp_amt', 'number', ''),// 검색 level == 0일 경우에만
@@ -52,7 +52,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
-      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_square: true }),
+      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
@@ -75,7 +75,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
-      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_square: true }),
+      managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('상위아이디', 'group_id', 'text', ''),// 검색 level >=10 일시
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
