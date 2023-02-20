@@ -10,28 +10,23 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 
-const DialogForm = () => {
-  // ** State
-  const [open, setOpen] = useState(false)
-  const handleClickOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+const DialogForm = (props) => {
+  const { open, setOpen, handleClickOpen, handleClose, data, changePassword } = props;
 
   return (
     <Fragment>
-      <Button variant='outlined' onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
+        <DialogTitle id='form-dialog-title'>{data?.table} {data?.user_name} 비밀번호 변경</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 3 }}>
-            To subscribe to this website, please enter your email address here. We will send updates occasionally.
+            {'변경할 비밀번호를 입력해 주세요.'}
           </DialogContentText>
-          <TextField id='name' autoFocus fullWidth type='email' label='Email Address' />
+          <TextField sx={{ marginBottom: '12px' }} autoComplete='new-password' id='new-pw' autoFocus fullWidth type='password' label='새비밀번호' />
+          <TextField id='new-pw-check' autoComplete='new-password' fullWidth type='password' label='새비밀번호 확인' />
         </DialogContent>
         <DialogActions className='dialog-actions-dense'>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleClose}>취소</Button>
+          <Button onClick={changePassword}>저장</Button>
         </DialogActions>
       </Dialog>
     </Fragment>

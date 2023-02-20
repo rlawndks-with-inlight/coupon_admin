@@ -165,23 +165,30 @@ const ManagerUserEdit = (props) => {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label='비밀번호'
-                        placeholder='****'
-                        type={'password'}
-                        autoComplete={'new-password'}
-                        onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <Icon icon='tabler:lock' />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    </Grid>
+                    {editCategory == 'create' ?
+                      <>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label='비밀번호'
+                            placeholder='****'
+                            type={'password'}
+                            autoComplete={'new-password'}
+                            onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position='start'>
+                                  <Icon icon='tabler:lock' />
+                                </InputAdornment>
+                              )
+                            }}
+                          />
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
+
                     <Grid item xs={12}>
                       <TextField
                         fullWidth

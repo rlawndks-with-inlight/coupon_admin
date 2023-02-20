@@ -16,11 +16,12 @@ import CustomChip from 'src/@core/components/mui/chip'
 import Icon from 'src/@core/components/icon'
 import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from '@emotion/react'
 import Avatar from '@mui/material/Avatar'
-
-export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) => {
+import DialogForm from 'src/views/components/dialogs/DialogForm'
+import $ from 'jquery'
+export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, openChangePasswordPopUp) => {
   try {
     let result = "---";
 
@@ -114,6 +115,21 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel) =
       )
       if (is_excel) result = '---';
     }
+    if (column?.type == 'change_pw') {
+      result = (
+        <>
+          <Tooltip title='비밀번호변경'>
+            <IconButton
+              size='small'
+              sx={{ color: 'text.secondary' }}
+              onClick={() => { openChangePasswordPopUp(data) }}
+            >
+              <Icon icon='tabler:lock' />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+    }
 
     return result;
 
@@ -159,9 +175,43 @@ const TrManager = (props) => {
       toast.error(err?.response?.data?.message || err?.message);
     }
   }
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [popupData, setPopupData] = useState({});
+  const [changePasswordUser, setChangePasswordUser] = useState({});
+  const openChangePasswordPopUp = (data) => {
+    handleClickOpen();
+    setPopupData({ ...data, table: objDataGridColumns[router.query?.table]?.breadcrumb });
+  }
+  const changePassword = async () => {
+    try {
+      if ($('#new-pw').val() != $('#new-pw-check').val()) {
+        toast.error('비밀번호가 일치하지 않습니다.');
+        return;
+      }
+      const response = await axiosIns().put(`/api/v1/manager/users/${popupData?.id}/set-password`, {
+        new_user_pw: $('#new-pw').val()
+      })
+      console.log(response)
+    } catch (err) {
+      if (err?.response?.status == 401) {
+        router.push('/manager/login')
+      }
+      toast.error(err?.response?.data?.message || err?.message);
+    }
 
+  }
   return (
     <>
+      <DialogForm
+        open={open}
+        data={popupData}
+        setOpen={setOpen}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+        changePassword={changePassword}
+      />
       <TableRow
         key={index}
         className={`table-cell-hover-${theme.palette.mode}`}
@@ -175,7 +225,7 @@ const TrManager = (props) => {
                     maxWidth: '300px',
                     color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
                   }}>
-                  {getItemByType(post, col, router.query?.table, goTo, deleteItem)}
+                  {getItemByType(post, col, router.query?.table, goTo, deleteItem, false, openChangePasswordPopUp)}
                 </TableCell>
               </>
               :

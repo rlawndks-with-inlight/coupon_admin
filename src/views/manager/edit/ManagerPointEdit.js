@@ -131,7 +131,7 @@ const ManagerPointEdit = (props) => {
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                  <TextField fullWidth label='유저아이디(전화번호)' placeholder='유저아이디를 입력해 주세요.' className='user_name' onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
@@ -141,7 +141,14 @@ const ManagerPointEdit = (props) => {
                       id='form-layouts-tabs-select'
                       labelId='form-layouts-tabs-select-label'
                       className='mcht_id'
-                      onChange={handleChangeValue('mcht_id')}
+                      onChange={(e) => {
+                        for (var i = 0; i < mchtList.length; i++) {
+                          if (e.target.value == mchtList[i].id) {
+                            setValues({ ...values, mcht_id: e.target.value, point_rate: mchtList[i].point_rate });
+                            return;
+                          }
+                        }
+                      }}
                       defaultValue={values?.mcht_id ?? 0}
                       value={values?.mcht_id}
                     >

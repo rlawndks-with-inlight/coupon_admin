@@ -78,10 +78,10 @@ const TableHeader = props => {
 
 
   useEffect(() => {
-    if ($('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
-      $('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').attr('style', 'padding: 8.5px 14px !important;');
+    if ($('.manager-table-header > .css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
+      $('.manager-table-header > .css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').attr('style', 'padding: 8.5px 14px !important;');
     }
-  }, [$('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()])
+  }, [$('.manager-table-header > .css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()])
   useEffect(() => {
     settings();
   }, [router.query?.table])
@@ -181,6 +181,7 @@ const TableHeader = props => {
             alignItems: 'center',
             rowGap: 2,
           }}
+          className='manager-table-header'
         >
           <div style={{ marginRight: '1rem' }} >
             <DatePicker

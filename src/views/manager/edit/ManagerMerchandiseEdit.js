@@ -69,7 +69,6 @@ const ManagerMerchandiseEdit = (props) => {
   const [values, setValues] = useState(defaultObj)
   useEffect(() => {
     settingPage();
-    getOneItem();
   }, [])
 
   const settingPage = async () => {
@@ -80,7 +79,9 @@ const ManagerMerchandiseEdit = (props) => {
         user_list[i]['group_id'] = user_list[i]['id'];
       }
       setUserList(user_list);
-      setValues({ ...values, 'group_id': user_list[0]?.group_id });
+      let obj = await getOneItem();
+      console.log(obj)
+      setValues({ ...obj });
     } catch (err) {
       console.log(err);
     }
@@ -88,19 +89,26 @@ const ManagerMerchandiseEdit = (props) => {
 
   const getOneItem = async () => {
     let item = await getItem();
+    let obj = {};
+
     if (item) {
+      console.log(1)
+
       setBDt(new Date(item?.birth_date));
-      let obj = {};
       for (var i = 0; i < Object.keys(values).length; i++) {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
       setValues({ ...obj });
     } else {
+      console.log(2)
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
-      setValues({ ...values, ['point_flag']: dns_data?.point_flag, ['point_rate']: dns_data?.point_rate, ['stamp_flag']: dns_data?.stamp_flag, ['stamp_save_count']: dns_data?.stamp_save_count });
+      console.log(dns_data)
+      obj = { ...values, point_flag: dns_data?.point_flag, point_rate: dns_data?.point_rate, stamp_flag: dns_data?.stamp_flag, stamp_save_count: dns_data?.stamp_save_count };
+      setValues({ ...obj });
     }
+    return obj;
   }
 
   const handleTabsChange = (event, newValue) => {
@@ -194,9 +202,16 @@ const ManagerMerchandiseEdit = (props) => {
                     <Grid item xs={12}>
                       <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='유저 패스워드' placeholder='유저 패스워드를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
-                    </Grid>
+                    {editCategory == 'create' ?
+                      <>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='유저 비밀번호' placeholder='유저 비밀번호를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
+
                     <Grid item xs={12}>
                       <TextField fullWidth label='유저명' placeholder='유저명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
                     </Grid>
@@ -245,7 +260,7 @@ const ManagerMerchandiseEdit = (props) => {
                       labelId='form-layouts-tabs-select-label'
                       className='stamp_flag'
                       onChange={handleChangeValue('stamp_flag')}
-                      defaultValue={values?.stamp_flag ?? 0}
+                      defaultValue={values?.stamp_flag}
                       value={values?.stamp_flag}
                     >
                       <MenuItem value='0'>사용안함</MenuItem>
@@ -262,7 +277,7 @@ const ManagerMerchandiseEdit = (props) => {
                       labelId='form-layouts-tabs-select-label'
                       className='point_flag'
                       onChange={handleChangeValue('point_flag')}
-                      defaultValue={values?.point_flag ?? 0}
+                      defaultValue={values?.point_flag}
                       value={values?.point_flag}
                     >
                       <MenuItem value='0'>사용안함</MenuItem>

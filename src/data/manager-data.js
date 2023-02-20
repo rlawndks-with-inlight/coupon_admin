@@ -38,6 +38,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
+      managerListFormat('비밀번호변경', 'change_pw', 'change_pw', ''),
     ],
     table_width: '',
     default_search_obj: {}
@@ -58,6 +59,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
+      managerListFormat('비밀번호변경', 'change_pw', 'change_pw', ''),
     ],
     table_width: '',
     default_search_obj: {}
@@ -88,6 +90,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
+      managerListFormat('비밀번호변경', 'change_pw', 'change_pw', ''),
     ],
     table_width: '150%',
     default_search_obj: {}
