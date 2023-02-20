@@ -99,7 +99,7 @@ export const getDomain = () => {
 export const excelDownload = async (excelData, objDataGridColumns, param_table) => {
   const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const excelFileExtension = '.xlsx';
-  const excelFileName = param_table;
+  const excelFileName = `${param_table}_${returnMoment().substring(0, 10).replaceAll('-', '')}`;
   let ignore_name_list = ['맨위로', '수정', '삭제', '관리'];
   let name_list = [];
   let column_list = [];
@@ -113,7 +113,7 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   dns_data = JSON.parse(dns_data);
 
   const ws = XLSX.utils.aoa_to_sheet([
-    [dns_data?.name]
+    [`${param_table}_${returnMoment().substring(0, 10).replaceAll('-', '')}`]
     , []
     , name_list
   ]);
