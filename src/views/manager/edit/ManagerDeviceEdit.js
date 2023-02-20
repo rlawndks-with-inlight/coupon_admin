@@ -54,7 +54,6 @@ const ManagerDeviceEdit = (props) => {
       user = JSON.parse(user);
 
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
-      console.log(response)
       let mcht_list = [...response?.data?.mcht_id];
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];

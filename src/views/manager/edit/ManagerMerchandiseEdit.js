@@ -75,7 +75,6 @@ const ManagerMerchandiseEdit = (props) => {
   const settingPage = async () => {
     try {
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=0`);
-      console.log(response)
       let user_list = [...response?.data?.user_id?.agencys, ...response?.data?.user_id?.branchs, ...response?.data?.user_id?.dists];
       for (var i = 0; i < user_list.length; i++) {
         user_list[i]['group_id'] = user_list[i]['id'];
@@ -91,7 +90,6 @@ const ManagerMerchandiseEdit = (props) => {
     let item = await getItem();
     if (item) {
       setBDt(new Date(item?.birth_date));
-      console.log(item)
       let obj = {};
       for (var i = 0; i < Object.keys(values).length; i++) {
         let key = Object.keys(values)[i];
@@ -176,7 +174,6 @@ const ManagerMerchandiseEdit = (props) => {
                         onChange={async (date) => {
                           try {
                             setBDt(date);
-                            console.log(date)
                             handleChange('birth_date', returnMoment(false, date).substring(0, 10));
                           } catch (err) {
                             console.log(err);

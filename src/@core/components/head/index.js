@@ -1,5 +1,3 @@
-'use client';
-import { useRouter } from "next/navigation";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 
@@ -12,11 +10,11 @@ const HeadContent = () => {
 
   const getDnsData = async () => {
     let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    console.log(dns_data)
   }
 
   return (
     <>
+
       <title>{`comagain`}</title>
       <meta
         name='description'

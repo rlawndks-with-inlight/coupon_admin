@@ -31,8 +31,6 @@ const FileUploaderSingle = (props) => {
 
   const setImg = async () => {
     try {
-      console.log(className)
-      console.log(typeof value)
       if (typeof value == 'object') {
         setFiles((value ? value : []).map(file => Object.assign(file)))
       } else {

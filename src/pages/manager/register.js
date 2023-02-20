@@ -123,7 +123,6 @@ const RegisterV1 = () => {
 
   const onRegister = async () => {
     try {
-      console.log(values);
       if (values.user_pw != values.passwordCheck) {
         toast.error('비밀번호가 일치하지 않습니다.');
 

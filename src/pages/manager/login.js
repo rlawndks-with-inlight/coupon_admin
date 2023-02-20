@@ -103,7 +103,6 @@ const LoginV1 = () => {
           dns: location.hostname
         },
       });
-      console.log(response?.data)
       setLocalStorage(LOCALSTORAGE.DNS_DATA, response?.data);
       setDnsData(response?.data);
       if (response?.status == 200) {
@@ -112,7 +111,6 @@ const LoginV1 = () => {
         toast.error(response?.data?.statusText);
       }
       let is_appr = Number(response?.data?.is_appr);
-      console.log(is_appr)
 
       if (is_appr != 1) {
         router.push('/manager/register');

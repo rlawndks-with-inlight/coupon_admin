@@ -54,7 +54,6 @@ const OperatorSameDateLineBox = (props) => {
               onChange={async (e) => {
                 try {
                   setLoading(true)
-                  console.log(e.target.value)
                   let obj = await handleChange('level', e.target.value);
                   changePage(1, false, obj);
                 } catch (err) {
