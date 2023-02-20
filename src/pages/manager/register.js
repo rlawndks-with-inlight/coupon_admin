@@ -36,8 +36,9 @@ import AuthIllustrationV1Wrapper from 'src/views/pages/auth/AuthIllustrationV1Wr
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
-import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { setCookie } from 'src/@core/utils/react-cookie'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -62,8 +63,8 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const RegisterV1 = () => {
   // ** States
   const [values, setValues] = useState({
-    id: '',
-    password: '',
+    user_name: '',
+    user_pw: '',
     showPassword: false,
     passwordCheck: '',
     showPasswordCheck: false
@@ -107,10 +108,10 @@ const RegisterV1 = () => {
       });
       let is_appr = Number(response?.data?.is_appr);
 
-      // if (is_appr == 1) {
-      // router.push('/manager/login');
+      if (is_appr == 1) {
+        router.push('/manager/login');
 
-      // }
+      }
       setDnsData(response?.data);
       setLoading(false);
     } catch (err) {
@@ -123,13 +124,29 @@ const RegisterV1 = () => {
   const onRegister = async () => {
     try {
       console.log(values);
-      if (values.password != values.passwordCheck) {
+      if (values.user_pw != values.passwordCheck) {
         toast.error('비밀번호가 일치하지 않습니다.');
 
         return;
       }
+      let obj = { ...values };
+      obj['brand_id'] = dnsData?.id;
+      delete obj['showPassword'];
+      delete obj['passwordCheck'];
+      delete obj['showPasswordCheck'];
+      const response = await axiosIns().post('/api/v1/auth/sign-up/first', obj);
+      await setCookie('o', response?.data?.access_token, {
+        path: "/",
+        secure: true,
+        sameSite: "none",
+      });
+      if (response?.status == 200 && response?.data?.user) {
+        await setLocalStorage(LOCALSTORAGE.USER_AUTH, response?.data?.user);
+        router.push('/manager/users');
+      }
     } catch (err) {
-
+      console.log(err);
+      toast.error(err?.response?.data?.message || err?.message);
     }
 
   }
@@ -145,16 +162,16 @@ const RegisterV1 = () => {
             <Typography variant='h6' sx={{ mb: 1.5 }}>
               환영합니다 🚀
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>최초 접속으로 서비스를 운영햘 본사를 등록합니다.</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>최초 접속으로 서비스를 운영할 본사를 등록합니다.</Typography>
           </Box>
-          <TextField autoFocus fullWidth id='username' onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password').focus() : '' }} label='아이디' sx={{ mb: 4 }} />
+          <TextField autoFocus fullWidth id='user_name' onChange={handleChange('user_name')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password').focus() : '' }} label='아이디' sx={{ mb: 4 }} />
           <FormControl fullWidth sx={{ mb: 4 }}>
             <InputLabel htmlFor='auth-register-password'>비밀번호</InputLabel>
             <OutlinedInput
               label='비밀번호'
-              value={values.password}
+              value={values.user_pw}
               id='auth-register-password'
-              onChange={handleChange('password')}
+              onChange={handleChange('user_pw')}
               type={values.showPassword ? 'text' : 'password'}
               onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-register-password-check').focus() : '' }}
               endAdornment={
@@ -196,7 +213,7 @@ const RegisterV1 = () => {
           </FormControl>
           <div style={{ height: '42px' }} />
           <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 4 }} onClick={onRegister}>
-            Sign up
+            등록
           </Button>
         </CardContent>
       </Card>

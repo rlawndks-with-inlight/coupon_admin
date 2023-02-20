@@ -95,8 +95,8 @@ const LoginV1 = () => {
   }
 
   const checkDns = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
 
       const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
@@ -111,13 +111,11 @@ const LoginV1 = () => {
       } else {
         toast.error(response?.data?.statusText);
       }
-      if (response?.data?.is_appr) {
-        let is_appr = Number(response?.data?.is_appr);
+      let is_appr = Number(response?.data?.is_appr);
+      console.log(is_appr)
 
-        // if (is_appr != 1) {
-        //router.push('/manager/register');
-
-        // }
+      if (is_appr != 1) {
+        router.push('/manager/register');
       }
 
       // let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
@@ -125,7 +123,10 @@ const LoginV1 = () => {
       // if (user_auth?.id > 0) {
       //   // router.push('/manager/users')
       // }
-
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err?.message);
+    }
+    try {
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -136,11 +137,10 @@ const LoginV1 = () => {
       if (response_auth?.level > 0) {
         router.push('/manager/users');
       }
-      setLoading(false);
     } catch (err) {
-      toast.error(err?.response?.data?.message || err?.message);
-    }
 
+    }
+    setLoading(false);
   }
 
   const handleChange = prop => event => {
