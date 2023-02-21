@@ -29,7 +29,6 @@ import DialogAlert from "src/views/components/dialogs/DialogAlert";
 import TablePagination from '@mui/material/TablePagination'
 import { useTheme } from "@emotion/react";
 import HeadContent from "src/@core/components/head";
-
 const List = () => {
   const router = useRouter();
   const [params, setParams] = useState({});
@@ -112,10 +111,13 @@ const List = () => {
     } catch (err) {
       console.log(err)
       setPosts([]);
+      toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 401) {
         router.push('/manager/login')
       }
-      toast.error(err?.response?.data?.message || err?.message);
+      if (err?.response?.status == 403) {
+        router.back();
+      }
     }
   }
 

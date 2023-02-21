@@ -108,6 +108,16 @@ const UserDropdown = props => {
     } catch (err) {
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
+      if (err?.response?.status == 401) {
+        await deleteCookie('o');
+        await deleteLocalStorage(LOCALSTORAGE.USER_AUTH);
+        router.push('/manager/login');
+      }
+      if (err?.response?.status == 403) {
+        await deleteCookie('o');
+        await deleteLocalStorage(LOCALSTORAGE.USER_AUTH);
+        router.push('/manager/login');
+      }
     }
   }
 
