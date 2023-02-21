@@ -1,23 +1,17 @@
 import Head from "next/head";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useTheme } from "@emotion/react";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title } = props;
-  const router = useRouter();
-  const theme = useTheme();
   useEffect(() => {
     getDnsData();
-    console.log(theme)
   }, [])
 
   const getDnsData = async () => {
     let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    console.log(dns_data)
     setDnsData(dns_data);
   }
 

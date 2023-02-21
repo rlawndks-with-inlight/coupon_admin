@@ -50,6 +50,7 @@ import '../../styles/globals.css'
 import { useEffect } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import HeadContent from 'src/@core/components/head'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -81,7 +82,22 @@ const App = props => {
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-
+        <HeadContent />
+        {/* <Head>
+          <title>{dnsData.name ?? ""}</title>
+          <meta
+            name='description'
+            content={dnsData.og_description}
+          />
+          <link rel='shortcut icon' href={dnsData.favicon_img} />
+          <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
+          <meta name='viewport' content='initial-scale=1, width=device-width' />
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={dnsData.name} />
+          <meta property="og:image" content={dnsData.og_img} />
+          <meta property="og:description" content={dnsData.og_description} />
+        </Head> */}
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
             {({ settings }) => {
