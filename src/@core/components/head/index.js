@@ -3,18 +3,21 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTheme } from "@emotion/react";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title } = props;
   const router = useRouter();
-
+  const theme = useTheme();
   useEffect(() => {
     getDnsData();
+    console.log(theme)
   }, [])
 
   const getDnsData = async () => {
     let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
+    console.log(dns_data)
     setDnsData(dns_data);
   }
 
@@ -41,7 +44,6 @@ const HeadContent = (props) => {
         <meta name="apple-mobile-web-app-title" content={dnsData.name} />
         {/* <meta name="theme-color" content="{{ $bk_clr }}"> <- 여기엔 테마색상 적용 */}
         <link rel="apple-touch-icon" sizes="180x180" href={dnsData.favicon_img} />
-        <link rel="shortcut icon" href={dnsData.favicon_img} type="image/x-icon" />
       </Head>
     </>
   )
