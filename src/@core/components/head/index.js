@@ -28,7 +28,6 @@ const HeadContent = (props) => {
       console.log(err);
     }
   }
-
   return (
     <>
       <Head>

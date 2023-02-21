@@ -82,7 +82,7 @@ const App = props => {
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        <HeadContent />
+        {/* <HeadContent /> */}
         {/* <Head>
           <title>{dnsData.name ?? ""}</title>
           <meta

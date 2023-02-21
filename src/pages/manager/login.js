@@ -63,7 +63,8 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   }
 }))
 
-const LoginV1 = () => {
+const Login = ({ data }) => {
+  console.log(data)
   // ** State
   const [values, setValues] = useState({
     id: '',
@@ -283,6 +284,13 @@ const LoginV1 = () => {
     </>
   )
 }
-LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
-export default LoginV1
+Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
+export async function getStaticProps() {
+  return {
+    props: {
+      data: 'asd'/* data that you fetched */
+    }
+  }
+}
+export default Login
