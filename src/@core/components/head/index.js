@@ -30,6 +30,7 @@ const HeadContent = (props) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={dnsData.name} />
         <meta property="og:image" content={dnsData.og_img} />
+        <meta property="og:url" content={'https://' + dnsData.dns} />
         <meta property="og:description" content={dnsData.og_description} />
         <meta name="author" content="purplevery" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
