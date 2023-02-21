@@ -135,8 +135,10 @@ const List = () => {
     await excelDownload(response?.data?.content ?? [], objDataGridColumns, router.query?.table);
   }
 
+
   return (
     <>
+
       <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
@@ -160,6 +162,7 @@ const List = () => {
               </>
               :
               <>
+
                 <TableManager
                   param_table={router.query?.table}//uri 에 사용할 것
                   table={objDataGridColumns[router.query?.table]?.table}//ajax에 사용할 것

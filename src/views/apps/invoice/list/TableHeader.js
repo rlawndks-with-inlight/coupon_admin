@@ -27,8 +27,10 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import DeviceSameDateLineBox from './same-date-line/DeviceSameDateLineBox'
 import PointSameDateLineBox from './same-date-line/PointSameDateLineBox'
 import OperatorSameDateLineBox from './same-date-line/OperatorSameDateLineBox'
-import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import DialogSearchOption from 'src/views/components/dialogs/DialogSearchOption'
+import { toast } from 'react-hot-toast'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -166,9 +168,38 @@ const TableHeader = props => {
     return false;
   }
 
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const openSearchOption = async () => {
+    await handleClickOpen();
+  }
+  const saveSearchOption = async () => {
+    let not_search_options = [];
+    for (var i = 0; i < objDataGridColumns[router.query?.table].columns.length; i++) {
+      console.log(objDataGridColumns[router.query?.table].columns[i]?.column)
+      if (!$(`input:checkbox[name=${objDataGridColumns[router.query?.table].columns[i]?.column}]`).is(":checked")) {
+        not_search_options.push(objDataGridColumns[router.query?.table].columns[i]?.column);
+      }
+    }
+    let not_search_option = await getLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION);
+    not_search_option = JSON.parse(not_search_option) ?? {};
+    not_search_option[router.query?.table] = not_search_options;
+    await setLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION, not_search_option);
+    handleClose();
+    toast.success("성공적으로 저장 되었습니다.")
+  }
   return (
     <>
-
+      <DialogSearchOption
+        open={open}
+        data={objDataGridColumns[router.query?.table]}
+        setOpen={setOpen}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+        saveSearchOption={saveSearchOption}
+        param_table={router.query?.table}
+      />
       {/* {optionBox(router.query?.table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj)} */}
       <DatePickerWrapper>
         <Box
@@ -282,7 +313,7 @@ const TableHeader = props => {
             <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(90) }}>
               3개월
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { }}>
+            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={openSearchOption}>
               검색옵션
             </Button>
           </Box>

@@ -111,6 +111,21 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, o
               <Icon icon='tabler:trash' />
             </IconButton>
           </Tooltip>
+          {column?.column == 'edit_ch' ?
+            <>
+              <Tooltip title='비밀번호변경'>
+                <IconButton
+                  size='small'
+                  sx={{ color: 'text.secondary' }}
+                  onClick={() => { openChangePasswordPopUp(data) }}
+                >
+                  <Icon icon='tabler:lock' />
+                </IconButton>
+              </Tooltip>
+            </>
+            :
+            <>
+            </>}
         </>
       )
       if (is_excel) result = '---';
