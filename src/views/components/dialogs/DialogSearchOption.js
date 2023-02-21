@@ -29,15 +29,21 @@ const DialogSearchOption = (props) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     initialCheck();
-  }, [open])
+  }, [param_table, open])
+
   const initialCheck = async () => {
     setLoading(true);
     let not_search_option = await getLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION);
     not_search_option = JSON.parse(not_search_option) ?? {};
     not_search_option = not_search_option[param_table] ?? [];
-    setNotSearchOptions(not_search_option);
-    setLoading(false);
+    not_search_option.push('&A%D#A%^D$A&^D&F^A')
+    await setNotSearchOptions(not_search_option);
   }
+  useEffect(() => {
+    if (notSearchOptions.length > 0) {
+      setLoading(false);
+    }
+  }, [notSearchOptions])
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -46,19 +52,20 @@ const DialogSearchOption = (props) => {
           <DialogContentText sx={{ mb: 3 }}>
             {'설정할 옵션을 체크해 주세요.'}
           </DialogContentText>
-          <FormGroup row sx={{ maxWidth: '425px' }} ref={checkRef}>
-            {loading ?
-              <>
-              </>
-              :
-              <>
+          {loading ?
+            <>
+            </>
+            :
+            <>
+              <FormGroup row sx={{ maxWidth: '425px' }} ref={checkRef}>
                 {data?.columns && data?.columns.map((item, idx) => (
                   <>
                     <FormControlLabel label={item?.title} sx={{ margin: 0, width: '200px' }} control={<Checkbox defaultChecked={!notSearchOptions.includes(item?.column)} name={item?.column} />} />
                   </>
                 ))}
-              </>}
-          </FormGroup>
+              </FormGroup>
+            </>}
+
         </DialogContent>
         <DialogActions className='dialog-actions-dense'>
           <Button onClick={handleClose}>취소</Button>

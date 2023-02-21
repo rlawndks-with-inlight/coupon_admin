@@ -40,7 +40,7 @@ const List = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const page_size_list = [10, 20, 25, 50, 100];
-
+  const [notSearchOptions, setNotSearchOptions] = useState([]);
   const theme = useTheme()
   const { direction } = theme
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
@@ -64,7 +64,9 @@ const List = () => {
     setParams(router?.query);
 
   }, [router?.query?.table])
+  const changeNotSearchOption = () => {
 
+  }
   const handleChange = async (field, value) => {
     setSearchObj({ ...searchObj, [field]: value });
 

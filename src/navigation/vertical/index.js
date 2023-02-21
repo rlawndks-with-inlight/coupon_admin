@@ -614,14 +614,8 @@ const template_navigation = [
 
 const project_navigation = [
   {
-    title: '브랜드관리',
-    icon: 'tabler:layout-grid',
-    path: '/manager/brands',
-    level: 40
-  },
-  {
     title: '오퍼레이터관리',
-    icon: 'tabler:user',
+    icon: 'tabler:affiliate',
     level: 50,
     children: [
       {
@@ -632,10 +626,27 @@ const project_navigation = [
     ]
   },
   {
-    title: '광고관리',
-    icon: 'tabler:ad',
-    path: '/manager/advertisements',
-    level: 10
+    title: '브랜드관리',
+    icon: 'ph-buildings',
+    path: '/manager/brands',
+    level: 40
+  },
+  {
+    title: '가맹점관리',
+    icon: 'tabler:map-pin',
+    level: 10,
+    children: [
+      {
+        title: '가맹점관리',
+        path: '/manager/merchandises',
+        level: 10
+      },
+      {
+        title: '장비관리',
+        path: '/manager/devices',
+        level: 10
+      },
+    ]
   },
   {
     title: '유저관리',
@@ -655,25 +666,14 @@ const project_navigation = [
     ]
   },
   {
-    title: '가맹점관리',
-    icon: 'tabler:user',
-    level: 10,
-    children: [
-      {
-        title: '가맹점관리',
-        path: '/manager/merchandises',
-        level: 10
-      },
-      {
-        title: '장비관리',
-        path: '/manager/devices',
-        level: 10
-      },
-    ]
+    title: '광고관리',
+    icon: 'tabler:ad',
+    path: '/manager/advertisements',
+    level: 10
   },
   {
     title: '게시판관리',
-    icon: 'tabler:table',
+    icon: 'tabler:news',
     level: 10,
     children: [
       {
