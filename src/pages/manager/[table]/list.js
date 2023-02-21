@@ -96,7 +96,6 @@ const List = () => {
       list: not_search_options,
       head_columns: head_columns
     }
-    console.log(not_search_options)
     setNotSearchOption(not_search_options);
     setLoading(false);
   }
