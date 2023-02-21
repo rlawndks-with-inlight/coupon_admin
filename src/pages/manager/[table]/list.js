@@ -29,6 +29,8 @@ import DialogAlert from "src/views/components/dialogs/DialogAlert";
 import TablePagination from '@mui/material/TablePagination'
 import { useTheme } from "@emotion/react";
 import HeadContent from "src/@core/components/head";
+import { getLocalStorage } from "src/@core/utils/local-storage";
+import { LOCALSTORAGE } from "src/data/data";
 const List = () => {
   const router = useRouter();
   const [params, setParams] = useState({});
@@ -40,7 +42,8 @@ const List = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const page_size_list = [10, 20, 25, 50, 100];
-  const [notSearchOptions, setNotSearchOptions] = useState([]);
+  const [notSearchOption, setNotSearchOption] = useState({});
+
   const theme = useTheme()
   const { direction } = theme
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
@@ -62,10 +65,40 @@ const List = () => {
     //   router.back();
     // }
     setParams(router?.query);
-
   }, [router?.query?.table])
-  const changeNotSearchOption = () => {
+  const changeNotSearchOption = async () => {
+    setLoading(true);
+    let not_search_options = await getLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION);
+    not_search_options = JSON.parse(not_search_options) ?? {};
+    not_search_options = not_search_options[router.query?.table] ?? [];
+    let head_columns = [];
+    if (objDataGridColumns[router.query?.table]?.head_columns) {
+      for (var i = 0; i < objDataGridColumns[router.query?.table]?.head_columns.length; i++) {
+        head_columns.push(0);
+      }
+    }
 
+    for (var i = 0; i < not_search_options.length; i++) {
+      let idx = objDataGridColumns[router.query?.table].columns.findIndex((e) => e.column == not_search_options[i]);
+      if (objDataGridColumns[router.query?.table]?.head_columns) {
+        let head_size = 0;
+        for (var j = 0; j < objDataGridColumns[router.query?.table].head_columns.length; j++) {
+          head_size += objDataGridColumns[router.query?.table].head_columns[j]?.size ?? 0;
+          if (head_size > idx) {
+            head_columns[j]++;
+            break;
+          }
+        }
+      }
+
+    }
+    not_search_options = {
+      list: not_search_options,
+      head_columns: head_columns
+    }
+    console.log(not_search_options)
+    setNotSearchOption(not_search_options);
+    setLoading(false);
   }
   const handleChange = async (field, value) => {
     setSearchObj({ ...searchObj, [field]: value });
@@ -109,6 +142,7 @@ const List = () => {
       setMaxPage(max_page);
       setTotalCount(response?.data?.total);
       setPosts(response?.data?.content ?? []);
+      changeNotSearchOption();
       setLoading(false);
     } catch (err) {
       console.log(err)
@@ -156,6 +190,8 @@ const List = () => {
               page_size_list={page_size_list}
               exportExcel={exportExcel}
               popperPlacement={popperPlacement}
+              changeNotSearchOption={changeNotSearchOption}
+              notSearchOption={notSearchOption}
             />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?
@@ -173,6 +209,7 @@ const List = () => {
                   columns={objDataGridColumns[router.query?.table]?.columns}
                   changePage={changePage}
                   page={page}
+                  notSearchOption={notSearchOption}
                 />
               </>}
             <Box

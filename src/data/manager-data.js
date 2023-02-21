@@ -52,6 +52,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('유저레벨', 'level', 'user_level', ''),

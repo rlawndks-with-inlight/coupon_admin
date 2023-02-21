@@ -45,7 +45,7 @@ const isShowCell = (param_table, col, search_obj) => {
 }
 
 const TableManager = (props) => {
-  const { param_table, posts, columns, changePage, page, searchObj } = props;
+  const { param_table, posts, columns, changePage, page, searchObj, notSearchOption } = props;
 
   const theme = useTheme();
   useEffect(() => {
@@ -62,6 +62,7 @@ const TableManager = (props) => {
         page={page}
         isShowCell={isShowCell}
         searchObj={searchObj}
+        notSearchOption={notSearchOption}
       />
     )
   }, [])
@@ -82,7 +83,7 @@ const TableManager = (props) => {
                 {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.map((item, idx) => (
                   <>
                     <TableCell align='center'
-                      colSpan={item?.size}
+                      colSpan={item?.size - (notSearchOption['head_columns'][idx] ?? 0)}
                       sx={{
                         position: 'relative'
                       }}>
@@ -117,29 +118,35 @@ const TableManager = (props) => {
             }}>
             {columns && columns.map((col, idx) => (
               <>
+                {notSearchOption['list'] && !notSearchOption['list'].includes(col?.column) ?
+                  <>
+                    <TableCell align='left'
+                      sx={{
+                        maxWidth: '300px',
+                        position: 'relative'
+                      }}>
+                      <div style={{
+                        position: 'absolute',
+                        width: '2px',
+                        height: '100%',
+                        display: 'flex',
+                        left: '0',
+                        top: '0'
+                      }}>
+                        <div style={{
+                          width: '2px',
+                          height: '14px',
+                          margin: 'auto 0',
+                          background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                        }} />
+                      </div>
+                      {col?.title}
+                    </TableCell>
+                  </>
+                  :
+                  <>
+                  </>}
 
-                <TableCell align='left'
-                  sx={{
-                    maxWidth: '300px',
-                    position: 'relative'
-                  }}>
-                  <div style={{
-                    position: 'absolute',
-                    width: '2px',
-                    height: '100%',
-                    display: 'flex',
-                    left: '0',
-                    top: '0'
-                  }}>
-                    <div style={{
-                      width: '2px',
-                      height: '14px',
-                      margin: 'auto 0',
-                      background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
-                    }} />
-                  </div>
-                  {col?.title}
-                </TableCell>
               </>
             ))
             }

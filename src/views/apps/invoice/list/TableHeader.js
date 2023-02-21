@@ -70,7 +70,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
 
 const TableHeader = props => {
   // ** Props
-  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement } = props
+  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption } = props
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
   const [addSearchOption, setAddSearchOption] = useState({});
@@ -187,7 +187,8 @@ const TableHeader = props => {
     not_search_option[router.query?.table] = not_search_options;
     await setLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION, not_search_option);
     handleClose();
-    toast.success("성공적으로 저장 되었습니다.")
+    toast.success("성공적으로 저장 되었습니다.");
+    changeNotSearchOption();
   }
   return (
     <>

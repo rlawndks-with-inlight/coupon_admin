@@ -157,7 +157,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, o
 }
 
 const TrManager = (props) => {
-  const { post, index, columns, changePage, page, isShowCell, searchObj } = props;
+  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption } = props;
   const router = useRouter();
   const theme = useTheme();
 
@@ -233,7 +233,10 @@ const TrManager = (props) => {
       >
         {columns && columns.map((col, idx) => (
           <>
-            {isShowCell(router.query?.table, col, searchObj) ?
+            {notSearchOption['list'] && notSearchOption['list'].includes(col?.column) ?
+              <>
+              </>
+              :
               <>
                 <TableCell align='left'
                   style={{
@@ -242,9 +245,6 @@ const TrManager = (props) => {
                   }}>
                   {getItemByType(post, col, router.query?.table, goTo, deleteItem, false, openChangePasswordPopUp)}
                 </TableCell>
-              </>
-              :
-              <>
               </>}
           </>
         ))}
