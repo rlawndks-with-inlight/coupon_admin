@@ -2,6 +2,7 @@ import Head from "next/head";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { useEffect, useState } from "react";
+import { axiosIns } from "src/@fake-db/backend";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title } = props;
@@ -12,7 +13,16 @@ const HeadContent = (props) => {
   const getDnsData = async () => {
     let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    setDnsData(dns_data);
+    if (!dns_data?.name) {
+      const response = await axiosIns().options('/api/v1/auth/domain', {
+        data: {
+          dns: location.hostname
+        },
+      });
+      setDnsData(response?.data);
+    } else {
+      setDnsData(dns_data);
+    }
   }
 
   return (
