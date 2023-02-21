@@ -60,7 +60,7 @@ const DialogSearchOption = (props) => {
               <FormGroup row sx={{ maxWidth: '425px' }} ref={checkRef}>
                 {data?.columns && data?.columns.map((item, idx) => (
                   <>
-                    <FormControlLabel label={item?.title} sx={{ margin: 0, width: '200px' }} control={<Checkbox defaultChecked={!notSearchOptions.includes(item?.column)} name={item?.column} />} />
+                    <FormControlLabel label={(item?.type_option?.search_option_label ?? "") + item?.title} sx={{ margin: 0, width: '200px' }} control={<Checkbox defaultChecked={!notSearchOptions.includes(item?.column)} name={item?.column} />} />
                   </>
                 ))}
               </FormGroup>

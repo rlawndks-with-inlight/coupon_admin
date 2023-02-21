@@ -36,8 +36,6 @@ import themeConfig from 'src/configs/themeConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
-import AuthIllustrationV1Wrapper from 'src/views/pages/auth/AuthIllustrationV1Wrapper'
-import AnalyticsDashboard from '../dashboards/analytics'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'

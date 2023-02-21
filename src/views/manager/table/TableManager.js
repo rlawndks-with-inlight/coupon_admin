@@ -83,7 +83,7 @@ const TableManager = (props) => {
                 {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.map((item, idx) => (
                   <>
                     <TableCell align='center'
-                      colSpan={item?.size - (notSearchOption['head_columns'][idx] ?? 0)}
+                      colSpan={notSearchOption['head_columns'] && (item?.size - (notSearchOption['head_columns'][idx] ?? 0))}
                       sx={{
                         position: 'relative'
                       }}>
