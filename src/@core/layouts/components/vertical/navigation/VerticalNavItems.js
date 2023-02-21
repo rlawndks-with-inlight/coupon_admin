@@ -16,18 +16,32 @@ const VerticalNavItems = props => {
   // ** Props
   const { verticalNavItems } = props
   const [userData, setUserData] = useState({});
+  const [dnsData, setDnsData] = useState({});
   const [navItems, setNavItems] = useState([]);
   useEffect(() => {
     getUserData();
   }, [])
   const getUserData = async () => {
+    let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    setDnsData(dns_data);
     let user_data = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
     user_data = JSON.parse(user_data);
     setUserData(user_data);
   }
+  const settingItems = (item) => {
+    // if (item?.title == '오퍼레이터관리' && window.location.hostname != 'team.comagain.kr') {
+    //   return false;
+    // }
+    if (userData?.level >= item?.level) {
+      return true;
+    } else {
+      return false
+    }
+  }
   const RenderMenuItems = (userData && userData.id && verticalNavItems?.map((item, index) => {
     const TagName = resolveNavItemComponent(item, userData)
-    if (userData?.level >= item?.level) {
+    if (settingItems(item)) {
       return <TagName {...props} key={index} item={item} />
     }
   }))

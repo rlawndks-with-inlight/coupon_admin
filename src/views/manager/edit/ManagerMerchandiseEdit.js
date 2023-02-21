@@ -80,7 +80,6 @@ const ManagerMerchandiseEdit = (props) => {
       }
       setUserList(user_list);
       let obj = await getOneItem();
-      console.log(obj)
       setValues({ ...obj });
     } catch (err) {
       console.log(err);
@@ -90,10 +89,7 @@ const ManagerMerchandiseEdit = (props) => {
   const getOneItem = async () => {
     let item = await getItem();
     let obj = {};
-
     if (item) {
-      console.log(1)
-
       setBDt(new Date(item?.birth_date));
       for (var i = 0; i < Object.keys(values).length; i++) {
         let key = Object.keys(values)[i];
@@ -101,10 +97,8 @@ const ManagerMerchandiseEdit = (props) => {
       }
       setValues({ ...obj });
     } else {
-      console.log(2)
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
-      console.log(dns_data)
       obj = { ...values, point_flag: dns_data?.point_flag, point_rate: dns_data?.point_rate, stamp_flag: dns_data?.stamp_flag, stamp_save_count: dns_data?.stamp_save_count };
       setValues({ ...obj });
     }

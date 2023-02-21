@@ -177,7 +177,6 @@ const TableHeader = props => {
   const saveSearchOption = async () => {
     let not_search_options = [];
     for (var i = 0; i < objDataGridColumns[router.query?.table].columns.length; i++) {
-      console.log(objDataGridColumns[router.query?.table].columns[i]?.column)
       if (!$(`input:checkbox[name=${objDataGridColumns[router.query?.table].columns[i]?.column}]`).is(":checked")) {
         not_search_options.push(objDataGridColumns[router.query?.table].columns[i]?.column);
       }

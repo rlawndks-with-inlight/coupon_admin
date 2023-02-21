@@ -208,7 +208,6 @@ const TrManager = (props) => {
       const response = await axiosIns().put(`/api/v1/manager/users/${popupData?.id}/set-password`, {
         new_user_pw: $('#new-pw').val()
       })
-      console.log(response)
     } catch (err) {
       if (err?.response?.status == 401) {
         router.push('/manager/login')

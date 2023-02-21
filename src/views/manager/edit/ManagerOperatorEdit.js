@@ -28,6 +28,7 @@ import DatePicker from 'react-datepicker'
 //** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
+import { axiosIns } from 'src/@fake-db/backend'
 
 const ManagerOperatorEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory } = props;
@@ -35,9 +36,11 @@ const ManagerOperatorEdit = (props) => {
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
   const [bDt, setBDt] = useState(new Date())
   const defaultObj = {
     profile_img: undefined,
+    brand_id: brandList[0]?.id ?? 0,
     user_name: '',
     user_pw: '',
     nick_name: '',
@@ -56,41 +59,49 @@ const ManagerOperatorEdit = (props) => {
   }, [])
 
   const settingPage = async () => {
-    setLoading(true);
-    let user = await getLocalStorage('user_auth');
-    user = JSON.parse(user);
+    try {
+      setLoading(true);
+      const response = await axiosIns().get(`/api/v1/manager/brands?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
+      setBrandList(response?.data?.content);
+      let user = await getLocalStorage('user_auth');
+      user = JSON.parse(user);
 
-    let z_all_user = [
-      { level: 50, name: '개발사' },
-      { level: 45, name: '협력사' },
-      { level: 40, name: '본사' },
-      // { level: 30, name: '지사' },
-      // { level: 20, name: '총판' },
-      // { level: 15, name: '대리점' },
-      // { level: 10, name: '가맹점' },
-      // { level: 0, name: '일반유저' },
-    ];
-    let user_level_list = [];
-    for (var i = 0; i < z_all_user.length; i++) {
-      if (z_all_user[i].level <= user?.level) {
-        user_level_list.push(z_all_user[i]);
+      let z_all_user = [
+        { level: 50, name: '개발사' },
+        { level: 45, name: '협력사' },
+        { level: 40, name: '본사' },
+        // { level: 30, name: '지사' },
+        // { level: 20, name: '총판' },
+        // { level: 15, name: '대리점' },
+        // { level: 10, name: '가맹점' },
+        // { level: 0, name: '일반유저' },
+      ];
+      let user_level_list = [];
+      for (var i = 0; i < z_all_user.length; i++) {
+        if (z_all_user[i].level <= user?.level) {
+          user_level_list.push(z_all_user[i]);
+        }
       }
+      setValues({ ...values, 'level': user_level_list[0]?.level });
+      setUserLevelList(user_level_list);
+      let obj = await getOneItem();
+      setValues({ ...obj });
+    } catch (err) {
+      console.log(err);
     }
-    setValues({ ...values, 'level': user_level_list[0]?.level });
-    setUserLevelList(user_level_list);
   }
 
   const getOneItem = async () => {
     let item = await getItem();
+    let obj = {};
     if (item) {
       setBDt(new Date(item?.birth_date));
-      let obj = {};
       for (var i = 0; i < Object.keys(values).length; i++) {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
-      setValues({ ...obj });
     }
+    return obj;
   }
 
 
@@ -151,6 +162,25 @@ const ManagerOperatorEdit = (props) => {
                 <CardContent>
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>브랜드명</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='level'
+                          onChange={handleChangeValue('brand_id')}
+                          defaultValue={values?.brand_id}
+                          value={values?.brand_id}
+                        >
+                          {brandList && brandList.map((item, idx) => {
+                            return <MenuItem value={item?.id} key={idx}>{item?.name}</MenuItem>
+                          })}
+
+                        </Select>
+                      </FormControl>
+                    </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
