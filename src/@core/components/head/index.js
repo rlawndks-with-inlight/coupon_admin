@@ -11,17 +11,21 @@ const HeadContent = (props) => {
   }, [])
 
   const getDnsData = async () => {
-    let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
-    if (!dns_data?.name) {
-      const response = await axiosIns().options('/api/v1/auth/domain', {
-        data: {
-          dns: location.hostname
-        },
-      });
-      setDnsData(response?.data);
-    } else {
-      setDnsData(dns_data);
+    try {
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+      dns_data = JSON.parse(dns_data);
+      if (!dns_data?.name) {
+        const response = await axiosIns().options('/api/v1/auth/domain', {
+          data: {
+            dns: location.hostname
+          },
+        });
+        setDnsData(response?.data);
+      } else {
+        setDnsData(dns_data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
