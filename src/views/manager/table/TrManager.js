@@ -51,9 +51,9 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, o
 
       if (column?.type_option?.is_profile) {
         style = {
-          height: '64px', width: '64px'
+          height: '50px', width: '50px'
         }
-        result = <Avatar alt='John Doe' src={data[column?.column]} sx={{ ...style, borderRadius: 0 }} />
+        result = <Avatar alt='John Doe' src={data[column?.column]} sx={{ ...style, borderRadius: '50%' }} />
       }
 
       if (is_excel) result = data[column?.column];
