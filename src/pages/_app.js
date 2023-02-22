@@ -70,7 +70,7 @@ if (themeConfig.routingLoader) {
 
 // ** Configure JSS & ClassName
 const App = props => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
 
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
@@ -82,7 +82,7 @@ const App = props => {
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        {/* <HeadContent dns_data={dns_data} /> */}
+        <HeadContent dns_data={dns_data} />
         {/* <Head>
           <title>{dnsData.name ?? ""}</title>
           <meta
@@ -119,13 +119,18 @@ const App = props => {
   )
 }
 App.getInitialProps = async ({ Component, ctx }) => {
-  let pageProps = {}
-  if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx)
+  console.log(ctx.req.headers.host)
+  try {
+    const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      dns_data: {}
+    }
   }
-
-  pageProps = { ...pageProps }
-
-  return { pageProps }
 }
 export default App

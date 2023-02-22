@@ -157,7 +157,7 @@ const Edit = ({ dns_data }) => {
   }
   return (
     <>
-      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} dns_data={dns_data} />
+      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} dns_data={dns_data} /> */}
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({
@@ -181,18 +181,18 @@ const Edit = ({ dns_data }) => {
 
   )
 }
-Edit.getInitialProps = async ({ req, res }) => {
-  try {
-    const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
-    const json = await res.json();
-    return {
-      dns_data: json
-    }
-  } catch (err) {
-    console.log(err);
-    return {
-      dns_data: {}
-    }
-  }
-}
+// Edit.getInitialProps = async ({ req, res }) => {
+//   try {
+//     const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
+//     const json = await res.json();
+//     return {
+//       dns_data: json
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     return {
+//       dns_data: {}
+//     }
+//   }
+// }
 export default Edit
