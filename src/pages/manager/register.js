@@ -40,6 +40,7 @@ import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import { setCookie } from 'src/@core/utils/react-cookie'
 import HeadContent from 'src/@core/components/head'
+import DialogCongraturation from 'src/views/components/dialogs/DialogCongraturation'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -142,7 +143,7 @@ const RegisterV1 = ({ dns_data }) => {
       });
       if (response?.status == 200 && response?.data?.user) {
         await setLocalStorage(LOCALSTORAGE.USER_AUTH, response?.data?.user);
-        router.push('/manager/users');
+        handleClickOpen();
       }
     } catch (err) {
       console.log(err);
@@ -150,9 +151,25 @@ const RegisterV1 = ({ dns_data }) => {
     }
 
   }
-
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const openSearchOption = async () => {
+    await handleClickOpen();
+  }
+  const goToManagerPage = () => {
+    handleClose();
+    router.push('/manager/users');
+  }
   return (
     <>
+      <DialogCongraturation
+        open={open}
+        setOpen={setOpen}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+        goToManagerPage={goToManagerPage}
+      />
       <Box className='content-center'>
         <Card>
           <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
