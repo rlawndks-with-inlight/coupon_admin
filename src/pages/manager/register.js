@@ -153,7 +153,7 @@ const RegisterV1 = () => {
 
   return (
     <>
-      <HeadContent title={'등록'} />
+      {/* <HeadContent title={'등록'} /> */}
       <Box className='content-center'>
         <Card>
           <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
