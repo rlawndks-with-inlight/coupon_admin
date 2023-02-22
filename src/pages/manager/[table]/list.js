@@ -31,7 +31,7 @@ import { useTheme } from "@emotion/react";
 import HeadContent from "src/@core/components/head";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
-const List = () => {
+const List = ({ dns_data }) => {
   const router = useRouter();
   const [params, setParams] = useState({});
   const [page, setPage] = useState(1);
@@ -174,7 +174,7 @@ const List = () => {
   return (
     <>
 
-      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} /> */}
+      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} dns_data={dns_data} />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
@@ -286,5 +286,18 @@ const List = () => {
     </>
   )
 }
-
+List.getInitialProps = async ({ req, res }) => {
+  try {
+    const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      dns_data: {}
+    }
+  }
+}
 export default List;

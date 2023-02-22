@@ -52,7 +52,7 @@ import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdi
 import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
 import HeadContent from 'src/@core/components/head'
 
-const Edit = () => {
+const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
     posts: {}
   })
@@ -157,7 +157,7 @@ const Edit = () => {
   }
   return (
     <>
-      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} /> */}
+      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} dns_data={dns_data} />
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({
@@ -181,5 +181,18 @@ const Edit = () => {
 
   )
 }
-
+Edit.getInitialProps = async ({ req, res }) => {
+  try {
+    const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      dns_data: {}
+    }
+  }
+}
 export default Edit

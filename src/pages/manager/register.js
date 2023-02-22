@@ -61,7 +61,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   }
 }))
 
-const RegisterV1 = () => {
+const RegisterV1 = ({ dns_data }) => {
   // ** States
   const [values, setValues] = useState({
     user_name: '',
@@ -153,7 +153,7 @@ const RegisterV1 = () => {
 
   return (
     <>
-      {/* <HeadContent title={'등록'} /> */}
+      <HeadContent title={'등록'} dns_data={dns_data} />
       <Box className='content-center'>
         <Card>
           <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
@@ -222,6 +222,17 @@ const RegisterV1 = () => {
       </Box>
     </>
   )
+}
+RegisterV1.getInitialProps = async ({ req, res }) => {
+  try {
+    const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 RegisterV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
 

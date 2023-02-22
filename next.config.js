@@ -15,8 +15,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: `https://backend.comagain.kr/api/:path*`
+        source: "/api/v1/:path*",
+        destination: `https://backend.comagain.kr/api/v1/:path*`
       }
     ]
   },

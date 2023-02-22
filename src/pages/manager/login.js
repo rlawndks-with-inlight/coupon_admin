@@ -186,7 +186,6 @@ const LoginV1 = ({ dns_data }) => {
             <Box sx={{ mb: 6 }}>
               <Typography variant='h6' sx={{ mb: 1.5 }}>
                 {`Welcome ${themeConfig.templateName}! 👋🏻`}
-
               </Typography>
             </Box>
             <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
@@ -282,19 +281,21 @@ const LoginV1 = ({ dns_data }) => {
     </>
   )
 }
+LoginV1.getInitialProps = async ({ req, res }) => {
+  try {
+    const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      dns_data: {}
+    }
+  }
+}
 
 LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
-export const getServerSideProps = async ({ req, res }) => {
-
-  let hostname = (req.headers.referer && req.headers.referer.split('/'));
-  hostname = hostname[0] + '//' + hostname[2];
-  let response = await fetch(`${hostname}/api/get-domain-data`);
-  response = response.json();
-  return {
-    props: { dns_data: response }
-  }
-
-
-}
 export default LoginV1

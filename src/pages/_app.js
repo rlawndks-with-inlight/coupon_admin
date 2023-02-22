@@ -50,6 +50,7 @@ import '../../styles/globals.css'
 import { useEffect } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import HeadContent from 'src/@core/components/head'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -81,7 +82,7 @@ const App = props => {
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        {/* <HeadContent /> */}
+        {/* <HeadContent dns_data={dns_data} /> */}
         {/* <Head>
           <title>{dnsData.name ?? ""}</title>
           <meta
