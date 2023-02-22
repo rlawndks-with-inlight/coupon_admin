@@ -174,7 +174,6 @@ const List = ({ dns_data }) => {
   return (
     <>
 
-      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} dns_data={dns_data} /> */}
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
@@ -286,18 +285,5 @@ const List = ({ dns_data }) => {
     </>
   )
 }
-// List.getInitialProps = async ({ req, res }) => {
-//   try {
-//     const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       dns_data: {}
-//     }
-//   }
-// }
+
 export default List;

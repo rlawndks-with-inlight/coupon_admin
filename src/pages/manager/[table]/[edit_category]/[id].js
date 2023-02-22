@@ -181,18 +181,5 @@ const Edit = ({ dns_data }) => {
 
   )
 }
-// Edit.getInitialProps = async ({ req, res }) => {
-//   try {
-//     const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       dns_data: {}
-//     }
-//   }
-// }
+
 export default Edit

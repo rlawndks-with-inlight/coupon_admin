@@ -172,7 +172,6 @@ const LoginV1 = ({ dns_data }) => {
 
   return (
     <>
-      {/* <HeadContent title={'로그인'} dns_data={dns_data} /> */}
       <Box className='content-center'>
         {/* <AuthIllustrationV1Wrapper> */}
         <Card>
@@ -281,20 +280,7 @@ const LoginV1 = ({ dns_data }) => {
     </>
   )
 }
-// LoginV1.getInitialProps = async ({ req, res }) => {
-//   try {
-//     const res = await fetch(`http://${req ? req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       dns_data: {}
-//     }
-//   }
-// }
+
 
 LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
