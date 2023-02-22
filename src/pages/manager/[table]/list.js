@@ -174,7 +174,7 @@ const List = () => {
   return (
     <>
 
-      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} />
+      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`} /> */}
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>

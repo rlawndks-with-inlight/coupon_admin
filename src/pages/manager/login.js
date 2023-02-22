@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
-
+import { GetServerSideProps } from 'next'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -63,8 +63,8 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   }
 }))
 
-const Login = ({ data }) => {
-  console.log(data)
+const LoginV1 = ({ userData }) => {
+  console.log(userData)
   // ** State
   const [values, setValues] = useState({
     id: '',
@@ -175,7 +175,7 @@ const Login = ({ data }) => {
 
   return (
     <>
-      <HeadContent title={'로그인'} />
+      {/* <HeadContent title={'로그인'} /> */}
       <Box className='content-center'>
         {/* <AuthIllustrationV1Wrapper> */}
         <Card>
@@ -189,6 +189,7 @@ const Login = ({ data }) => {
             <Box sx={{ mb: 6 }}>
               <Typography variant='h6' sx={{ mb: 1.5 }}>
                 {`Welcome ${themeConfig.templateName}! 👋🏻`}
+                {userData}
               </Typography>
             </Box>
             <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
@@ -285,12 +286,6 @@ const Login = ({ data }) => {
   )
 }
 
-Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
-export async function getStaticProps() {
-  return {
-    props: {
-      data: 'asd'/* data that you fetched */
-    }
-  }
-}
-export default Login
+LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
+
+export default LoginV1

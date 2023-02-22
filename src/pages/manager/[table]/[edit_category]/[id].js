@@ -157,7 +157,7 @@ const Edit = () => {
   }
   return (
     <>
-      <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} />
+      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} /> */}
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({

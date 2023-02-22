@@ -55,7 +55,7 @@ const ManagerBrandEdit = (props) => {
     addr: '',
     phone_num: '',
     fax_num: '',
-    template_id: '',
+    template_id: 0,
     theme_css: '{}',
     company_nm: '',
     pvcy_rep_nm: '',
