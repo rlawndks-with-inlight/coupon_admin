@@ -6,33 +6,33 @@ import { axiosIns } from "src/@fake-db/backend";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title, dns_data } = props;
-  // useEffect(() => {
-  //   if (!dns_data?.name) {
+  useEffect(() => {
+    if (!dns_data?.name) {
 
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   getDnsData();
-  // }, [])
+    }
+  }, [])
+  useEffect(() => {
+    getDnsData();
+  }, [])
 
-  // const getDnsData = async () => {
-  //   try {
-  //     let dns_data = await getLocalStorage(LOCALSTORAGE.dns_data);
-  //     dns_data = JSON.parse(dns_data);
-  //     if (!dns_data?.name) {
-  //       const response = await axiosIns().options('/api/v1/auth/domain', {
-  //         data: {
-  //           dns: location.hostname
-  //         },
-  //       });
-  //       setDnsData(response?.data);
-  //     } else {
-  //       setDnsData(dns_data);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  const getDnsData = async () => {
+    try {
+      let dns_data = await getLocalStorage(LOCALSTORAGE.dns_data);
+      dns_data = JSON.parse(dns_data);
+      if (!dns_data?.name) {
+        const response = await axiosIns().options('/api/v1/auth/domain', {
+          data: {
+            dns: location.hostname
+          },
+        });
+        setDnsData(response?.data);
+      } else {
+        setDnsData(dns_data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <>
       <Head>
@@ -61,16 +61,16 @@ const HeadContent = (props) => {
     </>
   )
 }
-// HeadContent.getInitialProps = async ({ req, res }) => {
-//   try {
-//     const res = await fetch(`http:${req ? req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+HeadContent.getInitialProps = async ({ req, res }) => {
+  try {
+    const res = await fetch(`http:${req ? req.headers.host : ''}/api/get-domain-data`);
+    const json = await res.json();
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default HeadContent;
