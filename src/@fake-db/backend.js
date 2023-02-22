@@ -3,11 +3,11 @@ import { getDomain } from 'src/@core/utils/function';
 import { getCookie } from 'src/@core/utils/react-cookie';
 import dynamic from 'next/dynamic'
 
-export const axiosIns = () => {
+export const axiosIns = (host, protocol) => {
   let dns_info = {
     // You can add your headers here
     // ================================
-    baseURL: window.location.protocol + "//" + window.location.host,
+    baseURL: (protocol || window.location.protocol) + "//" + (host || window.location.host),
     timeout: 10000,
     headers: {
       "Authorization": `Bearer ${getCookie('o')}`,

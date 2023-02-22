@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
-import { GetServerSideProps } from 'next'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -41,9 +40,8 @@ import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import FallbackSpinner from 'src/@core/components/spinner'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
-import { LOCALSTORAGE } from 'src/data/data'
+import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
-
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -63,8 +61,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   }
 }))
 
-const LoginV1 = ({ userData }) => {
-  console.log(userData)
+const LoginV1 = ({ dns_data }) => {
   // ** State
   const [values, setValues] = useState({
     id: '',
@@ -175,7 +172,7 @@ const LoginV1 = ({ userData }) => {
 
   return (
     <>
-      {/* <HeadContent title={'로그인'} /> */}
+      <HeadContent title={'로그인'} dns_data={dns_data} />
       <Box className='content-center'>
         {/* <AuthIllustrationV1Wrapper> */}
         <Card>
@@ -189,7 +186,7 @@ const LoginV1 = ({ userData }) => {
             <Box sx={{ mb: 6 }}>
               <Typography variant='h6' sx={{ mb: 1.5 }}>
                 {`Welcome ${themeConfig.templateName}! 👋🏻`}
-                {userData}
+
               </Typography>
             </Box>
             <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
@@ -288,4 +285,16 @@ const LoginV1 = ({ userData }) => {
 
 LoginV1.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
+export const getServerSideProps = async ({ req, res }) => {
+
+  let hostname = (req.headers.referer && req.headers.referer.split('/'));
+  hostname = hostname[0] + '//' + hostname[2];
+  let response = await fetch(`${hostname}/api/get-domain-data`);
+  response = response.json();
+  return {
+    props: { dns_data: response }
+  }
+
+
+}
 export default LoginV1
