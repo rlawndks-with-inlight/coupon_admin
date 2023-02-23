@@ -59,7 +59,7 @@ const DefaultPalette = (mode, skin) => {
     primary: {
       light: dnsData?.theme_css?.main_color ?? "#000000",
       main: dnsData?.theme_css?.main_color ?? "#000000",
-      dark: '#655BD3',
+      dark: `${dnsData?.theme_css?.main_color ?? "#000000"}cc`,
       contrastText: whiteColor
     },
     secondary: {
