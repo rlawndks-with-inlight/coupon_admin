@@ -56,7 +56,9 @@ const ManagerBrandEdit = (props) => {
     phone_num: '',
     fax_num: '',
     template_id: 0,
-    theme_css: '{}',
+    theme_css: {
+      main_color: '#000000'
+    },
     company_nm: '',
     pvcy_rep_nm: '',
     business_num: '',
@@ -80,6 +82,8 @@ const ManagerBrandEdit = (props) => {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
+      obj['theme_css'] = JSON.parse(obj['theme_css']);
+      console.log(obj)
       setValues({ ...obj });
     }
   }
@@ -97,14 +101,14 @@ const ManagerBrandEdit = (props) => {
   }
   const onEditItem = () => {
     let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
-    let obj = { ...values };
+    let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css']) };
+    console.log(obj)
     for (var i = 0; i < img_key_list.length; i++) {
-      if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] == 'object') {
+      if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
+        console.log(img_key_list[i])
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
-
       } else {
         delete obj[img_key_list[i]];
-
       }
     }
     editItem(obj);
@@ -208,7 +212,14 @@ const ManagerBrandEdit = (props) => {
                     <Grid item xs={12}>
                       <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
                     </Grid>
-
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='메인색상' type={'color'} placeholder='메인색상을 입력해 주세요.' className='main_color' onChange={(e) => {
+                        let obj = { ...values };
+                        obj['theme_css'].main_color = e.target.value
+                        setValues(obj);
+                        console.log(obj)
+                      }} defaultValue={values?.theme_css?.main_color} value={values?.theme_css?.main_color} />
+                    </Grid>
                   </Grid>
                 </CardContent>
               </Card>

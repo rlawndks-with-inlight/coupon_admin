@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react"
+import { getLocalStorage } from "src/@core/utils/local-storage"
+import { axiosIns } from "src/@fake-db/backend"
+import { LOCALSTORAGE } from "src/data/data"
+
 const DefaultPalette = (mode, skin) => {
   // ** Vars
   const whiteColor = '#FFF'
@@ -15,7 +20,25 @@ const DefaultPalette = (mode, skin) => {
       return '#F8F7FA'
     } else return '#25293C'
   }
+  const [dnsData, setDnsData] = useState({});
+  useEffect(() => {
+    getDnsData();
+  }, [])
 
+  const getDnsData = async () => {
+    try {
+      const response = await axiosIns().options('/api/v1/auth/domain', {
+        data: {
+          dns: location.hostname
+        },
+      });
+      let obj = { ...response?.data };
+      obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      setDnsData(obj);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return {
     customColors: {
       dark: darkColor,
@@ -34,8 +57,8 @@ const DefaultPalette = (mode, skin) => {
       white: whiteColor
     },
     primary: {
-      light: '#8479F2',
-      main: '#7367F0',
+      light: dnsData?.theme_css?.main_color ?? "#000000",
+      main: dnsData?.theme_css?.main_color ?? "#000000",
       dark: '#655BD3',
       contrastText: whiteColor
     },
