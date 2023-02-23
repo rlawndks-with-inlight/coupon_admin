@@ -25,6 +25,7 @@ import Icon from 'src/@core/components/icon'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { axiosIns } from 'src/@fake-db/backend'
 import { LOCALSTORAGE } from 'src/data/data'
+import { toast } from 'react-hot-toast'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
@@ -40,6 +41,8 @@ const ManagerDeviceEdit = (props) => {
   useEffect(() => {
     if (mchtList.length > 0) {
       setLoading(false);
+    } else {
+      toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
     }
   }, [mchtList])
   useEffect(() => {

@@ -49,6 +49,8 @@ const ManagerPointEdit = (props) => {
   useEffect(() => {
     if (mchtList.length > 0) {
       setLoading(false);
+    } else {
+      toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
     }
   }, [mchtList])
   useEffect(() => {
