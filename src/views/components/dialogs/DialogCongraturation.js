@@ -33,8 +33,11 @@ const DialogCongraturation = (props) => {
       <Dialog open={open} onClose={goToManagerPage} aria-labelledby='form-dialog-title'>
         <DialogTitle id='form-dialog-title'>등록에 성공하였습니다!</DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ mb: 3, alignItems: 'center', display: 'flex' }}>
-            <div>상세한 정보는</div> <div style={{ margin: '0 0 0 6px', fontWeight: 'bold' }}>브랜드 관리</div> <div>에서 작성해주세요.</div>
+          <DialogContentText sx={{ mb: 3, display: 'flex', flexDirection: 'column', lineHeight: '30px' }}>
+            <div style={{ marginBottom: '22px' }}>최초 접속 후 하단 순서대로 세팅을 진행해주세요.</div>
+            <div style={{ fontWeight: 'bold' }}>1. 브랜드 관리</div>
+            <div style={{ fontWeight: 'bold' }}>2. 가맹점 관리</div>
+            <div style={{ fontWeight: 'bold' }}>3. 장비 관리</div>
           </DialogContentText>
         </DialogContent>
         <DialogActions className='dialog-actions-dense'>

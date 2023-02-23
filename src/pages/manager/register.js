@@ -112,7 +112,6 @@ const RegisterV1 = ({ dns_data }) => {
 
       if (is_appr == 1) {
         router.push('/manager/login');
-
       }
       setDnsData(response?.data);
       setLoading(false);
