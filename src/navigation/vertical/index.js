@@ -671,18 +671,18 @@ const project_navigation = [
     path: '/manager/advertisements',
     level: 10
   },
-  {
-    title: '게시판관리',
-    icon: 'tabler:news',
-    level: 10,
-    children: [
-      {
-        title: '공지사항관리',
-        path: '/manager/notices',
-        level: 10
-      }
-    ]
-  },
+  // {
+  //   title: '게시판관리',
+  //   icon: 'tabler:news',
+  //   level: 10,
+  //   children: [
+  //     {
+  //       title: '공지사항관리',
+  //       path: '/manager/notices',
+  //       level: 10
+  //     }
+  //   ]
+  // },
 ]
 const is_project = false;
 
