@@ -51,6 +51,7 @@ import { useEffect } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
+import { returnMoment } from 'src/@core/utils/function'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -125,12 +126,13 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-    const res = await fetch(`https://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
+    const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
     const json = await res.json();
     return {
       dns_data: json
     }
   } catch (err) {
+    console.log(err)
     return {
       dns_data: {}
     }

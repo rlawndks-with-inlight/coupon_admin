@@ -41,6 +41,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import { setCookie } from 'src/@core/utils/react-cookie'
 import HeadContent from 'src/@core/components/head'
 import DialogCongraturation from 'src/views/components/dialogs/DialogCongraturation'
+import { processCatch } from 'src/@core/utils/function'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -116,8 +117,12 @@ const RegisterV1 = ({ dns_data }) => {
       setDnsData(response?.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
+      }
     }
 
   }
@@ -141,12 +146,16 @@ const RegisterV1 = ({ dns_data }) => {
         sameSite: "none",
       });
       if (response?.status == 200 && response?.data?.user) {
-        await setLocalStorage(LOCALSTORAGE.USER_AUTH, response?.data?.user);
+        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
         handleClickOpen();
       }
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
+      }
     }
 
   }

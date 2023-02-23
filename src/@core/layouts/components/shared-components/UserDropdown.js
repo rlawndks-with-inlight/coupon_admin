@@ -71,7 +71,7 @@ const UserDropdown = props => {
   }, [])
 
   const getUser = async () => {
-    let auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH) ?? "{}";
+    let auth = await getLocalStorage(LOCALSTORAGE.USER_DATA) ?? "{}";
     auth = JSON.parse(auth);
     auth['level'] = await getUserLevelByNumber(auth['level']);
     setUser(auth);
@@ -102,7 +102,7 @@ const UserDropdown = props => {
       });
       if (response?.status == 200) {
         await deleteCookie('o');
-        await deleteLocalStorage(LOCALSTORAGE.USER_AUTH);
+        await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
         router.push('/manager/login');
       }
     } catch (err) {
@@ -110,7 +110,7 @@ const UserDropdown = props => {
       toast.error(err?.response?.data?.message || err?.message);
       if ([401, 403, 409].includes(err?.response?.status)) {
         await deleteCookie('o');
-        await deleteLocalStorage(LOCALSTORAGE.USER_AUTH);
+        await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
         router.push('/manager/login');
       }
     }

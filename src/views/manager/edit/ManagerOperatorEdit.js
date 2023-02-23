@@ -63,7 +63,7 @@ const ManagerOperatorEdit = (props) => {
       setLoading(true);
       const response = await axiosIns().get(`/api/v1/manager/brands?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
       setBrandList(response?.data?.content);
-      let user = await getLocalStorage('user_auth');
+      let user = await getLocalStorage('user_data');
       user = JSON.parse(user);
 
       let z_all_user = [

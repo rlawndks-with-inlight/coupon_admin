@@ -1,4 +1,3 @@
-//user_auth -> 로그인한 유저정보
 
 
 export const setLocalStorage = async (key_, value_) => {

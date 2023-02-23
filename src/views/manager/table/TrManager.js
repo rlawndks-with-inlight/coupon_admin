@@ -6,7 +6,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import { objDataGridColumns } from 'src/data/manager-data'
-import { commarNumber, getUserLevelByNumber } from 'src/@core/utils/function'
+import { commarNumber, getUserLevelByNumber, processCatch } from 'src/@core/utils/function'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import { toast } from "react-hot-toast";
@@ -184,10 +184,12 @@ const TrManager = (props) => {
         changePage(page);
       }
     } catch (err) {
-      if (err?.response?.status == 401) {
-        router.push('/manager/login')
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
       }
-      toast.error(err?.response?.data?.message || err?.message);
     }
   }
   const [open, setOpen] = useState(false);
@@ -209,10 +211,12 @@ const TrManager = (props) => {
         new_user_pw: $('#new-pw').val()
       })
     } catch (err) {
-      if (err?.response?.status == 401) {
-        router.push('/manager/login')
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
       }
-      toast.error(err?.response?.data?.message || err?.message);
     }
 
   }

@@ -51,6 +51,7 @@ import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
 import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdit'
 import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
 import HeadContent from 'src/@core/components/head'
+import { processCatch } from 'src/@core/utils/function'
 
 const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
@@ -123,10 +124,12 @@ const Edit = ({ dns_data }) => {
         }, 1000)
       }
     } catch (err) {
-      if (err?.response?.status == 401) {
-        router.push('/manager/login')
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
       }
-      toast.error(err?.response?.data?.message || err?.message);
     }
 
   }
@@ -141,9 +144,12 @@ const Edit = ({ dns_data }) => {
         return false;
       }
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
-
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
+      }
       return false;
     }
   }

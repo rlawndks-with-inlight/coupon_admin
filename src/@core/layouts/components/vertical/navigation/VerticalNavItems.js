@@ -25,7 +25,7 @@ const VerticalNavItems = props => {
     let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
     setDnsData(dns_data);
-    let user_data = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user_data = JSON.parse(user_data);
     setUserData(user_data);
   }

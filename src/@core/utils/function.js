@@ -2,9 +2,10 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import { getItemByType } from "src/views/manager/table/TrManager";
 import { objDataGridColumns } from "src/data/manager-data";
-import { getLocalStorage } from "./local-storage";
+import { deleteLocalStorage, getLocalStorage } from "./local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { t } from "i18next";
+import { toast } from "react-hot-toast";
 
 export const objToQuery = (obj_) => {
   let obj = { ...obj_ };
@@ -179,5 +180,16 @@ export const useEditPageImg = (img_) => {
     console.log(err);
 
     return '';
+  }
+}
+export const processCatch = async (err) => {
+  toast.error(err?.response?.data?.message || err?.message);
+  let push_link = '#';
+  if (err?.response?.status == 401) {
+    await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
+    push_link = '/manager/login';
+  }
+  if (err?.response?.status == 403) {
+    push_link = -1;
   }
 }

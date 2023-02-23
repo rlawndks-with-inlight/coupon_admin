@@ -159,9 +159,9 @@ const TableHeader = props => {
 
   const getIsSeeAddButton = async () => {
     let param_table = router.query?.table;
-    let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
-    user_auth = JSON.parse(user_auth);
-    if (user_auth?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
+    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+    user_data = JSON.parse(user_data);
+    if (user_data?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
       return true;
     }
 

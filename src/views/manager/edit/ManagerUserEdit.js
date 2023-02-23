@@ -56,7 +56,7 @@ const ManagerUserEdit = (props) => {
 
   // const settingPage = async () => {
   //   setLoading(true);
-  //   let user = await getLocalStorage('user_auth');
+  //   let user = await getLocalStorage('user_data');
   //   user = JSON.parse(user);
 
   //   let z_all_user = [

@@ -17,7 +17,7 @@ import FormControl from '@mui/material/FormControl'
 
 // ** Styled Components
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { excelDownload, makeMaxPage, objToQuery } from "src/@core/utils/function";
+import { excelDownload, makeMaxPage, objToQuery, processCatch } from "src/@core/utils/function";
 import TableBasic from "src/views/table/data-grid/TableBasic";
 import TableManager from "src/views/manager/table/TableManager";
 import { Divider } from "@mui/material";
@@ -144,14 +144,11 @@ const List = ({ dns_data }) => {
       changeNotSearchOption();
       setLoading(false);
     } catch (err) {
-      console.log(err)
-      setPosts([]);
-      toast.error(err?.response?.data?.message || err?.message);
-      if (err?.response?.status == 401) {
-        router.push('/manager/login')
-      }
-      if (err?.response?.status == 403) {
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
         router.back();
+      } else {
+        router.push(push_lick);
       }
     }
   }

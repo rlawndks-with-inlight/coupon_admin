@@ -42,6 +42,7 @@ import FallbackSpinner from 'src/@core/components/spinner'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
+import { processCatch } from 'src/@core/utils/function'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -113,9 +114,9 @@ const LoginV1 = ({ dns_data }) => {
         router.push('/manager/register');
       }
 
-      // let user_auth = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
-      // user_auth = JSON.parse(user_auth);
-      // if (user_auth?.id > 0) {
+      // let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+      // user_data = JSON.parse(user_data);
+      // if (user_data?.id > 0) {
       //   // router.push('/manager/users')
       // }
     } catch (err) {
@@ -130,10 +131,16 @@ const LoginV1 = ({ dns_data }) => {
         }
       });
       if (response_auth?.level > 0) {
+        await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
         router.push('/manager/users');
       }
     } catch (err) {
-
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
+      }
     }
     setLoading(false);
   }
@@ -160,12 +167,16 @@ const LoginV1 = ({ dns_data }) => {
         sameSite: "none",
       });
       if (response?.status == 200 && response?.data?.user) {
-        await setLocalStorage(LOCALSTORAGE.USER_AUTH, response?.data?.user);
+        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
         router.push('/manager/users');
       }
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
+      let push_lick = processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        router.push(push_lick);
+      }
     }
 
   }

@@ -54,7 +54,7 @@ const ManagerDeviceEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      let user = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+      let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);

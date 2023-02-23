@@ -28,7 +28,7 @@ const UserOptionBox = (props) => {
 
   const settings = async () => {
     setLoading(true);
-    let user = await getLocalStorage(LOCALSTORAGE.USER_AUTH);
+    let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user = JSON.parse(user);
 
     let z_all_user = [
