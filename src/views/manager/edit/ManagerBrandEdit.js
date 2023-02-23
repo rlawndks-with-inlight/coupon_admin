@@ -99,7 +99,7 @@ const ManagerBrandEdit = (props) => {
     let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
     let obj = { ...values };
     for (var i = 0; i < img_key_list.length; i++) {
-      if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
+      if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] == 'object') {
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
 
       } else {
