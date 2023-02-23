@@ -58,7 +58,7 @@ const ManagerMerchandiseEdit = (props) => {
     user_pw: '',
     nick_name: '',
     birth_date: returnMoment(false, new Date()).substring(0, 10),
-    group_id: '',
+    group_id: 0,
     mcht_name: '',
     addr: '',
     stamp_flag: 0,
