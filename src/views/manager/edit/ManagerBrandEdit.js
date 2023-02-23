@@ -57,7 +57,7 @@ const ManagerBrandEdit = (props) => {
     fax_num: '',
     template_id: 0,
     theme_css: {
-      main_color: '#000000'
+      main_color: '#7367f0'
     },
     company_nm: '',
     pvcy_rep_nm: '',
