@@ -28,9 +28,12 @@ import DatePicker from 'react-datepicker'
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment } from 'src/@core/utils/function'
 import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 const ManagerPointEdit = (props) => {
   const { getItem, editItem, popperPlacement } = props;
+
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
@@ -49,8 +52,6 @@ const ManagerPointEdit = (props) => {
   useEffect(() => {
     if (mchtList.length > 0) {
       setLoading(false);
-    } else {
-      toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
     }
   }, [mchtList])
   useEffect(() => {
@@ -63,6 +64,10 @@ const ManagerPointEdit = (props) => {
       setLoading(true);
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
       setMchtList(response?.data?.mcht_id);
+      if (response?.data?.mcht_id.length <= 0) {
+        toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
+        router.back();
+      }
       setUserList(response?.data?.user_id?.normals);
       setValues({ ...values, 'mcht_id': response?.data?.mcht_id[0]?.id });
     } catch (err) {

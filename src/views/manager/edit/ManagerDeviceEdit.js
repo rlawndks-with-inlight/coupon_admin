@@ -26,9 +26,12 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { axiosIns } from 'src/@fake-db/backend'
 import { LOCALSTORAGE } from 'src/data/data'
 import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
+
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
@@ -41,8 +44,6 @@ const ManagerDeviceEdit = (props) => {
   useEffect(() => {
     if (mchtList.length > 0) {
       setLoading(false);
-    } else {
-      toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
     }
   }, [mchtList])
   useEffect(() => {
@@ -62,7 +63,10 @@ const ManagerDeviceEdit = (props) => {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
       setMchtList(response?.data?.mcht_id);
-
+      if (response?.data?.mcht_id.length <= 0) {
+        toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
+        router.back();
+      }
       let item = await getItem();
       if (item) {
         setValues({ ...item });
