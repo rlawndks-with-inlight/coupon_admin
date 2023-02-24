@@ -117,11 +117,13 @@ const RegisterV1 = ({ dns_data }) => {
       setDnsData(response?.data);
       setLoading(false);
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
 
@@ -150,11 +152,13 @@ const RegisterV1 = ({ dns_data }) => {
         handleClickOpen();
       }
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
 

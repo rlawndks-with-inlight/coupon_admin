@@ -144,11 +144,13 @@ const List = ({ dns_data }) => {
       changeNotSearchOption();
       setLoading(false);
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
   }

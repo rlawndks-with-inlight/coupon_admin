@@ -166,11 +166,13 @@ const LoginV1 = ({ dns_data }) => {
         router.push('/manager/users');
       }
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
 
@@ -218,15 +220,15 @@ const LoginV1 = ({ dns_data }) => {
             </FormControl>
             <Box
               sx={{
-                mb: 1.75,
+                mb: '1rem',
                 display: 'flex',
                 flexWrap: 'wrap',
                 alignItems: 'center',
                 justifyContent: 'space-between'
               }}
             >
-              <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
-              <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled>
+              {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
+              <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
             </Box>
             <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
               if (!loading) {

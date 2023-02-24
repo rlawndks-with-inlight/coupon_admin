@@ -46,7 +46,6 @@ const DeviceSameDateLineBox = (props) => {
           <FormControl sx={{ minWidth: '110px' }}>
             <InputLabel id='demo-simple-select-outlined-label'>사용여부</InputLabel>
             <Select
-              size='small'
               label='사용여부'
               value={searchObj?.appr_status}
               id='demo-simple-select-outlined'

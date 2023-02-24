@@ -616,14 +616,8 @@ const project_navigation = [
   {
     title: '오퍼레이터관리',
     icon: 'tabler:affiliate',
-    level: 50,
-    children: [
-      {
-        title: '오퍼레이터관리',
-        path: '/manager/operators',
-        level: 50
-      },
-    ]
+    path: '/manager/operators',
+    level: 50
   },
   {
     title: '브랜드관리',

@@ -21,7 +21,8 @@ import { useTheme } from '@emotion/react'
 import Avatar from '@mui/material/Avatar'
 import DialogForm from 'src/views/components/dialogs/DialogForm'
 import $ from 'jquery'
-export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, openChangePasswordPopUp) => {
+import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
+export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel, openChangePasswordPopUp) => {
   try {
     let result = "---";
 
@@ -107,7 +108,7 @@ export const getItemByType = (data, column, table, goTo, deleteItem, is_excel, o
             </IconButton>
           </Tooltip>
           <Tooltip title='삭제'>
-            <IconButton size='small' sx={{ color: 'text.secondary' }} onClick={() => { deleteItem(data?.id) }}>
+            <IconButton size='small' sx={{ color: 'text.secondary' }} onClick={() => { onDeleteOpen(data?.id) }}>
               <Icon icon='tabler:trash' />
             </IconButton>
           </Tooltip>
@@ -174,24 +175,7 @@ const TrManager = (props) => {
     return result;
   }
 
-  const deleteItem = async (id) => {
-    try {
-      if (!window.confirm("정말 삭제 하시겠습니까?"))
-        return;
-      const response = await axiosIns().delete(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${id}`)
-      if (response?.status == 204) {
-        toast.success("성공적으로 삭제되었습니다.");
-        changePage(page);
-      }
-    } catch (err) {
-      let push_lick = processCatch(err);
-      if (push_lick == -1) {
-        router.back();
-      } else {
-        router.push(push_lick);
-      }
-    }
-  }
+
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -211,17 +195,56 @@ const TrManager = (props) => {
         new_user_pw: $('#new-pw').val()
       })
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
+      }
+    }
+
+  }
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const onDeleteOpen = (id) => {
+    setDeleteOpen(true);
+    setDeleteData(id);
+  }
+  const handleDeleteClose = () => setDeleteOpen(false)
+  const [deleteData, setDeleteData] = useState(0);
+  const deleteItem = async (id) => {
+    handleDeleteClose();
+    try {
+      const response = await axiosIns().delete(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${id}`);
+      if (response?.status == 204) {
+        toast.success("성공적으로 삭제되었습니다.");
+        changePage(page);
+      }
+    } catch (err) {
+      let push_lick = await processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
 
   }
   return (
     <>
+      <DialogConfirm
+        open={deleteOpen}
+        handleClose={handleDeleteClose}
+        onKeepGoing={deleteItem}
+        text={'정말 삭제 하시겠습니까?'}
+        subText={'삭제하시면 복구할 수 없습니다.'}
+        saveText={'삭제'}
+        data={deleteData}
+      />
       <DialogForm
         open={open}
         data={popupData}
@@ -246,7 +269,7 @@ const TrManager = (props) => {
                     maxWidth: '300px',
                     color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
                   }}>
-                  {getItemByType(post, col, router.query?.table, goTo, deleteItem, false, openChangePasswordPopUp)}
+                  {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp)}
                 </TableCell>
               </>}
           </>

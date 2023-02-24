@@ -194,6 +194,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '맥주소 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('브랜드 ID', 'brand_id', 'number', ''),
+      managerListFormat('가맹점 ID', 'mcth_id', 'number', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('맥주소', 'mac_addr', 'text', ''),
       managerListFormat('발행시간', 'created_at', 'datetime', ''),

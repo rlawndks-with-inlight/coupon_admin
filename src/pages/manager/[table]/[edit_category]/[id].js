@@ -52,6 +52,7 @@ import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdi
 import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
 import HeadContent from 'src/@core/components/head'
 import { processCatch } from 'src/@core/utils/function'
+import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 
 const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
@@ -95,9 +96,8 @@ const Edit = ({ dns_data }) => {
   }
 
   const editItem = async (obj_) => {
+    handleEditConfirmClose();
     try {
-      if (!window.confirm("저장 하시겠습니까?"))
-        return;
       let obj = { ...obj_ };
 
       let formData = new FormData();
@@ -124,11 +124,13 @@ const Edit = ({ dns_data }) => {
         }, 1000)
       }
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
     }
 
@@ -144,11 +146,13 @@ const Edit = ({ dns_data }) => {
         return false;
       }
     } catch (err) {
-      let push_lick = processCatch(err);
+      let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();
       } else {
-        router.push(push_lick);
+        if (push_lick) {
+          router.push(push_lick);
+        }
       }
       return false;
     }
@@ -161,15 +165,31 @@ const Edit = ({ dns_data }) => {
   const handleClickOpen = () => {
     setIsOpen(true);
   }
+  const [editConfirmOpen, setEditConfirmOpen] = useState(false);
+  const handleEditConfirmClose = () => setEditConfirmOpen(false)
+  const [editConfirmData, setEditConfirmData] = useState({});
+  const onEditConfirmOpen = (obj) => {
+    setEditConfirmOpen(true);
+    setEditConfirmData(obj);
+  }
   return (
     <>
+      <DialogConfirm
+        open={editConfirmOpen}
+        handleClose={handleEditConfirmClose}
+        onKeepGoing={editItem}
+        text={`정말 ${router.query?.edit_category == 'edit' ? '수정' : '추가'} 하시겠습니까?`}
+        //subText={'삭제하시면 복구할 수 없습니다.'}
+        saveText={'저장'}
+        data={editConfirmData}
+      />
       {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} dns_data={dns_data} /> */}
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({
             posts: editSetting?.posts,
             table: objDataGridColumns[router.query?.table]?.table,
-            editItem: editItem,
+            editItem: onEditConfirmOpen,
             getItem: getItem,
             popperPlacement: popperPlacement,
             breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`,

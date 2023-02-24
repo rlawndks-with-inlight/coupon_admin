@@ -184,7 +184,7 @@ export const useEditPageImg = (img_) => {
 }
 export const processCatch = async (err) => {
   toast.error(err?.response?.data?.message || err?.message);
-  let push_link = '#';
+  let push_link = '';
   if (err?.response?.status == 401) {
     await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
     push_link = '/manager/login';
@@ -192,4 +192,5 @@ export const processCatch = async (err) => {
   if (err?.response?.status == 403) {
     push_link = -1;
   }
+  return push_link
 }
