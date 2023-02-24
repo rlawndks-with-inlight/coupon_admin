@@ -125,7 +125,6 @@ const ManagerMerchandiseEdit = (props) => {
     let img_key_list = ['profile_img'];
     let obj = { ...values };
     for (var i = 0; i < img_key_list.length; i++) {
-      console.log(obj[img_key_list[i]])
 
       if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
         delete obj[img_key_list[i]];

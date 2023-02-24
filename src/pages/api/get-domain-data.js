@@ -14,7 +14,6 @@ export default async (req, res) => {
     res.json(response?.data);
   } catch (err) {
     console.log(err)
-    console.log(123)
   }
 
 }

@@ -83,7 +83,6 @@ const ManagerBrandEdit = (props) => {
         obj[key] = item[key];
       }
       obj['theme_css'] = JSON.parse(obj['theme_css']);
-      console.log(obj)
       setValues({ ...obj });
     }
   }
@@ -102,10 +101,8 @@ const ManagerBrandEdit = (props) => {
   const onEditItem = () => {
     let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
     let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css']) };
-    console.log(obj)
     for (var i = 0; i < img_key_list.length; i++) {
       if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
-        console.log(img_key_list[i])
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
       } else {
         delete obj[img_key_list[i]];
@@ -217,7 +214,6 @@ const ManagerBrandEdit = (props) => {
                         let obj = { ...values };
                         obj['theme_css'].main_color = e.target.value
                         setValues(obj);
-                        console.log(obj)
                       }} defaultValue={values?.theme_css?.main_color} value={values?.theme_css?.main_color} />
                     </Grid>
                   </Grid>
