@@ -49,6 +49,8 @@ import 'src/iconify-bundle/icons-bundle-react'
 import '../../styles/globals.css'
 import { useEffect } from 'react'
 import HeadContent from 'src/@core/components/head'
+import { backUrl } from 'src/data/data'
+import axios from 'axios'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -116,15 +118,10 @@ const App = props => {
     </Provider>
   )
 }
-App.getInitialProps = async ({ Component, ctx }) => {
+App.getInitialProps = async () => {
   try {
-    if (!ctx.req) {
-      return {
-        dns_data: {}
-      }
-    }
-    const res = await fetch(`https://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
-    const json = await res.json();
+    const res = await axios.options(`${backUrl}/api/v2/auth/domain`);
+    const json = res.data;
     return {
       dns_data: json
     }
