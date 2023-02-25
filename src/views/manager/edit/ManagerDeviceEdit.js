@@ -39,7 +39,7 @@ const ManagerDeviceEdit = (props) => {
   const [values, setValues] = useState({
     mcht_id: 0,
     mac_addr: '',
-    appr_status: 1,
+    comment: '',
   })
   useEffect(() => {
     if (mchtList.length > 0) {
@@ -102,7 +102,7 @@ const ManagerDeviceEdit = (props) => {
     setValues({
       mcht_id: mchtList[0]?.id,
       mac_addr: '',
-      appr_status: 1,
+      comment: '',
     })
   }
 
@@ -139,6 +139,17 @@ const ManagerDeviceEdit = (props) => {
                   <TextField fullWidth label='맥주소' placeholder='맥주소를 입력해 주세요.' className='mac_addr' onChange={handleChangeValue('mac_addr')} defaultValue={values?.mac_addr} value={values?.mac_addr} />
                 </Grid>
                 <Grid item xs={12}>
+                  <TextField
+                    sx={{ width: '100%' }}
+                    onChange={handleChangeValue('comment')} defaultValue={values?.comment} value={values?.comment}
+                    rows={4}
+                    multiline
+                    label='비고'
+                    variant='standard'
+                    id='textarea-standard-static'
+                  />
+                </Grid>
+                {/* <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>사용여부</InputLabel>
                     <Select
@@ -155,7 +166,7 @@ const ManagerDeviceEdit = (props) => {
 
                     </Select>
                   </FormControl>
-                </Grid>
+                </Grid> */}
               </Grid>
             </CardContent>
           </Card>

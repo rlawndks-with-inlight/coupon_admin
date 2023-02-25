@@ -236,7 +236,7 @@ const ManagerBrandEdit = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>스탬프 사용여부</InputLabel>
+                        <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>스탬프 사용여부</InputLabel>
                         <Select
                           label='Country'
                           id='form-layouts-tabs-select'
@@ -281,7 +281,7 @@ const ManagerBrandEdit = (props) => {
                       </>}
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>포인트 사용여부</InputLabel>
+                        <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>포인트 사용여부</InputLabel>
                         <Select
                           label='Country'
                           id='form-layouts-tabs-select'
