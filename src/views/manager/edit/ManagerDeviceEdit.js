@@ -35,9 +35,11 @@ const ManagerDeviceEdit = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
+  const [partnerList, setPartnerList] = useState([]);
 
   const [values, setValues] = useState({
-    mcht_id: 0,
+    mcht_id: mchtList[0]?.id ?? 0,
+    partner_id: partnerList[0]?.id ?? 0,
     mac_addr: '',
     comment: '',
   })
@@ -58,11 +60,13 @@ const ManagerDeviceEdit = (props) => {
       user = JSON.parse(user);
 
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      let partner_list = [...response?.data?.user_id?.partners];
       let mcht_list = [...response?.data?.mcht_id];
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
       setMchtList(response?.data?.mcht_id);
+      setPartnerList(response?.data?.user_id?.partners);
       if (response?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
@@ -71,7 +75,7 @@ const ManagerDeviceEdit = (props) => {
       if (item) {
         setValues({ ...item });
       } else {
-        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
+        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'], 'partner_id': partner_list[0]['id'] });
       }
     } catch (err) {
       console.log(err);
@@ -100,7 +104,8 @@ const ManagerDeviceEdit = (props) => {
 
   const onReset = () => {
     setValues({
-      mcht_id: mchtList[0]?.id,
+      mcht_id: mchtList[0]?.id ?? 0,
+      partner_id: partnerList[0]?.id ?? 0,
       mac_addr: '',
       comment: '',
     })
@@ -130,6 +135,25 @@ const ManagerDeviceEdit = (props) => {
                     >
                       {mchtList && mchtList.map((item, idx) => {
                         return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
+                      })}
+
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='form-layouts-tabs-select-label'>협력사명</InputLabel>
+                    <Select
+                      label='Country'
+                      id='form-layouts-tabs-select'
+                      labelId='form-layouts-tabs-select-label'
+                      className='partner_id'
+                      onChange={handleChangeValue('partner_id')}
+                      defaultValue={values?.partner_id ?? 0}
+                      value={values?.partner_id}
+                    >
+                      {partnerList && partnerList.map((item, idx) => {
+                        return <MenuItem value={item?.id} key={idx}>{item?.user_name}</MenuItem>
                       })}
 
                     </Select>
