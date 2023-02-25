@@ -50,6 +50,7 @@ import '../../styles/globals.css'
 import { useEffect } from 'react'
 import HeadContent from 'src/@core/components/head'
 import { backUrl } from 'src/data/data'
+import axios from 'axios'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -124,7 +125,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-    const res = await fetch(`${backUrl}/api/v2/auth/domain`, {
+    const res = await axios.options(`${backUrl}/api/v2/auth/domain`, {
       dns: (ctx.req ? ctx.req.headers.host : '').split(':')[0]
     });
     const json = await res.data;
