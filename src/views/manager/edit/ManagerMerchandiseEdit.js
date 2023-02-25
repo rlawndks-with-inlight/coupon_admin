@@ -136,117 +136,94 @@ const ManagerMerchandiseEdit = (props) => {
   }
   return (
     <>
+      <Grid container spacing={6}>
+        <Grid item xs={12} md={5}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>프로필 이미지</InputLabel>
+                  <FileUploaderSingle
+                    className='profile_img'
+                    setValues={setValues}
+                    values={values}
+                    value={values?.profile_img}
+                    sx={{ width: '120px', height: '120px' }}
+                    placeholder={'120px * 120px'}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <DatePicker
+                    showYearDropdown
+                    showMonthDropdown
+                    selected={bDt}
+                    id='month-year-dropdown'
+                    placeholderText='YYYY-MM-DD'
+                    dateFormat={'yyyy-MM-dd'}
+                    popperPlacement={popperPlacement}
+                    onChange={async (date) => {
+                      try {
+                        setBDt(date);
+                        handleChange('birth_date', returnMoment(false, date).substring(0, 10));
+                      } catch (err) {
+                        console.log(err);
+                      }
 
-      <TabContext value={tabValue}>
-        <TabList
-          variant='scrollable'
-          scrollButtons={false}
-          onChange={handleTabsChange}
-          sx={{ mb: 4 }}
-        >
-          <Tab value='tab-1' label='기본정보' sx={{ mr: 2 }} />
-          <Tab value='tab-2' label='적립설정' sx={{ mr: 2 }} />
-        </TabList>
-
-        <TabPanel sx={{ p: 0 }} value='tab-1'>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={5}>
-              <Card sx={{ height: '100%' }}>
-                <CardContent>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>프로필 이미지</InputLabel>
-                      <FileUploaderSingle
-                        className='profile_img'
-                        setValues={setValues}
-                        values={values}
-                        value={values?.profile_img}
-                        sx={{ width: '120px', height: '120px' }}
-                        placeholder={'120px * 120px'}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <DatePicker
-                        showYearDropdown
-                        showMonthDropdown
-                        selected={bDt}
-                        id='month-year-dropdown'
-                        placeholderText='YYYY-MM-DD'
-                        dateFormat={'yyyy-MM-dd'}
-                        popperPlacement={popperPlacement}
-                        onChange={async (date) => {
-                          try {
-                            setBDt(date);
-                            handleChange('birth_date', returnMoment(false, date).substring(0, 10));
-                          } catch (err) {
-                            console.log(err);
-                          }
-
-                        }}
-                        customInput={<CustomInput label='유저 생년월일' />}
-                      />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <Card>
-                <CardContent>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
-                    </Grid>
-                    {editCategory == 'create' ?
-                      <>
-                        <Grid item xs={12}>
-                          <TextField fullWidth label='유저 비밀번호' placeholder='유저 비밀번호를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
-                        </Grid>
-                      </>
-                      :
-                      <>
-                      </>}
-
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='유저명' placeholder='유저명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>그룹 ID</InputLabel>
-                        <Select
-                          label='Country'
-                          id='form-layouts-tabs-select'
-                          labelId='form-layouts-tabs-select-label'
-                          className='group_id'
-                          onChange={handleChangeValue('group_id')}
-                          defaultValue={values?.group_id ?? 0}
-                          value={values?.group_id}
-                        >
-                          {userList && userList.map((item, idx) => {
-                            return <MenuItem value={item?.group_id} key={idx}>{item?.user_name}</MenuItem>
-                          })}
-
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='가맹점 주소' placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChangeValue('addr')} defaultValue={values?.addr} value={values?.addr} />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='tab-2'>
+                    }}
+                    customInput={<CustomInput label='유저 생년월일' />}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={7}>
           <Card>
             <CardContent>
               <Grid container spacing={5}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                </Grid>
+                {editCategory == 'create' ?
+                  <>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='유저 비밀번호' placeholder='유저 비밀번호를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
+                    </Grid>
+                  </>
+                  :
+                  <>
+                  </>}
+
+                <Grid item xs={12}>
+                  <TextField fullWidth label='유저명' placeholder='유저명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='form-layouts-tabs-select-label'>그룹 ID</InputLabel>
+                    <Select
+                      label='Country'
+                      id='form-layouts-tabs-select'
+                      labelId='form-layouts-tabs-select-label'
+                      className='group_id'
+                      onChange={handleChangeValue('group_id')}
+                      defaultValue={values?.group_id ?? 0}
+                      value={values?.group_id}
+                    >
+                      {userList && userList.map((item, idx) => {
+                        return <MenuItem value={item?.group_id} key={idx}>{item?.user_name}</MenuItem>
+                      })}
+
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='가맹점 주소' placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChangeValue('addr')} defaultValue={values?.addr} value={values?.addr} />
+                </Grid>
+                <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>스탬프 사용여부</InputLabel>
                     <Select
@@ -263,7 +240,24 @@ const ManagerMerchandiseEdit = (props) => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {values?.stamp_flag == 1 ?
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label='상품당 스탬프 저장개수'
+                        placeholder='상품당 스탬프 저장개수를 입력해 주세요.'
+                        className='stamp_save_count'
+                        onChange={handleChangeValue('stamp_save_count')}
+                        defaultValue={values?.stamp_save_count}
+                        value={values?.stamp_save_count}
+                      />
+                    </Grid>
+                  </>
+                  :
+                  <>
+                  </>}
+                <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>포인트 사용여부</InputLabel>
                     <Select
@@ -280,26 +274,10 @@ const ManagerMerchandiseEdit = (props) => {
                     </Select>
                   </FormControl>
                 </Grid>
-                {values?.stamp_flag == 1 ?
-                  <>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='상품당 스탬프 저장개수'
-                        placeholder='상품당 스탬프 저장개수를 입력해 주세요.'
-                        className='stamp_save_count'
-                        onChange={handleChangeValue('stamp_save_count')}
-                        defaultValue={values?.stamp_save_count}
-                        value={values?.stamp_save_count}
-                      />
-                    </Grid>
-                  </>
-                  :
-                  <>
-                  </>}
+
                 {values?.point_flag == 1 ?
                   <>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                       <TextField
                         fullWidth
                         label='포인트 변환률'
@@ -317,9 +295,10 @@ const ManagerMerchandiseEdit = (props) => {
               </Grid>
             </CardContent>
           </Card>
-        </TabPanel>
+        </Grid>
+      </Grid>
 
-      </TabContext>
+
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
           <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={onEditItem}>

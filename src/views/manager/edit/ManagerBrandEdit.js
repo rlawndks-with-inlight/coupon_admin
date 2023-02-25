@@ -120,7 +120,6 @@ const ManagerBrandEdit = (props) => {
           sx={{ mb: 4 }}
         >
           <Tab value='tab-1' label='기본정보' sx={{ mr: 2 }} />
-          <Tab value='tab-2' label='적립설정' sx={{ mr: 2 }} />
           <Tab value='tab-3' label='계약정보' sx={{ mr: 2 }} />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='tab-1'>
@@ -216,118 +215,111 @@ const ManagerBrandEdit = (props) => {
                         setValues(obj);
                       }} defaultValue={values?.theme_css?.main_color} value={values?.theme_css?.main_color} />
                     </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>템플릿 ID</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='template_id'
+                          onChange={handleChangeValue('template_id')}
+                          defaultValue={values?.template_id ?? 0}
+                          value={values?.template_id}
+                        >
+                          <MenuItem value='0'>0</MenuItem>
+                          <MenuItem value='1'>1</MenuItem>
+                          <MenuItem value='2'>2</MenuItem>
+                          <MenuItem value='3'>3</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>스탬프 사용여부</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='stamp_flag'
+                          onChange={handleChangeValue('stamp_flag')}
+                          defaultValue={values?.stamp_flag ?? 0}
+                          value={values?.stamp_flag}
+                        >
+                          <MenuItem value='0'>사용안함</MenuItem>
+                          <MenuItem value='1'>사용</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    {values?.stamp_flag == 1 ?
+                      <>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label='스탬프 쿠폰변환 최소개수'
+                            placeholder='스탬프 쿠폰변환 최소개수를 입력해 주세요.'
+                            className='stamp_max_size'
+                            onChange={handleChangeValue('stamp_max_size')}
+                            defaultValue={values?.stamp_max_size}
+                            value={values?.stamp_max_size}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label='상품당 스탬프 저장개수'
+                            placeholder='상품당 스탬프 저장개수를 입력해 주세요.'
+                            className='stamp_save_count'
+                            onChange={handleChangeValue('stamp_save_count')}
+                            defaultValue={values?.stamp_save_count}
+                            value={values?.stamp_save_count}
+                          />
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>포인트 사용여부</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='point_flag'
+                          onChange={handleChangeValue('point_flag')}
+                          defaultValue={values?.point_flag ?? 0}
+                          value={values?.point_flag}
+                        >
+                          <MenuItem value='0'>사용안함</MenuItem>
+                          <MenuItem value='1'>사용</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+
+                    {values?.point_flag == 1 ?
+                      <>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label='포인트 변환률'
+                            placeholder='포인트 변환률을 입력해 주세요.'
+                            className='point_rate'
+                            onChange={handleChangeValue('point_rate')}
+                            defaultValue={values?.point_rate}
+                            value={values?.point_rate}
+                          />
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
                   </Grid>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
 
-        </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='tab-2'>
-          <Card>
-            <CardContent>
-              <Grid container spacing={5}>
-                <Grid item xs={12} sm={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>템플릿 ID</InputLabel>
-                    <Select
-                      label='Country'
-                      id='form-layouts-tabs-select'
-                      labelId='form-layouts-tabs-select-label'
-                      className='template_id'
-                      onChange={handleChangeValue('template_id')}
-                      defaultValue={values?.template_id ?? 0}
-                      value={values?.template_id}
-                    >
-                      <MenuItem value='0'>0</MenuItem>
-                      <MenuItem value='1'>1</MenuItem>
-                      <MenuItem value='2'>2</MenuItem>
-                      <MenuItem value='3'>3</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>스탬프 사용여부</InputLabel>
-                    <Select
-                      label='Country'
-                      id='form-layouts-tabs-select'
-                      labelId='form-layouts-tabs-select-label'
-                      className='stamp_flag'
-                      onChange={handleChangeValue('stamp_flag')}
-                      defaultValue={values?.stamp_flag ?? 0}
-                      value={values?.stamp_flag}
-                    >
-                      <MenuItem value='0'>사용안함</MenuItem>
-                      <MenuItem value='1'>사용</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>포인트 사용여부</InputLabel>
-                    <Select
-                      label='Country'
-                      id='form-layouts-tabs-select'
-                      labelId='form-layouts-tabs-select-label'
-                      className='point_flag'
-                      onChange={handleChangeValue('point_flag')}
-                      defaultValue={values?.point_flag ?? 0}
-                      value={values?.point_flag}
-                    >
-                      <MenuItem value='0'>사용안함</MenuItem>
-                      <MenuItem value='1'>사용</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {values?.stamp_flag == 1 ?
-                  <>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='스탬프 쿠폰변환 최소개수'
-                        placeholder='스탬프 쿠폰변환 최소개수를 입력해 주세요.'
-                        className='stamp_max_size'
-                        onChange={handleChangeValue('stamp_max_size')}
-                        defaultValue={values?.stamp_max_size}
-                        value={values?.stamp_max_size}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='상품당 스탬프 저장개수'
-                        placeholder='상품당 스탬프 저장개수를 입력해 주세요.'
-                        className='stamp_save_count'
-                        onChange={handleChangeValue('stamp_save_count')}
-                        defaultValue={values?.stamp_save_count}
-                        value={values?.stamp_save_count}
-                      />
-                    </Grid>
-                  </>
-                  :
-                  <>
-                  </>}
-                {values?.point_flag == 1 ?
-                  <>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='포인트 변환률'
-                        placeholder='포인트 변환률을 입력해 주세요.'
-                        className='point_rate'
-                        onChange={handleChangeValue('point_rate')}
-                        defaultValue={values?.point_rate}
-                        value={values?.point_rate}
-                      />
-                    </Grid>
-                  </>
-                  :
-                  <>
-                  </>}
-              </Grid>
-            </CardContent>
-          </Card>
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='tab-3'>
           <Grid container spacing={6}>
