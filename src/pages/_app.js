@@ -123,7 +123,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-    const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
+    const res = await fetch(`https://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
     const json = await res.json();
     return {
       dns_data: json
