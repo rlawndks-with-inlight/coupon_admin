@@ -37,7 +37,6 @@ const DialogCongraturation = (props) => {
             <div style={{ marginBottom: '22px' }}>최초 접속 후 하단 순서대로 세팅을 진행해주세요.</div>
             <div style={{ fontWeight: 'bold' }}>1. 브랜드 관리</div>
             <div style={{ fontWeight: 'bold' }}>2. 가맹점 관리</div>
-            <div style={{ fontWeight: 'bold' }}>3. 장비 관리</div>
           </DialogContentText>
         </DialogContent>
         <DialogActions className='dialog-actions-dense'>
