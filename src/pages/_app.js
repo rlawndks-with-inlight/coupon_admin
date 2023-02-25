@@ -116,23 +116,23 @@ const App = props => {
     </Provider>
   )
 }
-App.getInitialProps = async ({ Component, ctx }) => {
-  try {
-    if (!ctx.req) {
-      return {
-        dns_data: {}
-      }
-    }
-    const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
-    const json = await res.json();
-    return {
-      dns_data: json
-    }
-  } catch (err) {
-    console.log(err)
-    return {
-      dns_data: {}
-    }
-  }
-}
-export default App
+// App.getInitialProps = async ({ Component, ctx }) => {
+//   try {
+//     if (!ctx.req) {
+//       return {
+//         dns_data: {}
+//       }
+//     }
+//     const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
+//     const json = await res.json();
+//     return {
+//       dns_data: json
+//     }
+//   } catch (err) {
+//     console.log(err)
+//     return {
+//       dns_data: {}
+//     }
+//   }
+// }
+// export default App
