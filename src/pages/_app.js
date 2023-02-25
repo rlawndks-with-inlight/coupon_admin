@@ -49,9 +49,10 @@ import 'src/iconify-bundle/icons-bundle-react'
 import '../../styles/globals.css'
 import { useEffect } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
-import { LOCALSTORAGE } from 'src/data/data'
+import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 import { returnMoment } from 'src/@core/utils/function'
+import axios from 'axios'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -77,6 +78,7 @@ const App = props => {
   const getLayout =
     Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
   const setConfig = Component.setConfig ?? undefined
+
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
@@ -116,23 +118,27 @@ const App = props => {
     </Provider>
   )
 }
-// App.getInitialProps = async ({ Component, ctx }) => {
-//   try {
-//     if (!ctx.req) {
-//       return {
-//         dns_data: {}
-//       }
-//     }
-//     const res = await fetch(`http://${ctx.req ? ctx.req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     return {
-//       dns_data: {}
-//     }
-//   }
-// }
+App.getInitialProps = async ({ Component, ctx }) => {
+  try {
+    if (!ctx.req) {
+      return {
+        dns_data: {}
+      }
+    }
+    const res = await axios.options(`${backUrl}/api/v1/auth/domain`, {
+      data: {
+        dns: ctx.req.headers.host.split(':')[0]
+      }
+    });
+    const json = await res.data;
+    return {
+      dns_data: json
+    }
+  } catch (err) {
+    console.log(err)
+    return {
+      dns_data: {}
+    }
+  }
+}
 export default App
