@@ -48,7 +48,6 @@ const isShowDeleteButton = (param_table, user_data) => {
 }
 const settingColumnName = (col_, user_data, param_table) => {
   let col = col_;
-  console.log(col)
   if (col.type == 'edit') {
     if (param_table == 'brands' && user_data?.level < 50) {
       return "수정";
