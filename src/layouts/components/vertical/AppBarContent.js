@@ -165,14 +165,13 @@ const AppBarContent = props => {
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {window.innerWidth >= 700 ?
           <>
-
-            <div>
-              <ButtonGroup variant='outlined' sx={{ height: '26px', border: 'none', mr: 2, fontWeight: 'bold' }}>
-                <Button sx={{ ...ButtonGroupStyle(theme), fontSize: '16px' }} onClick={() => onChangeZoom(-1)}>-</Button>
-                <Button sx={{ ...ButtonGroupStyle(theme), cursor: 'default', pointerEvents: 'none' }}>{curZoom}%</Button>
-                <Button sx={{ ...ButtonGroupStyle(theme), fontSize: '16px' }} onClick={() => onChangeZoom(1)}>+</Button>
-              </ButtonGroup>
-            </div>
+            <IconButton color='inherit' aria-haspopup='true' onClick={() => onChangeZoom(-1)}>
+              <Icon fontSize='1rem' icon="tabler:minus" />
+            </IconButton>
+            <div style={{ ...ButtonGroupStyle(theme), cursor: 'default', pointerEvents: 'none' }}>{curZoom}%</div>
+            <IconButton color='inherit' aria-haspopup='true' onClick={() => onChangeZoom(1)}>
+              <Icon fontSize='1rem' icon="tabler:plus" />
+            </IconButton>
             <IconButton color='inherit' aria-haspopup='true' onClick={onChangeFullScreen}>
               {isFullScreen ?
                 <>
@@ -194,7 +193,7 @@ const AppBarContent = props => {
         <NotificationDropdown settings={settings} notifications={notifications} />
         <UserDropdown settings={settings} />
       </Box>
-    </Box>
+    </Box >
   )
 }
 

@@ -97,7 +97,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'brands',
     breadcrumb: '브랜드',
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 50,
     search_placeholder: '브랜드명 검색',
     head_columns: [
       { title: '브랜드정보', size: 8 },

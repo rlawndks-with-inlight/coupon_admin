@@ -169,9 +169,19 @@ const RegisterV1 = ({ dns_data }) => {
   const openSearchOption = async () => {
     await handleClickOpen();
   }
-  const goToManagerPage = () => {
+  const goToManagerPage = async () => {
     handleClose();
-    router.push('/manager/users');
+    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+    user_data = JSON.parse(user_data);
+    let push_link = '/manager/brands';
+    if (user_data?.user_level == 40)
+      push_link = '/manager/merchandises'
+    else if (user_data?.user_level == 10)
+      push_link = '/manager/merchandises'
+    else if (user_data?.user_level == 45)
+      push_link = '/manager/devices'
+
+    router.push(push_link);
   }
   return (
     <>

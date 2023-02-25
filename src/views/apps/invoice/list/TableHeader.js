@@ -97,7 +97,7 @@ const TableHeader = props => {
     let obj = { ...defaultSearchObj, s_dt: returnMoment(false, first_day).substring(0, 10), e_dt: today };
     let add_obj = await getOptionBoxBySameLineDate(router.query?.table);
     add_obj = add_obj?.value;
-    obj = { ...obj, ...add_obj }
+    obj = { ...obj, ...add_obj };
     changePage(1, false, obj);
   }
 
