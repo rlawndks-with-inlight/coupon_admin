@@ -26,7 +26,7 @@ const notifications = [
     meta: '알림',
     avatarAlt: 'Flora',
     title: '환영합니다 ! 🎉',
-    avatarImg: '/images/avatars/4.png',
+    avatarImg: '/images/avatars/logo.png',
     subtitle: ''
   },
 ]
