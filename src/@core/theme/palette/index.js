@@ -1,4 +1,6 @@
+import { useTheme } from "@emotion/react"
 import { useEffect, useState } from "react"
+import { useSettings } from "src/@core/hooks/useSettings"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { axiosIns } from "src/@fake-db/backend"
 import { LOCALSTORAGE } from "src/data/data"
@@ -10,7 +12,6 @@ const DefaultPalette = (mode, skin) => {
   const darkColor = '228, 230, 244'
   const darkPaperBgColor = '#2F3349'
   const mainColor = mode === 'light' ? lightColor : darkColor
-
   const defaultBgColor = () => {
     if (skin === 'bordered' && mode === 'light') {
       return whiteColor

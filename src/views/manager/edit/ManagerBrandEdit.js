@@ -22,6 +22,7 @@ import { useEditPageImg } from 'src/@core/utils/function'
 import MuiTabList from '@mui/lab/TabList'
 import { styled } from '@mui/material/styles'
 import { useTheme } from '@emotion/react'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -41,6 +42,7 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 const ManagerBrandEdit = (props) => {
   const { getItem, editItem } = props;
   const theme = useTheme();
+  const { settings, saveSettings } = useSettings();
 
   const [tabValue, setTabValue] = useState('tab-1')
   const defaultObj = {

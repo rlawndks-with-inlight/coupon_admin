@@ -120,7 +120,11 @@ const Edit = ({ dns_data }) => {
       if (response?.status == 201) {
         toast.success("성공적으로 저장되었습니다.");
         setTimeout(() => {
-          router.push(`/manager/${router.query?.table}`);
+          if (router.query?.table == 'brands') {
+            window.location.href = `/manager/${router.query?.table}`;
+          } else {
+            router.push(`/manager/${router.query?.table}`);
+          }
         }, 1000)
       }
     } catch (err) {
