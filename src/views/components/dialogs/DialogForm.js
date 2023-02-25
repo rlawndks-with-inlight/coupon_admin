@@ -16,23 +16,26 @@ const Dialog = styled(MuiDialog)({
   },
 })
 const DialogForm = (props) => {
-  const { open, setOpen, handleClickOpen, handleClose, data, changePassword } = props;
+  const { open, setOpen, handleClickOpen, handleClose, data, changePassword, headIcon } = props;
 
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>{data?.table} {data?.user_name} 비밀번호 변경</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ mb: 3 }}>
+        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ margin: '0 auto' }}>{headIcon}</div>
+          <DialogTitle id='form-dialog-title' style={{ margin: "0 auto" }}>{data?.table} {data?.user_name} 비밀번호 변경</DialogTitle>
+          <DialogContentText style={{ margin: "0 auto" }} >
             {'변경할 비밀번호를 입력해 주세요.'}
           </DialogContentText>
-          <TextField sx={{ marginBottom: '12px' }} autoComplete='new-password' id='new-pw' autoFocus fullWidth type='password' label='새비밀번호' />
-          <TextField id='new-pw-check' autoComplete='new-password' fullWidth type='password' label='새비밀번호 확인' />
-        </DialogContent>
-        <DialogActions className='dialog-actions-dense'>
-          <Button onClick={handleClose}>취소</Button>
-          <Button onClick={changePassword}>저장</Button>
-        </DialogActions>
+          <DialogContent>
+            <TextField sx={{ marginBottom: '12px' }} autoComplete='new-password' id='new-pw' autoFocus fullWidth type='password' label='새비밀번호' />
+            <TextField id='new-pw-check' autoComplete='new-password' fullWidth type='password' label='새비밀번호 확인' />
+          </DialogContent>
+          <DialogActions className='dialog-actions-dense'>
+            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={changePassword}>저장</Button>
+            <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
+          </DialogActions>
+        </div>
       </Dialog>
     </Fragment>
   )

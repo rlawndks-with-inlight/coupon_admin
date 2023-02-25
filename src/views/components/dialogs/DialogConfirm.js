@@ -16,24 +16,34 @@ const Dialog = styled(MuiDialog)({
   },
 })
 const DialogConfirm = (props) => {
-  const { open, handleClose, onKeepGoing, text, subText, data, saveText } = props;
+  const { open, handleClose, onKeepGoing, text, subText, data, saveText, headIcon } = props;
 
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>{text}</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ mb: 3 }}>
-            {subText}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions className='dialog-actions-dense'>
-          <Button onClick={handleClose}>취소</Button>
-          <Button onClick={() => onKeepGoing(data)}>{saveText}</Button>
-        </DialogActions>
+        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ margin: '0 auto' }}>{headIcon}</div>
+          <DialogTitle id='form-dialog-title'>{text}</DialogTitle>
+          <DialogContent>
+            {subText ?
+              <>
+                <DialogContentText sx={{ mb: 3 }}>
+                  {subText}
+                </DialogContentText>
+              </>
+              :
+              <>
+              </>}
+          </DialogContent>
+          <DialogActions className='dialog-actions-dense'>
+            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => onKeepGoing(data)}>{saveText}</Button>
+            <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
+          </DialogActions>
+        </div>
+
       </Dialog>
     </Fragment>
   )
 }
 
-export default DialogConfirm
+export default DialogConfirm;

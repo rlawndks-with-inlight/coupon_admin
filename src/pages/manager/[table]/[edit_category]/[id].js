@@ -24,7 +24,7 @@ import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import CardContent from '@mui/material/CardContent'
 import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
-
+import Icon from 'src/@core/components/icon'
 // ** Third Party Components
 import axios from 'axios'
 
@@ -40,7 +40,6 @@ import ManagerUserEdit from 'src/views/manager/edit/ManagerUserEdit'
 import ManagerAdEdit from 'src/views/manager/edit/ManagerAdEdit'
 import ManagerNoticeEdit from 'src/views/manager/edit/ManagerNoticeEdit'
 import ManagerBrandEdit from 'src/views/manager/edit/ManagerBrandEdit'
-import { CardHeader } from '@mui/material'
 import { objDataGridColumns } from 'src/data/manager-data'
 import { axiosIns } from 'src/@fake-db/backend'
 import DialogAlert from 'src/views/components/dialogs/DialogAlert'
@@ -184,6 +183,7 @@ const Edit = ({ dns_data }) => {
         onKeepGoing={editItem}
         text={`정말 ${router.query?.edit_category == 'edit' ? '수정' : '추가'} 하시겠습니까?`}
         //subText={'삭제하시면 복구할 수 없습니다.'}
+        headIcon={<Icon icon='tabler:edit' style={{ fontSize: '40px' }} />}
         saveText={'저장'}
         data={editConfirmData}
       />

@@ -256,6 +256,7 @@ const TrManager = (props) => {
         text={'정말 삭제 하시겠습니까?'}
         subText={'삭제하시면 복구할 수 없습니다.'}
         saveText={'삭제'}
+        headIcon={<Icon icon='tabler:trash' style={{ fontSize: '40px' }} />}
         data={deleteData}
       />
       <DialogForm
@@ -265,6 +266,7 @@ const TrManager = (props) => {
         handleClose={handleClose}
         handleClickOpen={handleClickOpen}
         changePassword={changePassword}
+        headIcon={<Icon icon='tabler:lock' style={{ fontSize: '40px' }} />}
       />
       <TableRow
         key={index}
