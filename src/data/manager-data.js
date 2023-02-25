@@ -77,6 +77,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('가맹점ID', 'mcht_id', 'number', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('상위아이디', 'group_id', 'text', ''),// 검색 level >=10 일시

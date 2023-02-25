@@ -204,7 +204,6 @@ const List = ({ dns_data }) => {
               </>
               :
               <>
-
                 <TableManager
                   param_table={router.query?.table}//uri 에 사용할 것
                   table={objDataGridColumns[router.query?.table]?.table}//ajax에 사용할 것

@@ -48,10 +48,7 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import { useEffect } from 'react'
-import { getLocalStorage } from 'src/@core/utils/local-storage'
-import { LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
-import { returnMoment } from 'src/@core/utils/function'
 
 const clientSideEmotionCache = createEmotionCache()
 
