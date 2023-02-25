@@ -40,12 +40,24 @@ const isShowCell = (param_table, col, search_obj) => {
       }
     }
   }
-
   return true;
 }
+const isShowDeleteButton = (param_table, user_data) => {
+  let ans = true;
 
+}
+const settingColumnName = (col_, user_data, param_table) => {
+  let col = col_;
+  console.log(col)
+  if (col.type == 'edit') {
+    if (param_table == 'brands' && user_data?.level < 50) {
+      return "수정";
+    }
+  }
+  return col?.title;
+}
 const TableManager = (props) => {
-  const { param_table, posts, columns, changePage, page, searchObj, notSearchOption } = props;
+  const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption } = props;
 
   const theme = useTheme();
   useEffect(() => {
@@ -60,12 +72,14 @@ const TableManager = (props) => {
         columns={columns}
         changePage={changePage}
         page={page}
-        isShowCell={isShowCell}
+        //isShowCell={isShowCell}
+        isShowDeleteButton={isShowDeleteButton}
         searchObj={searchObj}
         notSearchOption={notSearchOption}
+        userData={userData}
       />
     )
-  }, [])
+  }, []);
   useEffect(() => {
   }, [])
 
@@ -140,7 +154,7 @@ const TableManager = (props) => {
                           background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
                         }} />
                       </div>
-                      {col?.title}
+                      {settingColumnName(col, userData, param_table)}
                     </TableCell>
                   </>
                   :

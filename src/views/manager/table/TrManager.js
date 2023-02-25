@@ -22,7 +22,7 @@ import Avatar from '@mui/material/Avatar'
 import DialogForm from 'src/views/components/dialogs/DialogForm'
 import $ from 'jquery'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
-export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel, openChangePasswordPopUp) => {
+export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel, openChangePasswordPopUp, user_data) => {
   try {
     let result = "---";
 
@@ -107,11 +107,18 @@ export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel,
               <Icon icon='tabler:edit' />
             </IconButton>
           </Tooltip>
-          <Tooltip title='삭제'>
-            <IconButton size='small' sx={{ color: 'text.secondary' }} onClick={() => { onDeleteOpen(data?.id) }}>
-              <Icon icon='tabler:trash' />
-            </IconButton>
-          </Tooltip>
+          {isShowDeleteButton(table, user_data) ?
+            <>
+              <Tooltip title='삭제'>
+                <IconButton size='small' sx={{ color: 'text.secondary' }} onClick={() => { onDeleteOpen(data?.id) }}>
+                  <Icon icon='tabler:trash' />
+                </IconButton>
+              </Tooltip>
+            </>
+            :
+            <>
+            </>}
+
           {column?.column == 'edit_ch' ?
             <>
               <Tooltip title='비밀번호변경'>
@@ -156,9 +163,15 @@ export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel,
   }
 
 }
+const isShowDeleteButton = (param_table, user_data) => {
+  if (param_table == 'brands' && user_data?.level < 50) {
+    return false;
+  }
 
+  return true;
+}
 const TrManager = (props) => {
-  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption } = props;
+  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData } = props;
   const router = useRouter();
   const theme = useTheme();
 
@@ -269,7 +282,7 @@ const TrManager = (props) => {
                     maxWidth: '300px',
                     color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
                   }}>
-                  {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp)}
+                  {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp, userData)}
                 </TableCell>
               </>}
           </>

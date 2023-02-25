@@ -70,7 +70,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
 
 const TableHeader = props => {
   // ** Props
-  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption } = props
+  const { userData, changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption } = props
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
   const [addSearchOption, setAddSearchOption] = useState({});
@@ -157,15 +157,12 @@ const TableHeader = props => {
     setEDt(new Date(e_dt));
   }
 
-  const getIsSeeAddButton = async () => {
-    let param_table = router.query?.table;
-    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
-    user_data = JSON.parse(user_data);
+  const getIsSeeAddButton = (param_table, user_data) => {
     if (user_data?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
       return true;
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   const [open, setOpen] = useState(false);
@@ -344,7 +341,7 @@ const TableHeader = props => {
               placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
               className="search"
             />
-            {objDataGridColumns[router.query?.table]?.is_add && getIsSeeAddButton() ?
+            {(objDataGridColumns[router.query?.table]?.is_add && getIsSeeAddButton(router.query?.table, userData)) ?
               <>
                 <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
                   {objDataGridColumns[router.query?.table]?.breadcrumb} 추가

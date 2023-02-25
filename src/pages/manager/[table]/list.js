@@ -43,7 +43,7 @@ const List = ({ dns_data }) => {
   const [loading, setLoading] = useState(false);
   const page_size_list = [10, 20, 25, 50, 100];
   const [notSearchOption, setNotSearchOption] = useState({});
-
+  const [userData, setUserData] = useState({});
   const theme = useTheme()
   const { direction } = theme
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
@@ -64,8 +64,14 @@ const List = ({ dns_data }) => {
     // if (!Object.keys(objDataGridColumns).includes(router.query?.table)) {
     //   router.back();
     // }
+    getUserData();
     setParams(router?.query);
-  }, [router?.query?.table])
+  }, [router?.query?.table]);
+  const getUserData = async () => {
+    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+    user_data = JSON.parse(user_data);
+    setUserData(user_data);
+  }
   const changeNotSearchOption = async () => {
     setLoading(true);
     let not_search_options = await getLocalStorage(LOCALSTORAGE.NOT_SEARCH_OPTION);
@@ -189,6 +195,7 @@ const List = ({ dns_data }) => {
               popperPlacement={popperPlacement}
               changeNotSearchOption={changeNotSearchOption}
               notSearchOption={notSearchOption}
+              userData={userData}
             />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?
@@ -207,6 +214,7 @@ const List = ({ dns_data }) => {
                   changePage={changePage}
                   page={page}
                   notSearchOption={notSearchOption}
+                  userData={userData}
                 />
               </>}
             <Box
