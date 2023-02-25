@@ -56,17 +56,15 @@ import { returnMoment } from 'src/@core/utils/function'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
-if (themeConfig.routingLoader) {
-  Router.events.on('routeChangeStart', () => {
-    NProgress.start()
-  })
-  Router.events.on('routeChangeError', () => {
-    NProgress.done()
-  })
-  Router.events.on('routeChangeComplete', () => {
-    NProgress.done()
-  })
-}
+Router.events.on('routeChangeStart', () => {
+  NProgress.start()
+})
+Router.events.on('routeChangeError', () => {
+  NProgress.done()
+})
+Router.events.on('routeChangeComplete', () => {
+  NProgress.done()
+})
 
 
 // ** Configure JSS & ClassName
@@ -79,7 +77,9 @@ const App = props => {
   const getLayout =
     Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
   const setConfig = Component.setConfig ?? undefined
-
+  useEffect(() => {
+    console.log(dns_data)
+  }, [dns_data])
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
