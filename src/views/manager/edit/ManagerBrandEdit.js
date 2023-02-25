@@ -21,6 +21,7 @@ import * as source from 'src/views/forms/form-elements/file-uploader/FileUploade
 import { useEditPageImg } from 'src/@core/utils/function'
 import MuiTabList from '@mui/lab/TabList'
 import { styled } from '@mui/material/styles'
+import { useTheme } from '@emotion/react'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -39,6 +40,7 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 
 const ManagerBrandEdit = (props) => {
   const { getItem, editItem } = props;
+  const theme = useTheme();
 
   const [tabValue, setTabValue] = useState('tab-1')
   const defaultObj = {
