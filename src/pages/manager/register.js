@@ -219,7 +219,6 @@ const Register = () => {
     }
   }
   const onRegister = async () => {
-    console.log(values);
     try {
       if (values.password != values.passwordCheck) {
         toast.error('비밀번호가 일치하지 않습니다.');
