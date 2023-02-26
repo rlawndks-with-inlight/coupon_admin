@@ -87,6 +87,11 @@ const ManagerBrandEdit = (props) => {
         obj[key] = item[key];
       }
       obj['theme_css'] = JSON.parse(obj['theme_css']);
+      if (typeof obj['theme_css'] != 'object' || !obj['theme_css']?.main_color) {
+        obj['theme_css'] = {
+          main_color: '#7367f0'
+        }
+      }
       setValues({ ...obj });
     }
   }
@@ -104,7 +109,7 @@ const ManagerBrandEdit = (props) => {
   }
   const onEditItem = () => {
     let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
-    let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css']) };
+    let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css'] ?? {}) };
     for (var i = 0; i < img_key_list.length; i++) {
       if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
