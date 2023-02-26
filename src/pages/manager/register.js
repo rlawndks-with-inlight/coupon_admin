@@ -117,7 +117,7 @@ const Register = () => {
 
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0)
-
+  const [token, setToken] = useState("");
   const [state, setState] = useState({
     password: '',
     password2: '',
@@ -233,16 +233,10 @@ const Register = () => {
       delete obj['passwordCheck'];
       delete obj['showPasswordCheck'];
       const response = await axiosIns().post('/api/v1/auth/sign-up/brand', obj);
-      await setCookie('o', response?.data?.access_token, {
-        path: "/",
-        secure: true,
-        sameSite: "none",
-      });
+      setToken(response?.data?.access_token);
       if (response?.status == 200 && response?.data?.user) {
-        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+        setActiveStep(activeStep + 1);
       }
-      setActiveStep(activeStep + 1);
-
     } catch (err) {
       let push_lick = await processCatch(err);
     }
@@ -254,18 +248,7 @@ const Register = () => {
     await handleClickOpen();
   }
   const goToManagerPage = async () => {
-    handleClose();
-    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
-    user_data = JSON.parse(user_data);
-    let push_link = '/manager/brands';
-    if (user_data?.user_level == 40)
-      push_link = '/manager/merchandises'
-    else if (user_data?.user_level == 10)
-      push_link = '/manager/merchandises'
-    else if (user_data?.user_level == 45)
-      push_link = '/manager/devices'
-
-    router.push(push_link);
+    window.location.href = `https://${values?.dns}/manager/login?o=${token}`
   }
   const getStepContent = step => {
     switch (step) {

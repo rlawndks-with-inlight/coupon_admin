@@ -81,7 +81,10 @@ const LoginV1 = ({ dns_data }) => {
   }, [])
 
   const settings = async () => {
+    setLoading(true);
     await checkDns();
+    await checkAuth();
+    setLoading(false);
   }
 
   const settingDomain = async () => {
@@ -93,7 +96,6 @@ const LoginV1 = ({ dns_data }) => {
   }
 
   const checkDns = async () => {
-    setLoading(true);
     try {
 
       const response = await axiosIns().options('/api/v1/auth/domain', {
@@ -119,12 +121,27 @@ const LoginV1 = ({ dns_data }) => {
       // if (user_data?.id > 0) {
       //   // router.push('/manager/users')
       // }
+      if (router.asPath.split('?')[1]) {
+        let query_str = router.asPath.split('?')[1];
+        if (query_str.includes('o=')) {
+          let token = query_str.split('o=')[1];
+          await setCookie('o', token, {
+            path: "/",
+            secure: true,
+            sameSite: "none",
+          });
+        }
+
+      }
     } catch (err) {
       toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
         router.push('/404');
       }
     }
+
+  }
+  const checkAuth = async () => {
     try {
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
@@ -140,9 +157,7 @@ const LoginV1 = ({ dns_data }) => {
     } catch (err) {
       console.log(err)
     }
-    setLoading(false);
   }
-
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
