@@ -171,7 +171,7 @@ const isShowDeleteButton = (param_table, user_data) => {
   return true;
 }
 const TrManager = (props) => {
-  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn } = props;
+  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table } = props;
   const router = useRouter();
   const theme = useTheme();
 

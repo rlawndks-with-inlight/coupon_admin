@@ -77,6 +77,7 @@ const TableManager = (props) => {
         notSearchOption={notSearchOption}
         userData={userData}
         onlyTeamSeeColumn={onlyTeamSeeColumn}
+        param_table={param_table}
       />
     )
   }, []);
