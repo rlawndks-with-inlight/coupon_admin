@@ -117,7 +117,7 @@ const Edit = ({ dns_data }) => {
       else if (router.query?.edit_category == 'create')
         response = await axiosIns().post(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}`, formData, config);
       if (response?.status == 201) {
-        toast.success("성공적으로 저장되었습니다.");
+        toast.success("성공적으로 저장되었습니다." + `${router.query?.edit_category == 'edit' ? '😊' : '😻'}`);
         setTimeout(() => {
           if (router.query?.table == 'brands') {
             window.location.href = `/manager/${router.query?.table}`;
