@@ -28,12 +28,14 @@ const DefaultPalette = (mode, skin) => {
 
   const getDnsData = async () => {
     try {
+      let obj = {};
+
       const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
           dns: location.hostname
         },
       });
-      let obj = { ...response?.data };
+      obj = { ...response?.data };
       obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
       setDnsData(obj);
     } catch (err) {

@@ -116,7 +116,7 @@ const VerticalNavHeader = props => {
             </>
             :
             <>
-              <img src={dnsData?.logo_img} style={{ height: 'auto', width: 'auto', maxWidth: '160px' }} />
+              <img src={dnsData?.logo_img} style={{ height: 'auto', width: 'auto', maxWidth: '160px', maxHeight: '80px' }} />
             </>}
         </LinkStyled>
       )}

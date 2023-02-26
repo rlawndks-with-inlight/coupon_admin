@@ -121,6 +121,9 @@ const LoginV1 = ({ dns_data }) => {
       // }
     } catch (err) {
       toast.error(err?.response?.data?.message || err?.message);
+      if (err?.response?.status == 409) {
+        router.push('/404');
+      }
     }
     try {
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
@@ -174,6 +177,7 @@ const LoginV1 = ({ dns_data }) => {
           router.push(push_lick);
         }
       }
+
     }
 
   }
