@@ -227,6 +227,7 @@ const Register = () => {
       }
       let obj = { ...values };
       obj['user_pw'] = obj?.password;
+      delete obj['password'];
       delete obj['showPassword'];
       delete obj['passwordCheck'];
       delete obj['showPasswordCheck'];
