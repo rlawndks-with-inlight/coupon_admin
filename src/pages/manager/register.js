@@ -43,6 +43,7 @@ import DialogCongraturation from 'src/views/components/dialogs/DialogCongraturat
 import { processCatch } from 'src/@core/utils/function'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { setCookie } from 'src/@core/utils/react-cookie'
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '80rem' }
 }))
