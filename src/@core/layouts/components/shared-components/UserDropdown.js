@@ -24,7 +24,7 @@ import { deleteCookie, getCookie } from 'src/@core/utils/react-cookie'
 import { deleteLocalStorage, getLocalStorage } from 'src/@core/utils/local-storage'
 import { toast } from 'react-hot-toast'
 import { LOCALSTORAGE } from 'src/data/data'
-import { getUserLevelByNumber } from 'src/@core/utils/function'
+import { getMyPageParamByNumber, getUserLevelByNumber } from 'src/@core/utils/function'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -73,7 +73,9 @@ const UserDropdown = props => {
   const getUser = async () => {
     let auth = await getLocalStorage(LOCALSTORAGE.USER_DATA) ?? "{}";
     auth = JSON.parse(auth);
+    auth['my_page_param'] = await getMyPageParamByNumber(auth['level']);
     auth['level'] = await getUserLevelByNumber(auth['level']);
+    console.log(auth)
     setUser(auth);
   }
 
@@ -162,7 +164,7 @@ const UserDropdown = props => {
           </Box>
         </Box>
         <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/manager/my-page')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose(`/manager/${user?.my_page_param}/edit/${user?.id}`)}>
           <Box sx={styles}>
             <Icon icon='tabler:user-check' />
             My Profile

@@ -108,11 +108,11 @@ const LoginV1 = ({ dns_data }) => {
       } else {
         toast.error(response?.data?.statusText);
       }
-      let is_appr = Number(response?.data?.is_appr);
+      // let is_appr = Number(response?.data?.is_appr);
 
-      if (is_appr != 1) {
-        router.push('/manager/register');
-      }
+      // if (is_appr != 1) {
+      //   router.push('/manager/register');
+      // }
 
       // let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       // user_data = JSON.parse(user_data);

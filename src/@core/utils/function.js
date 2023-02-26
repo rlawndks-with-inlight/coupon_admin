@@ -168,6 +168,26 @@ export const getUserLevelByNumber = (num) => {
   else
     return '잘못된레벨'
 }
+export const getMyPageParamByNumber = (num) => {
+  if (num == 0)
+    return 'users'
+  else if (num == 10)
+    return 'merchandises'
+  else if (num == 15)
+    return 'users'
+  else if (num == 20)
+    return 'users'
+  else if (num == 30)
+    return 'users'
+  else if (num == 40)
+    return 'users'
+  else if (num == 45)
+    return 'users'
+  else if (num == 50)
+    return 'users'
+  else
+    return '잘못된레벨'
+}
 export const useEditPageImg = (img_) => {
   try {
     let img = img_ ? img_[0] : '';

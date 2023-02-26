@@ -109,11 +109,11 @@ const RegisterV1 = ({ dns_data }) => {
           dns: location.hostname
         },
       });
-      let is_appr = Number(response?.data?.is_appr);
+      // let is_appr = Number(response?.data?.is_appr);
 
-      if (is_appr == 1) {
-        router.push('/manager/login');
-      }
+      // if (is_appr == 1) {
+      //   router.push('/manager/login');
+      // }
       setDnsData(response?.data);
       setLoading(false);
     } catch (err) {

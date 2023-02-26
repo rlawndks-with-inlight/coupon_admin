@@ -28,6 +28,7 @@ import DatePicker from 'react-datepicker'
 // ** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const ManagerUserEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory } = props;
@@ -35,7 +36,8 @@ const ManagerUserEdit = (props) => {
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
-  const [bDt, setBDt] = useState(new Date())
+  const [bDt, setBDt] = useState(new Date());
+  const [userData, setUserData] = useState();
   const defaultObj = {
     profile_img: undefined,
     user_name: '',
@@ -91,7 +93,6 @@ const ManagerUserEdit = (props) => {
     }
   }
 
-
   const handleChange = async (field, value) => {
     setValues({ ...values, [field]: value });
   }
@@ -102,7 +103,7 @@ const ManagerUserEdit = (props) => {
 
   const onReset = () => {
     setBDt(new Date());
-    setValues(defaultObj)
+    setValues(defaultObj);
   }
   const onEditItem = () => {
     let img_key_list = ['profile_img'];
