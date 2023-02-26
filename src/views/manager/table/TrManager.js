@@ -171,7 +171,7 @@ const isShowDeleteButton = (param_table, user_data) => {
   return true;
 }
 const TrManager = (props) => {
-  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData } = props;
+  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn } = props;
   const router = useRouter();
   const theme = useTheme();
 
@@ -274,19 +274,26 @@ const TrManager = (props) => {
       >
         {columns && columns.map((col, idx) => (
           <>
-            {notSearchOption['list'] && notSearchOption['list'].includes(col?.column) ?
+            {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
               <>
               </>
               :
               <>
-                <TableCell align='left'
-                  style={{
-                    maxWidth: '300px',
-                    color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
-                  }}>
-                  {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp, userData)}
-                </TableCell>
+                {notSearchOption['list'] && notSearchOption['list'].includes(col?.column) ?
+                  <>
+                  </>
+                  :
+                  <>
+                    <TableCell align='left'
+                      style={{
+                        maxWidth: '300px',
+                        color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
+                      }}>
+                      {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp, userData)}
+                    </TableCell>
+                  </>}
               </>}
+
           </>
         ))}
       </TableRow>

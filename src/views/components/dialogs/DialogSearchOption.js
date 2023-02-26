@@ -22,7 +22,7 @@ const Dialog = styled(MuiDialog)({
   },
 })
 const DialogSearchOption = (props) => {
-  const { open, setOpen, handleClickOpen, handleClose, data, saveSearchOption, param_table } = props;
+  const { open, setOpen, handleClickOpen, handleClose, data, saveSearchOption, param_table, onlyTeamSeeColumn } = props;
   const [checked, setChecked] = useState(true)
   const checkRef = useRef();
   const [notSearchOptions, setNotSearchOptions] = useState([]);
@@ -43,7 +43,8 @@ const DialogSearchOption = (props) => {
     if (notSearchOptions.length > 0) {
       setLoading(false);
     }
-  }, [notSearchOptions])
+  }, [notSearchOptions]);
+
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -60,7 +61,14 @@ const DialogSearchOption = (props) => {
               <FormGroup row sx={{ maxWidth: '425px' }} ref={checkRef}>
                 {data?.columns && data?.columns.map((item, idx) => (
                   <>
-                    <FormControlLabel label={(item?.type_option?.search_option_label ?? "") + item?.title} sx={{ margin: 0, width: '200px' }} control={<Checkbox defaultChecked={!notSearchOptions.includes(item?.column)} name={item?.column} />} />
+                    {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(item?.column)) ?
+                      <>
+                      </>
+                      :
+                      <>
+                        <FormControlLabel label={(item?.type_option?.search_option_label ?? "") + item?.title} sx={{ margin: 0, width: '200px' }} control={<Checkbox defaultChecked={!notSearchOptions.includes(item?.column)} name={item?.column} />} />
+                      </>
+                    }
                   </>
                 ))}
               </FormGroup>

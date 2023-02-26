@@ -175,7 +175,9 @@ const List = ({ dns_data }) => {
     await excelDownload(response?.data?.content ?? [], objDataGridColumns, router.query?.table);
   }
 
-
+  const onlyTeamSeeColumn = {
+    devices: ['brand_name', 'brand_id']
+  }
   return (
     <>
 
@@ -196,6 +198,7 @@ const List = ({ dns_data }) => {
               changeNotSearchOption={changeNotSearchOption}
               notSearchOption={notSearchOption}
               userData={userData}
+              onlyTeamSeeColumn={onlyTeamSeeColumn}
             />
             <Divider sx={{ m: '0 !important' }} />
             {loading ?
@@ -214,6 +217,7 @@ const List = ({ dns_data }) => {
                   page={page}
                   notSearchOption={notSearchOption}
                   userData={userData}
+                  onlyTeamSeeColumn={onlyTeamSeeColumn}
                 />
               </>}
             <Box

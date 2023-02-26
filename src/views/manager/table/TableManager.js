@@ -56,7 +56,7 @@ const settingColumnName = (col_, user_data, param_table) => {
   return col?.title;
 }
 const TableManager = (props) => {
-  const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption } = props;
+  const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption, onlyTeamSeeColumn } = props;
 
   const theme = useTheme();
   useEffect(() => {
@@ -76,6 +76,7 @@ const TableManager = (props) => {
         searchObj={searchObj}
         notSearchOption={notSearchOption}
         userData={userData}
+        onlyTeamSeeColumn={onlyTeamSeeColumn}
       />
     )
   }, []);
@@ -131,34 +132,41 @@ const TableManager = (props) => {
             }}>
             {columns && columns.map((col, idx) => (
               <>
-                {notSearchOption['list'] && !notSearchOption['list'].includes(col?.column) ?
+                {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
                   <>
-                    <TableCell align='left'
-                      sx={{
-                        maxWidth: '300px',
-                        position: 'relative'
-                      }}>
-                      <div style={{
-                        position: 'absolute',
-                        width: '2px',
-                        height: '100%',
-                        display: 'flex',
-                        left: '0',
-                        top: '0'
-                      }}>
-                        <div style={{
-                          width: '2px',
-                          height: '14px',
-                          margin: 'auto 0',
-                          background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
-                        }} />
-                      </div>
-                      {settingColumnName(col, userData, param_table)}
-                    </TableCell>
                   </>
                   :
                   <>
+                    {notSearchOption['list'] && !notSearchOption['list'].includes(col?.column) ?
+                      <>
+                        <TableCell align='left'
+                          sx={{
+                            maxWidth: '300px',
+                            position: 'relative'
+                          }}>
+                          <div style={{
+                            position: 'absolute',
+                            width: '2px',
+                            height: '100%',
+                            display: 'flex',
+                            left: '0',
+                            top: '0'
+                          }}>
+                            <div style={{
+                              width: '2px',
+                              height: '14px',
+                              margin: 'auto 0',
+                              background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                            }} />
+                          </div>
+                          {settingColumnName(col, userData, param_table)}
+                        </TableCell>
+                      </>
+                      :
+                      <>
+                      </>}
                   </>}
+
 
               </>
             ))

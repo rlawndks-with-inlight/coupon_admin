@@ -70,7 +70,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
 
 const TableHeader = props => {
   // ** Props
-  const { userData, changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption } = props
+  const { userData, changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption, onlyTeamSeeColumn } = props
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
   const [addSearchOption, setAddSearchOption] = useState({});
@@ -196,6 +196,7 @@ const TableHeader = props => {
         handleClickOpen={handleClickOpen}
         saveSearchOption={saveSearchOption}
         param_table={router.query?.table}
+        onlyTeamSeeColumn={onlyTeamSeeColumn}
       />
       {/* {optionBox(router.query?.table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj)} */}
       <DatePickerWrapper>
