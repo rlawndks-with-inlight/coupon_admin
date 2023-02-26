@@ -22,14 +22,15 @@ const DefaultPalette = (mode, skin) => {
     } else return '#25293C'
   }
   const [dnsData, setDnsData] = useState({});
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     getDnsData();
   }, [])
 
   const getDnsData = async () => {
     try {
+      setLoading(true);
       let obj = {};
-
       const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
           dns: location.hostname
@@ -38,6 +39,7 @@ const DefaultPalette = (mode, skin) => {
       obj = { ...response?.data };
       obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
       setDnsData(obj);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -128,7 +130,8 @@ const DefaultPalette = (mode, skin) => {
       disabled: `rgba(${mainColor}, 0.26)`,
       disabledBackground: `rgba(${mainColor}, 0.12)`,
       focus: `rgba(${mainColor}, 0.12)`
-    }
+    },
+    loading: loading,
   }
 }
 
