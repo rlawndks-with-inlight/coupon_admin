@@ -466,13 +466,6 @@ const Register = () => {
 
   return (
     <Box className='content-center'>
-      <DialogCongraturation
-        open={open}
-        setOpen={setOpen}
-        handleClose={handleClose}
-        handleClickOpen={handleClickOpen}
-        goToManagerPage={goToManagerPage}
-      />
       <Card>
         <CardContent>
           <StepperWrapper>
