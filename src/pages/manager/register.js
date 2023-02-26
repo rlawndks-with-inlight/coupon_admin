@@ -248,7 +248,7 @@ const Register = () => {
     await handleClickOpen();
   }
   const goToManagerPage = async () => {
-    window.location.href = `https://${values?.dns}/manager/login?o=${token}`
+    window.location.href = `https://${values?.dns}`
   }
   const getStepContent = step => {
     switch (step) {
