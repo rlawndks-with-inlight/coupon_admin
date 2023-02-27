@@ -35,6 +35,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('보유포인트', 'point_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유스탬프', 'stamp_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유쿠폰갯수', 'coupon_amt', 'number', ''),// 검색 level == 0일 경우에만
+      managerListFormat('포인트이력', 'point_history', 'point_history', ''),// 검색 level == 0일 경우에만
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),
@@ -103,7 +104,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     head_columns: [
       { title: '브랜드정보', size: 7 },
       { title: '스탬프정보', size: 3 },
-      { title: '포인트정보', size: 2 },
+      { title: '포인트정보', size: 3 },
       { title: '법인정보', size: 5 },
       { title: '', size: 3 },
     ],
@@ -121,6 +122,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('저장개수', 'stamp_save_count', 'number', '', { search_option_label: '스탬프' }),
       managerListFormat('사용여부', 'point_flag', 'use_status', '', { search_option_label: '포인트' }),
       managerListFormat('적립비율', 'point_rate', 'percent', '', { search_option_label: '포인트' }),
+      managerListFormat('최소사용금액', 'point_min_amount', 'number', '', { search_option_label: '포인트' }),
       managerListFormat('법인상호', 'company_nm', 'text', ''),
       managerListFormat('대표자명', 'ceo_nm', 'text', ''),
       managerListFormat('전화번호', 'phone_num', 'text', ''),
@@ -182,6 +184,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('적립포인트', 'save_amount', 'number', ''),
       managerListFormat('사용포인트', 'use_amount', 'number', ''),
       managerListFormat('적립비율', 'point_rate', 'percent', ''),
+      managerListFormat('적립타입', 'is_cancel', 'is_cancel', ''),
       managerListFormat('발행시간', 'created_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],

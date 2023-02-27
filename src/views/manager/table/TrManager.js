@@ -84,6 +84,32 @@ export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel,
       if (is_excel) result = data[column?.column] == 1 ? '승인' : '승인안됨';
 
     }
+    if (column?.type == 'is_cancel') {//
+      result = data[column?.column] == 0 ?
+        <CustomChip rounded label='적립' skin='light' color='success' />
+        :
+        <CustomChip rounded label='적립취소' skin='light' color='error' />;
+      if (is_excel) result = data[column?.column] == 0 ? '적립' : '적립취소';
+    }
+    if (column?.type == 'point_history') {//
+      result = (
+        <Tooltip title='포인트이력'>
+          <IconButton
+            size='small'
+            sx={{ color: 'text.secondary' }}
+            onClick={() => {
+              goTo({
+                pathname: `/manager/points/`,
+                query: { search: data?.user_name }
+              })
+            }}
+          >
+            <Icon icon='tabler:history' />
+          </IconButton>
+        </Tooltip>
+      )
+      if (is_excel) result = '---';
+    }
     if (column?.type == 'ad_type') {//
       if (data[column?.column] == 0)
         result = '사용안함';
@@ -175,7 +201,7 @@ const TrManager = (props) => {
   const router = useRouter();
   const theme = useTheme();
 
-  const goTo = (link) => {
+  const goTo = (link, state) => {
     router.push(link);
   }
   useEffect(() => {

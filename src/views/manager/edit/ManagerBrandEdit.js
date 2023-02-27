@@ -72,6 +72,7 @@ const ManagerBrandEdit = (props) => {
     stamp_save_count: '',
     coupon_model_id: '',
     point_rate: '',
+    point_min_amount: '',
   }
   const [values, setValues] = useState(defaultObj)
   useEffect(() => {
@@ -317,6 +318,17 @@ const ManagerBrandEdit = (props) => {
                             onChange={handleChangeValue('point_rate')}
                             defaultValue={values?.point_rate}
                             value={values?.point_rate}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label='포인트 최소사용금액'
+                            placeholder='포인트 최소사용금액을 입력해 주세요.'
+                            className='point_min_amount'
+                            onChange={handleChangeValue('point_min_amount')}
+                            defaultValue={values?.point_min_amount}
+                            value={values?.point_min_amount}
                           />
                         </Grid>
                       </>

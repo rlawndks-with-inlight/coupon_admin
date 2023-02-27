@@ -70,14 +70,13 @@ const getOptionBoxBySameLineDate = (param_table,) => {
 
 const TableHeader = props => {
   // ** Props
-  const { userData, changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption, onlyTeamSeeColumn } = props
+  const { userData, changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, page_size_list, exportExcel, popperPlacement, changeNotSearchOption, onlyTeamSeeColumn, loading } = props
   const [sDt, setSDt] = useState(new Date());
   const [eDt, setEDt] = useState(new Date());
   const [addSearchOption, setAddSearchOption] = useState({});
   const router = useRouter();
   const theme = useTheme()
   const { direction } = theme
-
 
   useEffect(() => {
     if ($('.manager-table-header > .css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
@@ -89,6 +88,7 @@ const TableHeader = props => {
   }, [router.query?.table])
 
   const settings = async () => {
+
     let date = new Date();
     let first_day = new Date(date.getFullYear(), date.getMonth(), 1);
     setSDt(first_day)
@@ -98,7 +98,14 @@ const TableHeader = props => {
     let add_obj = await getOptionBoxBySameLineDate(router.query?.table);
     add_obj = add_obj?.value;
     obj = { ...obj, ...add_obj };
-    changePage(1, false, obj);
+    let obj_key_list = Object.keys(obj);
+    for (var i = 0; i < obj_key_list.length; i++) {
+      if (router.query[obj_key_list[i]]) {
+        obj[obj_key_list[i]] = router.query[obj_key_list[i]];
+      }
+    }
+    await changePage(1, false, obj);
+
   }
 
   const setDateByButton = async (num) => {
@@ -338,6 +345,8 @@ const TableHeader = props => {
               size='small'
               sx={{ mr: 4, mb: 2 }}
               onChange={e => handleChange('search', e.target.value)}
+              defaultValue={searchObj?.search}
+              value={searchObj?.search}
               onKeyPress={e => e.key == 'Enter' ? changePage(1) : console.log(null)}
               placeholder={`${objDataGridColumns[router.query?.table]?.search_placeholder ?? "검색명을 입력해 주세요."}`}
               className="search"
