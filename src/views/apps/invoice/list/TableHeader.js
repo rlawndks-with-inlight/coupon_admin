@@ -98,10 +98,10 @@ const TableHeader = props => {
     let add_obj = await getOptionBoxBySameLineDate(router.query?.table);
     add_obj = add_obj?.value;
     obj = { ...obj, ...add_obj };
-    let obj_key_list = Object.keys(obj);
-    for (var i = 0; i < obj_key_list.length; i++) {
-      if (router.query[obj_key_list[i]]) {
-        obj[obj_key_list[i]] = router.query[obj_key_list[i]];
+    let query_key_list = Object.keys(router.query);
+    for (var i = 0; i < query_key_list.length; i++) {
+      if (query_key_list != 'table') {
+        obj[query_key_list[i]] = router.query[query_key_list[i]];
       }
     }
     await changePage(1, false, obj);

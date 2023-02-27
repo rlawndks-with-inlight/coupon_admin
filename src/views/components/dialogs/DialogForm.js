@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
@@ -17,7 +17,10 @@ const Dialog = styled(MuiDialog)({
 })
 const DialogForm = (props) => {
   const { open, setOpen, handleClickOpen, handleClose, data, changePassword, headIcon } = props;
-
+  const [clickCount, setClickCount] = useState(0);
+  useEffect(() => {
+    setClickCount(0);
+  }, [open])
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -32,7 +35,12 @@ const DialogForm = (props) => {
             <TextField id='new-pw-check' autoComplete='new-password' fullWidth type='password' label='새비밀번호 확인' />
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={changePassword}>저장</Button>
+            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => {
+              if (clickCount == 0) {
+                changePassword();
+              }
+              setClickCount(clickCount + 1);
+            }}>저장</Button>
             <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
           </DialogActions>
         </div>

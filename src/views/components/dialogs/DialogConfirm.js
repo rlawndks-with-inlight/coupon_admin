@@ -18,6 +18,10 @@ const Dialog = styled(MuiDialog)({
 const DialogConfirm = (props) => {
   const { open, handleClose, onKeepGoing, text, subText, data, saveText, headIcon } = props;
 
+  const [clickCount, setClickCount] = useState(0);
+  useEffect(() => {
+    setClickCount(0);
+  }, [open])
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -36,7 +40,13 @@ const DialogConfirm = (props) => {
               </>}
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
-            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => onKeepGoing(data)}>{saveText}</Button>
+            <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => {
+
+              if (clickCount == 0) {
+                onKeepGoing(data)
+              }
+              setClickCount(clickCount + 1);
+            }}>{saveText}</Button>
             <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
           </DialogActions>
         </div>

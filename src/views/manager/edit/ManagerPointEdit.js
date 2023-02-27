@@ -120,6 +120,7 @@ const ManagerPointEdit = (props) => {
     }).findIndex((e) => e == values?.user_name);
     if (user_idx < 0) {
       toast.error('유저아이디를 찾을 수 없습니다.');
+      return;
     } else {
       obj['user_id'] = userList[user_idx]?.id;
       delete obj['user_name'];

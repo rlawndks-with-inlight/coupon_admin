@@ -100,7 +100,7 @@ export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel,
             onClick={() => {
               goTo({
                 pathname: `/manager/points/`,
-                query: { search: data?.user_name }
+                query: { user_id: data?.id }
               })
             }}
           >
@@ -233,6 +233,10 @@ const TrManager = (props) => {
       const response = await axiosIns().put(`/api/v1/manager/users/${popupData?.id}/set-password`, {
         new_user_pw: $('#new-pw').val()
       })
+      handleClose();
+      if (response?.status == 201) {
+        toast.success('성공적으로 변경 되었습니다.')
+      }
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {

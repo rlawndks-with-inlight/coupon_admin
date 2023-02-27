@@ -27,6 +27,7 @@ const DialogSearchOption = (props) => {
   const checkRef = useRef();
   const [notSearchOptions, setNotSearchOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
   useEffect(() => {
     initialCheck();
   }, [param_table, open])
@@ -44,7 +45,9 @@ const DialogSearchOption = (props) => {
       setLoading(false);
     }
   }, [notSearchOptions]);
-
+  useEffect(() => {
+    setClickCount(0);
+  }, [open])
   return (
     <Fragment>
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -77,7 +80,12 @@ const DialogSearchOption = (props) => {
         </DialogContent>
         <DialogActions className='dialog-actions-dense'>
           <Button onClick={handleClose}>취소</Button>
-          <Button onClick={saveSearchOption}>저장</Button>
+          <Button onClick={() => {
+            if (clickCount == 0) {
+              saveSearchOption()
+            }
+            setClickCount(clickCount + 1);
+          }}>저장</Button>
         </DialogActions>
       </Dialog>
     </Fragment>
