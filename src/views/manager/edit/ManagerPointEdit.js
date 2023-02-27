@@ -51,9 +51,15 @@ const ManagerPointEdit = (props) => {
   })
   useEffect(() => {
     if (mchtList.length > 0) {
-      setLoading(false);
+      if (router.query?.edit_category == 'edit') {
+        if (values?.user_name) {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
     }
-  }, [mchtList])
+  }, [mchtList, values]);
   useEffect(() => {
     settingPage();
     getOneItem();
