@@ -28,10 +28,6 @@ const UserLayout = ({ children, contentHeightFixed }) => {
   const theme = useTheme();
 
   // ** Hooks
-
-  useEffect(() => {
-    console.log(theme.palette.loading);
-  }, [theme])
   const { settings, saveSettings } = useSettings()
 
   // ** Vars for server side navigation
