@@ -55,6 +55,7 @@ const ManagerBrandEdit = (props) => {
     contract_img: undefined,
     id_img: undefined,
     og_img: undefined,
+    bsin_lic_img: undefined,
     ceo_nm: '',
     addr: '',
     phone_num: '',
@@ -109,7 +110,7 @@ const ManagerBrandEdit = (props) => {
     setValues(defaultObj)
   }
   const onEditItem = () => {
-    let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img'];
+    let img_key_list = ['logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img', 'bsin_lic_img'];
     let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css'] ?? {}) };
     for (var i = 0; i < img_key_list.length; i++) {
       if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
@@ -355,7 +356,18 @@ const ManagerBrandEdit = (props) => {
                         setValues={setValues}
                         values={values}
                         value={values?.contract_img}
-                        boxStyle={{ height: `${window.innerWidth >= 900 ? '195%' : ''}` }}
+                        sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                        placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
+
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>사업자등록증 이미지</InputLabel>
+                      <FileUploaderSingle
+                        className='bsin_lic_img'
+                        setValues={setValues}
+                        values={values}
+                        value={values?.bsin_lic_img}
                         sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
                         placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
 
