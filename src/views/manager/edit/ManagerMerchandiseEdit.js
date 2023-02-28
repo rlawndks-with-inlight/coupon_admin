@@ -76,9 +76,9 @@ const ManagerMerchandiseEdit = (props) => {
 
   const settingPage = async () => {
     try {
-      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=0`);
-      let user_list = [...response?.data?.user_id?.agencys ?? [], ...response?.data?.user_id?.branchs ?? [], ...response?.data?.user_id?.dists ?? []];
-      console.log(user_list)
+      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      console.log(response)
+      let user_list = [...response?.data?.mcht_id?.agencys ?? []];
       for (var i = 0; i < user_list.length; i++) {
         user_list[i]['group_id'] = user_list[i]['id'];
       }
