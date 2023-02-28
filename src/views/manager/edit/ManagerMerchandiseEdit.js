@@ -78,7 +78,7 @@ const ManagerMerchandiseEdit = (props) => {
     try {
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
       console.log(response)
-      let user_list = [...response?.data?.mcht_id?.agencys ?? []];
+      let user_list = [...response?.data?.mcht_id ?? []];
       for (var i = 0; i < user_list.length; i++) {
         user_list[i]['group_id'] = user_list[i]['id'];
       }
@@ -215,7 +215,7 @@ const ManagerMerchandiseEdit = (props) => {
                           value={values?.group_id}
                         >
                           {userList && userList.map((item, idx) => {
-                            return <MenuItem value={item?.group_id} key={idx}>{item?.user_name}</MenuItem>
+                            return <MenuItem value={item?.group_id} key={idx}>{item?.mcht_name}</MenuItem>
                           })}
                         </Select>
                       </FormControl>
