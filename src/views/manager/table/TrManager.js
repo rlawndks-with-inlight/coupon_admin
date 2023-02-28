@@ -193,7 +193,9 @@ const isShowDeleteButton = (param_table, user_data) => {
   if (param_table == 'brands' && user_data?.level < 50) {
     return false;
   }
-
+  if (param_table == 'merchandises' && user_data?.level < 11) {
+    return false;
+  }
   return true;
 }
 const TrManager = (props) => {
