@@ -179,8 +179,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '유저명, 가맹점명 검색',
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
-      managerListFormat('유저명', 'user_name', 'text', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
+      managerListFormat('유저명', 'user_name', 'text', ''),
       managerListFormat('구매금액', 'purchase_price', 'number', ''),
       managerListFormat('사용포인트', 'use_amount', 'number', ''),
       managerListFormat('적립포인트', 'save_amount', 'number', ''),
