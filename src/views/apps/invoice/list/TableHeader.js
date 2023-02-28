@@ -42,9 +42,9 @@ const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handl
 }
 
 const sameDateLineBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
-  if (param_table == 'devices')
-    return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
-  else if (param_table == 'points')
+  // if (param_table == 'devices')
+  //   return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  if (param_table == 'points')
     return <PointSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
   else if (param_table == 'operators')
     return <OperatorSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
@@ -54,9 +54,6 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   let result = {
     value: {},
     tag: undefined
-  }
-  if (param_table == 'devices') {
-    result.value['appr_status'] = -1;
   }
   if (param_table == 'points') {
     result.value['is_cancel'] = -1;

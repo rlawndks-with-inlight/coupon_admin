@@ -84,7 +84,7 @@ const ManagerMerchandiseEdit = (props) => {
       }
       setUserList(user_list);
       let obj = await getOneItem();
-      setValues({ ...obj });
+      setValues({ ...obj, 'group_id': user_list[0]['group_id'] });
     } catch (err) {
       console.log(err);
     }

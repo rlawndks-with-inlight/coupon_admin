@@ -62,7 +62,7 @@ const ManagerPointEdit = (props) => {
   }, [mchtList, values]);
   useEffect(() => {
     settingPage();
-    getOneItem();
+    //getOneItem();
   }, [])
 
   const settingPage = async () => {
@@ -75,23 +75,33 @@ const ManagerPointEdit = (props) => {
         router.back();
       }
       setUserList(response?.data?.user_id?.normals);
-      setValues({ ...values, 'mcht_id': response?.data?.mcht_id[0]?.id });
+      let item = await getItem();
+      if (item) {
+        let obj = {};
+        for (var i = 0; i < Object.keys(values).length; i++) {
+          let key = Object.keys(values)[i];
+          obj[key] = item[key];
+        }
+        setValues({ ...obj });
+      } else {
+        setValues({ ...values, 'mcht_id': response?.data?.mcht_id[0]?.id });
+      }
     } catch (err) {
       console.log(err);
     }
   }
 
-  const getOneItem = async () => {
-    let item = await getItem();
-    if (item) {
-      let obj = {};
-      for (var i = 0; i < Object.keys(values).length; i++) {
-        let key = Object.keys(values)[i];
-        obj[key] = item[key];
-      }
-      setValues({ ...obj });
-    }
-  }
+  // const getOneItem = async () => {
+  //   let item = await getItem();
+  //   if (item) {
+  //     let obj = {};
+  //     for (var i = 0; i < Object.keys(values).length; i++) {
+  //       let key = Object.keys(values)[i];
+  //       obj[key] = item[key];
+  //     }
+  //     setValues({ ...obj });
+  //   }
+  // }
 
   const handleTabsChange = (event, newValue) => {
     setTabValue(newValue)

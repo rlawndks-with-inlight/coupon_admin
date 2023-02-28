@@ -29,15 +29,20 @@ import DatePicker from 'react-datepicker'
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
 import { LOCALSTORAGE } from 'src/data/data'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { axiosIns } from 'src/@fake-db/backend'
 
 const ManagerUserEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory } = props;
-
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
   const [bDt, setBDt] = useState(new Date());
   const [userData, setUserData] = useState();
+  const [mchtList, setMchtList] = useState([]);
+
   const defaultObj = {
     profile_img: undefined,
     user_name: '',
@@ -47,13 +52,13 @@ const ManagerUserEdit = (props) => {
   }
   const [values, setValues] = useState(defaultObj)
   useEffect(() => {
-    if (userLevelList.length > 0) {
+    if (mchtList.length > 0) {
       setLoading(false);
     }
-  }, [userLevelList])
+  }, [mchtList])
   useEffect(() => {
-    // settingPage();
-    getOneItem();
+    settingPage();
+    //getOneItem();
   }, [])
 
   // const settingPage = async () => {
@@ -79,19 +84,47 @@ const ManagerUserEdit = (props) => {
   //   setValues({ ...values, 'level': user_level_list[0]?.level })
   //   setUserLevelList(user_level_list);
   // }
+  const settingPage = async () => {
+    try {
+      setLoading(true);
+      let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+      user = JSON.parse(user);
 
-  const getOneItem = async () => {
-    let item = await getItem();
-    if (item) {
-      setBDt(new Date(item?.birth_date));
-      let obj = {};
-      for (var i = 0; i < Object.keys(values).length; i++) {
-        let key = Object.keys(values)[i];
-        obj[key] = item[key];
+      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      let partner_list = [...response?.data?.user_id?.partners];
+      let mcht_list = [...response?.data?.mcht_id];
+      for (var i = 0; i < mcht_list.length; i++) {
+        mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
-      setValues({ ...obj });
+      if (response?.data?.mcht_id.length <= 0) {
+        toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
+        router.back();
+      }
+      let item = await getItem();
+      if (item) {
+        setValues({ ...item });
+      } else {
+        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
+      }
+      console.log(item)
+      setMchtList(response?.data?.mcht_id);
+
+    } catch (err) {
+      console.log(err);
     }
   }
+  // const getOneItem = async () => {
+  //   let item = await getItem();
+  //   if (item) {
+  //     setBDt(new Date(item?.birth_date));
+  //     let obj = {};
+  //     for (var i = 0; i < Object.keys(values).length; i++) {
+  //       let key = Object.keys(values)[i];
+  //       obj[key] = item[key];
+  //     }
+  //     setValues({ ...obj });
+  //   }
+  // }
 
   const handleChange = async (field, value) => {
     setValues({ ...values, [field]: value });
@@ -126,7 +159,7 @@ const ManagerUserEdit = (props) => {
         <>
           <Grid container spacing={6}>
             <Grid item xs={12} md={5}>
-              <Card>
+              <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
@@ -150,6 +183,25 @@ const ManagerUserEdit = (props) => {
                 <CardContent>
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='mcht_id'
+                          onChange={handleChangeValue('mcht_id')}
+                          defaultValue={values?.mcht_id ?? 0}
+                          value={values?.mcht_id}
+                        >
+                          {mchtList && mchtList.map((item, idx) => {
+                            return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
+                          })}
+
+                        </Select>
+                      </FormControl>
+                    </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth

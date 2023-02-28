@@ -50,7 +50,7 @@ const ManagerDeviceEdit = (props) => {
   }, [mchtList])
   useEffect(() => {
     settingPage();
-    getOneItem();
+    //getOneItem();
   }, [])
 
   const settingPage = async () => {

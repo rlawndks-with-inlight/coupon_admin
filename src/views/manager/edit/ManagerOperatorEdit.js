@@ -55,7 +55,7 @@ const ManagerOperatorEdit = (props) => {
   }, [userLevelList])
   useEffect(() => {
     settingPage();
-    getOneItem();
+    //getOneItem();
   }, [])
 
   const settingPage = async () => {
@@ -82,10 +82,18 @@ const ManagerOperatorEdit = (props) => {
           user_level_list.push(z_all_user[i]);
         }
       }
-      setValues({ ...values, 'level': user_level_list[0]?.level });
+      let item = await getItem();
+      if (item) {
+        let obj = {};
+        for (var i = 0; i < Object.keys(values).length; i++) {
+          let key = Object.keys(values)[i];
+          obj[key] = item[key];
+        }
+        setValues({ ...obj });
+      } else {
+        setValues({ ...values, 'level': user_level_list[0]?.level });
+      }
       setUserLevelList(user_level_list);
-      let obj = await getOneItem();
-      setValues({ ...obj });
     } catch (err) {
       console.log(err);
     }
