@@ -75,7 +75,6 @@ const UserDropdown = props => {
     auth = JSON.parse(auth);
     auth['my_page_param'] = await getMyPageParamByNumber(auth['level']);
     auth['level'] = await getUserLevelByNumber(auth['level']);
-    console.log(auth)
     setUser(auth);
   }
 

@@ -47,7 +47,7 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 }))
 
 const ManagerMerchandiseEdit = (props) => {
-  const { getItem, editItem, popperPlacement, editCategory } = props;
+  const { getItem, editItem, popperPlacement, editCategory, userData } = props;
 
   const theme = useTheme();
 
@@ -196,30 +196,34 @@ const ManagerMerchandiseEdit = (props) => {
                   :
                   <>
                   </>}
-
                 <Grid item xs={12}>
                   <TextField fullWidth label='유저명' placeholder='유저명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
                 </Grid>
+                {userData?.level >= 15 ?
+                  <>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>그룹 ID</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='group_id'
+                          onChange={handleChangeValue('group_id')}
+                          defaultValue={values?.group_id ?? 0}
+                          value={values?.group_id}
+                        >
+                          {userList && userList.map((item, idx) => {
+                            return <MenuItem value={item?.group_id} key={idx}>{item?.user_name}</MenuItem>
+                          })}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </>
+                  :
+                  <>
+                  </>}
 
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>그룹 ID</InputLabel>
-                    <Select
-                      label='Country'
-                      id='form-layouts-tabs-select'
-                      labelId='form-layouts-tabs-select-label'
-                      className='group_id'
-                      onChange={handleChangeValue('group_id')}
-                      defaultValue={values?.group_id ?? 0}
-                      value={values?.group_id}
-                    >
-                      {userList && userList.map((item, idx) => {
-                        return <MenuItem value={item?.group_id} key={idx}>{item?.user_name}</MenuItem>
-                      })}
-
-                    </Select>
-                  </FormControl>
-                </Grid>
                 <Grid item xs={12}>
                   <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
                 </Grid>

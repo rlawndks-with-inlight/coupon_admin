@@ -52,6 +52,8 @@ import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
 import HeadContent from 'src/@core/components/head'
 import { processCatch } from 'src/@core/utils/function'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
+import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
@@ -62,6 +64,7 @@ const Edit = ({ dns_data }) => {
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [userData, setUserData] = useState({});
   useEffect(() => {
     // if (router.query?.edit_category == 'edit' && router.query?.id) {
     //   console.log(1);
@@ -70,8 +73,13 @@ const Edit = ({ dns_data }) => {
     // } else {
     //   router.back();
     // }
-  }, [router.asPath])
-
+    getUserData();
+  }, [])
+  const getUserData = async () => {
+    let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
+    user_data = JSON.parse(user_data ?? "{}") ?? {};
+    setUserData(user_data);
+  }
   const renderPage = (common) => {
     if (router.query?.table == 'users')
       return <ManagerUserEdit {...common} />
@@ -197,7 +205,8 @@ const Edit = ({ dns_data }) => {
             getItem: getItem,
             popperPlacement: popperPlacement,
             breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`,
-            editCategory: router.query?.edit_category
+            editCategory: router.query?.edit_category,
+            userData: userData
           })}
         </DatePickerWrapper>
       </DropzoneWrapper>
