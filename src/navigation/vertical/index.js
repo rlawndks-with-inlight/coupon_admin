@@ -663,7 +663,7 @@ const project_navigation = [
     title: '광고관리',
     icon: 'tabler:ad',
     path: '/manager/advertisements',
-    level: 10
+    level: 35
   },
   // {
   //   title: '게시판관리',
