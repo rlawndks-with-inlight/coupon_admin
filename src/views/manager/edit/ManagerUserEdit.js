@@ -139,16 +139,21 @@ const ManagerUserEdit = (props) => {
     setValues(defaultObj);
   }
   const onEditItem = () => {
-    let img_key_list = ['profile_img'];
-    let obj = { ...values };
-    for (var i = 0; i < img_key_list.length; i++) {
-      if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
-        delete obj[img_key_list[i]];
-      } else {
-        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+    try {
+      let img_key_list = ['profile_img'];
+      let obj = { ...values };
+      for (var i = 0; i < img_key_list.length; i++) {
+        if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
+          delete obj[img_key_list[i]];
+        } else {
+          obj[img_key_list[i]] = obj[img_key_list[i]][0];
+        }
       }
+      editItem(obj);
+    } catch (err) {
+      console.log(err)
     }
-    editItem(obj);
+
   }
   return (
     <>
