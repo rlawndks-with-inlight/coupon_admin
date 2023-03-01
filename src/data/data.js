@@ -12,3 +12,9 @@ export const LOCALSTORAGE = {
   IS_FULL_SCREEN: "is_full_screen",
   NOT_SEARCH_OPTION: "not_search_option",
 }
+
+export const checkDnsAccessByLevel = {//0-자신만, 1-가능, -1-불가
+  'stellaorder.com': {
+
+  }
+}

@@ -65,23 +65,33 @@ const ManagerOperatorEdit = (props) => {
       setBrandList(response?.data?.content);
       let user = await getLocalStorage('user_data');
       user = JSON.parse(user);
-
-      let z_all_user = [
-        { level: 50, name: '개발사' },
-        { level: 45, name: '협력사' },
-        { level: 40, name: '본사' },
-        // { level: 30, name: '지사' },
-        // { level: 20, name: '총판' },
-        // { level: 15, name: '대리점' },
-        // { level: 10, name: '가맹점' },
-        // { level: 0, name: '일반유저' },
-      ];
-      let user_level_list = [];
-      for (var i = 0; i < z_all_user.length; i++) {
-        if (z_all_user[i].level <= user?.level) {
-          user_level_list.push(z_all_user[i]);
-        }
+      let z_all_user = [];
+      if (user?.level == 50) {
+        z_all_user = [
+          { level: 50, name: '개발사' },
+          { level: 45, name: '협력사' },
+          { level: 40, name: '본사' },
+          // { level: 30, name: '지사' },
+          // { level: 20, name: '총판' },
+          // { level: 15, name: '대리점' },
+          // { level: 10, name: '가맹점' },
+          // { level: 0, name: '일반유저' },
+        ];
+      } else if (user?.level == 40) {
+        z_all_user = [
+          //  { level: 50, name: '개발사' },
+          // { level: 45, name: '협력사' },
+          { level: 40, name: '본사' },
+          { level: 35, name: '직원' },
+          // { level: 30, name: '지사' },
+          // { level: 20, name: '총판' },
+          // { level: 15, name: '대리점' },
+          // { level: 10, name: '가맹점' },
+          // { level: 0, name: '일반유저' },
+        ];
       }
+      let user_level_list = [...z_all_user];
+
       let item = await getItem();
       if (item) {
         let obj = {};
