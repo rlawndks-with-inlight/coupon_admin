@@ -232,7 +232,7 @@ const TrManager = (props) => {
         toast.error('비밀번호가 일치하지 않습니다.');
         return;
       }
-      const response = await axiosIns().put(`/api/v1/manager/users/${popupData?.id}/set-password`, {
+      const response = await axiosIns().put(`/api/v1/manager/${param_table == 'merchandises' ? param_table : 'users'}/${popupData?.id}/set-password`, {
         new_user_pw: $('#new-pw').val()
       })
       handleClose();
