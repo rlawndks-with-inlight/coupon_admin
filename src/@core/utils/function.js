@@ -159,6 +159,8 @@ export const getUserLevelByNumber = (num) => {
     return '지사'
   else if (num == 30)
     return '총판'
+  else if (num == 35)
+    return '직원'
   else if (num == 40)
     return '본사'
   else if (num == 45)
@@ -178,6 +180,8 @@ export const getMyPageParamByNumber = (num) => {
   else if (num == 20)
     return 'users'
   else if (num == 30)
+    return 'users'
+  else if (num == 35)
     return 'users'
   else if (num == 40)
     return 'users'
