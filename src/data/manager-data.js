@@ -24,7 +24,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'users',//ajax에 사용할 테이블
     breadcrumb: '유저',//이름 사용할 것
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 35,
     search_placeholder: '유저명 검색',//검색 placeholder
     head_columns: [
     ],
@@ -70,7 +70,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'merchandises',//ajax에 사용할 테이블
     breadcrumb: '가맹점',//이름 사용할 것
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 35,
     head_columns: [
       { title: '가맹점정보', size: 6 },
       { title: '포인트정보', size: 2 },
@@ -140,7 +140,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'advertisements',
     breadcrumb: '광고',
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 35,
     search_placeholder: '광고명 검색',
     columns: [
       managerListFormat('광고ID', 'id', 'number', ''),
@@ -175,7 +175,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'points',
     breadcrumb: '포인트',
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 35,
     search_placeholder: '유저명, 가맹점명 검색',
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
