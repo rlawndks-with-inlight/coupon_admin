@@ -162,6 +162,13 @@ const TableHeader = props => {
   }
 
   const getIsSeeAddButton = (param_table, user_data) => {
+    if (param_table == 'operators') {
+      if (user_data?.level == 50 || user_data?.level == 40) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     if (user_data?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
       return true;
     } else {
