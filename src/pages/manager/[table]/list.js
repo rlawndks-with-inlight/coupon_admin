@@ -233,7 +233,7 @@ const List = ({ dns_data }) => {
                 padding: '12px 20px'
               }}
             >
-              <div style={{ color: 'rgba(51, 48, 60, 0.38)', fontSize: '.875rem' }}>
+              <div style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : 'rgba(51, 48, 60, 0.38)'}`, fontSize: '.875rem' }}>
                 총 {totalCount}개 항목 중 {pageSize * (page - 1) + 1} ~ {totalCount <= (pageSize * (page)) ? totalCount : (pageSize * (page))}개 표시
               </div>
               <Box sx={{
