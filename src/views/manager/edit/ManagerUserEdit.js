@@ -183,25 +183,32 @@ const ManagerUserEdit = (props) => {
                 <CardContent>
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
-                        <Select
-                          label='Country'
-                          id='form-layouts-tabs-select'
-                          labelId='form-layouts-tabs-select-label'
-                          className='mcht_id'
-                          onChange={handleChangeValue('mcht_id')}
-                          defaultValue={values?.mcht_id ?? 0}
-                          value={values?.mcht_id}
-                        >
-                          {mchtList && mchtList.map((item, idx) => {
-                            return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
-                          })}
+                    {values?.level > 0 ?
+                      <>
+                      </>
+                      :
+                      <>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
+                            <Select
+                              label='Country'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='mcht_id'
+                              onChange={handleChangeValue('mcht_id')}
+                              defaultValue={values?.mcht_id ?? 0}
+                              value={values?.mcht_id}
+                            >
+                              {mchtList && mchtList.map((item, idx) => {
+                                return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
+                              })}
 
-                        </Select>
-                      </FormControl>
-                    </Grid>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </>}
+
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
