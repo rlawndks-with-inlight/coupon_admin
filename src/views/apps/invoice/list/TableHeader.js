@@ -41,13 +41,13 @@ const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handl
 
 }
 
-const sameDateLineBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
+const sameDateLineBox = (common) => {
   // if (param_table == 'devices')
   //   return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
-  if (param_table == 'points')
-    return <PointSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
-  else if (param_table == 'operators')
-    return <OperatorSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  if (common.param_table == 'points')
+    return <PointSameDateLineBox {...common} />
+  else if (common.param_table == 'operators')
+    return <OperatorSameDateLineBox {...common} />
 }
 
 const getOptionBoxBySameLineDate = (param_table,) => {
@@ -262,7 +262,16 @@ const TableHeader = props => {
 
             />
           </div>
-          {sameDateLineBox(router.query?.table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj)}
+          {sameDateLineBox({
+            param_table: router.query?.table,
+            changePage: changePage,
+            page: page,
+            searchObj: searchObj,
+            setSearchObj: setSearchObj,
+            handleChange: handleChange,
+            defaultSearchObj: defaultSearchObj,
+            userData: userData,
+          })}
           {getOptionBoxBySameLineDate(router.query?.table)?.tag ?? ""}
           {/* <FormControl sx={{ mr: 4 }}>
           <InputLabel id='demo-simple-select-outlined-label'>발급타입</InputLabel>

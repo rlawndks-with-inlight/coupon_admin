@@ -12,13 +12,14 @@ import FormControl from '@mui/material/FormControl'
 import { useRouter } from 'next/router'
 
 const OperatorSameDateLineBox = (props) => {
-  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
+  const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj, userData } = props;
   const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState([]);
   const router = useRouter();
-
+  const [userLevelList, setUserLevelList] = useState([]);
   const pub_type_list = [
     { name: '전체', level: -1 },
+    { name: '직원', level: 35 },
     { name: '본사', level: 40 },
     { name: '협력사', level: 45 },
     { name: '개발사', level: 50 },
@@ -27,13 +28,23 @@ const OperatorSameDateLineBox = (props) => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.level == 'number') {
+    if (typeof searchObj?.level == 'number' && userLevelList.length > 0) {
       setLoading(false);
     }
-  }, [searchObj])
+  }, [searchObj, userLevelList])
 
   const settings = async () => {
     setLoading(true);
+    let pub_type_list = [
+      { name: '전체', level: -1 },
+      { name: '직원', level: 35 },
+      { name: '본사', level: 40 },
+    ]
+    if (userData?.level >= 50) {
+      pub_type_list.push({ name: '협력사', level: 45 });
+      pub_type_list.push({ name: '개발사', level: 50 });
+    }
+    setUserLevelList(pub_type_list);
   }
 
   return (
@@ -61,7 +72,7 @@ const OperatorSameDateLineBox = (props) => {
 
               }}
             >
-              {pub_type_list && pub_type_list.map((item, idx) => {
+              {userLevelList && userLevelList.map((item, idx) => {
                 return <MenuItem key={idx} value={parseInt(item?.level)}>{item?.name}</MenuItem>
               }
               )}
