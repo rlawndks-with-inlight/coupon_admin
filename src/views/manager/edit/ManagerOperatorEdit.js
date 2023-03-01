@@ -103,7 +103,7 @@ const ManagerOperatorEdit = (props) => {
         }
         setValues({ ...obj });
       } else {
-        setValues({ ...values, 'level': user_level_list[0]?.level });
+        setValues({ ...values, 'level': user_level_list[0]?.level, 'brand_id': response?.data?.content[0]?.id });
       }
       setUserLevelList(user_level_list);
     } catch (err) {
