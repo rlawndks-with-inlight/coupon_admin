@@ -638,7 +638,7 @@ const project_navigation = [
       {
         title: '장비관리',
         path: '/manager/devices',
-        level: 10
+        level: 40
       },
     ]
   },
