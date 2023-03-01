@@ -71,6 +71,8 @@ const ManagerOperatorEdit = (props) => {
           { level: 50, name: '개발사' },
           { level: 45, name: '협력사' },
           { level: 40, name: '본사' },
+          { level: 35, name: '직원' },
+
           // { level: 30, name: '지사' },
           // { level: 20, name: '총판' },
           // { level: 15, name: '대리점' },
