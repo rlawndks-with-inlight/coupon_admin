@@ -88,10 +88,14 @@ const TableHeader = props => {
 
     let date = new Date();
     let first_day = new Date(date.getFullYear(), date.getMonth(), 1);
-    setSDt(first_day)
-    setEDt(new Date())
+    setSDt('')
+    setEDt('')
     let today = returnMoment().substring(0, 10);
-    let obj = { ...defaultSearchObj, s_dt: returnMoment(false, first_day).substring(0, 10), e_dt: today };
+    let obj = {
+      ...defaultSearchObj,
+      //s_dt: returnMoment(false, first_day).substring(0, 10),
+      //e_dt: today
+    };
     let add_obj = await getOptionBoxBySameLineDate(router.query?.table);
     add_obj = add_obj?.value;
     obj = { ...obj, ...add_obj };
@@ -242,7 +246,7 @@ const TableHeader = props => {
 
               }}
               placeholderText='Click to select a date'
-              customInput={<CustomInput label='시작일' ref={(el) => (isSeeRef.current[0] = el)} />}
+              customInput={<CustomInput label='검색시작일' ref={(el) => (isSeeRef.current[0] = el)} />}
 
             />
           </div>
@@ -258,7 +262,7 @@ const TableHeader = props => {
                 changePage(1, false, obj);
               }}
               placeholderText='Click to select a date'
-              customInput={<CustomInput label='종료일' ref={(el) => (isSeeRef.current[1] = el)} />}
+              customInput={<CustomInput label='검색종료일' ref={(el) => (isSeeRef.current[1] = el)} />}
 
             />
           </div>
