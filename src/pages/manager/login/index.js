@@ -97,19 +97,22 @@ const LoginV1 = ({ dns_data }) => {
 
   const checkDns = async () => {
     try {
-
       const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
           dns: location.hostname
         },
       });
+      console.log(11);
       setLocalStorage(LOCALSTORAGE.DNS_DATA, response?.data);
+      console.log(22);
       setDnsData(response?.data);
+      console.log(33);
       if (response?.status == 200) {
         setValues({ ...values, ['brand_id']: response?.data?.id });
       } else {
         toast.error(response?.data?.statusText);
       }
+      console.log(456456);
       if (router.asPath.split('?')[1]) {
         let query_str = router.asPath.split('?')[1];
         if (query_str.includes('o=')) {
@@ -120,7 +123,7 @@ const LoginV1 = ({ dns_data }) => {
             sameSite: "none",
           });
         }
-
+        console.log(123123);
       }
     } catch (err) {
       console.log(err);
