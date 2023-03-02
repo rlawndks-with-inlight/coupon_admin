@@ -110,17 +110,6 @@ const LoginV1 = ({ dns_data }) => {
       } else {
         toast.error(response?.data?.statusText);
       }
-      // let is_appr = Number(response?.data?.is_appr);
-
-      // if (is_appr != 1) {
-      //   router.push('/manager/register');
-      // }
-
-      // let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
-      // user_data = JSON.parse(user_data);
-      // if (user_data?.id > 0) {
-      //   // router.push('/manager/users')
-      // }
       if (router.asPath.split('?')[1]) {
         let query_str = router.asPath.split('?')[1];
         if (query_str.includes('o=')) {
@@ -134,6 +123,7 @@ const LoginV1 = ({ dns_data }) => {
 
       }
     } catch (err) {
+      console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
         router.push('/404');
