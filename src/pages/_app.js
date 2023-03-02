@@ -111,11 +111,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
       }
     }
 
-    const res = await axios.options(`${backUrl}/api/v1/auth/domain`, {
-      data: {
-        dns: ctx.req.headers.host.split(':')[0]
-      }
-    });
+    const res = await axios.get(`${backUrl}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
     const json = await res.data;
     return {
       dns_data: json

@@ -31,11 +31,7 @@ const DefaultPalette = (mode, skin) => {
     try {
       setLoading(true);
       let obj = {};
-      const response = await axiosIns().options('/api/v1/auth/domain', {
-        data: {
-          dns: location.hostname
-        },
-      });
+      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
       obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
       setDnsData(obj);
