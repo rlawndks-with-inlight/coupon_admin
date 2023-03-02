@@ -97,6 +97,8 @@ const LoginV1 = ({ dns_data }) => {
 
   const checkDns = async () => {
     try {
+      console.log('###########');
+
       const response = await axiosIns().options('/api/v1/auth/domain', {
         data: {
           dns: location.hostname
