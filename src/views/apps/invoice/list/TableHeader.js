@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
-import { objDataGridColumns } from 'src/data/manager-data'
+import { excelUploadTableObj, objDataGridColumns } from 'src/data/manager-data'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import InputLabel from '@mui/material/InputLabel'
@@ -31,6 +31,7 @@ import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import DialogSearchOption from 'src/views/components/dialogs/DialogSearchOption'
 import { toast } from 'react-hot-toast'
+import DialogExcelUpload from 'src/views/components/dialogs/DialogExcelUpload'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -200,6 +201,13 @@ const TableHeader = props => {
     handleClose();
     toast.success("성공적으로 저장 되었습니다.");
     changeNotSearchOption();
+  }
+
+  const [excelUploadOpen, setExcelUploadOpen] = useState(false);
+  const handleClickExcelUploadOpen = () => setExcelUploadOpen(true);
+  const handleExcelUploadClose = () => setExcelUploadOpen(false);
+  const saveUploadExcel = () => {
+
   }
   return (
     <>
@@ -377,6 +385,18 @@ const TableHeader = props => {
               :
               <>
               </>}
+            {(excelUploadTableObj[router.query?.table] && getIsSeeAddButton(router.query?.table, userData)) ?
+              <>
+                <Button sx={{ mb: 2, ml: 4 }} variant='contained' onClick={() => {
+                  router.push({ pathname: '/manager/uploads/excel', query: { t: router.query?.table } })
+                }} startIcon={<Icon icon='uiw:file-excel' />}>
+                  {objDataGridColumns[router.query?.table]?.breadcrumb} 대량등록
+                </Button>
+              </>
+              :
+              <>
+              </>}
+
           </Box>
         </Box>
       </DatePickerWrapper>

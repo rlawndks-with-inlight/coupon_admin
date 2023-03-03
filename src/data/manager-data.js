@@ -217,7 +217,69 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     default_search_obj: {}
   },
 }
-
+export const excelUploadTableObj = {
+  merchandises: {
+    breadcrumb: '가맹점',
+    caution: [
+      '포인트 및 스탬프 사용여부는 1,0(사용,사용안함)으로 표기합니다.',
+      '포인트 변환률 및 스탬프 저장 개수는 숫자만 입력합니다.',
+      '아이디는 중복될 수 없습니다.',
+    ],
+    columns: [
+      { column: 'user_name', name: '아이디', type: 'text' },
+      { column: 'user_pw', name: '패스워드', type: 'text' },
+      { column: 'nick_name', name: '닉네임', type: 'text' },
+      { column: 'birth_date', name: '생년월일', type: 'date' },
+      { column: 'mcht_name', name: '가맹점 상호', type: 'text' },
+      { column: 'addr', name: '가맹점 주소', type: 'text' },
+      { column: 'point_flag', name: '포인트 사용여부', type: 'number' },
+      { column: 'point_rate', name: '포인트 변환률', type: 'number' },
+      { column: 'stamp_flag', name: '스탬프 사용여부', type: 'number' },
+      { column: 'stamp_save_count', name: '상품당 스탬프 저장개수', type: 'number' },
+    ]
+  },
+  devices: {
+    breadcrumb: '장비',
+    caution: [
+      '맥주소는 중복될 수 없습니다.',
+      '맥주소는 맥주소 포맷으로 작성되어야 합니다.(예: AA:BB:CC:DD:EE)',
+    ],
+    columns: [
+      { column: 'user_name', name: '가맹점 아이디', type: 'text' },
+      { column: 'partner_name', name: '협력사 아이디', type: 'text' },
+      { column: 'mac_addr', name: '맥주소', type: 'text' },
+      { column: 'comment', name: '비고', type: 'text' },
+    ]
+  },
+  users: {
+    breadcrumb: '유저',
+    caution: [
+      '유입된 가맹점 아이디와 유저 아이디는 통합하여 중복될 수 없습니다. \n(유저 멤버십 옵션이 "등록된 가맹점만 사용" 옵션인 브랜드에 한함)',
+    ],
+    columns: [
+      { column: 'mcht_name', name: '유입된 가맹점 아이디', type: 'text' },
+      { column: 'user_name', name: '유저 아이디', type: 'text' },
+      { column: 'nick_name', name: '유저 닉네임', type: 'text' },
+      { column: 'birth_date', name: '유저 생년월일', type: 'date' },
+    ]
+  },
+  points: {
+    breadcrumb: '포인트',
+    caution: [
+      '상품 총 금액, 사용된 포인트, 포인트 적립 비율은 숫자만 입력합니다.',
+      '적립 포인트는 "(구매금액 - 사용포인트) * 적립비율%" 수식으로 적립됩니다. (소수점 버림)',
+      '취소 여부 1,0(적립취소, 적립)으로 표기합니다.',
+    ],
+    columns: [
+      { column: 'user_name', name: '유저 아이디', type: 'text' },
+      { column: 'mcht_name', name: '사용된 가맹점 아이디', type: 'text' },
+      { column: 'purchase_price', name: '상품 구매 총금액', type: 'number' },
+      { column: 'use_amount', name: '사용된 포인트', type: 'number' },
+      { column: 'point_rate', name: '포인트 적립 비율', type: 'number' },
+      { column: 'is_cancel', name: '취소 여부', type: 'number' },
+    ]
+  },
+}
 export const editColumnObjFormat = (title, type, type_option, class_name, is_only_add, is_only_update) => {
   return {
     title: title,//제목

@@ -665,6 +665,12 @@ const project_navigation = [
     path: '/manager/advertisements',
     level: 35
   },
+  {
+    title: '대량등록',
+    icon: 'uiw:file-excel',
+    path: '/manager/uploads/excel',
+    level: 35
+  },
   // {
   //   title: '게시판관리',
   //   icon: 'tabler:news',

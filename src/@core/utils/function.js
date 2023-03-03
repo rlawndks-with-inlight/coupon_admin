@@ -47,11 +47,9 @@ export const returnMoment = (num, date) => {//num 0: 오늘, num -1: 어제 , da
     var seconds = ('0' + today.getSeconds()).slice(-2);
     var timeString = hours + ':' + minutes + ':' + seconds;
     let moment = dateString + ' ' + timeString;
-
     return moment;
   } catch (err) {
     console.log(err);
-
     return false;
   }
 
