@@ -195,7 +195,7 @@ const ManagerUserEdit = (props) => {
                       <>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
+                            <InputLabel id='form-layouts-tabs-select-label'>유입 가맹점명</InputLabel>
                             <Select
                               label='Country'
                               id='form-layouts-tabs-select'

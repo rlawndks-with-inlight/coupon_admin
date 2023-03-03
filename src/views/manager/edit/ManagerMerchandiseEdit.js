@@ -174,7 +174,7 @@ const ManagerMerchandiseEdit = (props) => {
                       }
 
                     }}
-                    customInput={<CustomInput label='유저 생년월일' />}
+                    customInput={<CustomInput label='생년월일' />}
                   />
                 </Grid>
               </Grid>
@@ -184,21 +184,22 @@ const ManagerMerchandiseEdit = (props) => {
         <Grid item xs={12} md={7}>
           <Card>
             <CardContent>
+              <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                  <TextField fullWidth label='가맹점 아이디' placeholder='가맹점 아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
                 </Grid>
                 {editCategory == 'create' ?
                   <>
                     <Grid item xs={12}>
-                      <TextField fullWidth label='유저 비밀번호' placeholder='유저 비밀번호를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
+                      <TextField fullWidth label='비밀번호' placeholder='비밀번호를 입력해 주세요.' type={'password'} autoComplete={'new-password'} className='user_pw' onChange={handleChangeValue('user_pw')} defaultValue={values?.user_pw} value={values?.user_pw} />
                     </Grid>
                   </>
                   :
                   <>
                   </>}
                 <Grid item xs={12}>
-                  <TextField fullWidth label='유저명' placeholder='유저명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
+                  <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
                 </Grid>
                 {/* {userData?.level >= 15 ?
                   <>
