@@ -385,7 +385,7 @@ const TableHeader = props => {
               :
               <>
               </>}
-            {(excelUploadTableObj[router.query?.table] && getIsSeeAddButton(router.query?.table, userData)) ?
+            {/* {(excelUploadTableObj[router.query?.table] && getIsSeeAddButton(router.query?.table, userData)) ?
               <>
                 <Button sx={{ mb: 2, ml: 4 }} variant='contained' onClick={() => {
                   router.push({ pathname: '/manager/uploads/excel', query: { t: router.query?.table } })
@@ -395,7 +395,7 @@ const TableHeader = props => {
               </>
               :
               <>
-              </>}
+              </>} */}
 
           </Box>
         </Box>

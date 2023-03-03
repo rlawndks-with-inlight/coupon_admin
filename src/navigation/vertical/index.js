@@ -669,7 +669,7 @@ const project_navigation = [
     title: '대량등록',
     icon: 'uiw:file-excel',
     path: '/manager/uploads/excel',
-    level: 35
+    level: 40
   },
   // {
   //   title: '게시판관리',

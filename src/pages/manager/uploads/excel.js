@@ -151,6 +151,8 @@ const Excel = (props) => {
       )
       if (response.status == 201) {
         toast.success('성공적으로 저장 되었습니다.');
+        setIsAbleAdd(false);
+        setRowObj({});
       }
     } catch (err) {
       console.log(err);
@@ -191,108 +193,98 @@ const Excel = (props) => {
             :
             <>
             </>}
-          {count == 0 ?
-            <>
-              <Button sx={{ mb: 2 }} href={"/file/정보 대량등록 양식_v1_2023-03-03.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
-                양식추출
-              </Button>
-              <Button sx={{ mb: 2, ml: 4 }} onClick={() => { setCount(1) }} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
-                대량업로드
-              </Button>
-            </>
-            :
-            <>
-            </>}
-          {count == 1 ?
-            <>
-              <TabContext value={tabValue}>
-                <TabList centered onChange={handleChangeTabChange} aria-label='simple tabs example'>
-                  {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
 
-                    return <Tab value={item} label={excelUploadTableObj[item]?.breadcrumb} />
 
-                  })}
-                </TabList>
-                <Box sx={{ padding: '24px', display: 'flex', flexWrap: 'wrap' }}>
-                  <Box sx={{ mr: 10 }}>
-                    <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4, }}>사용방법</Grid>
-                    <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>1. 상단 컬럼에 존재하는 (O)와 (X)는 필수 값의 여부이며 (X)는 존재하지 않을 시 빈값으로 입력합니다.</Grid>
-                    <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>2. 가맹점 {'->'} 장비 {'->'} 유저 {'->'} 포인트 순서로 대량등록을 진행해야합니다.</Grid>
-                    <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>3. 날짜 포멧은 Y-m-d을 준수해야합니다. (예: 1970-01-02)</Grid>
-                    <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>4. 대량등록은 사이트내 각각의 추가기능을 기반으로 제작되었습니다.</Grid>
-                  </Box>
-                  <Box>
-                    <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4 }}>{excelUploadTableObj[tabValue]?.breadcrumb} 등록 주의사항</Grid>
-                    {excelUploadTableObj[tabValue].caution && excelUploadTableObj[tabValue].caution.map((item, idx) => {
-                      return <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>{idx + 1}. {item}</Grid>
-                    })}
-                  </Box>
-                </Box>
-                <Grid sx={{ display: 'flex', padding: '0 24px', justifyContent: 'space-between' }}>
-                  <label htmlFor={'excel_upload'}>
-                    <Button variant='contained' component="span" startIcon={<Icon icon='uiw:file-excel' />} >
-                      파일등록
-                    </Button>
-                  </label>
-                  <input type={'file'} onChange={uploadExcel} id='excel_upload' style={{ display: 'none' }} />
-                  {isAbleAdd ?
-                    <>
-                      <Button variant='contained' startIcon={<Icon icon='tabler:plus' />} onClick={onEditConfirmOpen}>
-                        추가
-                      </Button>
-                    </>
-                    :
-                    <>
-                      <div />
-                    </>}
-
-                </Grid>
-                {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
-                  return (<TabPanel value={item}>
-
-                    <Typography sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
-                      <Card>
-
-                        <Table sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
-                          <TableHead>
-                            <TableRow
-                              sx={{
-                                borderTop: 'none',
-                                backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
-                              }}>
-                              {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((item, idx) => {
-                                return <TableCell sx={{ maxWidth: '300px' }}>{item.name}</TableCell>
-                              })}
-                            </TableRow>
-
-                          </TableHead>
-                          <TableBody>
-                            {rowObj[tabValue] && rowObj[tabValue].map((row, index) => {
-                              return (<TableRow>
-                                {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((column, idx) => {
-                                  let color = "";
-                                  if (errorObj[`${column?.column}`] && errorObj[`${column?.column}`].includes(index)) {
-                                    color = 'red !important';
-                                  }
-                                  return <TableCell sx={{ maxWidth: '300px', color: color }}>{row[column.column]}</TableCell>
-                                })}
-                              </TableRow>)
-                            })}
-
-                          </TableBody>
-
-                        </Table>
-                      </Card>
-
-                    </Typography>
-                  </TabPanel>)
+          <TabContext value={tabValue}>
+            <TabList centered onChange={handleChangeTabChange} aria-label='simple tabs example'>
+              {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
+                return <Tab value={item} label={excelUploadTableObj[item]?.breadcrumb} />
+              })}
+            </TabList>
+            <Box sx={{ padding: '24px', display: 'flex', flexWrap: 'wrap' }}>
+              <Box sx={{ mr: 10 }}>
+                <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4, }}>사용방법</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>1. 상단 컬럼에 존재하는 (O)와 (X)는 필수 값의 여부이며 (X)는 존재하지 않을 시 빈값으로 입력합니다.</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>2. 가맹점 {'->'} 장비 {'->'} 유저 {'->'} 포인트 순서로 대량등록을 진행해야합니다.</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>3. 날짜 포멧은 Y-m-d을 준수해야합니다. (예: 1970-01-02)</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>4. 대량등록은 사이트내 각각의 추가기능을 기반으로 제작되었습니다.</Grid>
+              </Box>
+              <Box>
+                <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4 }}>{excelUploadTableObj[tabValue]?.breadcrumb} 등록 주의사항</Grid>
+                {excelUploadTableObj[tabValue].caution && excelUploadTableObj[tabValue].caution.map((item, idx) => {
+                  return <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>{idx + 1}. {item}</Grid>
                 })}
-              </TabContext>
+              </Box>
+            </Box>
+            <Grid sx={{ display: 'flex', padding: '0 24px', justifyContent: 'space-between' }}>
+              <Grid sx={{ display: 'flex' }}>
+                <label htmlFor={'excel_upload'}>
+                  <Button variant='contained' component="span" startIcon={<Icon icon='uiw:file-excel' />} >
+                    파일등록
+                  </Button>
+                </label>
+                <input type={'file'} onChange={uploadExcel} id='excel_upload' style={{ display: 'none' }} />
+                <Button sx={{ mb: 2, ml: 2 }} href={"/file/정보 대량등록 양식_v1_2023-03-03.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
+                  양식추출
+                </Button>
+              </Grid>
 
-            </>
-            :
-            <>
-            </>}
+
+              {isAbleAdd ?
+                <>
+                  <Button variant='contained' startIcon={<Icon icon='tabler:plus' />} onClick={onEditConfirmOpen}>
+                    추가
+                  </Button>
+                </>
+                :
+                <>
+                  <div />
+                </>}
+
+            </Grid>
+            {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
+              return (<TabPanel value={item}>
+
+                <Typography sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
+                  <Card>
+
+                    <Table sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
+                      <TableHead>
+                        <TableRow
+                          sx={{
+                            borderTop: 'none',
+                            backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
+                          }}>
+                          {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((item, idx) => {
+                            return <TableCell sx={{ maxWidth: '300px' }}>{item.name}</TableCell>
+                          })}
+                        </TableRow>
+
+                      </TableHead>
+                      <TableBody>
+                        {rowObj[tabValue] && rowObj[tabValue].map((row, index) => {
+                          return (<TableRow>
+                            {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((column, idx) => {
+                              let color = "";
+                              if (errorObj[`${column?.column}`] && errorObj[`${column?.column}`].includes(index)) {
+                                color = 'red !important';
+                              }
+                              return <TableCell sx={{ maxWidth: '300px', color: color }}>{row[column.column]}</TableCell>
+                            })}
+                          </TableRow>)
+                        })}
+
+                      </TableBody>
+
+                    </Table>
+                  </Card>
+
+                </Typography>
+              </TabPanel>)
+            })}
+          </TabContext>
+
+
         </CardContent>
       </Card>
     </>

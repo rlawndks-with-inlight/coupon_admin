@@ -134,7 +134,7 @@ const ManagerDeviceEdit = (props) => {
                       value={values?.mcht_id}
                     >
                       {mchtList && mchtList.map((item, idx) => {
-                        return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
+                        return <MenuItem value={item?.mcht_id} key={idx}>{item?.user_name}</MenuItem>
                       })}
 
                     </Select>
