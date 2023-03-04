@@ -156,7 +156,7 @@ const LoginV1 = ({ dns_data }) => {
       });
       if (response?.status == 200 && response?.data?.user) {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        router.push('/manager/users');
+        window.location.href = '/manager/users';
       }
     } catch (err) {
       let push_lick = await processCatch(err);
