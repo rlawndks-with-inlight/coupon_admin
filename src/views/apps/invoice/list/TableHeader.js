@@ -226,7 +226,6 @@ const TableHeader = props => {
         <Box
           sx={{
             p: 5,
-            pb: 3,
             width: '100%',
             display: 'flex',
             flexWrap: 'wrap',
@@ -314,7 +313,8 @@ const TableHeader = props => {
         <Box
           sx={{
             p: 5,
-            pb: 3,
+            pl: 3,
+            pr: 3,
             width: '100%',
             display: 'flex',
             flexWrap: 'wrap',
@@ -324,7 +324,7 @@ const TableHeader = props => {
           }}
         >
           <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', rowGap: 2, }}>
-            <Button color='secondary' variant='outlined' sx={{ mr: 2, ml: `${window.innerWidth <= 500 ? '0.5rem' : '0'}` }} startIcon={<Icon icon='tabler:upload' />}
+            <Button color='secondary' variant='outlined' sx={{ mr: 2, ml: 2 }} startIcon={<Icon icon='tabler:upload' />}
               onClick={exportExcel}>
               엑셀추출
             </Button>
@@ -347,8 +347,8 @@ const TableHeader = props => {
               검색옵션
             </Button>
           </Box>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', }}>
-            <FormControl sx={{ mr: 2, ml: 2, mb: 2, minWidth: '78px', flexGrow: 1 }} size='small'>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', rowGap: 2, }}>
+            <FormControl sx={{ mr: 2, ml: 2, minWidth: '78px', flexGrow: 1 }} size='small'>
               <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
               <Select
                 label=''
@@ -368,7 +368,7 @@ const TableHeader = props => {
             </FormControl>
             <TextField
               size='small'
-              sx={{ mr: 2, ml: 2, mb: 2, flexGrow: 1 }}
+              sx={{ mr: 2, ml: 2, flexGrow: 1 }}
               onChange={e => handleChange('search', e.target.value)}
               defaultValue={searchObj?.search}
               value={searchObj?.search}
@@ -378,7 +378,7 @@ const TableHeader = props => {
             />
             {(objDataGridColumns[router.query?.table]?.is_add && getIsSeeAddButton(router.query?.table, userData)) ?
               <>
-                <Button sx={{ mb: 2, ml: 2, flexGrow: 1, mr: `${window.innerWidth <= 500 ? '0.5rem' : '0'}` }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
+                <Button sx={{ ml: 2, flexGrow: 1, mr: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
                   {objDataGridColumns[router.query?.table]?.breadcrumb} 추가
                 </Button>
               </>
