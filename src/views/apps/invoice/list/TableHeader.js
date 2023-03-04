@@ -324,31 +324,31 @@ const TableHeader = props => {
           }}
         >
           <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', rowGap: 2, }}>
-            <Button color='secondary' variant='outlined' sx={{ mr: 4 }} startIcon={<Icon icon='tabler:upload' />}
+            <Button color='secondary' variant='outlined' sx={{ mr: 2, ml: `${window.innerWidth <= 500 ? '0.5rem' : '0'}` }} startIcon={<Icon icon='tabler:upload' />}
               onClick={exportExcel}>
               엑셀추출
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(0) }}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={() => { setDateByButton(0) }}>
               당일
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(-1) }}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={() => { setDateByButton(-1) }}>
               어제
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(3) }}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={() => { setDateByButton(3) }}>
               3일전
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(30) }}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={() => { setDateByButton(30) }}>
               1개월
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={() => { setDateByButton(90) }}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={() => { setDateByButton(90) }}>
               3개월
             </Button>
-            <Button type='submit' color='secondary' sx={{ mr: 4 }} variant='outlined' onClick={openSearchOption}>
+            <Button type='submit' color='secondary' sx={{ mr: 2, ml: 2, flexGrow: 1 }} variant='outlined' onClick={openSearchOption}>
               검색옵션
             </Button>
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', }}>
-            <FormControl sx={{ mr: 4, mb: 2, minWidth: '78px' }} size='small'>
+            <FormControl sx={{ mr: 2, ml: 2, mb: 2, minWidth: '78px', flexGrow: 1 }} size='small'>
               <InputLabel id='demo-simple-select-outlined-label'></InputLabel>
               <Select
                 label=''
@@ -368,7 +368,7 @@ const TableHeader = props => {
             </FormControl>
             <TextField
               size='small'
-              sx={{ mr: 4, mb: 2 }}
+              sx={{ mr: 2, ml: 2, mb: 2, flexGrow: 1 }}
               onChange={e => handleChange('search', e.target.value)}
               defaultValue={searchObj?.search}
               value={searchObj?.search}
@@ -378,7 +378,7 @@ const TableHeader = props => {
             />
             {(objDataGridColumns[router.query?.table]?.is_add && getIsSeeAddButton(router.query?.table, userData)) ?
               <>
-                <Button sx={{ mb: 2 }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
+                <Button sx={{ mb: 2, ml: 2, flexGrow: 1, mr: `${window.innerWidth <= 500 ? '0.5rem' : '0'}` }} component={Link} variant='contained' href={`/manager/${router.query?.table}/create`} startIcon={<Icon icon='tabler:plus' />}>
                   {objDataGridColumns[router.query?.table]?.breadcrumb} 추가
                 </Button>
               </>
