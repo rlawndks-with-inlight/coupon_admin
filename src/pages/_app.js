@@ -48,11 +48,12 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import { useEffect } from 'react'
-import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 import { returnMoment } from 'src/@core/utils/function'
 import axios from 'axios'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -71,13 +72,18 @@ Router.events.on('routeChangeComplete', () => {
 // ** Configure JSS & ClassName
 const App = props => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
+  const saveDnsData = () => {
+    setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
+  }
+  useEffect(() => {
+    saveDnsData();
+  }, [dns_data])
 
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
-
   const getLayout =
     Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
-  const setConfig = Component.setConfig ?? undefined
+  const setConfig = Component.setConfig ?? undefined;
 
   return (
     <Provider store={store}>
@@ -110,7 +116,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-
     const res = await axios.get(`${backUrl}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
     const json = await res.data;
     return {

@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react"
 import { useEffect, useState } from "react"
-import { useSettings } from "src/@core/hooks/useSettings"
+import { returnMoment } from "src/@core/utils/function"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { axiosIns } from "src/@fake-db/backend"
 import { LOCALSTORAGE } from "src/data/data"
@@ -26,13 +26,16 @@ const DefaultPalette = (mode, skin) => {
   useEffect(() => {
     getDnsData();
   }, [])
-
   const getDnsData = async () => {
     try {
       setLoading(true);
       let obj = {};
-      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-      obj = { ...response?.data };
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+      obj = JSON.parse(dns_data);
+      if (!obj?.name) {
+        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+        obj = { ...response?.data };
+      }
       obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
       setDnsData(obj);
       setLoading(false);

@@ -97,25 +97,16 @@ const LoginV1 = ({ dns_data }) => {
 
   const checkDns = async () => {
     try {
-      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-      setLocalStorage(LOCALSTORAGE.DNS_DATA, response?.data);
-      setDnsData(response?.data);
-      if (response?.status == 200) {
-        setValues({ ...values, ['brand_id']: response?.data?.id });
-      } else {
-        toast.error(response?.data?.statusText);
+      let obj = {};
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+      obj = JSON.parse(dns_data);
+      if (!obj?.name) {
+        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+        obj = { ...response?.data };
       }
-      if (router.asPath.split('?')[1]) {
-        let query_str = router.asPath.split('?')[1];
-        if (query_str.includes('o=')) {
-          let token = query_str.split('o=')[1];
-          await setCookie('o', token, {
-            path: "/",
-            secure: true,
-            sameSite: "none",
-          });
-        }
-      }
+      setDnsData(obj);
+      setValues({ ...values, ['brand_id']: obj.id });
+
     } catch (err) {
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);

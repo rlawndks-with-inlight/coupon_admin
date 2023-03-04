@@ -23,6 +23,8 @@ import MuiTabList from '@mui/lab/TabList'
 import { styled } from '@mui/material/styles'
 import { useTheme } from '@emotion/react'
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -61,6 +63,8 @@ const ManagerBrandEdit = (props) => {
     phone_num: '',
     fax_num: '',
     template_id: 0,
+    mbr_type: 0,
+    guide_type: 0,
     theme_css: {
       main_color: '#7367f0'
     },
@@ -119,6 +123,10 @@ const ManagerBrandEdit = (props) => {
         delete obj[img_key_list[i]];
       }
     }
+    let local_dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    local_dns_data = JSON.parse(local_dns_data);
+    local_dns_data['theme_css'] = values['theme_css'];
+    setLocalStorage(LOCALSTORAGE.DNS_DATA, local_dns_data);
     editItem(obj);
   }
   return (
@@ -136,7 +144,7 @@ const ManagerBrandEdit = (props) => {
         <TabPanel sx={{ p: 0 }} value='tab-1'>
           <Grid container spacing={6}>
             <Grid item xs={12} md={5}>
-              <Card>
+              <Card style={{ height: '100%' }}>
                 <CardContent>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
@@ -218,6 +226,40 @@ const ManagerBrandEdit = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>멤버쉽 적용 타입</InputLabel>
+                        <Select
+                          label='멤버쉽 적용 타입'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='mbr_type'
+                          onChange={handleChangeValue('mbr_type')}
+                          defaultValue={values?.mbr_type ?? 0}
+                          value={values?.mbr_type}
+                        >
+                          <MenuItem value='0'>유입된 가맹점에서만 사용</MenuItem>
+                          <MenuItem value='1'>모든 가맹점에서 사용</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>안내 타입</InputLabel>
+                        <Select
+                          label='안내 타입'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='guide_type'
+                          onChange={handleChangeValue('guide_type')}
+                          defaultValue={values?.guide_type ?? 0}
+                          value={values?.guide_type}
+                        >
+                          <MenuItem value='0'>친화적</MenuItem>
+                          <MenuItem value='1'>일반형</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField fullWidth label='메인색상' type={'color'} placeholder='메인색상을 입력해 주세요.' className='main_color' onChange={(e) => {

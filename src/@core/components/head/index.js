@@ -3,6 +3,7 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { useEffect, useState } from "react";
 import { axiosIns } from "src/@fake-db/backend";
+import { returnMoment } from "src/@core/utils/function";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title, dns_data } = props;
@@ -17,7 +18,7 @@ const HeadContent = (props) => {
 
   const getDnsData = async () => {
     try {
-      let dns_data = await getLocalStorage(LOCALSTORAGE.dns_data);
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
       if (!dns_data?.name) {
         const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
