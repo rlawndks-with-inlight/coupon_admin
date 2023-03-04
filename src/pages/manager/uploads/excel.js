@@ -14,6 +14,8 @@ import IconButton from '@mui/material/IconButton'
 import Icon from 'src/@core/components/icon'
 import { excelUploadTableObj } from 'src/data/manager-data'
 import { Box, Card, CardContent, Grid, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
+import Paper from '@mui/material/Paper'
+import TableContainer from '@mui/material/TableContainer'
 import { useTheme } from '@emotion/react'
 import * as XLSX from 'xlsx';
 import $ from 'jquery';
@@ -196,23 +198,23 @@ const Excel = (props) => {
 
 
           <TabContext value={tabValue}>
-            <TabList centered onChange={handleChangeTabChange} aria-label='simple tabs example'>
+            <TabList centered onChange={handleChangeTabChange} aria-label='simple tabs example' variant='fullWidth'>
               {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
                 return <Tab value={item} label={excelUploadTableObj[item]?.breadcrumb} />
               })}
             </TabList>
-            <Box sx={{ padding: '24px', display: 'flex', flexWrap: 'wrap' }}>
+            <Box sx={{ padding: '24px 24px 0 24px', display: 'flex', flexWrap: 'wrap' }}>
               <Box sx={{ mr: 10 }}>
                 <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4, }}>사용방법</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>1. 상단 컬럼에 존재하는 (O)와 (X)는 필수 값의 여부이며 (X)는 존재하지 않을 시 빈값으로 입력합니다.</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>2. 가맹점 {'->'} 장비 {'->'} 유저 {'->'} 포인트 순서로 대량등록을 진행해야합니다.</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>3. 날짜 포멧은 Y-m-d을 준수해야합니다. (예: 1970-01-02)</Grid>
-                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>4. 대량등록은 사이트내 각각의 추가기능을 기반으로 제작되었습니다.</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre', paddingBottom: '24px' }}>4. 대량등록은 사이트내 각각의 추가기능을 기반으로 제작되었습니다.</Grid>
               </Box>
               <Box>
                 <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4 }}>{excelUploadTableObj[tabValue]?.breadcrumb} 등록 주의사항</Grid>
                 {excelUploadTableObj[tabValue].caution && excelUploadTableObj[tabValue].caution.map((item, idx) => {
-                  return <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>{idx + 1}. {item}</Grid>
+                  return <Grid sx={{ fontSize: '15px', whiteSpace: 'pre', paddingBottom: `${excelUploadTableObj[tabValue].caution.length - 1 == idx ? '24px' : '0'}` }}>{idx + 1}. {item}</Grid>
                 })}
               </Box>
             </Box>
@@ -228,8 +230,6 @@ const Excel = (props) => {
                   양식추출
                 </Button>
               </Grid>
-
-
               {isAbleAdd ?
                 <>
                   <Button variant='contained' startIcon={<Icon icon='tabler:plus' />} onClick={onEditConfirmOpen}>
@@ -240,15 +240,12 @@ const Excel = (props) => {
                 <>
                   <div />
                 </>}
-
             </Grid>
             {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
               return (<TabPanel value={item}>
-
-                <Typography sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
-                  <Card>
-
-                    <Table sx={{ border: `1px solid ${theme.palette.mode == 'dark' ? '#fff' : '000'}` }}>
+                <Typography>
+                  <TableContainer className={`table-container${theme.palette.mode == 'dark' ? '-dark' : ''}`} component={Paper}>
+                    <Table>
                       <TableHead>
                         <TableRow
                           sx={{
@@ -256,10 +253,26 @@ const Excel = (props) => {
                             backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
                           }}>
                           {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((item, idx) => {
-                            return <TableCell sx={{ maxWidth: '300px' }}>{item.name}</TableCell>
+                            return (<TableCell sx={{ maxWidth: '300px', position: 'relative' }}>
+                              <div style={{
+                                position: 'absolute',
+                                width: '2px',
+                                height: '100%',
+                                display: 'flex',
+                                left: '0',
+                                top: '0'
+                              }}>
+                                <div style={{
+                                  width: '2px',
+                                  height: '14px',
+                                  margin: 'auto 0',
+                                  background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                                }} />
+                              </div>
+                              {item.name}
+                            </TableCell>)
                           })}
                         </TableRow>
-
                       </TableHead>
                       <TableBody>
                         {rowObj[tabValue] && rowObj[tabValue].map((row, index) => {
@@ -273,12 +286,9 @@ const Excel = (props) => {
                             })}
                           </TableRow>)
                         })}
-
                       </TableBody>
-
                     </Table>
-                  </Card>
-
+                  </TableContainer>
                 </Typography>
               </TabPanel>)
             })}
