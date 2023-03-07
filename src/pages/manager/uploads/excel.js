@@ -49,6 +49,7 @@ const Excel = (props) => {
   useEffect(() => {
     setIsAbleAdd(false);
     setRowObj({});
+    setErrorObj({});
   }, [tabValue])
 
   function excelDateToJSDate(serial) {
@@ -114,6 +115,9 @@ const Excel = (props) => {
                 temp[k] = excelDateToJSDate(temp[k]);
               }
               temp[k] = returnMoment(false, new Date(temp[k])).substring(0, 10);
+              if (isNaN(temp[k])) {
+                temp[k] = "";
+              }
             }
             arr_obj[excelUploadTableObj[obj_key_list[i]].columns[k].column] = temp[k];
           }
