@@ -77,7 +77,6 @@ const ManagerMerchandiseEdit = (props) => {
   const settingPage = async () => {
     try {
       const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
-      console.log(response)
       let user_list = [...response?.data?.mcht_id ?? []];
       for (var i = 0; i < user_list.length; i++) {
         user_list[i]['group_id'] = user_list[i]['id'];

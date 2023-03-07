@@ -72,13 +72,11 @@ const DialogExcelUpload = (props) => {
 
   const uploadExcel = async (e) => {
     e.preventDefault();
-    console.log(e.target.files)
     var files = e.target.files, f = files[0];
     var reader = new FileReader();
     reader.onload = async function (e) {
       var data = e.target.result;
       let readedData = XLSX.read(data, { type: 'binary' });
-      console.log(readedData)
       let obj_key_list = Object.keys(excelUploadTableObj);
       let row_obj = {};
       let dataParseObj = {};
@@ -129,7 +127,6 @@ const DialogExcelUpload = (props) => {
         const response = await axiosIns().post(`api/v1/manager/${tabValue}/stores-validate`,
           dataParseObj[tabValue]
         )
-        console.log(response)
         if (response.status == 200) {
           setIsAbleAdd(true);
         }
@@ -144,7 +141,6 @@ const DialogExcelUpload = (props) => {
     $("#excel_upload").val("");
   }
   const handleChangeTabChange = (event, newValue) => {
-    console.log(event)
     setTabValue(newValue)
   }
   const saveExcelValues = async () => {

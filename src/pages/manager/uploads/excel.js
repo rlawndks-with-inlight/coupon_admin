@@ -279,7 +279,6 @@ const Excel = (props) => {
                           return (<TableRow>
                             {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((column, idx) => {
                               let color = "";
-                              console.log(errorObj)
                               if (errorObj[`${column?.column}`] && errorObj[`${column?.column}`].includes(index)) {
                                 color = 'red !important';
                               }

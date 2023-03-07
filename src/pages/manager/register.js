@@ -206,7 +206,6 @@ const Register = () => {
   }
   const onCheckNameServer = async () => {
     try {
-      console.log(values)
       const response = await axiosIns().get(`/api/v1/auth/name-server?dns=${values?.dns}`);
       if (response.status == 200) {
         setActiveStep(activeStep + 1);
