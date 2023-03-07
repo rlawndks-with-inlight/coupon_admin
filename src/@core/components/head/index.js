@@ -40,7 +40,6 @@ const HeadContent = (props) => {
         />
         <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
         <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
@@ -48,7 +47,7 @@ const HeadContent = (props) => {
         <meta property="og:url" content={'https:' + (dns_data?.dns || dnsData?.dns) ?? ""} />
         <meta property="og:description" content={(dns_data?.og_description || dnsData?.og_description) ?? ""} />
         <meta name="author" content="purplevery" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
