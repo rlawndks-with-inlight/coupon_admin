@@ -207,7 +207,7 @@ const Excel = (props) => {
               <Box sx={{ mr: 10 }}>
                 <Grid sx={{ color: 'red', fontWeight: 'bold', mb: 4, }}>사용방법</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>1. 상단 컬럼에 존재하는 (O)와 (X)는 필수 값의 여부이며 (X)는 존재하지 않을 시 빈값으로 입력합니다.</Grid>
-                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>2. 가맹점 {'->'} 장비 {'->'} 유저 {'->'} 포인트 순서로 대량등록을 진행해야합니다.</Grid>
+                <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>2. 가맹점 {'->'} 장비 {'->'} 유저 {'->'} 포인트 순서로 대량등록을 진행해야합니다.(이미 등록했을 시 무방함)</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre' }}>3. 날짜 포멧은 Y-m-d을 준수해야합니다. (예: 1970-01-02)</Grid>
                 <Grid sx={{ fontSize: '15px', whiteSpace: 'pre', paddingBottom: '24px' }}>4. 대량등록은 사이트내 각각의 추가기능을 기반으로 제작되었습니다.</Grid>
               </Box>
@@ -279,6 +279,7 @@ const Excel = (props) => {
                           return (<TableRow>
                             {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((column, idx) => {
                               let color = "";
+                              console.log(errorObj)
                               if (errorObj[`${column?.column}`] && errorObj[`${column?.column}`].includes(index)) {
                                 color = 'red !important';
                               }
