@@ -85,7 +85,6 @@ const Edit = ({ dns_data }) => {
       return <ManagerUserEdit {...common} />
     else if (router.query?.table == 'brands')
       return <ManagerBrandEdit {...common} />
-
     // else if (router.query?.table == 'notices')
     //   return <ManagerNoticeEdit {...common} />
     else if (router.query?.table == 'devices')

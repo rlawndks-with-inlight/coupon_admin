@@ -54,6 +54,7 @@ import HeadContent from 'src/@core/components/head'
 import { returnMoment } from 'src/@core/utils/function'
 import axios from 'axios'
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { Html } from 'next/document'
 
 const clientSideEmotionCache = createEmotionCache()
 

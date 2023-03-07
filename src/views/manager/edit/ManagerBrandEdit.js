@@ -155,7 +155,7 @@ const ManagerBrandEdit = (props) => {
                         values={values}
                         value={values?.logo_img}
                         sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
-                        placeholder={'max-width: 256px, 이상은 자동으로 리사이징 됩니다.'}
+                        placeholder={'max-width: 512px, 이상은 자동으로 리사이징 됩니다.'}
                       />
                     </Grid>
                     <Grid item xs={12}>

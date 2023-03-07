@@ -116,5 +116,6 @@
     "react-credit-cards": {
       "react": "$react"
     }
-  }
+  },
+  "sideEffects": false
 }
