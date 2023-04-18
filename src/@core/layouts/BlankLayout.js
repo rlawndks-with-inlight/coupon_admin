@@ -1,6 +1,7 @@
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import { useTheme } from '@emotion/react'
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
@@ -25,8 +26,9 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 }))
 
 const BlankLayout = ({ children }) => {
+  const theme = useTheme();
   return (
-    <BlankLayoutWrapper className='layout-wrapper'>
+    <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
         {children}
       </Box>
