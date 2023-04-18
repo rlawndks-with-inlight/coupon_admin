@@ -2,7 +2,9 @@ html,
 body {
   min-height: 100%;
 }
-
+.ql-editor {
+  min-height: 300px !important;
+}
 #__next {
   height: 100%;
 }

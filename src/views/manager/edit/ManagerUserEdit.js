@@ -90,8 +90,7 @@ const ManagerUserEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
-      let partner_list = [...response?.data?.user_id?.partners];
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       let mcht_list = [...response?.data?.mcht_id];
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
@@ -206,7 +205,7 @@ const ManagerUserEdit = (props) => {
                               value={values?.mcht_id}
                             >
                               {mchtList && mchtList.map((item, idx) => {
-                                return <MenuItem value={item?.mcht_id} key={idx}>{item?.mcht_name}</MenuItem>
+                                return <MenuItem value={item?.mcht_id} key={idx}>{item?.user_name}</MenuItem>
                               })}
 
                             </Select>

@@ -22,10 +22,14 @@ import Avatar from '@mui/material/Avatar'
 import DialogForm from 'src/views/components/dialogs/DialogForm'
 import $ from 'jquery'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
-export const getItemByType = (data, column, table, goTo, onDeleteOpen, is_excel, openChangePasswordPopUp, user_data) => {
+export const getItemByType = (data, column, table, is_excel, user_data, func) => {
   try {
     let result = "---";
-
+    const {
+      goTo,
+      onDeleteOpen,
+      openChangePasswordPopUp,
+    } = func;
     if (column?.type == 'text') {//
       result = data[column?.column];
     }
@@ -321,7 +325,11 @@ const TrManager = (props) => {
                         maxWidth: '300px',
                         color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
                       }}>
-                      {getItemByType(post, col, router.query?.table, goTo, onDeleteOpen, false, openChangePasswordPopUp, userData)}
+                      {getItemByType(post, col, router.query?.table, false, userData, {
+                        goTo: goTo,
+                        onDeleteOpen: onDeleteOpen,
+                        openChangePasswordPopUp: openChangePasswordPopUp
+                      })}
                     </TableCell>
                   </>}
               </>}

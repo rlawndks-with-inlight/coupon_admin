@@ -139,9 +139,14 @@ const TableHeader = props => {
     } else if (num == 90) {
       let moment = returnMoment().substring(0, 10);
       moment = moment.split('-');
-      if (moment[1] == '01' || moment[1] == '02' || moment[1] == '03') {
-        moment[1] = parseInt(moment[1]) + 9;
+      moment[0] = parseInt(moment[0]);
+      moment[1] = parseInt(moment[1]);
+      moment[2] = parseInt(moment[2]);
+      if (moment[1] == 1 || moment[1] == 2 || moment[1] == 3) {
+        moment[1] = moment[1] + 9;
         moment[0] = moment[0] - 1;
+      } else {
+        moment[1] = moment[1] - 3;
       }
       s_dt = `${moment[0]}-${moment[1] >= 10 ? moment[1] : `0${moment[1]}`}-01`;
 
@@ -157,7 +162,6 @@ const TableHeader = props => {
     } else {
       return;
     }
-
     let obj = await handleChange('s_dt', s_dt);
     await handleChange('e_dt', s_dt);
     obj = { ...obj, ['e_dt']: e_dt };

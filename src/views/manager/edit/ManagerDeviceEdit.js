@@ -59,7 +59,7 @@ const ManagerDeviceEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       let partner_list = [...response?.data?.user_id?.partners];
       let mcht_list = [...response?.data?.mcht_id];
       for (var i = 0; i < mcht_list.length; i++) {

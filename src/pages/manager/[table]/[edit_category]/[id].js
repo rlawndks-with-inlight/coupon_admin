@@ -54,7 +54,9 @@ import { processCatch } from 'src/@core/utils/function'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
-
+import ManagerCategoryEdit from 'src/views/manager/edit/ManagerCategoryEdit'
+import ManagerProductEdit from 'src/views/manager/edit/ManagerProductEdit'
+import $ from 'jquery';
 const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
     posts: {}
@@ -80,6 +82,7 @@ const Edit = ({ dns_data }) => {
     user_data = JSON.parse(user_data ?? "{}") ?? {};
     setUserData(user_data);
   }
+
   const renderPage = (common) => {
     if (router.query?.table == 'users')
       return <ManagerUserEdit {...common} />
@@ -97,6 +100,10 @@ const Edit = ({ dns_data }) => {
       return <ManagerMerchandiseEdit {...common} />
     else if (router.query?.table == 'operators')
       return <ManagerOperatorEdit {...common} />
+    else if (router.query?.table == 'categories')
+      return <ManagerCategoryEdit {...common} />
+    else if (router.query?.table == 'products')
+      return <ManagerProductEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>
   }

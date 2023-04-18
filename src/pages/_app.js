@@ -55,7 +55,8 @@ import { returnMoment } from 'src/@core/utils/function'
 import axios from 'axios'
 import { useSettings } from 'src/@core/hooks/useSettings'
 import { Html } from 'next/document'
-
+import "react-quill/dist/quill.snow.css";
+import "react-quill-emoji/dist/quill-emoji.css";
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader

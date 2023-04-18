@@ -660,6 +660,23 @@ const project_navigation = [
     ]
   },
   {
+    title: '상품관리',
+    icon: 'tabler:shopping-cart',
+    level: 50,
+    children: [
+      {
+        title: '카테고리관리',
+        path: '/manager/categories',
+        level: 50
+      },
+      {
+        title: '상품관리',
+        path: '/manager/products',
+        level: 50
+      },
+    ]
+  },
+  {
     title: '광고관리',
     icon: 'tabler:ad',
     path: '/manager/advertisements',

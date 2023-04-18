@@ -154,6 +154,41 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
+  categories: {
+    table: 'categories',
+    breadcrumb: '카테고리',
+    is_add: true,
+    is_see_add_condition: 40,
+    search_placeholder: '카테고리명 검색',
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('카테고리명', 'name', 'text', ''),
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
+  products: {
+    table: 'products',
+    breadcrumb: '상품',
+    is_add: true,
+    is_see_add_condition: 40,
+    search_placeholder: '카테고리명, 상품명 검색',
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('카테고리명', 'category_name', 'text', ''),
+      managerListFormat('상품명', 'name', 'text', ''),
+      managerListFormat('상품이미지', 'product_img', 'img', ''),
+      managerListFormat('가격', 'price', 'number', ''),
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
   notices: {
     table: 'notices',
     breadcrumb: '공지사항',

@@ -68,7 +68,7 @@ const ManagerPointEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      const response = await axiosIns().get(`/api/v1/manager/users/sub/users?user=1&mcht=1`);
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       setMchtList(response?.data?.mcht_id);
       if (response?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
