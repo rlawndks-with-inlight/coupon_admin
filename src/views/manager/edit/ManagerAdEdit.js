@@ -109,6 +109,7 @@ const ManagerAdEdit = (props) => {
                       <MenuItem value={0}>사용안함</MenuItem>
                       <MenuItem value={1}>메인광고</MenuItem>
                       <MenuItem value={2}>슬라이드광고</MenuItem>
+                      <MenuItem value={3}>쇼핑몰 슬라이드광고</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>

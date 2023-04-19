@@ -1,4 +1,4 @@
-import BlankLayout from "src/@core/layouts/BlankLayout"
+import ShowpingMallLayout from "src/@core/layouts/ShowpingMallLayout"
 
 const Home = () => {
   return (
@@ -7,6 +7,6 @@ const Home = () => {
     </>
   )
 }
-Home.getLayout = page => <BlankLayout>{page}</BlankLayout>
+Home.getLayout = page => <ShowpingMallLayout>{page}</ShowpingMallLayout>
 
 export default Home
