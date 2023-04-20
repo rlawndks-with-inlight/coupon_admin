@@ -230,3 +230,10 @@ export function base64toFile(base_data, filename) {
 
   return new File([u8arr], filename, { type: mime });
 }
+export const getBackgroundColor = (theme) => {
+  if (theme.palette.mode == 'dark') {
+    return '#2f3349';
+  } else {
+    return '#fff';
+  }
+}

@@ -36,7 +36,9 @@ const DefaultPalette = (mode, skin) => {
         const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
         obj = { ...response?.data };
       }
-      obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      if (typeof obj['theme_css'] == 'string') {
+        obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      }
       setDnsData(obj);
       setLoading(false);
     } catch (err) {
@@ -129,6 +131,12 @@ const DefaultPalette = (mode, skin) => {
       disabled: `rgba(${mainColor}, 0.26)`,
       disabledBackground: `rgba(${mainColor}, 0.12)`,
       focus: `rgba(${mainColor}, 0.12)`
+    },
+    font_size: {
+      font1: '2rem',
+      font2: '1rem',
+      font3: '0.75rem',
+      font4: '0.5rem',
     },
     loading: loading,
   }

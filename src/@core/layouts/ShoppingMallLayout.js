@@ -1,10 +1,12 @@
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import Fab from '@mui/material/Fab'
+import { Icon } from '@iconify/react'
 import { useTheme } from '@emotion/react'
-import Header from './components/showping-mall/Header'
-import Footer from './components/showping-mall/Footer'
-
+import Header from './components/shopping-mall/Header'
+import Footer from './components/shopping-mall/Footer'
+import ScrollToTop from 'src/@core/components/scroll-to-top'
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',
@@ -27,7 +29,7 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   }
 }))
 
-const ShowpingMallLayout = ({ children }) => {
+const ShoppingMallLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
@@ -36,8 +38,17 @@ const ShowpingMallLayout = ({ children }) => {
         {children}
         <Footer />
       </Box>
+      {scrollToTop ? (
+        scrollToTop(props)
+      ) : (
+        <ScrollToTop className='mui-fixed'>
+          <Fab color='primary' size='small' aria-label='scroll back to top'>
+            <Icon icon='tabler:arrow-up' />
+          </Fab>
+        </ScrollToTop>
+      )}
     </BlankLayoutWrapper>
   )
 }
 
-export default ShowpingMallLayout
+export default ShoppingMallLayout

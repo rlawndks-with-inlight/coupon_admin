@@ -16,7 +16,7 @@ const KeenSliderWrapper = styled('div')(({ theme }) => ({
       opacity: 0.4
     },
     '&.zoom-out': {
-      perspective: '1000px',
+      perspective: '1200px',
       '& .zoom-out__slide': {
         '& .slider-content-wrapper': {
           width: '100%',
