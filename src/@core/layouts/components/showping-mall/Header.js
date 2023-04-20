@@ -10,6 +10,7 @@ import { LOCALSTORAGE } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
 import { toast } from "react-hot-toast";
+import { processCatch } from "src/@core/utils/function";
 
 const Wrapper = styled.header`
 width:90%;
@@ -52,20 +53,32 @@ const Header = () => {
     console.log(router.asPath)
   }, [router.asPath])
   const getLocalStorageData = async () => {//로컬 스토리지 관련 데이터 불러오기
-    let data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    data = JSON.parse(data);
-    setDnsData(data);
+
     let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user = JSON.parse(user);
     setUserData(user);
   }
   const getCategoryList = async () => {
-    const response = await axiosIns().get(`/api/v1/manager/categories?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
-    if (response?.data?.content.length == 0) {
-      toast.error("카테고리를 먼저 등록해 주세요.");
-      router.back();
+    try {
+      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+      dns_data = JSON.parse(dns_data);
+      setDnsData(dns_data);
+      const response = await axiosIns().get(`/api/v1/shop/index?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01&cate_id=0&brand_id=${dns_data?.id}&search=`);
+      if (response?.data?.content.length == 0) {
+        toast.error("카테고리를 먼저 등록해 주세요.");
+        router.back();
+      }
+      setCategoryList(response?.data?.content);
+    } catch (err) {
+      let push_lick = await processCatch(err);
+      if (push_lick == -1) {
+        router.back();
+      } else {
+        if (push_lick) {
+          router.push(push_lick);
+        }
+      }
     }
-    setCategoryList(response?.data?.content);
   }
   return (
     <>

@@ -2,7 +2,7 @@ import logoSrc from '/public/images/logos/logo.svg'
 
 export default logoSrc;
 
-export const backUrl = "https://backend.comagain.kr";
+export const backUrl = process.env.BACK_URL;
 
 
 export const LOCALSTORAGE = {

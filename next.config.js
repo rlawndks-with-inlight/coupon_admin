@@ -16,7 +16,7 @@ module.exports = {
     return [
       {
         source: "/api/v1/:path*",
-        destination: `https://backend.comagain.kr/api/v1/:path*`,
+        destination: `${process.env.BACK_URL}/api/v1/:path*`,
       }
     ]
   },
