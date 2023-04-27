@@ -65,17 +65,17 @@ const project_navigation = [
   {
     title: '상품관리',
     icon: 'tabler:shopping-cart',
-    level: 50,
+    level: 10,
     children: [
       {
         title: '카테고리관리',
         path: '/manager/categories',
-        level: 50
+        level: 10
       },
       {
         title: '상품관리',
         path: '/manager/products',
-        level: 50
+        level: 10
       },
     ]
   },
