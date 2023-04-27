@@ -91,7 +91,7 @@ const AppBarContent = props => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [curZoom, setCurZoom] = useState(100);
   useEffect(() => {
-    settingLocalStorage();
+    // settingLocalStorage();
   }, [])
 
   const settingLocalStorage = async () => {
@@ -102,7 +102,7 @@ const AppBarContent = props => {
       cur_zoom = parseInt(cur_zoom)
     }
     setCurZoom(cur_zoom);
-    document.body.style.zoom = `${cur_zoom}%`;
+    // document.body.style.zoom = `${cur_zoom}%`;
     await setLocalStorage(LOCALSTORAGE.IS_FULL_SCREEN, false);
   }
 
@@ -130,7 +130,7 @@ const AppBarContent = props => {
     }
     await setLocalStorage(LOCALSTORAGE.CUR_ZOOM, cur_zoom);
     setCurZoom(cur_zoom);
-    document.body.style.zoom = `${cur_zoom}%`;
+    //document.body.style.zoom = `${cur_zoom}%`;
   }
 
   const onChangeFullScreen = async () => {
@@ -165,13 +165,13 @@ const AppBarContent = props => {
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {window.innerWidth >= 700 ?
           <>
-            <IconButton color='inherit' aria-haspopup='true' onClick={() => onChangeZoom(-1)}>
+            {/* <IconButton color='inherit' aria-haspopup='true' onClick={() => onChangeZoom(-1)}>
               <Icon fontSize='1rem' icon="tabler:minus" />
             </IconButton>
             <div style={{ ...ButtonGroupStyle(theme), cursor: 'default', pointerEvents: 'none' }}>{curZoom}%</div>
             <IconButton color='inherit' aria-haspopup='true' onClick={() => onChangeZoom(1)}>
               <Icon fontSize='1rem' icon="tabler:plus" />
-            </IconButton>
+            </IconButton> */}
             <IconButton color='inherit' aria-haspopup='true' onClick={onChangeFullScreen}>
               {isFullScreen ?
                 <>

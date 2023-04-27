@@ -129,18 +129,7 @@ const Excel = (props) => {
 
       }
       setRowObj(dataParseObj);
-      try {
-        const response = await axiosIns().post(`api/v1/manager/${tabValue}/stores-validate`,
-          dataParseObj[tabValue]
-        )
-        if (response.status == 200) {
-          setIsAbleAdd(true);
-        }
-      } catch (err) {
-        console.log(err);
-        setErrorObj(err?.response?.data?.data);
-        let push_lick = await processCatch(err);
-      }
+      setIsAbleAdd(true);
     };
 
     reader.readAsBinaryString(f);

@@ -76,7 +76,6 @@ const App = props => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
   const saveDnsData = () => {
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-    console.log(dns_data)
   }
   useEffect(() => {
     saveDnsData();

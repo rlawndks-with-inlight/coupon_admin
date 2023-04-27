@@ -26,8 +26,8 @@ const PointOptionBox = (props) => {
 
   const pub_type_list = [
     { name: '전체', is_cancel: -1 },
-    { name: '발급', is_cancel: 0 },
-    { name: '발급취소', is_cancel: 1 },
+    { name: '발행', is_cancel: 0 },
+    { name: '발행취소', is_cancel: 1 },
   ]
   useEffect(() => {
     if ($('.css-x2in24-MuiInputBase-input-MuiOutlinedInput-input').offset()?.top) {
@@ -76,10 +76,10 @@ const PointOptionBox = (props) => {
           :
           <>
             <FormControl sx={{ mr: 4 }}>
-              <InputLabel id='demo-simple-select-outlined-label'>발급타입</InputLabel>
+              <InputLabel id='demo-simple-select-outlined-label'>발행타입</InputLabel>
               <Select
                 size='small'
-                label='발급타입'
+                label='발행타입'
                 value={searchObj?.is_cancel}
                 id='demo-simple-select-outlined'
                 labelId='demo-simple-select-outlined-label'

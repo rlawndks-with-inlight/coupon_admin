@@ -9,7 +9,7 @@ import { LOCALSTORAGE } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
 import { toast } from "react-hot-toast";
-import { getBackgroundColor, processCatch } from "src/@core/utils/function";
+import { getBackgroundColor, handleLogout, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import ModeToggler from "../shared-components/ModeToggler";
 import DrawerMenu from "./DrawerMenu";
@@ -45,7 +45,7 @@ width:auto;
 `
 const MenuList = styled.div`
 display: flex;
-max-width: 300px;
+max-width: 350px;
 width: 30%;
 z-index:10;
 @media (max-width: 1200px) {
@@ -94,7 +94,7 @@ width:100%;
 const Category = styled.div`
 margin-right:1rem;
 cursor:pointer;
-padding:0.25rem 0;
+padding:0.25rem;
 `
 
 const SearchPc = styled.div`
@@ -143,7 +143,7 @@ const Header = () => {
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
       setDnsData(dns_data);
-      const response = await axiosIns().get(`/api/v1/shop/index?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01&cate_id=0&brand_id=${dns_data?.id}&search=`);
+      const response = await axiosIns().get(`/api/v1/shop/items?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01&cate_id=0&brand_id=${dns_data?.id}&search=`);
       if (response?.data?.categories.length == 0) {
         toast.error("카테고리를 먼저 등록해 주세요.");
         router.back();
@@ -242,10 +242,10 @@ const Header = () => {
             <MobileMenu theme={theme}>HOME</MobileMenu>
             <Menu theme={theme}>고객센터</Menu>
             <Menu theme={theme}>FAQ</Menu>
-            <Menu theme={theme}>고객센터</Menu>
+            <Menu theme={theme}>1:1 문의</Menu>
             {userData?.id ?
               <>
-                <Menu theme={theme} style={{ borderBottom: 'none' }}>로그아웃</Menu>
+                <Menu theme={theme} style={{ borderBottom: 'none' }} onClick={() => handleLogout(router, '/shop/login')}>로그아웃</Menu>
               </>
               :
               <>

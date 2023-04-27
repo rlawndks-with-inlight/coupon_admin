@@ -93,7 +93,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),
     ],
-    table_width: '150%',
+    table_width: '',
     default_search_obj: {}
   },
   brands: {
@@ -133,7 +133,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],
-    table_width: '180%',
+    table_width: '130%',
     default_search_obj: {}
   },
   advertisements: {
@@ -154,6 +154,77 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
+  couponModels: {//param
+    table: 'couponModels',//ajax에 사용할 테이블
+    breadcrumb: '쿠폰모델',//이름 사용할 것
+    is_add: true,
+    is_see_add_condition: 50,
+    search_placeholder: '쿠폰 모델명 검색',//검색 placeholder
+    head_columns: [
+      { title: '쿠폰정보', size: 9 },
+      { title: '발행완료', size: 2 },
+      { title: '발행취소', size: 2 },
+      { title: '지급완료', size: 2 },
+      { title: '사용', size: 2 },
+      { title: '', size: 6 },
+    ],
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('쿠폰 이미지', 'coupon_img', 'img', ''),
+      managerListFormat('쿠폰 모델명', 'name', 'text', ''),
+      managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
+      managerListFormat('교환상품', 'prod_name', 'text', ''),
+      managerListFormat('할인가', 'sale_amt', 'number', ''),
+      managerListFormat('쿠폰타입', 'code_type', 'code_type', ''),
+      managerListFormat('유효기간', 'valid_s_dt-valid_e_dt', 'period', ''),
+      managerListFormat('사용가능가맹점', 'mcht_names', 'mcht_names', ''),
+      managerListFormat('금액', 'amount-obj-pub', 'number', '', { search_option_label: '발행완료' }),
+      managerListFormat('개수', 'count-obj-pub', 'number', '', { search_option_label: '발행완료' }),
+      managerListFormat('금액', 'amount-obj-pub_cxl', 'number', '', { search_option_label: '발행취소' }),
+      managerListFormat('개수', 'count-obj-pub_cxl', 'number', '', { search_option_label: '발행취소' }),
+      managerListFormat('금액', 'amount-obj-match', 'number', '', { search_option_label: '지급완료' }),
+      managerListFormat('개수', 'count-obj-match', 'number', '', { search_option_label: '지급완료' }),
+      managerListFormat('금액', 'amount-obj-use', 'number', '', { search_option_label: '사용' }),
+      managerListFormat('개수', 'count-obj-use', 'number', '', { search_option_label: '사용' }),
+      managerListFormat('발행하기', 'on_pub', 'on_pub', ''),
+      managerListFormat('발행취소하기', 'on_pub_cxl', 'on_pub_cxl', ''),
+      managerListFormat('발행삭제하기', 'on_pub_del', 'on_pub_del', ''),
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '110%',
+    default_search_obj: {}
+  },
+  coupons: {//param
+    table: 'coupons',//ajax에 사용할 테이블
+    breadcrumb: '쿠폰',//이름 사용할 것
+    is_add: false,
+    is_see_add_condition: 35,
+    search_placeholder: '유저 ID, 쿠폰명 검색',//검색 placeholder
+    head_columns: [
+    ],
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('유저명', 'user_name', 'text', ''),
+      managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
+      managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
+      managerListFormat('교환상품', 'prod_name', 'text', ''),
+      managerListFormat('상태', 'status', 'coupon_status', ''),
+      managerListFormat('할인금액', 'sale_amt', 'number', ''),
+      managerListFormat('바코드번호', 'barcode_num', 'barcode_num', ''),
+
+      managerListFormat('유저지급하기', 'on_connect_user_coupon', 'on_connect_user_coupon', ''),
+      managerListFormat('사용하기', 'on_use_coupon', 'on_use_coupon', ''),
+      managerListFormat('사용취소하기', 'on_use_coupon_cxl', 'on_use_coupon_cxl', ''),
+
+      managerListFormat('생성시간', 'created_at', 'datetime', ''),
+      managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      //managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
   categories: {
     table: 'categories',
     breadcrumb: '카테고리',
@@ -162,6 +233,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '카테고리명 검색',
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('카테고리이미지', 'category_img', 'img', ''),
       managerListFormat('카테고리명', 'name', 'text', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
@@ -181,7 +253,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('카테고리명', 'category_name', 'text', ''),
       managerListFormat('상품명', 'name', 'text', ''),
       managerListFormat('상품이미지', 'product_img', 'img', ''),
-      managerListFormat('가격', 'price', 'number', ''),
+      managerListFormat('가격', 'item_pr', 'number', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),

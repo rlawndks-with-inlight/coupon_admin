@@ -1,11 +1,13 @@
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-import { getItemByType } from "src/views/manager/table/TrManager";
+import { getItemByType } from "src/views/manager/table/table-utils";
 import { objDataGridColumns } from "src/data/manager-data";
 import { deleteLocalStorage, getLocalStorage } from "./local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { t } from "i18next";
 import { toast } from "react-hot-toast";
+import { axiosIns } from "src/@fake-db/backend";
+import { deleteCookie, getCookie } from "./react-cookie";
 
 export const objToQuery = (obj_) => {
   let obj = { ...obj_ };
@@ -56,6 +58,9 @@ export const returnMoment = (num, date) => {//num 0: 오늘, num -1: 어제 , da
 }
 
 export const commarNumber = (num) => {
+  if (!num) {
+    return 0;
+  }
   if (num > 0 && num < 0.000001) {
     return "0.00";
   }
@@ -236,4 +241,92 @@ export const getBackgroundColor = (theme) => {
   } else {
     return '#fff';
   }
+}
+export const handleLogout = async (router, link_) => {
+  let link = link_ ?? '/';
+  try {
+    const response = await axiosIns().post('/api/v1/auth/sign-out', {
+      headers: {
+        "Authorization": `Bearer ${getCookie('o')}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      }
+    });
+    if (response?.status == 200) {
+      await deleteCookie('o');
+      await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
+      router.push(link);
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.response?.data?.message || err?.message);
+    if ([401, 403, 409].includes(err?.response?.status)) {
+      await deleteCookie('o');
+      await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
+      router.push(link);
+    }
+  }
+}
+export const getDnsData = async () => {
+  try {
+    let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    if (!dns_data?.name) {
+      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+      return response?.data;
+    } else {
+      return dns_data;
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+
+    }
+  }
+}
+export function getLocation(is_first) {
+  if (navigator.geolocation) {
+    if (is_first) {
+    }
+    // GPS를 지원하면
+    return new Promise(resolve => {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        function (error) {
+          console.error(error);
+          resolve({
+            latitude: 37.3595704,
+            longitude: 127.105399,
+          });
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        },
+      );
+    }).then(async coords => {
+      return coords;
+    });
+  }
+  console.info('GPS를 지원하지 않습니다');
+  return {
+    latitude: 37.3595704,
+    longitude: 127.105399,
+  };
+}
+export const dateMinus = (s_dt, e_dt) => {//두날짜의 시간차 s_dt - e_dt //포맷:0000-00-00
+
+  let f_d = new Date(s_dt).getTime();
+  let s_d = new Date(e_dt).getTime();
+  let hour = (f_d - s_d) / (1000 * 3600);
+  let minute = (f_d - s_d) / (1000 * 60);
+  let day = (f_d - s_d) / (1000 * 3600 * 24);
+
+  return day;
 }

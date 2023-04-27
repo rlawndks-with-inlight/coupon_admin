@@ -56,7 +56,7 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import ManagerCategoryEdit from 'src/views/manager/edit/ManagerCategoryEdit'
 import ManagerProductEdit from 'src/views/manager/edit/ManagerProductEdit'
-import $ from 'jquery';
+import ManagerCouponModelEdit from 'src/views/manager/edit/ManagerCouponModelEdit'
 const Edit = ({ dns_data }) => {
   const [editSetting, setEditSetting] = useState({
     posts: {}
@@ -104,6 +104,8 @@ const Edit = ({ dns_data }) => {
       return <ManagerCategoryEdit {...common} />
     else if (router.query?.table == 'products')
       return <ManagerProductEdit {...common} />
+    else if (router.query?.table == 'couponModels')
+      return <ManagerCouponModelEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>
   }

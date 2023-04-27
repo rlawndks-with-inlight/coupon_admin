@@ -1,12 +1,3 @@
-import BlankLayout from "src/@core/layouts/BlankLayout"
+import Login from "./login";
 
-const Home = () => {
-  return (
-    <>
-      <div>hi</div>
-    </>
-  )
-}
-Home.getLayout = page => <BlankLayout>{page}</BlankLayout>
-
-export default Home
+export default Login

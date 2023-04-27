@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { returnMoment } from "src/@core/utils/function"
 import { getLocalStorage } from "src/@core/utils/local-storage"
@@ -12,14 +13,19 @@ const DefaultPalette = (mode, skin) => {
   const darkColor = '228, 230, 244'
   const darkPaperBgColor = '#2F3349'
   const mainColor = mode === 'light' ? lightColor : darkColor
+
+  const router = useRouter();
+
   const defaultBgColor = () => {
+    let dark_color = '#25293C';
+    let dark_paper_color = '#2F3349';
     if (skin === 'bordered' && mode === 'light') {
       return whiteColor
     } else if (skin === 'bordered' && mode === 'dark') {
-      return darkPaperBgColor
+      return dark_paper_color
     } else if (mode === 'light') {
       return '#F8F7FA'
-    } else return '#25293C'
+    } else return dark_color
   }
   const [dnsData, setDnsData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -135,6 +141,7 @@ const DefaultPalette = (mode, skin) => {
     font_size: {
       font1: '2rem',
       font2: '1rem',
+      font3: '0.9rem',
       font3: '0.75rem',
       font4: '0.5rem',
     },

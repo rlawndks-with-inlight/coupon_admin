@@ -12,35 +12,40 @@ import TrManager from './TrManager'
 import { useTheme } from '@emotion/react'
 
 
-const isShowCell = (param_table, col, search_obj) => {
-  let show_flag = true;
-  if (param_table == 'users') {
-    let z_over_level_10 = ['group_id'];
-    let z_same_level_10 = ['mcht_name', 'addr', 'point_flag', 'point_rate', 'stamp_flag', 'stamp_save_count', 'number'];
-    let z_same_level_0 = ['a', 'b', 'c'];
-    if (z_same_level_10.includes(col?.column)) {
-      if (search_obj?.level == 10) {
-        show_flag = true;
-      } else {
-        show_flag = false;
+const isShowCell = (data, func) => {
+
+  const {
+    idx,
+    param_table,
+    user_data,
+    obj_data_grid_columns,
+    search_obj,
+    column,
+    is_head
+  } = data;
+  let result_obj = {
+    show_flag: true,
+    idx: idx
+  }
+  if (param_table == 'coupons') {
+    if (column == 'on_connect_user_coupon') {
+      if (search_obj?.status != 0) {
+        result_obj['show_flag'] = false;
       }
     }
-    if (z_over_level_10.includes(col?.column)) {
-      if (search_obj?.level >= 10) {
-        show_flag = true;
-      } else {
-        show_flag = false;
+    if (column == 'on_use_coupon') {
+      if (search_obj?.status != 7) {
+        result_obj['show_flag'] = false;
       }
     }
-    if (z_same_level_0.includes(col?.column)) {
-      if (search_obj?.level == 0) {
-        show_flag = true;
-      } else {
-        show_flag = false;
+    if (column == 'on_use_coupon_cxl') {
+      if (search_obj?.status != 10) {
+        result_obj['show_flag'] = false;
       }
     }
   }
-  return true;
+  // const {} = func;
+  return result_obj;
 }
 const isShowDeleteButton = (param_table, user_data) => {
   let ans = true;
@@ -71,7 +76,7 @@ const TableManager = (props) => {
         columns={columns}
         changePage={changePage}
         page={page}
-        //isShowCell={isShowCell}
+        isShowCell={isShowCell}
         isShowDeleteButton={isShowDeleteButton}
         searchObj={searchObj}
         notSearchOption={notSearchOption}
@@ -138,7 +143,17 @@ const TableManager = (props) => {
                   </>
                   :
                   <>
-                    {notSearchOption['list'] && !notSearchOption['list'].includes(col?.column) ?
+                    {notSearchOption['list'] && !notSearchOption['list'].includes(col?.column)
+                      && isShowCell({
+                        idx: idx,
+                        param_table: param_table,
+                        user_data: userData,
+                        obj_data_grid_columns: objDataGridColumns[param_table],
+                        search_obj: searchObj,
+                        column: col?.column
+                      },
+                        {}).show_flag
+                      ?
                       <>
                         <TableCell align='left'
                           sx={{

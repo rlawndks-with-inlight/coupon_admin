@@ -87,13 +87,6 @@ const LoginV1 = ({ dns_data }) => {
     setLoading(false);
   }
 
-  const settingDomain = async () => {
-    await setCookie('d', decodeURI(`${window.location.protocol}//${window.location.host}`), {
-      path: "/",
-      secure: true,
-      sameSite: "none",
-    });
-  }
 
   const checkDns = async () => {
     try {
@@ -148,14 +141,16 @@ const LoginV1 = ({ dns_data }) => {
         user_pw: values?.password,
         login_type: 0,
       });
+      console.log(response)
+
       await setCookie('o', response?.data?.access_token, {
         path: "/",
-        secure: true,
-        sameSite: "none",
+        secure: process.env.COOKIE_SECURE,
+        sameSite: process.env.COOKIE_SAME_SITE,
       });
       if (response?.status == 200 && response?.data?.user) {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        window.location.href = '/manager/users';
+        router.push('/manager/users');
       }
     } catch (err) {
       let push_lick = await processCatch(err);

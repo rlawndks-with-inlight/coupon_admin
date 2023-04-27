@@ -177,7 +177,8 @@ const List = ({ dns_data }) => {
 
   const onlyTeamSeeColumn = {
     devices: ['brand_name', 'brand_id'],
-    users: ['brand_name']
+    users: ['brand_name'],
+    couponModels: ['on_pub', 'on_pub_cxl', 'on_pub_del', 'edit'],
   }
   return (
     <>

@@ -55,29 +55,29 @@ const ItemDetailCard = (props) => {
           <PriceContainer theme={theme}>
             <Row>
               <KeyContent>시중가격</KeyContent>
-              <div>{commarNumber(item?.price)}원</div>
+              <div>{commarNumber(item?.mkt_pr)}원</div>
             </Row>
             <Row style={{ fontWeight: 'bold' }}>
               <KeyContent>판매가격</KeyContent>
-              <div>{commarNumber(item?.price)}원</div>
+              <div>{commarNumber(item?.item_pr)}원</div>
             </Row>
           </PriceContainer>
           <PriceContainer theme={theme}>
             <Row>
               <KeyContent>제조사</KeyContent>
-              <div>(주)제이유니트</div>
+              <div>{item?.mfg_nm}</div>
             </Row>
             <Row>
               <KeyContent>원산지</KeyContent>
-              <div>중국</div>
+              <div>{item?.origin_nm}</div>
             </Row>
             <Row>
               <KeyContent>브랜드</KeyContent>
-              <div>맘앤리틀</div>
+              <div>{item?.brand_nm}</div>
             </Row>
             <Row>
               <KeyContent>모델</KeyContent>
-              <div>미끄럼틀(맘앤리틀 큐피드 미끄럼틀)</div>
+              <div>{item?.model_nm}</div>
             </Row>
             <Row>
               <KeyContent>배송비결제</KeyContent>
@@ -89,7 +89,7 @@ const ItemDetailCard = (props) => {
               <div>총 금액 :</div>
               <div style={{
                 fontSize: theme.palette.font_size.font2
-              }}>{commarNumber(item?.price)}원</div>
+              }}>{commarNumber(item?.item_pr)}원</div>
             </Row>
           </PriceContainer>
           <Row>

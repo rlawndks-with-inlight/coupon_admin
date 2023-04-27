@@ -32,6 +32,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import DialogSearchOption from 'src/views/components/dialogs/DialogSearchOption'
 import { toast } from 'react-hot-toast'
 import DialogExcelUpload from 'src/views/components/dialogs/DialogExcelUpload'
+import CouponSameDateLineBox from './same-date-line/CouponSameDateLineBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -49,6 +50,9 @@ const sameDateLineBox = (common) => {
     return <PointSameDateLineBox {...common} />
   else if (common.param_table == 'operators')
     return <OperatorSameDateLineBox {...common} />
+  else if (common.param_table == 'coupons')
+    return <CouponSameDateLineBox {...common} />
+
 }
 
 const getOptionBoxBySameLineDate = (param_table,) => {
@@ -62,7 +66,9 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   if (param_table == 'operators') {
     result.value['level'] = -1;
   }
-
+  if (param_table == 'coupons') {
+    result.value['status'] = 0;
+  }
   return result;
 }
 
@@ -289,10 +295,10 @@ const TableHeader = props => {
           })}
           {getOptionBoxBySameLineDate(router.query?.table)?.tag ?? ""}
           {/* <FormControl sx={{ mr: 4 }}>
-          <InputLabel id='demo-simple-select-outlined-label'>발급타입</InputLabel>
+          <InputLabel id='demo-simple-select-outlined-label'>발행타입</InputLabel>
           <Select
             size='small'
-            label='발급타입'
+            label='발행타입'
             value={searchObj?.is_cancel}
             id='demo-simple-select-outlined'
             labelId='demo-simple-select-outlined-label'

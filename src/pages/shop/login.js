@@ -1,12 +1,15 @@
-import BlankLayout from "src/@core/layouts/BlankLayout"
+import ShoppingMallLayout from "src/@core/layouts/ShoppingMallLayout"
+import { Wrapper } from "src/@core/layouts/components/shopping-mall/style-component"
 
-const Home = () => {
+const Login = () => {
   return (
     <>
-      <div>hi</div>
+      <Wrapper>
+
+      </Wrapper>
     </>
   )
 }
-Home.getLayout = page => <BlankLayout>{page}</BlankLayout>
+Login.getLayout = page => <ShoppingMallLayout>{page}</ShoppingMallLayout>
 
-export default Home
+export default Login

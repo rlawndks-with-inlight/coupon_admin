@@ -30,6 +30,8 @@ import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
 import { LOCALSTORAGE } from 'src/data/data'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useTheme } from '@emotion/react'
+import DialogAddAddress from 'src/views/pages/dialog-examples/DialogAddAddress'
+import DialogAddress from 'src/views/components/dialogs/DialogAddress'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -137,8 +139,27 @@ const ManagerMerchandiseEdit = (props) => {
     }
     editItem(obj);
   }
+  const [selectAddressOpen, setSelectAddressOpen] = useState(false);
+  const onSelectAddressOpen = () => {
+    setSelectAddressOpen(true);
+  }
+  const handletSelectAddressClose = () => setSelectAddressOpen(false);
+  const onSelectAddress = (data) => {
+    console.log(data)
+    handletSelectAddressClose();
+    setValues({ ...values, ['addr']: data?.address })
+  }
   return (
     <>
+      <DialogAddress
+        open={selectAddressOpen}
+        handleClose={handletSelectAddressClose}
+        onKeepGoing={onSelectAddress}
+        text={'주소 선택'}
+        subText={'삭제하시면 복구할 수 없습니다.'}
+        saveText={'삭제'}
+        headIcon={<Icon icon='tabler:trash' style={{ fontSize: '40px' }} />}
+      />
       <Grid container spacing={6}>
         <Grid item xs={12} md={5}>
           <Card sx={{ height: '100%' }}>
@@ -186,7 +207,9 @@ const ManagerMerchandiseEdit = (props) => {
               <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='가맹점 아이디' placeholder='가맹점 아이디를 입력해 주세요.' className='user_name' disabled={editCategory == 'edit'} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                  <TextField fullWidth label='가맹점 아이디' placeholder='가맹점 아이디를 입력해 주세요.' className='user_name' inputProps={{
+                    readOnly: (editCategory == 'edit')
+                  }} onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
                 </Grid>
                 {editCategory == 'create' ?
                   <>
@@ -229,7 +252,11 @@ const ManagerMerchandiseEdit = (props) => {
                   <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='가맹점 주소' placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChangeValue('addr')} defaultValue={values?.addr} value={values?.addr} />
+                  <TextField fullWidth label='가맹점 주소' placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChangeValue('addr')} inputProps={{
+                    readOnly: true,
+                  }} defaultValue={values?.addr} value={values?.addr}
+                    onClick={onSelectAddressOpen}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
@@ -305,8 +332,6 @@ const ManagerMerchandiseEdit = (props) => {
           </Card>
         </Grid>
       </Grid>
-
-
       <Card style={{ marginTop: '24px' }}>
         <CardContent>
           <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={onEditItem}>
@@ -317,6 +342,7 @@ const ManagerMerchandiseEdit = (props) => {
           </Button>
         </CardContent>
       </Card>
+
     </>
   )
 }

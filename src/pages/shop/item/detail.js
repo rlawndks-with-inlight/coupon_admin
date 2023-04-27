@@ -31,7 +31,7 @@ const Detail = () => {
         router.push('/shop');
         return;
       }
-      const response = await axiosIns().get(`api/v1/manager/products/${router.query?.id}`);
+      const response = await axiosIns().get(`api/v1/shop/items/${router.query?.id}`);
       setItem(response?.data);
     } catch (err) {
       let push_lick = await processCatch(err);

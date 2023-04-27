@@ -24,7 +24,7 @@ import { deleteCookie, getCookie } from 'src/@core/utils/react-cookie'
 import { deleteLocalStorage, getLocalStorage } from 'src/@core/utils/local-storage'
 import { toast } from 'react-hot-toast'
 import { LOCALSTORAGE } from 'src/data/data'
-import { getMyPageParamByNumber, getUserLevelByNumber } from 'src/@core/utils/function'
+import { getMyPageParamByNumber, getUserLevelByNumber, handleLogout } from 'src/@core/utils/function'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -92,30 +92,6 @@ const UserDropdown = props => {
     }
   }
 
-  const handleLogout = async () => {
-    try {
-      const response = await axiosIns().post('/api/v1/auth/sign-out', {
-        headers: {
-          "Authorization": `Bearer ${getCookie('o')}`,
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        }
-      });
-      if (response?.status == 200) {
-        await deleteCookie('o');
-        await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
-        router.push('/manager/login');
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
-      if ([401, 403, 409].includes(err?.response?.status)) {
-        await deleteCookie('o');
-        await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
-        router.push('/manager/login');
-      }
-    }
-  }
 
   return (
     <Fragment>
@@ -202,7 +178,7 @@ const UserDropdown = props => {
           </Box>
         </MenuItemStyled> */}
         <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
-        <MenuItemStyled onClick={handleLogout} sx={{ py: 2, '& svg': { mr: 2, fontSize: '1.375rem' } }}>
+        <MenuItemStyled onClick={() => handleLogout(router)} sx={{ py: 2, '& svg': { mr: 2, fontSize: '1.375rem' } }}>
           <Icon icon='tabler:logout' />
           Logout
         </MenuItemStyled>

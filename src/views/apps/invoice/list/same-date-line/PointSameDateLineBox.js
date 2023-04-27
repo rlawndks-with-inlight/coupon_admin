@@ -19,8 +19,8 @@ const PointSameDateLineBox = (props) => {
 
   const pub_type_list = [
     { name: '전체', is_cancel: -1 },
-    { name: '발급', is_cancel: 0 },
-    { name: '발급취소', is_cancel: 1 },
+    { name: '발행', is_cancel: 0 },
+    { name: '발행취소', is_cancel: 1 },
   ]
   useEffect(() => {
     settings();

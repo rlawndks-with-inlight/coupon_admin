@@ -22,6 +22,7 @@ import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
 // ** Util Imports
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 import { handleURLQueries } from 'src/@core/layouts/utils'
+import { getCookie } from 'src/@core/utils/react-cookie'
 
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
@@ -103,7 +104,20 @@ const VerticalNavLink = ({
       return false
     }
   }
-
+  const anotherLinks = [
+    {
+      name: 'log',
+      link: `https://backend.comagain.kr/log-viewer?o=${getCookie('o')}`
+    },
+  ]
+  const goToLink = (item) => {
+    let find_index = -1;
+    find_index = anotherLinks.map(item => { return item.name }).findIndex((e) => e == item.path);
+    if (find_index >= 0) {
+      return anotherLinks[find_index].link
+    }
+    return item.path === undefined ? '/' : `${item.path}`;
+  }
   return (
     <ListItem
       disablePadding
@@ -115,7 +129,7 @@ const VerticalNavLink = ({
         component={Link}
         {...(item.disabled && { tabIndex: -1 })}
         className={isNavLinkActive() ? 'active' : ''}
-        href={item.path === undefined ? '/' : `${item.path}`}
+        href={goToLink(item)}
         {...(item.openInNewTab ? { target: '_blank' } : null)}
         onClick={e => {
           if (item.path === undefined) {
@@ -125,6 +139,7 @@ const VerticalNavLink = ({
           if (navVisible) {
             toggleNavVisibility()
           }
+
         }}
         sx={{
           py: 2,

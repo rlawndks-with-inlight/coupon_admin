@@ -48,7 +48,7 @@ const Item = (props) => {
           className="item-img"
         />
         <Name theme={theme}>{item.name}</Name>
-        <Price theme={theme}>{commarNumber(item.price)} 원</Price>
+        <Price theme={theme}>{commarNumber(item.item_pr)} 원</Price>
       </Wrapper>
     </>
   )

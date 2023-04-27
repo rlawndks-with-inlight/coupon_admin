@@ -7,10 +7,10 @@ import { useTheme } from '@emotion/react'
 import Header from './components/shopping-mall/Header'
 import Footer from './components/shopping-mall/Footer'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
+import { useEffect } from 'react'
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
-  height: '100vh',
-
+  minHeight: '100vh',
   // For V1 Blank layout pages
   '& .content-center': {
     display: 'flex',
