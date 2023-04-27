@@ -121,7 +121,6 @@ const ManagerBrandEdit = (props) => {
           }
         }
       }
-      console.log(obj)
       setValues({ ...obj });
     }
   }

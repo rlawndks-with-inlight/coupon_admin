@@ -129,7 +129,6 @@ const Header = () => {
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
       setDnsData(dns_data);
-
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {

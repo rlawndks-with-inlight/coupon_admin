@@ -93,7 +93,6 @@ const BottomMenu = () => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
   }, [])
   const isShowMenu = (dns_data, item) => {
-    console.log(dns_data)
     if (item?.option_column) {
       if (dns_data?.options?.app[item?.option_column] && dns_data?.options?.app[item?.option_column] == 1) {
         return true;

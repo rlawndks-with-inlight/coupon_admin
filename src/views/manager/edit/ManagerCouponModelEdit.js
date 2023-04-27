@@ -75,7 +75,6 @@ const ManagerCouponModelEdit = (props) => {
   }, [])
   useEffect(() => {
     if (productList.length > 0 && mchtList.length > 0) {
-      console.log(productList)
       setLoading(false);
     }
   }, [productList, mchtList])
@@ -123,7 +122,6 @@ const ManagerCouponModelEdit = (props) => {
       setMchtList(mcht_list);
       let item = await getItem();
       if (item) {
-        console.log(item)
         setSDt(new Date(item?.valid_s_dt));
         setEDt(new Date(item?.valid_e_dt));
         item['mcht_ids'] = JSON.parse(item?.mcht_ids ?? '[]');

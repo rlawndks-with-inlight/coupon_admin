@@ -140,7 +140,6 @@ const ManagerProductEdit = (props) => {
   }
   const getOptions = async () => {
     const response = await axiosIns().get(`/api/v1/manager/products/${router.query?.id}/options`);
-    console.log(response)
     let option_list = [...response?.data];
     for (var i = 0; i < option_list; i++) {
       option_list[i]['is_saved'] = true;

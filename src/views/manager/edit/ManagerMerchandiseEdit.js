@@ -145,7 +145,6 @@ const ManagerMerchandiseEdit = (props) => {
   }
   const handletSelectAddressClose = () => setSelectAddressOpen(false);
   const onSelectAddress = (data) => {
-    console.log(data)
     handletSelectAddressClose();
     setValues({ ...values, ['addr']: data?.address })
   }

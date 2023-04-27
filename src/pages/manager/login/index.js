@@ -141,7 +141,6 @@ const LoginV1 = ({ dns_data }) => {
         user_pw: values?.password,
         login_type: 0,
       });
-      console.log(response)
 
       await setCookie('o', response?.data?.access_token, {
         path: "/",

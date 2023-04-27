@@ -105,7 +105,6 @@ const ManagerUserEdit = (props) => {
       } else {
         setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
       }
-      console.log(item)
       setMchtList(response?.data?.mcht_id);
 
     } catch (err) {
