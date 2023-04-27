@@ -44,6 +44,13 @@ const isShowCell = (data, func) => {
       }
     }
   }
+  if (param_table == 'couponModels') {
+    if (user_data?.level < 50) {
+      if (['on_pub', 'on_pub_cxl', 'on_pub_del', 'edit'].includes(column)) {
+        result_obj['show_flag'] = false;
+      }
+    }
+  }
   // const {} = func;
   return result_obj;
 }

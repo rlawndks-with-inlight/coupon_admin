@@ -35,7 +35,6 @@ const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   const router = useRouter();
   useEffect(() => {
-    console.log(router.asPath)
   }, [router.asPath])
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
