@@ -51,6 +51,7 @@ const ManagerBrandEdit = (props) => {
     name: '',
     dns: '',
     og_description: '',
+    note: '',
     logo_img: undefined,
     dark_logo_img: undefined,
     favicon_img: undefined,
@@ -63,7 +64,6 @@ const ManagerBrandEdit = (props) => {
     addr: '',
     phone_num: '',
     fax_num: '',
-    template_id: 0,
     mbr_type: 0,
     guide_type: 0,
     theme_css: {
@@ -172,7 +172,7 @@ const ManagerBrandEdit = (props) => {
             </TabList>
             <TabPanel sx={{ p: 0 }} value='tab-1'>
               <Grid container spacing={6}>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={4}>
                   <Card style={{ height: '100%' }}>
                     <CardContent>
                       <Grid container spacing={5}>
@@ -183,8 +183,9 @@ const ManagerBrandEdit = (props) => {
                             setValues={setValues}
                             values={values}
                             value={values?.logo_img}
-                            sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                            sx={{ width: 'auto', height: '60%' }}
                             placeholder={'max-width: 512px, 이상은 자동으로 리사이징 됩니다.'}
+                            boxStyle={{ minHeight: '180px' }}
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -194,20 +195,20 @@ const ManagerBrandEdit = (props) => {
                             setValues={setValues}
                             values={values}
                             value={values?.dark_logo_img}
-                            sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                            sx={{ width: 'auto', height: '60%' }}
                             placeholder={'max-width: 512px, 이상은 자동으로 리사이징 됩니다.'}
+                            boxStyle={{ minHeight: '180px' }}
                           />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>favicon 이미지</InputLabel>
                           <FileUploaderSingle
                             className='favicon_img'
                             setValues={setValues}
                             values={values}
                             value={values?.favicon_img}
-                            sx={{ width: '120px', height: '120px' }}
-                            placeholder={'32px * 32px'}
-
+                            sx={{ width: '32px', height: '32px' }}
+                            boxStyle={{ minHeight: '50px', height: '84px', width: '84px' }}
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -217,7 +218,7 @@ const ManagerBrandEdit = (props) => {
                             setValues={setValues}
                             values={values}
                             value={values?.og_img}
-                            sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
+                            sx={{ maxWidth: '312px', width: '90%', height: 'auto' }}
                             placeholder={'1200px * 630px'}
                           />
                         </Grid>
@@ -232,15 +233,17 @@ const ManagerBrandEdit = (props) => {
                             id='textarea-standard-static'
                           />
                         </Grid>
+
                       </Grid>
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={7}>
+                <Grid item xs={12} md={4}>
                   <Card sx={{ height: '100%' }}>
                     <CardContent>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
+                          <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>법인정보</InputLabel>
                           <TextField fullWidth label='브랜드명' placeholder='브랜드명을 입력해 주세요.' className='name' onChange={handleChangeValue('name')} defaultValue={values?.name} value={values?.name} />
                         </Grid>
                         <Grid item xs={12}>
@@ -267,7 +270,18 @@ const ManagerBrandEdit = (props) => {
                         <Grid item xs={12}>
                           <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
                         </Grid>
+
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+                      <Grid container spacing={5}>
+
                         <Grid item xs={12}>
+                          <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>운영정보</InputLabel>
                           <FormControl fullWidth>
                             <InputLabel id='form-layouts-tabs-select-label'>멤버쉽 적용 타입</InputLabel>
                             <Select
@@ -308,25 +322,7 @@ const ManagerBrandEdit = (props) => {
                             setValues(obj);
                           }} defaultValue={values?.theme_css?.main_color} value={values?.theme_css?.main_color} />
                         </Grid>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label'>템플릿 ID</InputLabel>
-                            <Select
-                              label='Country'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='template_id'
-                              onChange={handleChangeValue('template_id')}
-                              defaultValue={values?.template_id ?? 0}
-                              value={values?.template_id}
-                            >
-                              <MenuItem value='0'>0</MenuItem>
-                              <MenuItem value='1'>1</MenuItem>
-                              <MenuItem value='2'>2</MenuItem>
-                              <MenuItem value='3'>3</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </Grid>
+
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>스탬프 사용여부</InputLabel>
@@ -417,6 +413,17 @@ const ManagerBrandEdit = (props) => {
                           :
                           <>
                           </>}
+                        <Grid item xs={12}>
+                          <TextField
+                            sx={{ width: '100%' }}
+                            onChange={handleChangeValue('note')} defaultValue={values?.note} value={values?.note}
+                            rows={4}
+                            multiline
+                            label='비고'
+                            variant='standard'
+                            id='textarea-standard-static'
+                          />
+                        </Grid>
                       </Grid>
                     </CardContent>
                   </Card>
