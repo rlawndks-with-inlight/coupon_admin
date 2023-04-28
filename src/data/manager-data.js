@@ -82,7 +82,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('ID', 'id', 'number', ''),
       managerListFormat('가맹점프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('가맹점아이디', 'user_name', 'text', ''),
-      managerListFormat('상위아이디', 'group_id', 'text', ''),// 검색 level >=10 일시
+      managerListFormat('상위아이디', 'group_name', 'text', ''),// 검색 level >=10 일시
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'point_flag', 'use_status', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만

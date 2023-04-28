@@ -52,7 +52,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       result = commarNumber(item);
     }
     if (column?.type == 'percent') {//
-      if (!item) {
+      if (!item && typeof item != 'number') {
         return "---";
       }
       result = commarNumber(item) + '%';
