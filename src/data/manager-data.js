@@ -30,7 +30,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('유저ID', 'id', 'number', ''),
-      managerListFormat('브랜드명', 'brand_name', 'text', ''),
+      // managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('유입 가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
@@ -307,8 +307,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '맥주소, 가맹점명 검색',
     columns: [
       managerListFormat('장비ID', 'id', 'number', ''),
-      managerListFormat('브랜드 ID', 'brand_id', 'number', ''),
-      managerListFormat('브랜드명', 'brand_name', 'text', ''),
+      // managerListFormat('브랜드 ID', 'brand_id', 'number', ''),
+      //  managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점 ID', 'mcht_id', 'number', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('포인트사용여부', 'point_flag', 'use_status', ''),

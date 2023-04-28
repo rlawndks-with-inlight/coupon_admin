@@ -176,8 +176,8 @@ const List = ({ dns_data }) => {
   }
 
   const onlyTeamSeeColumn = {
-    devices: ['brand_name', 'brand_id'],
-    users: ['brand_name'],
+    // devices: ['brand_name', 'brand_id'],
+    //users: ['brand_name'],
   }
   return (
     <>
