@@ -300,8 +300,8 @@ export function getLocation(is_first) {
         function (error) {
           console.error(error);
           resolve({
-            latitude: 37.3595704,
-            longitude: 127.105399,
+            latitude: 36.48509,
+            longitude: 127.30035,
           });
         },
         {
@@ -316,8 +316,8 @@ export function getLocation(is_first) {
   }
   console.info('GPS를 지원하지 않습니다');
   return {
-    latitude: 37.3595704,
-    longitude: 127.105399,
+    latitude: 36.48509,
+    longitude: 127.30035,
   };
 }
 export const dateMinus = (s_dt, e_dt) => {//두날짜의 시간차 s_dt - e_dt //포맷:0000-00-00
