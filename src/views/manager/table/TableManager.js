@@ -51,7 +51,7 @@ const isShowCell = (data, func) => {
       }
     }
   }
-  if (param_table == 'brand') {
+  if (param_table == 'brands') {
     if (user_data?.level < 50) {
       if (['edit'].includes(column)) {
         result_obj['show_flag'] = false;
