@@ -1,11 +1,28 @@
+import { useTheme } from "@emotion/react";
 import { Icon } from "@iconify/react"
 import styled from "styled-components"
 
-export const Wrapper = styled.div`
+export const WrapperStyle = styled.div`
 display:flex;
 flex-direction:column;
 min-height:90vh;
 `
+export const Wrapper = (props) => {
+  const { children, style, dns_data } = props;
+  const theme = useTheme();
+
+  return (
+    <>
+      <WrapperStyle style={{
+        ...style,
+        color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`,
+        background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
+      }}>
+        {children}
+      </WrapperStyle>
+    </>
+  )
+}
 export const ContentWrapper = styled.div`
 max-width:1200px;
 width:90%;
@@ -24,6 +41,22 @@ export const themeObj = {
     font3: '13px',
     font4: '12px',
     font5: '10px',
+  },
+  grey: {
+    50: '#FAFAFA',
+    100: '#F5F5F5',
+    200: '#EEEEEE',
+    300: '#E0E0E0',
+    400: '#BDBDBD',
+    500: '#9E9E9E',
+    600: '#757575',
+    700: '#616161',
+    800: '#424242',
+    900: '#212121',
+    A100: '#F5F5F5',
+    A200: '#EEEEEE',
+    A400: '#BDBDBD',
+    A700: '#616161'
   },
 }
 export const Font1 = styled.div`

@@ -73,9 +73,10 @@ export const commarNumber = (num) => {
   } else {
     str = num.toString();
   }
+
   let decimal = "";
   if (str.includes(".")) {
-    decimal = "." + str.split(".")[1];
+    decimal = "." + str.split(".")[1].substring(0, 2);
     str = str.split(".")[0];
   } else {
     decimal = "";
@@ -90,7 +91,6 @@ export const commarNumber = (num) => {
     result = str[i] + result;
     count++;
   }
-
   return result + decimal;
 }
 

@@ -46,18 +46,14 @@ const Home = () => {
     }
   }
   const onClickMembershipCategory = (num) => {
-  }
 
+  }
   const onFilterClick = () => {
+
   }
   return (
     <>
-      <Wrapper
-        style={{
-          color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`,
-          background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
-        }}
-      >
+      <Wrapper>
         {loading ?
           <>
             <FallbackSpinner sx={{ height: '300px' }} />

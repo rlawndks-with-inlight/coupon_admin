@@ -107,7 +107,7 @@ margin: 4rem 0;
 `
 const Merchandise = (props) => {
 
-  const { item, theme } = props;
+  const { item, theme, } = props;
 
   return (
     <>
@@ -122,7 +122,7 @@ const Merchandise = (props) => {
       >
         <MerchandiseExplain>
           <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
-          <Font4 style={{ color: theme.palette.grey[400] }}>{4.0}km</Font4>
+          <Font4 style={{ color: theme.palette.grey[400] }}>{commarNumber(item?.dist)}km</Font4>
           <Row style={{ margin: '0', alignItems: 'center' }}>
             {item?.count?.point || typeof item?.count?.point == 'number' ?
               <>

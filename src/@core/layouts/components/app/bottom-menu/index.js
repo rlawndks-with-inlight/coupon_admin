@@ -24,7 +24,7 @@ const Container = styled.aside`
 const MenuContainer = styled.nav`
 width: 100%;
 max-width: 76.8rem;
-height: 4rem;
+height: 3.5rem;
 display: -webkit-flex;
 display: flex;
 margin: 0 auto;
@@ -45,10 +45,9 @@ const OneMenuContainer = styled.div`
     align-items:center;
 `
 const OneMenuName = styled.span`
-font-weight:400;
+font-weight: 400;
 font-size:${themeObj.font_size.font4};
 margin-bottom:auto;
-
   @media screen and (max-width:330px) {
     font-size:0.7rem;
   }
@@ -60,25 +59,37 @@ const BottomMenu = () => {
   const [colorList, setColorList] = useState([]);
   const [dnsData, setDnsData] = useState({});
   const theme = useTheme();
+
+  const [menuCount, setMenuCount] = useState(0);
+  const [menuContainerStyle, setMenuContainerStyle] = useState({});
   useEffect(() => {
 
   }, [])
   useEffect(() => {
     let color_list = [];
     let move_idx = -1;
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+    dns_data['options'] = JSON.parse(dns_data['options']);
+    setDnsData(dns_data);
+
+    let menu_count = 0;
     for (var i = 0; i < zBottomMenu.length; i++) {
       if (zBottomMenu[i].link == router.asPath) {
         move_idx = i;
-        break;
+        if (isShowMenu(dns_data, zBottomMenu[i])) {
+          menu_count++;
+        }
       }
+    }
+    if (menu_count == 1 || menu_count == 2) {
+      setMenuContainerStyle({
+        justifyContent: 'space-around'
+      })
     }
     for (var i = 0; i < zBottomMenu.length; i++) {
       if (i == move_idx) {
-        let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-        dns_data = JSON.parse(dns_data);
-        dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
-        dns_data['options'] = JSON.parse(dns_data['options']);
-        setDnsData(dns_data);
         color_list.push(dns_data['theme_css']?.main_color)
       } else {
         if (theme.palette.mode == 'dark') {
@@ -98,28 +109,20 @@ const BottomMenu = () => {
     <>
       <Container className='menu-container'
         style={{
-          background: `${theme.palette.mode == 'dark' ? '#222224' : '#fff'}`,
+          background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
           color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`,
         }}>
-        <MenuContainer>
-          {zBottomMenu.map((item, idx) => (
-            <>
-              {isShowMenu(dnsData, item) ?
-                <>
-                  <OneMenuContainer onClick={() => { router.push(item.link) }} style={{ color: `${colorList[idx]}` }} key={idx}>
-                    <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
-                    <OneMenuName>
-                      {item.title}
-                    </OneMenuName>
-                  </OneMenuContainer>
-                </>
-                :
-                <>
-                </>}
-
-            </>
-          ))}
-
+        <MenuContainer style={menuContainerStyle}>
+          {zBottomMenu.map((item, idx) => {
+            if (isShowMenu(dnsData, item)) {
+              return <OneMenuContainer onClick={() => { router.push(item.link) }} style={{ color: `${colorList[idx]}` }} key={idx}>
+                <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
+                <OneMenuName>
+                  {item.title}
+                </OneMenuName>
+              </OneMenuContainer>
+            }
+          })}
         </MenuContainer>
       </Container>
     </>

@@ -17,7 +17,7 @@ export const LOCALSTORAGE = {
 }
 export const zBottomMenu = [
   { icon: 'mingcute:home-6-line', title: '홈', link: '/app/home/' },
-  { icon: 'mdi:coupon-outline', title: '쿠폰', link: '/app/my-coupon/', option_column: 'is_use_coupon' },
+  { icon: 'mdi:coupon-outline', title: '쿠폰', link: '/app/coupon/', option_column: 'is_use_coupon' },
   { icon: 'material-symbols:shopping-basket-outline', title: '주문', link: '/app/order/', option_column: 'is_use_order' },
   { icon: 'solar:gift-linear', title: '선물', link: '/app/gift/', option_column: 'is_use_gift' },
   { icon: 'noto:hamburger', title: '더보기', link: '/app/more/' },

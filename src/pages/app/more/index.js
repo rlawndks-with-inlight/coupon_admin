@@ -15,7 +15,7 @@ const getDemo = (num, common) => {
   if (num == 1)
     return <More1 {...common} />
 }
-const More = () => {
+const Order = () => {
 
   const router = useRouter();
   const theme = useTheme();
@@ -23,6 +23,7 @@ const More = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const [user, serUser] = useState({});
+  const [dnsData, setDnsData] = useState({});
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -33,6 +34,11 @@ const More = () => {
     let user_data = getLocalStorage(LOCALSTORAGE.USER_DATA);
     user_data = JSON.parse(user_data);
     serUser(user_data);
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+    dns_data['options'] = JSON.parse(dns_data['options']);
+    setDnsData(dns_data);
   }
 
   return (
@@ -50,7 +56,10 @@ const More = () => {
           :
           <>
             {getDemo(1, {
-              data: data,
+              data: {
+                user: user,
+                dnsData: dnsData
+              },
               func: {
               }
             })}
@@ -59,5 +68,5 @@ const More = () => {
     </>
   )
 }
-More.getLayout = page => <AppLayout>{page}</AppLayout>
-export default More
+Order.getLayout = page => <AppLayout>{page}</AppLayout>
+export default Order
