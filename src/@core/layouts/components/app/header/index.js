@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import { getBackgroundColor, handleLogout, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
+import { isShowMenu } from "src/@core/layouts/utils";
 
 const TopWrapper = styled.header`
 width:90%;
@@ -128,6 +129,8 @@ const Header = () => {
     try {
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
+      dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+      dns_data['options'] = JSON.parse(dns_data['options']);
       setDnsData(dns_data);
     } catch (err) {
       let push_lick = await processCatch(err);
@@ -177,10 +180,17 @@ const Header = () => {
               <>
                 {idx != 0 ?
                   <>
-                    <Menu theme={theme} onClick={() => {
-                      router.push(item.link)
-                    }}
-                    >{item.title}</Menu>
+                    {isShowMenu(dnsData, item) ?
+                      <>
+                        <Menu theme={theme} onClick={() => {
+                          router.push(item.link)
+                        }}
+                        >{item.title}</Menu>
+                      </>
+                      :
+                      <>
+                      </>}
+
                   </>
                   :
                   <>

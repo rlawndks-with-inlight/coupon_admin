@@ -68,3 +68,14 @@ export const removeChildren = (children, openGroup, currentActiveGroup) => {
     }
   })
 }
+
+export const isShowMenu = (dns_data, item) => {
+  if (item?.option_column) {
+    if (dns_data?.options?.app[item?.option_column] && dns_data?.options?.app[item?.option_column] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return true;
+}

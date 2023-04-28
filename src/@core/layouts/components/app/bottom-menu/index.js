@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { Icon } from '@iconify/react'
 import { themeObj } from '../style-component'
+import { isShowMenu } from 'src/@core/layouts/utils'
 const Container = styled.aside`
     position: fixed;
     right: 0;
@@ -92,16 +93,7 @@ const BottomMenu = () => {
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
   }, [])
-  const isShowMenu = (dns_data, item) => {
-    if (item?.option_column) {
-      if (dns_data?.options?.app[item?.option_column] && dns_data?.options?.app[item?.option_column] == 1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return true;
-  }
+
   return (
     <>
       <Container className='menu-container'
