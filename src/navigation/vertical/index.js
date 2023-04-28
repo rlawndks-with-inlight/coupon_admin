@@ -3,17 +3,20 @@ const project_navigation = [
     title: '오퍼레이터관리',
     icon: 'tabler:affiliate',
     path: '/manager/operators',
+    table: 'operators',
     level: 40
   },
   {
     title: '브랜드관리',
     icon: 'ph-buildings',
     path: '/manager/brands',
+    table: 'brands',
     level: 40
   },
   {
     title: '가맹점관리',
     icon: 'tabler:map-pin',
+    table: 'merchandises',
     level: 10,
     children: [
       {
@@ -32,6 +35,7 @@ const project_navigation = [
     title: '유저관리',
     icon: 'tabler:user',
     level: 10,
+    table: 'users',
     children: [
       {
         title: '유저관리',
@@ -49,6 +53,7 @@ const project_navigation = [
     title: '쿠폰관리',
     icon: 'tabler:ticket',
     level: 10,
+    table: 'coupons',
     children: [
       {
         title: '쿠폰모델관리',
@@ -66,6 +71,7 @@ const project_navigation = [
     title: '상품관리',
     icon: 'tabler:shopping-cart',
     level: 10,
+    table: 'products',
     children: [
       {
         title: '카테고리관리',
@@ -83,17 +89,20 @@ const project_navigation = [
     title: '광고관리',
     icon: 'tabler:ad',
     path: '/manager/advertisements',
+    table: 'advertisements',
     level: 35
   },
   {
     title: '대량등록',
     icon: 'uiw:file-excel',
     path: '/manager/uploads/excel',
+    table: 'uploads',
     level: 40
   },
   {
     title: '로그관리',
     icon: 'mdi:math-log',
+    table: 'log',
     path: 'log',
     level: 50
   },

@@ -7,6 +7,7 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 
 const resolveNavItemComponent = (item, user_data) => {
+
   if (item.sectionTitle) return VerticalNavSectionTitle
   if (item.children) return VerticalNavGroup
   return VerticalNavLink
@@ -35,6 +36,15 @@ const VerticalNavItems = props => {
     // }
     if (item?.path == "/manager/operators") {
       if (userData?.level == 40 || userData?.level == 50) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (userData?.level == 45) {
+      let z_can_show_table = ['users', 'merchandises', 'users', 'brands'];
+      let z_can_show_path = ['/manager/merchandises', '/manager/devices', '/manager/users']
+      if (z_can_show_table.includes(item?.table) || z_can_show_path.includes(item?.path)) {
         return true;
       } else {
         return false;
