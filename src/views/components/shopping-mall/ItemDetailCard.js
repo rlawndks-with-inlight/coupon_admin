@@ -7,20 +7,33 @@ const ItemContent = styled.div`
 width:100%;
 display:flex;
 align-items:flex-start;
+@media (max-width: 900px) {
+  flex-direction: column;
+}
 `
 const ProductImgContainer = styled.div`
 width:50%;
 display:flex;
 padding-top:2rem;
+@media (max-width: 900px) {
+  width:100%;
+  padding-top:0rem;
+}
 `
 const ProductImg = styled.img`
 margin:auto;
 width:300px;
 height:auto;
+@media (max-width: 900px) {
+  width:80%;
+}
 `
 const ExampleContainer = styled.div`
 width:50%;
 padding-top:1.1rem;
+@media (max-width: 900px) {
+  width:100%;
+}
 `
 const Name = styled.div`
 font-weight:bold;

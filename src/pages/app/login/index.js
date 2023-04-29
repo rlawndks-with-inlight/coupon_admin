@@ -44,6 +44,7 @@ import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 import { processCatch } from 'src/@core/utils/function'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
+import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -82,21 +83,23 @@ const Login = ({ dns_data }) => {
   }, [])
 
   const settings = async () => {
-    setLoading(true);
     await checkDns();
     await checkAuth();
-    setLoading(false);
   }
 
 
   const checkDns = async () => {
     try {
+      setLoading(true);
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
 
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
+      obj['theme_css'] = JSON.parse(obj['theme_css']);
+      obj['options'] = JSON.parse(obj['options']);
+      console.log(obj)
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
 
@@ -111,6 +114,7 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
+      setLoading(true);
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -121,9 +125,12 @@ const Login = ({ dns_data }) => {
       if (response_auth?.level > 0) {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
         router.push('/app/home');
+      } else {
+        setLoading(false);
       }
     } catch (err) {
       console.log(err)
+      setLoading(false);
     }
   }
   const handleChange = prop => event => {
@@ -165,9 +172,16 @@ const Login = ({ dns_data }) => {
     }
 
   }
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleLoginClose = () => setLoginOpen(false);
+  const handleLoginOpen = () => setLoginOpen(true);
 
   return (
     <>
+      <DialogLoginForm
+        open={loginOpen}
+        handleClose={handleLoginClose}
+      />
       {loading ?
         <>
         </>
@@ -215,6 +229,7 @@ const Login = ({ dns_data }) => {
                 </Button>
                 <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
+                    handleLoginOpen();
                   }
                 }}>
                   {loading ?

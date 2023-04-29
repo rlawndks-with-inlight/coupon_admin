@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ContentWrapper, Font1, Font2, Row, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
+import { handleLogout } from "src/@core/utils/function";
 import { zBottomMenu } from "src/data/data";
 import styled from "styled-components";
 
@@ -73,6 +74,26 @@ const More1 = (props) => {
             }
           </>
         ))}
+        <Menu onClick={() => router.push('/app/auth/privacy?type=0')}
+        >
+          <Icon icon='iconoir:privacy-policy' style={{ fontSize: themeObj.font_size.font1 }} />
+          <MenuTitle>이용약관</MenuTitle>
+        </Menu>
+        <Menu onClick={() => router.push('/app/auth/privacy?type=1')}
+        >
+          <Icon icon='ic:outline-privacy-tip' style={{ fontSize: themeObj.font_size.font1 }} />
+          <MenuTitle>개인정보처리방침</MenuTitle>
+        </Menu>
+        <Menu onClick={() => router.push('/app/auth/privacy?type=2')}
+        >
+          <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
+          <MenuTitle>저작권정책</MenuTitle>
+        </Menu>
+        <Menu onClick={() => handleLogout(router, '/app/login')}
+        >
+          <Icon icon='ri:logout-circle-r-line' style={{ fontSize: themeObj.font_size.font1 }} />
+          <MenuTitle>로그아웃</MenuTitle>
+        </Menu>
       </ContentWrapper>
     </>
   )

@@ -214,7 +214,7 @@ export const processCatch = async (err) => {
   let push_link = '';
   if (err?.response?.status == 401) {
     await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
-    push_link = '/manager/login';
+    push_link = `/${window.location.pathname.split('/')[1]}/login`;
   }
   if (err?.response?.status == 403) {
     push_link = -1;
@@ -258,7 +258,6 @@ export const handleLogout = async (router, link_) => {
       router.push(link);
     }
   } catch (err) {
-    console.log(err);
     toast.error(err?.response?.data?.message || err?.message);
     if ([401, 403, 409].includes(err?.response?.status)) {
       await deleteCookie('o');

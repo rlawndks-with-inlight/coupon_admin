@@ -9,7 +9,7 @@ import { LOCALSTORAGE, zBottomMenu } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
 import { toast } from "react-hot-toast";
-import { getBackgroundColor, handleLogout, processCatch } from "src/@core/utils/function";
+import { getBackgroundColor, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
