@@ -45,6 +45,7 @@ import HeadContent from 'src/@core/components/head'
 import { processCatch } from 'src/@core/utils/function'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
 import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
+import Loading from 'src/@core/layouts/components/app/Loading'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -94,15 +95,10 @@ const Login = ({ dns_data }) => {
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
-
-      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-      obj = { ...response?.data };
       obj['theme_css'] = JSON.parse(obj['theme_css']);
       obj['options'] = JSON.parse(obj['options']);
-      console.log(obj)
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
-
     } catch (err) {
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
@@ -126,11 +122,15 @@ const Login = ({ dns_data }) => {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
         router.push('/app/home');
       } else {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000)
       }
     } catch (err) {
       console.log(err)
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000)
     }
   }
   const handleChange = prop => event => {
@@ -175,7 +175,8 @@ const Login = ({ dns_data }) => {
   const [loginOpen, setLoginOpen] = useState(false);
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
-
+  const onClickKakaoButton = () => {
+  }
   return (
     <>
       <DialogLoginForm
@@ -185,6 +186,7 @@ const Login = ({ dns_data }) => {
       />
       {loading ?
         <>
+          <Loading />
         </>
         :
         <>
@@ -217,6 +219,7 @@ const Login = ({ dns_data }) => {
                 </Box>
                 <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
+                    onClickKakaoButton();
                   }
                 }}>
                   {loading ?

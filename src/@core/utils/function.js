@@ -329,9 +329,13 @@ export const dateMinus = (s_dt, e_dt) => {//두날짜의 시간차 s_dt - e_dt /
 
   return day;
 }
-
 export const getKakaoInfo = () => {
+  let KAKAO_CLIENT_ID = `73b89581dcdc34aea90a3e61cdc168e2`;
+  let KAKAO_REDIRECT_URI = `${window.location.origin}`;
+  let KAKAO_AUTH_URL = ``;
   return {
-
+    KAKAO_CLIENT_ID: KAKAO_CLIENT_ID,
+    KAKAO_REDIRECT_URI: KAKAO_REDIRECT_URI,
+    KAKAO_AUTH_URL: KAKAO_AUTH_URL,
   }
 }
