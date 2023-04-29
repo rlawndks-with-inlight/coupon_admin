@@ -107,7 +107,7 @@ margin: 4rem 0;
 `
 const Merchandise = (props) => {
 
-  const { item, theme, } = props;
+  const { item, theme, router } = props;
 
   return (
     <>
@@ -119,6 +119,14 @@ const Merchandise = (props) => {
           background: `${theme.palette.mode == 'dark' ? '#222224' : '#fff'}`
         }}
         className='merchandise-content'
+        onClick={() => {
+          router.push({
+            pathname: `/app/merchandise/detail/${item?.id}`,
+            state: {
+              item: item
+            }
+          })
+        }}
       >
         <MerchandiseExplain>
           <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
@@ -169,7 +177,8 @@ const Home1 = (props) => {
     data,
     func: {
       onClickMembershipCategory,
-      onFilterClick
+      onFilterClick,
+      router
     } } = props;
   const theme = useTheme();
 
@@ -206,6 +215,7 @@ const Home1 = (props) => {
               <Merchandise
                 item={item}
                 theme={theme}
+                router={router}
               />
             </>
           ))}

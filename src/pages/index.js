@@ -96,8 +96,8 @@ const SelectService = ({ dns_data }) => {
 
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
-      obj['theme_css'] = JSON.parse(obj['theme_css']);
-      obj['options'] = JSON.parse(obj['options']);
+      obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      obj['options'] = JSON.parse(obj['options'] ?? "{}");
       console.log(obj)
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
