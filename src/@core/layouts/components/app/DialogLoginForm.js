@@ -31,11 +31,13 @@ margin: 0 auto;
 
 const DialogLoginForm = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing } = props;
+  const { open, handleClose, onKeepGoing, dnsData } = props;
 
   const theme = useTheme();
 
   const [keyword, setKeyword] = useState('');
+
+  const [focusItem, setFocusItem] = useState('');
   return (
     <div>
 
@@ -70,6 +72,14 @@ const DialogLoginForm = (props) => {
               id='icons-start-adornment'
               label='휴대전화번호 입력'
               size='small'
+              onFocus={() => {
+                setFocusItem('phone');
+              }}
+              onBlur={() => {
+                if (focusItem == 'phone') {
+                  setFocusItem('')
+                }
+              }}
               style={{ width: '100%' }}
               InputProps={{
                 endAdornment: <InputAdornment position='end'>
@@ -79,7 +89,8 @@ const DialogLoginForm = (props) => {
                       borderTopLeftRadius: '0',
                       borderBottomLeftRadius: '0',
                       fontSize: themeObj.font_size.font3,
-                      padding: '9px'
+                      padding: '9px',
+                      background: `${focusItem == 'phone' ? dnsData?.theme_css?.main_color : ''}`
                     }}>
                     인증번호 발송
                   </Button>
@@ -91,6 +102,14 @@ const DialogLoginForm = (props) => {
               label='인증번호 입력'
               size='small'
               style={{ width: '100%', paddingRight: '0', marginTop: '0.5rem' }}
+              onFocus={() => {
+                setFocusItem('phoneCheck');
+              }}
+              onBlur={() => {
+                if (focusItem == 'phoneCheck') {
+                  setFocusItem('')
+                }
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position='end'>
                   <Button variant='contained' color='secondary'
@@ -99,7 +118,8 @@ const DialogLoginForm = (props) => {
                       borderTopLeftRadius: '0',
                       borderBottomLeftRadius: '0',
                       fontSize: themeObj.font_size.font3,
-                      padding: '9px'
+                      padding: '9px',
+                      background: `${focusItem == 'phoneCheck' ? dnsData?.theme_css?.main_color : ''}`
                     }}>
                     인증번호 확인
                   </Button>

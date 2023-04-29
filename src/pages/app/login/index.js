@@ -181,6 +181,7 @@ const Login = ({ dns_data }) => {
       <DialogLoginForm
         open={loginOpen}
         handleClose={handleLoginClose}
+        dnsData={dnsData}
       />
       {loading ?
         <>
