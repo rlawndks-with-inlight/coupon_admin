@@ -130,7 +130,7 @@ const SelectService = ({ dns_data }) => {
         <>
           <Box className='content-center'>
             {/* <AuthIllustrationV1Wrapper> */}
-            <Card>
+            <Card style={{ boxShadow: 'none' }}>
               <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
                 <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
@@ -141,6 +141,11 @@ const SelectService = ({ dns_data }) => {
                 <Box sx={{ mb: 6 }}>
                   <Typography variant='h6' sx={{ mb: 1.5 }}>
                     {`Welcome ${themeConfig.templateName}! 👋🏻`}
+                  </Typography>
+                </Box>
+                <Box sx={{ mb: 6 }}>
+                  <Typography variant='h6' sx={{ mb: 1.5, fontSize: themeObj.font_size.font3 }}>
+                    {dnsData?.og_description}
                   </Typography>
                 </Box>
                 <Box
@@ -156,7 +161,7 @@ const SelectService = ({ dns_data }) => {
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
                 </Box>
 
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.green }} sx={{ mb: 4 }} onClick={() => {
+                {/* <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.green }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     router.push('/app')
                   }
@@ -169,8 +174,8 @@ const SelectService = ({ dns_data }) => {
                     <>
                       멤버십 페이지 이동
                     </>}
-                </Button>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow }} sx={{ mb: 4 }} onClick={() => {
+                </Button> */}
+                {/* <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     router.push('/shop')
                   }
@@ -183,8 +188,8 @@ const SelectService = ({ dns_data }) => {
                     <>
                       쇼핑몰 이동
                     </>}
-                </Button>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+                </Button> */}
+                {/* <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     router.push('/manager')
                   }
@@ -197,7 +202,7 @@ const SelectService = ({ dns_data }) => {
                     <>
                       관리자 페이지 이동
                     </>}
-                </Button>
+                </Button> */}
                 {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
                 <Typography>
