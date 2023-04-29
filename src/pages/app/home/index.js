@@ -86,7 +86,6 @@ const Home = () => {
           </>
           :
           <>
-            <div style={{ position: 'fixed', top: '0', zIndex: '999' }}>{page} {mchts.length}</div>
             {getDemo(1, {
               data: {
                 data: data,
