@@ -18,7 +18,7 @@ const FallbackSpinner = ({ sx }) => {
         ...sx
       }}
     >
-      <CircularProgress disableShrink sx={{ mt: 6 }} />
+      <CircularProgress disableShrink sx={{ m: 'auto' }} />
     </Box>
   )
 }

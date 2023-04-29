@@ -31,17 +31,7 @@ const More1 = (props) => {
   return (
     <>
       <ContentWrapper>
-        <Row style={{ color: themeObj.grey[700] }}>
-          <Font2 style={{ paddingRight: '0.25rem', borderRight: `1px solid ${themeObj.grey[400]}`, cursor: 'pointer' }}
-            onClick={() => {
 
-            }}>계정설정</Font2>
-          <Font2 style={{ paddingLeft: '0.25rem', cursor: 'pointer' }}
-            onClick={() => {
-
-            }}
-          >고객센터</Font2>
-        </Row>
         <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{data?.user?.user_name} 님</Font1>
         <Menu onClick={() => {
         }}
@@ -51,7 +41,7 @@ const More1 = (props) => {
         </Menu>
         {zBottomMenu.map((item, idx) => (
           <>
-            {idx != 0 ?
+            {idx != 0 && item?.link != '/app/more/' ?
               <>
                 {isShowMenu(data?.dnsData, item) ?
                   <>
@@ -88,6 +78,11 @@ const More1 = (props) => {
         >
           <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
           <MenuTitle>저작권정책</MenuTitle>
+        </Menu>
+        <Menu onClick={() => router.push('/app/auth/privacy?type=2')}
+        >
+          <Icon icon='mdi:customer-service' style={{ fontSize: themeObj.font_size.font1 }} />
+          <MenuTitle>고객센터</MenuTitle>
         </Menu>
         <Menu onClick={() => handleLogout(router, '/app/login')}
         >

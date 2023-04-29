@@ -74,8 +74,9 @@ const Login = ({ dns_data }) => {
     brand_id: 0
   })
   const [dnsData, setDnsData] = useState({})
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  const [dnsLoadingFlag, setDnsLoadingFlag] = useState(false);
+  const [authLoadingFlag, setAuthLoadingFlag] = useState(false);
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
@@ -84,14 +85,15 @@ const Login = ({ dns_data }) => {
   }, [])
 
   const settings = async () => {
+    setLoading(true);
     await checkDns();
     await checkAuth();
+    setLoading(false);
   }
 
 
   const checkDns = async () => {
     try {
-      setLoading(true);
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
@@ -110,7 +112,6 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
-      setLoading(true);
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -122,15 +123,9 @@ const Login = ({ dns_data }) => {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
         router.push('/app/home');
       } else {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000)
       }
     } catch (err) {
-      console.log(err)
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000)
+      console.log(err);
     }
   }
   const handleChange = prop => event => {
@@ -168,14 +163,13 @@ const Login = ({ dns_data }) => {
           router.push(push_lick);
         }
       }
-
     }
-
   }
   const [loginOpen, setLoginOpen] = useState(false);
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {
+    console.log(1)
   }
   return (
     <>
@@ -184,68 +178,69 @@ const Login = ({ dns_data }) => {
         handleClose={handleLoginClose}
         dnsData={dnsData}
       />
-      {loading ?
-        <>
-          <Loading />
-        </>
-        :
-        <>
-          <Box className='content-center'>
-            {/* <AuthIllustrationV1Wrapper> */}
-            <Card>
-              <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
-                <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
-                  <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
-                    {themeConfig.templateName}
-                  </Typography>
-                </Box>
-                <Box sx={{ mb: 6 }}>
-                  <Typography variant='h6' sx={{ mb: 1.5 }}>
-                    {`Welcome ${themeConfig.templateName}! 👋🏻`}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    mb: '1rem',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
+      <Box className='content-center' style={{
+        display: `${loading ? 'none' : ''}`,
+        background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`
+      }}>
+        {/* <AuthIllustrationV1Wrapper> */}
+        <Card style={{
+          background: `${theme.palette.mode == 'dark' ? '#222' : '#fff'}`
+        }}>
+          <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
+            <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={theme.palette.mode == 'dark' ? dnsData?.dark_logo_img : dnsData?.logo_img} style={{ height: '4rem', width: 'auto' }} />
+            </Box>
+            <Box sx={{ mb: 9 }}>
+              <Typography variant='h6' sx={{ mb: 1.5 }}>
+                {`Welcome ${themeConfig.templateName}! 👋🏻`}
+              </Typography>
+            </Box>
+            {/* <Box sx={{ mb: 9 }}>
+              <Typography variant='h8' sx={{ mb: 1.5, whiteSpace: 'pre', fontWeight: 'bold' }}>
+                {dnsData?.og_description}
+              </Typography>
+            </Box> */}
+            <Box
+              sx={{
+                mb: '1rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
-                </Box>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
-                  if (!loading) {
-                    onClickKakaoButton();
-                  }
-                }}>
-                  {loading ?
-                    <>
-                      Loading...
-                    </>
-                    :
-                    <>
-                      카카오로 로그인
-                    </>}
-                </Button>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
-                  if (!loading) {
-                    handleLoginOpen();
-                  }
-                }}>
-                  {loading ?
-                    <>
-                      Loading...
-                    </>
-                    :
-                    <>
-                      휴대폰으로 로그인
-                    </>}
-                </Button>
-                {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            </Box>
+            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
+              if (!loading) {
+                onClickKakaoButton();
+              }
+            }}>
+              {loading ?
+                <>
+                  Loading...
+                </>
+                :
+                <>
+                  카카오로 로그인
+                </>}
+            </Button>
+            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+              if (!loading) {
+                handleLoginOpen();
+              }
+            }}>
+              {loading ?
+                <>
+                  Loading...
+                </>
+                :
+                <>
+                  휴대폰으로 로그인
+                </>}
+            </Button>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
                 <Typography>
                   <LinkStyled href='/pages/auth/register-v1' sx={{ fontSize: '1rem' }}>
@@ -253,7 +248,7 @@ const Login = ({ dns_data }) => {
                   </LinkStyled>
                 </Typography>
               </Box> */}
-                {/* <Divider
+            {/* <Divider
                 sx={{
                   fontSize: '0.875rem',
                   color: 'text.disabled',
@@ -263,7 +258,7 @@ const Login = ({ dns_data }) => {
               >
                 or
               </Divider> */}
-                {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />
                 </IconButton>
@@ -282,12 +277,10 @@ const Login = ({ dns_data }) => {
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box> */}
-              </CardContent>
-            </Card>
-            {/* </AuthIllustrationV1Wrapper> */}
-          </Box>
-        </>}
-
+          </CardContent>
+        </Card>
+        {/* </AuthIllustrationV1Wrapper> */}
+      </Box>
     </>
   )
 }

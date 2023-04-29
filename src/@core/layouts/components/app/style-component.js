@@ -6,6 +6,7 @@ export const WrapperStyle = styled.div`
 display:flex;
 flex-direction:column;
 min-height:90vh;
+padding: 0 0 2rem 0;
 `
 export const Wrapper = (props) => {
   const { children, style, dns_data } = props;

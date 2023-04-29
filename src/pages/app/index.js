@@ -122,14 +122,14 @@ const Index = ({ dns_data }) => {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
         setTimeout(() => {
           router.push('/app/home');
-        }, 1000);
+        }, 1300);
       }
     } catch (err) {
       console.log(err)
       if (err?.response?.data?.code == 950) {
         setTimeout(() => {
           router.push('/app/login')
-        }, 1000);
+        }, 1300);
       }
     }
   }
