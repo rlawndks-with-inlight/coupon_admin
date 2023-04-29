@@ -25,7 +25,7 @@ const Content = styled.div`
 display:flex;
 flex-direction:column;
 width:100%;
-max-width:1000px;
+max-width:700px;
 margin: 0 auto;
 `
 
@@ -55,7 +55,7 @@ const DialogLoginForm = (props) => {
           </IconButton>
         </DialogTitle>
         <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-          <Title style={{ padding: '0 0 1rem 0', margin: '0 auto', width: '100%', maxWidth: '1000px' }}>
+          <Title style={{ padding: '0 0 1rem 0', margin: '0 auto', width: '100%', maxWidth: '700px' }}>
             휴대전화번호를 등록하셔야 스탬프 적립이 가능합니다.
             <br />
             개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
