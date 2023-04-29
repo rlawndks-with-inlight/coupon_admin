@@ -329,3 +329,9 @@ export const dateMinus = (s_dt, e_dt) => {//두날짜의 시간차 s_dt - e_dt /
 
   return day;
 }
+
+export const getKakaoInfo = () => {
+  return {
+
+  }
+}
