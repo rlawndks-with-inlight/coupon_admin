@@ -153,6 +153,10 @@ const Header = () => {
       <DialogSearchMobile
         open={searchOpen}
         handleClose={handleSearchClose}
+        style={{
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
+        }}
       />
       <header style={{
         width: '100%',

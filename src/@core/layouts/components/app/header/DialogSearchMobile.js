@@ -39,7 +39,7 @@ const testSearchList = [
 ]
 const DialogSearchMobile = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing } = props;
+  const { open, handleClose, onKeepGoing, style } = props;
 
   const theme = useTheme();
 
@@ -48,44 +48,46 @@ const DialogSearchMobile = (props) => {
     <div>
 
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open}>
-        <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '2rem' }}>
-          <Typography variant='h6' component='span'>
-            <div style={{ display: 'flex' }}>
-              <TextField
-                label='통합검색'
-                id='size-small'
-                size='small'
-                onChange={(e) => {
-                  setKeyword(e.target.value)
-                }}
-                value={keyword}
-                sx={{ width: '80%', margin: '0 auto' }}
-                onKeyPress={(e) => {
-                  if (e.key == 'Enter') {
-                  }
-                }}
-              />
-            </div>
-          </Typography>
-          <IconButton
-            aria-label='close'
-            onClick={handleClose}
-            sx={{ top: 18, right: 10, position: 'absolute', color: 'grey.500' }}
-          >
-            <Icon icon='tabler:x' />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent style={{ borderTop: `1px solid ${theme.palette.grey[300]}` }}>
-          <Title>인기 검색어</Title>
-          {testSearchList.map((item, idx) => (
-            <>
-              <Content theme={theme} >
-                <div style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>{idx + 1}</div>
-                <div>{item.title}</div>
-              </Content>
-            </>
-          ))}
-        </DialogContent>
+        <div style={{ ...style, minHeight: '100vh' }}>
+          <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '2rem' }}>
+            <Typography variant='h6' component='span'>
+              <div style={{ display: 'flex' }}>
+                <TextField
+                  label='통합검색'
+                  id='size-small'
+                  size='small'
+                  onChange={(e) => {
+                    setKeyword(e.target.value)
+                  }}
+                  value={keyword}
+                  sx={{ width: '80%', margin: '0 auto' }}
+                  onKeyPress={(e) => {
+                    if (e.key == 'Enter') {
+                    }
+                  }}
+                />
+              </div>
+            </Typography>
+            <IconButton
+              aria-label='close'
+              onClick={handleClose}
+              sx={{ top: 18, right: 10, position: 'absolute', color: 'grey.500' }}
+            >
+              <Icon icon='tabler:x' />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent style={{ borderTop: `1px solid ${theme.palette.grey[300]}` }}>
+            <Title>인기 검색어</Title>
+            {testSearchList.map((item, idx) => (
+              <>
+                <Content theme={theme} >
+                  <div style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>{idx + 1}</div>
+                  <div>{item.title}</div>
+                </Content>
+              </>
+            ))}
+          </DialogContent>
+        </div>
       </Dialog>
     </div>
   )

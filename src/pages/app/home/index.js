@@ -64,7 +64,6 @@ const Home = () => {
       }
       setLoading(false);
       setMchtLoading(false);
-
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {

@@ -78,7 +78,7 @@ const More1 = (props) => {
           <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
           <MenuTitle>저작권정책</MenuTitle>
         </Menu>
-        <Menu onClick={() => router.push('/app/auth/privacy?type=2')}
+        <Menu
         >
           <Icon icon='mdi:customer-service' style={{ fontSize: themeObj.font_size.font1 }} />
           <MenuTitle>고객센터</MenuTitle>

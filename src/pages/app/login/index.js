@@ -176,14 +176,17 @@ const Login = ({ dns_data }) => {
         open={loginOpen}
         handleClose={handleLoginClose}
         dnsData={dnsData}
+        style={{
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : ''}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : ''}`,
+        }}
       />
       <Box className='content-center' style={{
         display: `${loading ? 'none' : ''}`,
-        background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`
       }}>
         {/* <AuthIllustrationV1Wrapper> */}
         <Card style={{
-          background: `${theme.palette.mode == 'dark' ? '#222' : '#fff'}`
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : '#fff'}`,
         }}>
           <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
             <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
