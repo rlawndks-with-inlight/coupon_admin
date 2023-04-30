@@ -8,6 +8,8 @@ import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
 import { useRef } from "react"
+import { getLocalStorage } from "src/@core/utils/local-storage"
+import { LOCALSTORAGE } from "src/data/data"
 
 
 const getDemo = (num, common) => {
@@ -26,22 +28,26 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [mchtLoading, setMchtLoading] = useState(false);
   const [pageStack, setPageStack] = useState([]);
+  const [dnsData, setDnsData] = useState({});
   const PAGE_SIZE = 10;
   useEffect(() => {
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    dns_data['options'] = JSON.parse(dns_data['options']);
+    dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+    setDnsData(dns_data)
     getHomeContent(1, true)
   }, [])
 
   const getHomeContent = async (pag, is_first) => {
     try {
-      console.log(pageStack)
-      console.log(pag)
+
       if (pageStack.includes(pag)) {
         return;
       }
       let page_stack = pageStack;
       page_stack.push(pag);
       setPageStack(page_stack)
-
       setPage(pag);
       if (is_first) {
         setLoading(true);
@@ -79,29 +85,28 @@ const Home = () => {
   }
   return (
     <>
-      <Wrapper>
-        {loading ?
-          <>
-            <FallbackSpinner sx={{ height: '300px' }} />
-          </>
-          :
-          <>
-            {getDemo(1, {
-              data: {
-                data: data,
-                mchtLoading: mchtLoading,
-                mchts: mchts,
-                page: page
-              },
-              func: {
-                onClickMembershipCategory,
-                onFilterClick,
-                router,
-                getHomeContent
-              }
-            })}
-          </>}
-      </Wrapper>
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '300px' }} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: {
+              data: data,
+              mchtLoading: mchtLoading,
+              mchts: mchts,
+              page: page,
+              dnsData: dnsData
+            },
+            func: {
+              onClickMembershipCategory,
+              onFilterClick,
+              router,
+              getHomeContent
+            }
+          })}
+        </>}
     </>
   )
 }

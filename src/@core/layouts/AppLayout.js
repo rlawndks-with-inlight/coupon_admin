@@ -10,6 +10,10 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import BottomMenu from './components/app/bottom-menu'
+import { Wrapper } from './components/app/style-component'
+import { useState } from 'react'
+import { getLocalStorage } from '../utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
@@ -34,13 +38,21 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   const router = useRouter();
+  const [dnsData, setDnsData] = useState({});
   useEffect(() => {
-  }, [router.asPath])
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    dns_data['options'] = JSON.parse(dns_data['options']);
+    dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+    setDnsData(dns_data)
+  }, [])
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
         <Header />
-        {children}
+        <Wrapper dns_data={dnsData}>
+          {children}
+        </Wrapper>
         <BottomMenu />
         <Footer />
       </Box>

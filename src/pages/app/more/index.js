@@ -43,28 +43,21 @@ const Order = () => {
 
   return (
     <>
-      <Wrapper
-        style={{
-          color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`,
-          background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
-        }}
-      >
-        {loading ?
-          <>
-            <FallbackSpinner sx={{ height: '300px' }} />
-          </>
-          :
-          <>
-            {getDemo(1, {
-              data: {
-                user: user,
-                dnsData: dnsData
-              },
-              func: {
-              }
-            })}
-          </>}
-      </Wrapper>
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '300px' }} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: {
+              user: user,
+              dnsData: dnsData
+            },
+            func: {
+            }
+          })}
+        </>}
     </>
   )
 }

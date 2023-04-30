@@ -169,7 +169,6 @@ const Login = ({ dns_data }) => {
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {
-    console.log(1)
   }
   return (
     <>

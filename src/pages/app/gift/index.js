@@ -4,9 +4,6 @@ import { Wrapper } from "src/@core/layouts/components/app/style-component";
 const Gift = () => {
   return (
     <>
-      <Wrapper>
-
-      </Wrapper>
     </>
   )
 }

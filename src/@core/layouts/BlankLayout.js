@@ -2,6 +2,10 @@
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { useTheme } from '@emotion/react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { getLocalStorage } from '../utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
@@ -27,8 +31,39 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 
 const BlankLayout = ({ children }) => {
   const theme = useTheme();
+  const router = useRouter();
+  const [backgroundColor, setBackgroundColor] = useState("");
+  const [dnsData, setDnsData] = useState({});
+  useEffect(() => {
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    dns_data['options'] = JSON.parse(dns_data['options']);
+    dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+    setDnsData(dns_data)
+  }, [])
+  useEffect(() => {
+    if (theme.palette.mode == 'dark') {
+      if (router.asPath.includes('/app/')) {
+        let dns_data = {};
+        if (!dnsData?.options) {
+          dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+          dns_data = JSON.parse(dns_data);
+          dns_data['options'] = JSON.parse(dns_data['options']);
+          dns_data['theme_css'] = JSON.parse(dns_data['theme_css']);
+        } else {
+          dns_data = dnsData;
+        }
+        setBackgroundColor(dns_data?.options?.app?.dark_background_color ?? '');
+      } else {
+        setBackgroundColor('');
+      }
+    } else {
+      setBackgroundColor('#fff');
+    }
+
+  }, [router.asPath])
   return (
-    <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
+    <BlankLayoutWrapper className='layout-wrapper' style={{ background: backgroundColor }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
         {children}
       </Box>

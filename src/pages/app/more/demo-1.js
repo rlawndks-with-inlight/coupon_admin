@@ -26,7 +26,6 @@ const More1 = (props) => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(data)
   }, [])
   return (
     <>

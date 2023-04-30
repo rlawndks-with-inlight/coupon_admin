@@ -109,8 +109,8 @@ const BottomMenu = () => {
     <>
       <Container className='menu-container'
         style={{
-          background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
-          color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`,
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
         }}>
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {

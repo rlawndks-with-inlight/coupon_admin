@@ -4,9 +4,6 @@ import AppLayout from "src/@core/layouts/AppLayout";
 const MyCoupon = () => {
   return (
     <>
-      <Wrapper>
-
-      </Wrapper>
     </>
   )
 }

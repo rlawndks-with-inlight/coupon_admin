@@ -161,8 +161,8 @@ const Header = () => {
         display: 'flex',
         flexDirection: 'column',
         zIndex: '10',
-        background: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`,
-        color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`
+        color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
+        background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
       }} className="header-wrapper">
         <TopWrapper>
           {dnsData?.logo_img ?

@@ -163,7 +163,8 @@ const Home1 = (props) => {
       data,
       mchtLoading,
       mchts,
-      page
+      page,
+      dnsData
     },
     func: {
       onClickMembershipCategory,
@@ -228,7 +229,7 @@ const Home1 = (props) => {
                 onHoverStart={e => { }}
                 onHoverEnd={e => { }}
                 style={{
-                  background: `${theme.palette.mode == 'dark' ? '#222224' : '#fff'}`
+                  background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : '#fff'}`
                 }}
                 className={`merchandise-content mcht-${idx}`}
                 onClick={() => {

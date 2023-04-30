@@ -31,21 +31,19 @@ const Merchandise = () => {
   }
   return (
     <>
-      <Wrapper>
-        {loading ?
-          <>
-            <FallbackSpinner sx={{ height: '300px' }} />
-          </>
-          :
-          <>
-            {getDemo(1, {
-              data: data,
-              func: {
-                router
-              }
-            })}
-          </>}
-      </Wrapper>
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '300px' }} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: data,
+            func: {
+              router
+            }
+          })}
+        </>}
     </>
   )
 }

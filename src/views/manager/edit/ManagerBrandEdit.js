@@ -74,6 +74,9 @@ const ManagerBrandEdit = (props) => {
         is_use_coupon: 0,
         is_use_gift: 0,
         is_use_order: 0,
+        dark_background_color: '#000',//다크모드 배경색
+        dark_box_color: '#000',// 다크모드 컨텐츠 색
+        dark_font_color: '#fff',// 다크모드 폰트 색
       }
     },
     company_nm: '',
@@ -95,7 +98,7 @@ const ManagerBrandEdit = (props) => {
     if (userData) {
       setLoading(false);
     }
-  }, [userData])
+  }, [userData, values])
   const getOneItem = async () => {
     setLoading(true);
     let item = await getItem();
@@ -105,22 +108,11 @@ const ManagerBrandEdit = (props) => {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
-      obj['theme_css'] = JSON.parse(obj['theme_css']);
-      if (typeof obj['theme_css'] != 'object' || !obj['theme_css']?.main_color) {
-        obj['theme_css'] = {
-          main_color: '#7367f0',
-        }
-      }
-      obj['options'] = JSON.parse(obj['options']);
-      if (typeof obj['options'] != 'object' || !obj['options']?.app) {
-        obj['options'] = {
-          app: {
-            is_use_coupon: 0,
-            is_use_gift: 0,
-            is_use_order: 0,
-          }
-        }
-      }
+      obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      obj['theme_css'] = Object.assign(defaultObj.theme_css, obj['theme_css']);
+
+      obj['options'] = JSON.parse(obj['options'] ?? "{}");
+      obj['options'] = Object.assign(defaultObj.options, obj['options']);
       setValues({ ...obj });
     }
   }
@@ -149,6 +141,7 @@ const ManagerBrandEdit = (props) => {
     let local_dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     local_dns_data = JSON.parse(local_dns_data);
     local_dns_data['theme_css'] = values['theme_css'];
+    local_dns_data['options'] = values['options'];
     setLocalStorage(LOCALSTORAGE.DNS_DATA, local_dns_data);
     editItem(obj);
   }
@@ -505,68 +498,101 @@ const ManagerBrandEdit = (props) => {
                   <Card sx={{ height: '100%' }}>
                     <CardContent>
                       <Grid container spacing={5}>
+                        {userData?.level >= 50 ?
+                          <>
+                            <Grid item xs={12}>
+                              <FormControl fullWidth>
+                                <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>쿠폰탭 사용여부</InputLabel>
+                                <Select
+                                  label='쿠폰탭 사용여부'
+                                  id='form-layouts-tabs-select'
+                                  labelId='form-layouts-tabs-select-label'
+                                  className='is_use_coupon'
+                                  onChange={(e) => {
+                                    let obj = { ...values };
+                                    obj['options']['app'].is_use_coupon = e.target.value
+                                    setValues(obj);
+                                  }}
+                                  defaultValue={values?.options?.app?.is_use_coupon ?? 0}
+                                  value={values?.options?.app?.is_use_coupon}
+                                >
+                                  <MenuItem value='0'>사용안함</MenuItem>
+                                  <MenuItem value='1'>사용</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <FormControl fullWidth>
+                                <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>주문탭 사용여부</InputLabel>
+                                <Select
+                                  label='주문탭 사용여부'
+                                  id='form-layouts-tabs-select'
+                                  labelId='form-layouts-tabs-select-label'
+                                  className='is_use_order'
+                                  onChange={(e) => {
+                                    let obj = { ...values };
+                                    obj['options']['app'].is_use_order = e.target.value
+                                    setValues(obj);
+                                  }}
+                                  defaultValue={values?.options?.app?.is_use_order ?? 0}
+                                  value={values?.options?.app?.is_use_order}
+                                >
+                                  <MenuItem value='0'>사용안함</MenuItem>
+                                  <MenuItem value='1'>사용</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <FormControl fullWidth>
+                                <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>선물탭 사용여부</InputLabel>
+                                <Select
+                                  label='선물탭 사용여부'
+                                  id='form-layouts-tabs-select'
+                                  labelId='form-layouts-tabs-select-label'
+                                  className='is_use_gift'
+                                  onChange={(e) => {
+                                    let obj = { ...values };
+                                    obj['options']['app'].is_use_gift = e.target.value
+                                    setValues(obj);
+                                  }}
+                                  defaultValue={values?.options?.app?.is_use_gift ?? 0}
+                                  value={values?.options?.app?.is_use_gift}
+                                >
+                                  <MenuItem value='0'>사용안함</MenuItem>
+                                  <MenuItem value='1'>사용</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                          </>
+                          :
+                          <>
+                          </>}
                         <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>쿠폰탭 사용여부</InputLabel>
-                            <Select
-                              label='쿠폰탭 사용여부'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='is_use_coupon'
-                              onChange={(e) => {
-                                let obj = { ...values };
-                                obj['options']['app'].is_use_coupon = e.target.value
-                                setValues(obj);
-                              }}
-                              defaultValue={values?.options?.app?.is_use_coupon ?? 0}
-                              value={values?.options?.app?.is_use_coupon}
-                            >
-                              <MenuItem value='0'>사용안함</MenuItem>
-                              <MenuItem value='1'>사용</MenuItem>
-                            </Select>
-                          </FormControl>
+                          <TextField fullWidth label='다크모드 배경색' type={'color'} placeholder='다크모드 배경색을 입력해 주세요.' className='dark_background_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['app'].dark_background_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.app.dark_background_color}
+                            value={values?.options?.app.dark_background_color} />
                         </Grid>
                         <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>주문탭 사용여부</InputLabel>
-                            <Select
-                              label='주문탭 사용여부'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='is_use_order'
-                              onChange={(e) => {
-                                let obj = { ...values };
-                                obj['options']['app'].is_use_order = e.target.value
-                                setValues(obj);
-                              }}
-                              defaultValue={values?.options?.app?.is_use_order ?? 0}
-                              value={values?.options?.app?.is_use_order}
-                            >
-                              <MenuItem value='0'>사용안함</MenuItem>
-                              <MenuItem value='1'>사용</MenuItem>
-                            </Select>
-                          </FormControl>
+                          <TextField fullWidth label='다크모드 컨텐츠 배경색' type={'color'} placeholder='다크모드 컨텐츠 배경색을 입력해 주세요.' className='dark_box_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['app'].dark_box_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.app.dark_box_color}
+                            value={values?.options?.app.dark_box_color} />
                         </Grid>
                         <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>선물탭 사용여부</InputLabel>
-                            <Select
-                              label='선물탭 사용여부'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='is_use_gift'
-                              onChange={(e) => {
-                                let obj = { ...values };
-                                obj['options']['app'].is_use_gift = e.target.value
-                                setValues(obj);
-                              }}
-                              defaultValue={values?.options?.app?.is_use_gift ?? 0}
-                              value={values?.options?.app?.is_use_gift}
-                            >
-                              <MenuItem value='0'>사용안함</MenuItem>
-                              <MenuItem value='1'>사용</MenuItem>
-                            </Select>
-                          </FormControl>
+                          <TextField fullWidth label='다크모드 폰트색' type={'color'} placeholder='다크모드 폰트색을 입력해 주세요.' className='dark_font_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['app'].dark_font_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.app?.dark_font_color}
+                            value={values?.options?.app?.dark_font_color} />
                         </Grid>
                       </Grid>
                     </CardContent>
