@@ -20,7 +20,10 @@ font-size:${themeObj.font_size.font2};
 `
 const More1 = (props) => {
 
-  const { data, func: {
+  const { data: {
+    user,
+    dnsData,
+  }, func: {
   } } = props;
 
   const router = useRouter();
@@ -31,7 +34,7 @@ const More1 = (props) => {
     <>
       <ContentWrapper>
 
-        <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{data?.user?.user_name} 님</Font1>
+        <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name} 님</Font1>
         <Menu onClick={() => {
         }}
         >
@@ -42,7 +45,7 @@ const More1 = (props) => {
           <>
             {idx != 0 && item?.link != '/app/more/' ?
               <>
-                {isShowMenu(data?.dnsData, item) ?
+                {isShowMenu(dnsData, item) ?
                   <>
                     <Menu onClick={() => {
                       router.push(item.link)
