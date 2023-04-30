@@ -86,11 +86,11 @@ const DialogLoginForm = (props) => {
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
                       style={{
-                        transform: `translateX(13px)`,
+                        transform: `translateX(14px)`,
                         borderTopLeftRadius: '0',
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
-                        padding: '9px',
+                        padding: '8px',
                         background: `${focusItem == 'phone' ? dnsData?.theme_css?.main_color : ''}`
                       }}>
                       인증번호 발송
@@ -115,11 +115,11 @@ const DialogLoginForm = (props) => {
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
                       style={{
-                        transform: `translateX(13px)`,
+                        transform: `translateX(14px)`,
                         borderTopLeftRadius: '0',
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
-                        padding: '9px',
+                        padding: '8px',
                         background: `${focusItem == 'phoneCheck' ? dnsData?.theme_css?.main_color : ''}`
                       }}>
                       인증번호 확인

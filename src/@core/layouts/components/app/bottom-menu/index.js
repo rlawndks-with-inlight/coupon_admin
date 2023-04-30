@@ -59,8 +59,7 @@ const BottomMenu = () => {
   const [colorList, setColorList] = useState([]);
   const [dnsData, setDnsData] = useState({});
   const theme = useTheme();
-
-  const [menuCount, setMenuCount] = useState(0);
+  const [menuIndex, setMenuIndex] = useState(0);
   const [menuContainerStyle, setMenuContainerStyle] = useState({});
   useEffect(() => {
 
@@ -77,10 +76,10 @@ const BottomMenu = () => {
     let menu_count = 0;
     for (var i = 0; i < zBottomMenu.length; i++) {
       if (zBottomMenu[i].link == router.asPath) {
-        move_idx = i;
-        if (isShowMenu(dns_data, zBottomMenu[i])) {
-          menu_count++;
-        }
+        setMenuIndex(i)
+      }
+      if (isShowMenu(dns_data, zBottomMenu[i])) {
+        menu_count++;
       }
     }
     if (menu_count == 1 || menu_count == 2) {
@@ -88,23 +87,27 @@ const BottomMenu = () => {
         justifyContent: 'space-around'
       })
     }
-    for (var i = 0; i < zBottomMenu.length; i++) {
-      if (i == move_idx) {
-        color_list.push(dns_data['theme_css']?.main_color)
-      } else {
-        if (theme.palette.mode == 'dark') {
-          color_list.push(theme.palette.grey[300]);
-        } else {
-          color_list.push(theme.palette.grey[400]);
-        }
-      }
-    }
+
     setColorList(color_list);
   }, [router.asPath])
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
   }, [])
-
+  const getColor = (is_menu, mode) => {
+    if (is_menu) {
+      if (mode == 'dark') {
+        return '#fff';
+      } else {
+        return '#000';
+      }
+    } else {
+      if (mode == 'dark') {
+        return themeObj.grey[500];
+      } else {
+        return themeObj.grey[500];
+      }
+    }
+  }
   return (
     <>
       <Container className='menu-container'
@@ -115,7 +118,9 @@ const BottomMenu = () => {
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {
             if (isShowMenu(dnsData, item)) {
-              return <OneMenuContainer onClick={() => { router.push(item.link) }} style={{ color: `${colorList[idx]}` }} key={idx}>
+              return <OneMenuContainer onClick={() => { router.push(item.link) }} style={{
+                color: `${getColor(menuIndex == idx, theme.palette.mode)}`
+              }} key={idx}>
                 <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
                 <OneMenuName>
                   {item.title}

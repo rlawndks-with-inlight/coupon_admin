@@ -214,13 +214,13 @@ const Home1 = (props) => {
             <div>쿠폰 {commarNumber(data?.total?.coupon)}</div>
           </Row>
         </Row>
-        <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
+        {/* <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
           <div />
           <Row style={{ alignItems: 'center', cursor: 'pointer' }} onClick={onFilterClick}>
             <div>거리순</div>
             <Icon icon='mi:filter' style={{ marginLeft: '0.1rem', fontSize: '1.2rem' }} />
           </Row>
-        </Row>
+        </Row> */}
         <MerchandiseContainer>
           {mchts && mchts.map((item, idx) => {
             if (idx == mchts.length - 1) {
@@ -235,9 +235,7 @@ const Home1 = (props) => {
                 onClick={() => {
                   router.push({
                     pathname: `/app/merchandise/detail/${item?.id}`,
-                    state: {
-                      item: item
-                    }
+                    query: { ...item }
                   })
                 }}
                 ref={lastMchtRef}
@@ -261,9 +259,7 @@ const Home1 = (props) => {
                 onClick={() => {
                   router.push({
                     pathname: `/app/merchandise/detail/${item?.id}`,
-                    state: {
-                      item: item
-                    }
+                    query: { ...item }
                   })
                 }}
               >

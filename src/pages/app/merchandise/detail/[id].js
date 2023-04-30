@@ -21,13 +21,13 @@ const Merchandise = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-
+  const [mcht, setMcht] = useState({});
   useEffect(() => {
     getMerchandise();
   }, [])
 
   const getMerchandise = async () => {
-
+    setMcht(router.query)
   }
   return (
     <>
