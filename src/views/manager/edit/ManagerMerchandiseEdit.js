@@ -65,6 +65,7 @@ const ManagerMerchandiseEdit = (props) => {
     birth_date: returnMoment(false, new Date()).substring(0, 10),
     group_id: 0,
     mcht_name: '',
+    phone_num: '',
     addr: '',
     stamp_flag: 0,
     point_flag: 0,
@@ -256,6 +257,9 @@ const ManagerMerchandiseEdit = (props) => {
                   }} defaultValue={values?.addr} value={values?.addr}
                     onClick={onSelectAddressOpen}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='휴대폰번호' placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>

@@ -37,15 +37,14 @@ const ManagerOperatorEdit = (props) => {
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
   const [brandList, setBrandList] = useState([]);
-  const [bDt, setBDt] = useState(new Date())
   const defaultObj = {
     profile_img: undefined,
     brand_id: brandList[0]?.id ?? 0,
     user_name: '',
     user_pw: '',
     nick_name: '',
-    birth_date: returnMoment(false, new Date()).substring(0, 10),
     level: 0,
+    phone_num: ''
   }
   const [values, setValues] = useState(defaultObj);
   useEffect(() => {
@@ -115,7 +114,6 @@ const ManagerOperatorEdit = (props) => {
     let item = await getItem();
     let obj = {};
     if (item) {
-      setBDt(new Date(item?.birth_date));
       for (var i = 0; i < Object.keys(values).length; i++) {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
@@ -134,7 +132,6 @@ const ManagerOperatorEdit = (props) => {
   }
 
   const onReset = async () => {
-    setBDt(new Date());
     setValues({ ...defaultObj, level: userLevelList[0].level });
   }
   const onEditItem = () => {
@@ -276,24 +273,19 @@ const ManagerOperatorEdit = (props) => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                      <DatePicker
-                        showYearDropdown
-                        showMonthDropdown
-                        selected={bDt}
-                        id='month-year-dropdown'
-                        placeholderText='YYYY-MM-DD'
-                        dateFormat={'yyyy-MM-dd'}
-                        popperPlacement={popperPlacement}
-                        onChange={async (date) => {
-                          try {
-                            setBDt(date);
-                            handleChange('birth_date', returnMoment(false, date).substring(0, 10));
-                          } catch (err) {
-                            console.log(err);
-                          }
-
+                      <TextField
+                        fullWidth
+                        label='휴대폰번호'
+                        placeholder='휴대폰번호를 입력해 주세요.'
+                        onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num}
+                        type='number'
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <Icon icon='tabler:user' />
+                            </InputAdornment>
+                          )
                         }}
-                        customInput={<CustomInput label='유저 생년월일' />}
                       />
                     </Grid>
                   </Grid>

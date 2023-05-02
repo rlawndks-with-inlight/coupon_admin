@@ -57,6 +57,7 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 import { Html } from 'next/document'
 import "react-quill/dist/quill.snow.css";
 import "react-quill-emoji/dist/quill-emoji.css";
+import Script from 'next/script'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
@@ -91,6 +92,10 @@ const App = props => {
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
         <HeadContent dns_data={dns_data} />
+        <Script
+          strategy="beforeInteractive"
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
+        ></Script>
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
             {({ settings }) => {

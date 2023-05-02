@@ -10,7 +10,7 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import BottomMenu from './components/app/bottom-menu'
-import { Wrapper } from './components/app/style-component'
+import { PageTransition, Wrapper } from './components/app/style-component'
 import { useState } from 'react'
 import { getLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
@@ -44,17 +44,27 @@ const AppLayout = ({ children, scrollToTop }) => {
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
+    let query_keys = Object.keys(router.query);
+    for (var i = 0; i < query_keys.length; i++) {
+      dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+    }
     setDnsData(dns_data)
   }, [])
   return (
-    <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
+    <BlankLayoutWrapper className='layout-wrapper' style={{
+      color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
+      background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
+    }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
         <Header />
-        <Wrapper dns_data={dnsData}>
-          {children}
-        </Wrapper>
+        <PageTransition router={router}>
+          <Wrapper dns_data={dnsData}>
+            {children}
+          </Wrapper>
+          <Footer />
+        </PageTransition>
         <BottomMenu />
-        <Footer />
+
       </Box>
       {scrollToTop ? (
         scrollToTop(props)

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
@@ -16,6 +16,18 @@ import { useTheme } from '@emotion/react'
 import styled from 'styled-components'
 import { themeObj } from './style-component'
 import { Icon } from '@iconify/react'
+import { axiosIns } from 'src/@fake-db/backend'
+import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
+import $ from 'jquery';
+import { Toaster, toast } from 'react-hot-toast'
+import { setLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
+
+import Slide from '@mui/material/Slide'
+import { useEffect } from 'react'
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='left' ref={ref} {...props} />
+})
 
 const Title = styled.div`
 font-size: ${themeObj.font_size.font4};
@@ -28,21 +40,130 @@ width:100%;
 max-width:700px;
 margin: 0 auto;
 `
+function Countdown({ seconds }) {
+  const [timeLeft, setTimeLeft] = useState(seconds);
 
+  useEffect(() => {
+    // 1초마다 timeLeft 값을 1씩 감소시킵니다.
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+
+    // 컴포넌트가 언마운트되면 타이머를 정리합니다.
+    return () => clearInterval(timer);
+  }, [seconds]);
+
+  return <div style={{
+    right: '110px',
+    position: 'absolute',
+    color: themeObj.red
+  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</div>;
+}
 const DialogLoginForm = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing, dnsData, style } = props;
+  const { open, handleClose, onKeepGoing, dnsData, style, router } = props;
 
   const theme = useTheme();
 
   const [keyword, setKeyword] = useState('');
 
   const [focusItem, setFocusItem] = useState('');
+
+  const [values, setValues] = useState({
+    phone_num: '',
+    rand_num: '',
+    is_exist: false,
+  })
+  const [isSendSms, setIsSendSms] = useState(false);
+  const [isCheckPhone, setIsCheckPhone] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setIsSendSms(false)
+      setIsCheckPhone(false)
+    }
+  }, [open])
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+  const requestVerifyCode = async () => {
+    try {
+      const response = await axiosIns().post(`/api/v1/app/auth/verify/code`, {
+        dns: dnsData?.dns,
+        phone_num: values?.phone_num
+      })
+      setValues({ ...values, ['is_exist']: response?.data?.is_exist })
+      $('.rand_num').focus();
+      toast.success("인증번호가 성공적으로 전송 되었습니다.");
+      setIsSendSms(true);
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.response?.data?.message);
+    }
+  }
+  const requestVerify = async () => {
+    try {
+      const response = await axiosIns().post(`/api/v1/app/auth/verify`, {
+        rand_num: values.rand_num,
+        phone_num: values?.phone_num
+      })
+      if (!response?.data?.phone_token) {
+        toast.error("인증번호가 일치하지 않습니다.");
+        return;
+      }
+      await setCookie('phone_token', response?.data?.phone_token, {
+        path: "/",
+        secure: process.env.COOKIE_SECURE,
+        sameSite: process.env.COOKIE_SAME_SITE,
+      });
+      toast.success("인증번호가 일치합니다.");
+      setIsCheckPhone(true)
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  }
+  const onConfirm = async () => {
+    try {
+      if (!isSendSms) {
+        toast.error('휴대폰 인증번호를 발송해 주세요.');
+        return;
+      }
+      if (!isCheckPhone) {
+        toast.error('휴대폰 인증을 완료해 주세요.');
+        return;
+      }
+      if (!values.is_exist) {
+        const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, {
+          dns: dnsData?.dns,
+          phone_num: values?.phone_num,
+          login_type: 0,
+          phone_token: getCookie('phone_token')
+        })
+      }
+      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+        dns: dnsData?.dns,
+        phone_num: values?.phone_num,
+        login_type: 0,
+        token: getCookie('phone_token'),
+      });
+      await setCookie('o', response?.data?.access_token, {
+        path: "/",
+        secure: process.env.COOKIE_SECURE,
+        sameSite: process.env.COOKIE_SAME_SITE,
+      });
+      if (response?.status == 200 && response?.data?.user) {
+        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+        router.push('/app/home');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div>
 
-      <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open}>
-        <div style={{ ...style, minHeight: '100vh' }}>
+      <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
+        <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
               <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold' }}>
@@ -74,14 +195,15 @@ const DialogLoginForm = (props) => {
                 label='휴대전화번호 입력'
                 size='small'
                 onFocus={() => {
-                  setFocusItem('phone');
+                  setFocusItem('phone_num');
                 }}
                 onBlur={() => {
-                  if (focusItem == 'phone') {
+                  if (focusItem == 'phone_num') {
                     setFocusItem('')
                   }
                 }}
-                style={{ width: '100%' }}
+                onChange={handleChange('phone_num')}
+                style={{ width: '100%', marginTop: '0.5rem' }}
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
@@ -91,8 +213,10 @@ const DialogLoginForm = (props) => {
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
-                        background: `${focusItem == 'phone' ? dnsData?.theme_css?.main_color : ''}`
-                      }}>
+                        background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`
+                      }}
+                      onClick={requestVerifyCode}
+                    >
                       인증번호 발송
                     </Button>
                   </InputAdornment>
@@ -102,15 +226,17 @@ const DialogLoginForm = (props) => {
                 id='icons-start-adornment'
                 label='인증번호 입력'
                 size='small'
-                style={{ width: '100%', paddingRight: '0', marginTop: '0.5rem' }}
+                style={{ width: '100%', paddingRight: '0', marginTop: '1rem' }}
                 onFocus={() => {
-                  setFocusItem('phoneCheck');
+                  setFocusItem('rand_num');
                 }}
                 onBlur={() => {
-                  if (focusItem == 'phoneCheck') {
+                  if (focusItem == 'rand_num') {
                     setFocusItem('')
                   }
                 }}
+                onChange={handleChange('rand_num')}
+                className='rand_num'
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
@@ -120,16 +246,30 @@ const DialogLoginForm = (props) => {
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
-                        background: `${focusItem == 'phoneCheck' ? dnsData?.theme_css?.main_color : ''}`
-                      }}>
+                        background: `${focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : ''}`
+                      }}
+                      onClick={requestVerify}
+                    >
                       인증번호 확인
                     </Button>
+                    {isSendSms && !isCheckPhone ?
+                      <>
+                        <Countdown seconds={180} />
+                      </>
+                      :
+                      <>
+                      </>}
                   </InputAdornment>
                 }}
               />
+
             </Content>
           </DialogContent>
+          <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
+            로그인
+          </Button>
         </div>
+        <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
       </Dialog>
     </div>
   )

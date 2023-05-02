@@ -77,6 +77,8 @@ const Login = ({ dns_data }) => {
   const [loading, setLoading] = useState(true);
   const [dnsLoadingFlag, setDnsLoadingFlag] = useState(false);
   const [authLoadingFlag, setAuthLoadingFlag] = useState(false);
+
+
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
@@ -108,7 +110,6 @@ const Login = ({ dns_data }) => {
         router.push('/404');
       }
     }
-
   }
   const checkAuth = async () => {
     try {
@@ -176,6 +177,7 @@ const Login = ({ dns_data }) => {
         open={loginOpen}
         handleClose={handleLoginClose}
         dnsData={dnsData}
+        router={router}
         style={{
           color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : ''}`,
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : ''}`,
@@ -242,43 +244,6 @@ const Login = ({ dns_data }) => {
                   휴대폰으로 로그인
                 </>}
             </Button>
-            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
-                <Typography>
-                  <LinkStyled href='/pages/auth/register-v1' sx={{ fontSize: '1rem' }}>
-                    Create an account
-                  </LinkStyled>
-                </Typography>
-              </Box> */}
-            {/* <Divider
-                sx={{
-                  fontSize: '0.875rem',
-                  color: 'text.disabled',
-                  '& .MuiDivider-wrapper': { px: 6 },
-                  my: theme => `${theme.spacing(6)} !important`
-                }}
-              >
-                or
-              </Divider> */}
-            {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:facebook' />
-                </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:twitter' />
-                </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  onClick={e => e.preventDefault()}
-                  sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : 'grey.300') }}
-                >
-                  <Icon icon='mdi:github' />
-                </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:google' />
-                </IconButton>
-              </Box> */}
           </CardContent>
         </Card>
         {/* </AuthIllustrationV1Wrapper> */}

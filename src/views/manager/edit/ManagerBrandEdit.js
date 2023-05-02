@@ -60,6 +60,7 @@ const ManagerBrandEdit = (props) => {
     id_img: undefined,
     og_img: undefined,
     bsin_lic_img: undefined,
+    map_marker_img: undefined,
     ceo_nm: '',
     addr: '',
     phone_num: '',
@@ -129,7 +130,7 @@ const ManagerBrandEdit = (props) => {
     setValues(defaultObj)
   }
   const onEditItem = () => {
-    let img_key_list = ['logo_img', 'dark_logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img', 'bsin_lic_img'];
+    let img_key_list = ['logo_img', 'dark_logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img', 'bsin_lic_img', 'map_marker_img'];
     let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css'] ?? {}), ['options']: JSON.stringify(values['options'] ?? {}) };
     for (var i = 0; i < img_key_list.length; i++) {
       if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
@@ -161,7 +162,7 @@ const ManagerBrandEdit = (props) => {
             >
               <Tab value='tab-1' label='기본정보' sx={{ mr: 2 }} />
               <Tab value='tab-3' label='계약정보' sx={{ mr: 2 }} />
-              <Tab value='tab-5' label='어플정보' sx={{ mr: 2, display: `${userData?.level >= 50 ? '' : 'none'}` }} />
+              <Tab value='tab-5' label='어플정보' sx={{ mr: 2 }} />
             </TabList>
             <TabPanel sx={{ p: 0 }} value='tab-1'>
               <Grid container spacing={6}>
@@ -226,7 +227,6 @@ const ManagerBrandEdit = (props) => {
                             id='textarea-standard-static'
                           />
                         </Grid>
-
                       </Grid>
                     </CardContent>
                   </Card>
@@ -263,7 +263,6 @@ const ManagerBrandEdit = (props) => {
                         <Grid item xs={12}>
                           <TextField fullWidth label='사업자 번호' placeholder='사업자 번호를 입력해 주세요.' className='business_num' onChange={handleChangeValue('business_num')} defaultValue={values?.business_num} value={values?.business_num} />
                         </Grid>
-
                       </Grid>
                     </CardContent>
                   </Card>
@@ -422,7 +421,6 @@ const ManagerBrandEdit = (props) => {
                   </Card>
                 </Grid>
               </Grid>
-
             </TabPanel>
             <TabPanel sx={{ p: 0 }} value='tab-3'>
               <Grid container spacing={6}>
@@ -439,7 +437,6 @@ const ManagerBrandEdit = (props) => {
                             value={values?.contract_img}
                             sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
                             placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -451,7 +448,6 @@ const ManagerBrandEdit = (props) => {
                             value={values?.bsin_lic_img}
                             sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
                             placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
                           />
                         </Grid>
                       </Grid>
@@ -471,10 +467,8 @@ const ManagerBrandEdit = (props) => {
                             value={values?.passbook_img}
                             sx={{ maxWidth: '256px', width: '90%', height: 'auto' }}
                             placeholder={'max-width: 500px, 이상은 자동으로 리사이징 됩니다.'}
-
                           />
                         </Grid>
-
                         <Grid item xs={12}>
                           <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>신분증 사본 이미지</InputLabel>
                           <FileUploaderSingle
@@ -494,7 +488,29 @@ const ManagerBrandEdit = (props) => {
             </TabPanel >
             <TabPanel sx={{ p: 0 }} value='tab-5'>
               <Grid container spacing={6}>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+                      <Grid container spacing={5}>
+                        <Grid item xs={12} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>지도 마커 이미지</InputLabel>
+                          <FileUploaderSingle
+                            className='map_marker_img'
+                            setValues={setValues}
+                            values={values}
+                            value={values?.map_marker_img}
+                            sx={{ width: '40px', height: '60px' }}
+                            boxStyle={{ minHeight: '50px', height: '104px', width: '104px' }}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <iframe className='none-show-scroll' src={`${window.location.origin}/app/home?dark_background_color=${values?.options?.app.dark_background_color.replace('#', '%23')}&dark_box_color=${values?.options?.app.dark_box_color.replace('#', '%23')}&dark_font_color=${values?.options?.app?.dark_font_color.replace('#', '%23')}`} style={{ border: 'none', height: '500px' }} />
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <Card sx={{ height: '100%' }}>
                     <CardContent>
                       <Grid container spacing={5}>
@@ -601,7 +617,6 @@ const ManagerBrandEdit = (props) => {
               </Grid>
             </TabPanel>
           </TabContext >
-
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
               <Button type='submit' sx={{ mr: 2 }} variant='contained'

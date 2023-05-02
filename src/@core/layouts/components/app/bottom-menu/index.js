@@ -15,7 +15,7 @@ const Container = styled.aside`
     z-index: 5;
     display:none;
     width:100%;
-    max-width:1000px;
+    max-width:1200px;
     margin: 0 auto;
     @media screen and (max-width:1200px) {
         display:flex;
@@ -61,6 +61,7 @@ const BottomMenu = () => {
   const theme = useTheme();
   const [menuIndex, setMenuIndex] = useState(0);
   const [menuContainerStyle, setMenuContainerStyle] = useState({});
+  const [notChangeRouter, setNotChangeRouter] = useState(false);
   useEffect(() => {
 
   }, [])
@@ -71,6 +72,17 @@ const BottomMenu = () => {
     dns_data = JSON.parse(dns_data);
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
+    let query_keys = Object.keys(router.query);
+    if (query_keys.includes('dark_background_color')) {
+      for (var i = 0; i < query_keys.length; i++) {
+        if (router.query[query_keys[i]]) {
+          setNotChangeRouter(true);
+          dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+        }
+      }
+    } else {
+      setNotChangeRouter(false);
+    }
     setDnsData(dns_data);
 
     let menu_count = 0;
@@ -118,9 +130,15 @@ const BottomMenu = () => {
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {
             if (isShowMenu(dnsData, item)) {
-              return <OneMenuContainer onClick={() => { router.push(item.link) }} style={{
-                color: `${getColor(menuIndex == idx, theme.palette.mode)}`
-              }} key={idx}>
+              return <OneMenuContainer
+                onClick={() => {
+                  if (!notChangeRouter) {
+                    router.push(item.link)
+                  }
+                }}
+                style={{
+                  color: `${getColor(menuIndex == idx, theme.palette.mode)}`
+                }} key={idx}>
                 <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
                 <OneMenuName>
                   {item.title}

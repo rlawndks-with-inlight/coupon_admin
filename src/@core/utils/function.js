@@ -339,3 +339,7 @@ export const getKakaoInfo = () => {
     KAKAO_AUTH_URL: KAKAO_AUTH_URL,
   }
 }
+
+export const detetimeFormat = (datetime) => {
+  return `${datetime.substring(0, 4)}년 ${datetime.substring(5, 7)}월 ${datetime.substring(8, 10)}일 ${datetime.substring(11, 19)}`
+}

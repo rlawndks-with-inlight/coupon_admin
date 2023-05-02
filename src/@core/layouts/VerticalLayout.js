@@ -22,7 +22,7 @@ import Navigation from './components/vertical/navigation'
 import Footer from './components/shared-components/footer'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
 import { useRouter } from 'next/router'
-import { objDataGridColumns, objEditColumns } from 'src/data/manager-data'
+import { objDataGridColumns } from 'src/data/manager-data'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
@@ -71,22 +71,6 @@ const VerticalLayout = props => {
     subTitle: ""
   });
   useEffect(() => {
-    if (router.asPath.includes('edit')) {
-      setBreadcumb({
-        title: `${objEditColumns[router.query?.table]?.breadcrumb} 관리`,
-        subTitle: `${objEditColumns[router.query?.table]?.breadcrumb} 수정`,
-      })
-    } else if (router.asPath.includes('create')) {
-      setBreadcumb({
-        title: `${objEditColumns[router.query?.table]?.breadcrumb} 관리`,
-        subTitle: `${objEditColumns[router.query?.table]?.breadcrumb} 추가`,
-      })
-    } else {
-      setBreadcumb({
-        title: `${objDataGridColumns[router.query?.table]?.breadcrumb} 관리`,
-        subTitle: ``,
-      })
-    }
 
   }, [router.asPath])
 

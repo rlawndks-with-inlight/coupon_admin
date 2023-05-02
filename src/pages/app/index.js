@@ -99,7 +99,7 @@ const Index = ({ dns_data }) => {
       obj = { ...response?.data };
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
-
+      console.log(obj)
     } catch (err) {
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
@@ -107,7 +107,6 @@ const Index = ({ dns_data }) => {
         router.push('/404');
       }
     }
-
   }
   const checkAuth = async () => {
     try {

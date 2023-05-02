@@ -1,12 +1,46 @@
 import { useTheme } from "@emotion/react";
 import { Icon } from "@iconify/react"
 import styled from "styled-components"
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import { useState } from "react";
+
+export const PageTransition = ({ children, router, }) => {
+  const [isUseAnimation, setIsUseAnimation] = useState(false);
+  useEffect(() => {
+    if (router.asPath.includes('/app/merchandise/detail/')) {
+      setIsUseAnimation(true)
+    } else {
+      setIsUseAnimation(false)
+    }
+  }, [router])
+
+  return (
+    <>
+      {isUseAnimation ?
+        <>
+          <motion.div
+            initial={{ transform: 'translateX(100vw)' }}
+            animate={{ transform: 'translateX(0)' }}
+            exit={{ transform: 'translateX(100vw)' }}
+          >
+            {children}
+          </motion.div>
+        </>
+        :
+        <>
+          {children}
+        </>
+      }
+    </>
+  );
+};
 
 export const WrapperStyle = styled.div`
 display:flex;
 flex-direction:column;
 min-height:90vh;
-padding: 0 0 2rem 0;
+padding: 0 0 4rem 0;
 `
 export const Wrapper = (props) => {
   const { children, style, dns_data } = props;
@@ -36,6 +70,7 @@ export const themeObj = {
   red: '#C92323',
   green: '#048B48',
   yellow: '#FDC604',
+  blue: '#1263CE',
   font_size: {
     font1: '20px',
     font2: '15px',

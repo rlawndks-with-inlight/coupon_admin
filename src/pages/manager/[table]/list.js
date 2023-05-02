@@ -279,7 +279,6 @@ const List = ({ dns_data }) => {
                     event,
                     newPage
                   ) => {
-                    console.log(newPage)
                     changePage(newPage + 1)
                   }}
                   onRowsPerPageChange={async (event) => {

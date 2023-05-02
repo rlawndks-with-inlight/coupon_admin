@@ -31,9 +31,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     columns: [
       managerListFormat('유저ID', 'id', 'number', ''),
       // managerListFormat('브랜드명', 'brand_name', 'text', ''),
-      managerListFormat('유입 가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
-      managerListFormat('유저아이디', 'user_name', 'text', ''),
+      managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('보유포인트', 'point_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유스탬프', 'stamp_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유쿠폰갯수', 'coupon_amt', 'number', ''),// 검색 level == 0일 경우에만
@@ -59,6 +58,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('유저레벨', 'level', 'user_level', ''),
+      managerListFormat('휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),
@@ -72,7 +72,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_add: true,
     is_see_add_condition: 35,
     head_columns: [
-      { title: '가맹점정보', size: 6 },
+      { title: '가맹점정보', size: 7 },
       { title: '포인트정보', size: 2 },
       { title: '스탬프정보', size: 2 },
       { title: '', size: 3 },
@@ -85,6 +85,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('상위아이디', 'group_name', 'text', ''),// 검색 level >=10 일시
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
+      managerListFormat('휴대폰번호', 'phone_num', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'point_flag', 'use_status', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
       managerListFormat('적립비율', 'point_rate', 'percent', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'stamp_flag', 'use_status', '', { search_option_label: '스탬프' }),// 검색 level == 10일 경우에만
@@ -206,18 +207,16 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
-      managerListFormat('유저명', 'user_name', 'text', ''),
+      managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
       managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
       managerListFormat('교환상품', 'prod_name', 'text', ''),
       managerListFormat('상태', 'status', 'coupon_status', ''),
       managerListFormat('할인금액', 'sale_amt', 'number', ''),
       managerListFormat('바코드번호', 'barcode_num', 'barcode_num', ''),
-
       managerListFormat('유저지급하기', 'on_connect_user_coupon', 'on_connect_user_coupon', ''),
       managerListFormat('사용하기', 'on_use_coupon', 'on_use_coupon', ''),
       managerListFormat('사용취소하기', 'on_use_coupon_cxl', 'on_use_coupon_cxl', ''),
-
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       //managerListFormat('수정/삭제', 'edit', 'edit', ''),
@@ -287,7 +286,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
-      managerListFormat('유저명', 'user_name', 'text', ''),
+      managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('구매금액', 'purchase_price', 'number', ''),
       managerListFormat('사용포인트', 'use_amount', 'number', ''),
       managerListFormat('적립포인트', 'save_amount', 'number', ''),
@@ -364,8 +363,7 @@ export const excelUploadTableObj = {
       '가맹점당 고유한 휴대폰 번호가 중복되어 저장될 수 없으므로 이점 유의 부탁드립니다. \n(멤버쉽 적용 타입이 "유입된 가맹점에서만 사용" 옵션인 브랜드에 한함)',
     ],
     columns: [
-      { column: 'mcht_name', name: '유입된 가맹점 아이디', type: 'text' },
-      { column: 'user_name', name: '유저 아이디', type: 'text' },
+      { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
       { column: 'nick_name', name: '유저 닉네임', type: 'text' },
       { column: 'birth_date', name: '유저 생년월일', type: 'date' },
     ]
@@ -379,7 +377,7 @@ export const excelUploadTableObj = {
       '취소 여부 기본 값: 0(적립)',
     ],
     columns: [
-      { column: 'user_name', name: '유저 아이디', type: 'text' },
+      { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
       { column: 'mcht_name', name: '사용된 가맹점 아이디', type: 'text' },
       { column: 'purchase_price', name: '상품 구매 총금액', type: 'number' },
       { column: 'use_amount', name: '사용된 포인트', type: 'number' },
@@ -387,105 +385,4 @@ export const excelUploadTableObj = {
       { column: 'is_cancel', name: '취소 여부', type: 'number' },
     ]
   },
-}
-export const editColumnObjFormat = (title, type, type_option, class_name, is_only_add, is_only_update) => {
-  return {
-    title: title,//제목
-    type: type,//타입 -> input, select, editor, img
-    type_option: type_option,
-    class_name: class_name,
-    is_only_add: is_only_add,//추가할때만 사용할때
-    is_only_update: is_only_update,//수정할때만 사용할때
-  }
-}
-
-export const objEditColumns = {//수정 페이지에 사용할 것
-  users: {
-    table: 'users',
-    breadcrumb: '유저',
-    columns: [//img, select, input,
-      [
-        editColumnObjFormat('메인이미지 (240x150)', 'img', { field_name: 'content' }, 'main_img'),
-      ],
-      [
-        editColumnObjFormat('제목', 'input', { placeholder: '제목을 입력해 주세요.' }, 'title'),
-        editColumnObjFormat('해시태그', 'input', { placeholder: '' }, 'hash'),
-      ],
-      [
-        editColumnObjFormat('내용', 'editor', {}, 'note'),
-      ],
-    ],
-    add_list: [],
-  },
-  brands: {
-    table: 'brands',
-    breadcrumb: '브랜드',
-    columns: [//img, select, input,
-      [
-        editColumnObjFormat('브랜드 명', 'input', {}, 'name'),
-      ],
-      [
-        editColumnObjFormat('DNS 명', 'input', {}, 'dns'),
-      ],
-      [
-        editColumnObjFormat('로고 이미지', 'img', {}, 'logo_img'),
-      ],
-      [
-        editColumnObjFormat('favicon 이미지', 'img', {}, 'favicon_img'),
-      ],
-      [
-        editColumnObjFormat('대표자 명', 'input', {}, 'ceo_nm'),
-      ],
-      [
-        editColumnObjFormat('법인 주소', 'input', {}, 'addr'),
-      ],
-      [
-        editColumnObjFormat('휴대폰 번호', 'input', {}, 'phone_num'),
-      ],
-      [
-        editColumnObjFormat('팩스 번호', 'input', {}, 'fax_num'),
-      ],
-      [
-        editColumnObjFormat('템플릿 ID', 'input', {}, 'template_id'),
-      ],
-      [
-        editColumnObjFormat('법인 상호', 'input', {}, 'company_nm'),
-      ],
-      [
-        editColumnObjFormat('개인정보 책임자명', 'input', {}, 'pvcy_rep_nm'),
-      ],
-      [
-        editColumnObjFormat('사업자 번호', 'input', {}, 'business_num'),
-      ],
-      [
-        editColumnObjFormat('스탬프 사용여부', 'input', {}, 'stamp_flag'),
-      ],
-      [
-        editColumnObjFormat('포인트 사용여부', 'input', {}, 'point_flag'),
-      ],
-      [
-        editColumnObjFormat('스탬프 쿠폰변환 최소개수', 'input', {}, 'stamp_to_coupon_size'),
-      ],
-      [
-        editColumnObjFormat('상품당 스탬프 저장개수', 'input', {}, 'stamp_save_count'),
-      ],
-      [
-        editColumnObjFormat('쿠폰 발행시 발행될 쿠폰 ID', 'input', {}, 'coupon_model_id'),
-      ],
-      [
-        editColumnObjFormat('포인트 변환률', 'input', {}, 'point_rate'),
-      ],
-    ],
-    add_list: [],
-  },
-  advertisements: {
-    table: 'advertisements',
-    breadcrumb: '광고',
-    add_list: [],
-  },
-  notices: {
-    table: 'notices',
-    breadcrumb: '공지사항',
-    add_list: [],
-  }
 }

@@ -41,21 +41,16 @@ const ManagerUserEdit = (props) => {
   const [userLevelList, setUserLevelList] = useState([]);
   const [bDt, setBDt] = useState(new Date());
   const [userData, setUserData] = useState();
-  const [mchtList, setMchtList] = useState([]);
 
   const defaultObj = {
     profile_img: undefined,
-    user_name: '',
+    phone_num: '',
     user_pw: '',
     nick_name: '',
     birth_date: returnMoment(false, new Date()).substring(0, 10),
   }
   const [values, setValues] = useState(defaultObj)
-  useEffect(() => {
-    if (mchtList.length > 0) {
-      setLoading(false);
-    }
-  }, [mchtList])
+
   useEffect(() => {
     settingPage();
     //getOneItem();
@@ -90,22 +85,13 @@ const ManagerUserEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
-      let mcht_list = [...response?.data?.mcht_id];
-      for (var i = 0; i < mcht_list.length; i++) {
-        mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
-      }
-      if (response?.data?.mcht_id.length <= 0) {
-        toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
-        router.back();
-      }
       let item = await getItem();
       if (item) {
         setValues({ ...item });
       } else {
-        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
+        setValues({ ...values });
       }
-      setMchtList(response?.data?.mcht_id);
+      setLoading(false);
 
     } catch (err) {
       console.log(err);
@@ -186,39 +172,15 @@ const ManagerUserEdit = (props) => {
                 <CardContent>
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
-                    {values?.level > 0 ?
-                      <>
-                      </>
-                      :
-                      <>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label'>유입 가맹점명</InputLabel>
-                            <Select
-                              label='Country'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='mcht_id'
-                              onChange={handleChangeValue('mcht_id')}
-                              defaultValue={values?.mcht_id ?? 0}
-                              value={values?.mcht_id}
-                            >
-                              {mchtList && mchtList.map((item, idx) => {
-                                return <MenuItem value={item?.mcht_id} key={idx}>{item?.user_name}</MenuItem>
-                              })}
-
-                            </Select>
-                          </FormControl>
-                        </Grid>
-                      </>}
 
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        label='유저아이디'
-                        placeholder='유저아이디를 입력해 주세요.'
+                        label='유저휴대폰번호'
+                        placeholder='유저휴대폰번호를 입력해 주세요.'
                         disabled={editCategory == 'edit'}
-                        onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name}
+                        onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num}
+                        type='number'
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position='start'>

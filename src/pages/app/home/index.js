@@ -24,25 +24,43 @@ const Home = () => {
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
+  const [total, setTotal] = useState({})
   const [mchts, setMchts] = useState([]);
   const [page, setPage] = useState(1);
-  const [mchtLoading, setMchtLoading] = useState(false);
   const [pageStack, setPageStack] = useState([]);
   const [dnsData, setDnsData] = useState({});
+  const [isDataEnd, setIsDataEnd] = useState(false);
   const PAGE_SIZE = 10;
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
+    let query_keys = Object.keys(router.query);
+    for (var i = 0; i < query_keys.length; i++) {
+      dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+    }
     setDnsData(dns_data)
-    getHomeContent(1, true)
+    getTotalCount(dns_data)
+    getHomeContent(1, true, dns_data)
   }, [])
-
-  const getHomeContent = async (pag, is_first) => {
+  const getTotalCount = async (dns_data) => {
     try {
-
+      setLoading(true);
+      const response = await axiosIns().get(`/api/v1/app/total?brand_id=${dns_data?.id}`);
+      setTotal(response?.data);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const getHomeContent = async (pag, is_first, dns_data_) => {
+    try {
+      let dns_data = dns_data_;
       if (pageStack.includes(pag)) {
+        return;
+      }
+      if ((pag) * PAGE_SIZE > data?.mchts?.total) {
+        setIsDataEnd(true);
         return;
       }
       let page_stack = pageStack;
@@ -51,11 +69,9 @@ const Home = () => {
       setPage(pag);
       if (is_first) {
         setLoading(true);
-      } else {
-        setMchtLoading(true);
       }
       let location = await getLocation(true);
-      const response = await axiosIns().get(`/api/v1/app/home?latitude=${location?.latitude}&longitude=${location?.longitude}&radius=100&page=${pag}&page_size=${PAGE_SIZE}`);
+      const response = await axiosIns().get(`/api/v1/app/home?latitude=${location?.latitude}&longitude=${location?.longitude}&radius=100&page=${pag}&page_size=${PAGE_SIZE}&brand_id=${dnsData?.id || dns_data?.id}`);
       if (is_first) {
         setData(response?.data);
         setMchts(response?.data?.mchts?.content);
@@ -63,7 +79,6 @@ const Home = () => {
         setMchts(prePost => [...prePost, ...response?.data?.mchts?.content]);
       }
       setLoading(false);
-      setMchtLoading(false);
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {
@@ -77,10 +92,8 @@ const Home = () => {
     return;
   }
   const onClickMembershipCategory = (num) => {
-
   }
   const onFilterClick = () => {
-
   }
   return (
     <>
@@ -93,16 +106,18 @@ const Home = () => {
           {getDemo(1, {
             data: {
               data: data,
-              mchtLoading: mchtLoading,
               mchts: mchts,
               page: page,
-              dnsData: dnsData
+              dnsData: dnsData,
+              isDataEnd: isDataEnd,
+              total, total
             },
             func: {
               onClickMembershipCategory,
               onFilterClick,
               router,
-              getHomeContent
+              getHomeContent,
+              setPage
             }
           })}
         </>}

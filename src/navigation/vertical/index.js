@@ -100,6 +100,13 @@ const project_navigation = [
     level: 40
   },
   {
+    title: '이용가이드',
+    icon: 'icon-park-outline:guide-board',
+    table: 'guide',
+    path: 'guide',
+    level: 50
+  },
+  {
     title: '로그관리',
     icon: 'mdi:math-log',
     table: 'log',

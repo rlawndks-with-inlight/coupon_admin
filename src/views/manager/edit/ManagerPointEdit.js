@@ -41,7 +41,7 @@ const ManagerPointEdit = (props) => {
   const [pubDt, setPubDt] = useState(new Date())
 
   const [values, setValues] = useState({
-    user_name: '',
+    phone_num: '',
     mcht_id: mchtList[0]?.id,
     purchase_price: 0,
     use_amount: 0,
@@ -52,7 +52,7 @@ const ManagerPointEdit = (props) => {
   useEffect(() => {
     if (mchtList.length > 0) {
       if (router.query?.edit_category == 'edit') {
-        if (values?.user_name) {
+        if (values?.phone_num) {
           setLoading(false);
         }
       } else {
@@ -117,7 +117,7 @@ const ManagerPointEdit = (props) => {
 
   const onReset = () => {
     setValues({
-      user_name: '',
+      phone_num: '',
       mcht_id: mchtList[0]?.id,
       purchase_price: 0,
       use_amount: 0,
@@ -132,14 +132,14 @@ const ManagerPointEdit = (props) => {
     let obj = obj_;
 
     let user_idx = userList.map(item => {
-      return item?.user_name
-    }).findIndex((e) => e == values?.user_name);
+      return item?.phone_num
+    }).findIndex((e) => e == values?.phone_num);
     if (user_idx < 0) {
       toast.error('유저아이디를 찾을 수 없습니다.');
       return;
     } else {
       obj['user_id'] = userList[user_idx]?.id;
-      delete obj['user_name'];
+      delete obj['phone_num'];
     }
     editItem(obj);
   }
@@ -155,7 +155,7 @@ const ManagerPointEdit = (props) => {
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='유저아이디(전화번호)' placeholder='유저아이디를 입력해 주세요.' className='user_name' onChange={handleChangeValue('user_name')} defaultValue={values?.user_name} value={values?.user_name} />
+                  <TextField fullWidth label='유저아이디(전화번호)' placeholder='유저아이디를 입력해 주세요.' className='phone_num' onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>

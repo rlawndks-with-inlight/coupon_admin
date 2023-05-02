@@ -9,6 +9,8 @@ import FallbackSpinner from 'src/@core/components/spinner';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
+import { Button } from '@mui/material';
+import $ from 'jquery';
 const BannerContainerPc = styled.div`
 max-width:1200px;
 margin:0 auto 1rem auto;
@@ -57,7 +59,7 @@ display:flex;
 @media (max-width: 850px) {
   width: 25%;
   height: 100%;
-  margin:auto 0;
+  margin: auto 0;
 }
 
 `
@@ -109,51 +111,66 @@ margin: 4rem 0;
 `
 const Merchandise = (props) => {
 
-  const { item, theme, router, idx } = props;
+  const { item, theme, router, idx, dnsData, } = props;
 
   return (
     <>
-
-      <MerchandiseExplain>
-        <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
-        <Font4 style={{ color: theme.palette.grey[400] }}>{commarNumber(item?.dist)}km</Font4>
-        <Row style={{ margin: '0', alignItems: 'center' }}>
-          {item?.count?.point || typeof item?.count?.point == 'number' ?
-            <>
-              <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: '1rem' }} />
-              <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.point)}</div>
-            </>
-            :
-            <>
-            </>}
-          {item?.count?.stamp || typeof item?.count?.stamp == 'number' ?
-            <>
-              <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: '1rem' }} />
-              <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.stamp)}</div>
-            </>
-            :
-            <>
-            </>}
-          {item?.count?.coupon || typeof item?.count?.coupon == 'number' || true ?
-            <>
-              <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
-              <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.coupon)}</div>
-            </>
-            :
-            <>
-            </>}
-        </Row>
-      </MerchandiseExplain>
-      <MerchandiseImgContainer>
-        <MerchandiseImg src={item?.profile_img} />
-      </MerchandiseImgContainer>
-      {/* {dateMinus(returnMoment().substring(0, 10), item?.created_at.substring(0, 10)) <= 30 ?
+      <motion.div
+        whileHover={{ scale: 1.01, boxShadow: `4px 12px 30px 6px rgba(0, 0, 0, 0.19)`, transform: `translateY(-0.5rem)` }}
+        onHoverStart={e => { }}
+        onHoverEnd={e => { }}
+        style={{
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : ''}`
+        }}
+        className={`merchandise-content mcht-${idx}`}
+        onClick={() => {
+          router.push({
+            pathname: `/app/merchandise/detail/${item?.id}`,
+            query: { item: JSON.stringify(item) }
+          })
+        }}
+      >
+        <MerchandiseExplain>
+          <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
+          <Font4 style={{ color: theme.palette.grey[400] }}>{commarNumber(item?.dist)}km</Font4>
+          <Row style={{ margin: '0', alignItems: 'center' }}>
+            {(item?.count?.point || typeof item?.count?.point == 'number') && item?.point_flag ?
+              <>
+                <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: '1rem' }} />
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.point)}</div>
+              </>
+              :
+              <>
+              </>}
+            {(item?.count?.stamp || typeof item?.count?.stamp == 'number') && item?.stamp_flag ?
+              <>
+                <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: '1rem' }} />
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.stamp)}</div>
+              </>
+              :
+              <>
+              </>}
+            {item?.count?.coupon || typeof item?.count?.coupon == 'number' || true ?
+              <>
+                <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.coupon)}</div>
+              </>
+              :
+              <>
+              </>}
+          </Row>
+        </MerchandiseExplain>
+        <MerchandiseImgContainer>
+          <MerchandiseImg src={item?.profile_img} />
+        </MerchandiseImgContainer>
+        {/* {dateMinus(returnMoment().substring(0, 10), item?.created_at.substring(0, 10)) <= 30 ?
           <>
             <NewIcon src='/images/icons/project-icons/new-icon.svg' />
           </>
           :
           <>
           </>} */}
+      </motion.div>
     </>
   )
 }
@@ -161,39 +178,45 @@ const Home1 = (props) => {
   const {
     data: {
       data,
-      mchtLoading,
       mchts,
       page,
-      dnsData
+      dnsData,
+      isDataEnd,
+      total
     },
     func: {
       onClickMembershipCategory,
       onFilterClick,
+      setPage,
       router,
       getHomeContent
     } } = props;
   const theme = useTheme();
-  const lastMchtRef = useRef(null);
-  const observer = useRef(null);
-  const [currentPage, setCurrentPage] = useState(page)
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0
-    };
-    if (lastMchtRef.current && !mchtLoading) {
-      observer.current = new IntersectionObserver(handleObserver, options);
-      observer.current.observe(lastMchtRef.current);
+  const [mchtLoading, setMchtLoading] = useState(false);
+
+  const scrollRef = useRef(null);
+  const handleScroll = () => {
+    if (!scrollRef.current) {
+      return;
     }
-  }, [lastMchtRef.current]);
-  const handleObserver = (entries) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      getHomeContent(page + 1)
+    const { top, bottom } = scrollRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    if (top < windowHeight && bottom >= 0 && !mchtLoading) {
+      setMchtLoading(true);
+      $('.more-page').trigger("click");
     }
   };
-
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  useEffect(() => {
+    if (mchts.length > 0) {
+      setMchtLoading(false);
+    }
+  }, [mchts])
   return (
     <>
       <ContentWrapper>
@@ -201,17 +224,20 @@ const Home1 = (props) => {
           Comagain에 오신 것을 환영합니다.
         </TopText>
         <Row style={{ justifyContent: 'space-between', fontSize: themeObj.font_size.font3, margin: '0 auto 0 0', maxWidth: '400px' }}>
-          <Row style={{ alignItems: 'center', cursor: 'pointer' }}>
-            <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.5rem', fontSize: '1.6rem' }} />
-            <div>포인트 {commarNumber(data?.total?.point)}</div>
+          <Row style={{ alignItems: 'center', width: '33.33%' }}>
+            <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: 'auto', fontSize: '1.6rem' }} />
+            <div>포인트</div>
+            <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.point)}</div>
           </Row>
-          <Row style={{ alignItems: 'center', cursor: 'pointer' }}>
-            <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.5rem', fontSize: '1.6rem' }} />
-            <div>스탬프 {commarNumber(data?.total?.stamp)}</div>
+          <Row style={{ alignItems: 'center', width: '33.33%' }}>
+            <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: 'auto', fontSize: '1.6rem' }} />
+            <div >스탬프</div>
+            <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.stamp)}</div>
           </Row>
-          <Row style={{ alignItems: 'center', cursor: 'pointer' }}>
-            <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.5rem', fontSize: '1.6rem' }} />
-            <div>쿠폰 {commarNumber(data?.total?.coupon)}</div>
+          <Row style={{ alignItems: 'center', width: '33.33%' }}>
+            <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: 'auto', fontSize: '1.6rem' }} />
+            <div>쿠폰</div>
+            <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
           </Row>
         </Row>
         {/* <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
@@ -223,64 +249,31 @@ const Home1 = (props) => {
         </Row> */}
         <MerchandiseContainer>
           {mchts && mchts.map((item, idx) => {
-            if (idx == mchts.length - 1) {
-              return <motion.div
-                whileHover={{ scale: 1.01, boxShadow: `4px 12px 30px 6px rgba(0, 0, 0, 0.19)`, transform: `translateY(-0.5rem)` }}
-                onHoverStart={e => { }}
-                onHoverEnd={e => { }}
-                style={{
-                  background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : '#fff'}`
-                }}
-                className={`merchandise-content mcht-${idx}`}
-                onClick={() => {
-                  router.push({
-                    pathname: `/app/merchandise/detail/${item?.id}`,
-                    query: { ...item }
-                  })
-                }}
-                ref={lastMchtRef}
-              >
-                <Merchandise
-                  idx={idx}
-                  item={item}
-                  theme={theme}
-                  router={router}
-                />
-              </motion.div>
-            } else {
-              return <motion.div
-                whileHover={{ scale: 1.01, boxShadow: `4px 12px 30px 6px rgba(0, 0, 0, 0.19)`, transform: `translateY(-0.5rem)` }}
-                onHoverStart={e => { }}
-                onHoverEnd={e => { }}
-                style={{
-                  background: `${theme.palette.mode == 'dark' ? '#222224' : '#fff'}`
-                }}
-                className={`merchandise-content mcht-${idx}`}
-                onClick={() => {
-                  router.push({
-                    pathname: `/app/merchandise/detail/${item?.id}`,
-                    query: { ...item }
-                  })
-                }}
-              >
-                <Merchandise
-                  idx={idx}
-                  item={item}
-                  theme={theme}
-                  router={router}
-                />
-              </motion.div>
-            }
-
+            return <Merchandise
+              idx={idx}
+              item={item}
+              theme={theme}
+              router={router}
+              dnsData={dnsData}
+            />
           })}
         </MerchandiseContainer>
-        {mchtLoading ?
+        {isDataEnd ?
           <>
-            <FallbackSpinner sx={{ height: '72px' }} />
           </>
           :
           <>
+            {mchtLoading ?
+              <>
+                <FallbackSpinner sx={{ height: '72px' }} />
+              </>
+              :
+              <>
+                <Button className='more-page' onClick={() => { getHomeContent(page + 1, false) }} ref={scrollRef} />
+              </>}
           </>}
+
+
       </ContentWrapper>
     </>
   )

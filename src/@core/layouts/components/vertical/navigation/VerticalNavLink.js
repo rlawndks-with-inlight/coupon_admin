@@ -109,6 +109,10 @@ const VerticalNavLink = ({
       name: 'log',
       link: `https://backend.comagain.kr/log-viewer?o=${getCookie('o')}`
     },
+    {
+      name: 'guide',
+      link: `https://api.comagain.kr/docs/`
+    },
   ]
   const goToLink = (item) => {
     let find_index = -1;

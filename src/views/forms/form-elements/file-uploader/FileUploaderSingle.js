@@ -13,7 +13,7 @@ import { useDropzone } from 'react-dropzone'
 const Img = styled('img')(({ theme }) => ({
   width: 48,
   height: 48,
-  marginBottom: theme.spacing(8.5)
+  margin: 'auto'
 }))
 
 const FileUploaderSingle = (props) => {
@@ -75,7 +75,13 @@ const FileUploaderSingle = (props) => {
             <>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column', margin: 'auto' }}>
                 <Img alt='Upload img' src={`/images/misc/upload-${theme.palette.mode}.png`} />
-                <div>{placeholder}</div>
+                {placeholder ?
+                  <>
+                    <div style={{ marginTop: '1rem' }}>{placeholder}</div>
+                  </>
+                  :
+                  <>
+                  </>}
               </Box>
             </>}
 
