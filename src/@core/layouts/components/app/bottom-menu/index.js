@@ -124,8 +124,8 @@ const BottomMenu = () => {
     <>
       <Container className='menu-container'
         style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
         }}>
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {

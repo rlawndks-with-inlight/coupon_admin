@@ -120,7 +120,7 @@ const Merchandise = (props) => {
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
         style={{
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : ''}`
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : ''}`
         }}
         className={`merchandise-content mcht-${idx}`}
         onClick={() => {

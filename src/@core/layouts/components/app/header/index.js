@@ -160,8 +160,8 @@ const Header = () => {
         open={searchOpen}
         handleClose={handleSearchClose}
         style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
         }}
       />
       <header style={{
@@ -171,8 +171,8 @@ const Header = () => {
         display: 'flex',
         flexDirection: 'column',
         zIndex: '10',
-        color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : '#000'}`,
-        background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`,
+        color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
+        background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
       }} className="header-wrapper">
         <TopWrapper>
           {dnsData?.logo_img ?

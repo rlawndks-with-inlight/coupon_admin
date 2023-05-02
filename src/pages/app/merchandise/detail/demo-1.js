@@ -65,8 +65,8 @@ const Merchandise1 = (props) => {
         membershipCategory={membershipCategory}
         router={router}
         style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : ''}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : ''}`,
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
         }}
       />
       <ContentWrapper>

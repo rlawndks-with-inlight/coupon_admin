@@ -179,8 +179,8 @@ const Login = ({ dns_data }) => {
         dnsData={dnsData}
         router={router}
         style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color : ''}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : ''}`,
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
         }}
       />
       <Box className='content-center' style={{
@@ -188,7 +188,7 @@ const Login = ({ dns_data }) => {
       }}>
         {/* <AuthIllustrationV1Wrapper> */}
         <Card style={{
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color : '#fff'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : '#fff'}`,
         }}>
           <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
             <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

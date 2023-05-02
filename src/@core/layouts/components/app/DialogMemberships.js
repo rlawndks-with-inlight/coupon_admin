@@ -65,7 +65,7 @@ const CouponContetnt = (props) => {
           margin: '0.5rem auto 0.5rem 12px'
         }}>Coupon</div>
         <CardContent style={{
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff'}`
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`
         }}>
           <img src={item?.coupon_img} style={{ margin: '0 auto', maxWidth: '300px', width: '80%' }} />
           <div style={{ margin: '0.5rem auto 0 auto' }}>{item?.name}</div>

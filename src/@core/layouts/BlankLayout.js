@@ -53,7 +53,7 @@ const BlankLayout = ({ children }) => {
         } else {
           dns_data = dnsData;
         }
-        setBackgroundColor(dns_data?.options?.app?.dark_background_color ?? '');
+        setBackgroundColor(dns_data?.options?.app?.dark_background_color ?? "#000");
       } else {
         setBackgroundColor('');
       }
