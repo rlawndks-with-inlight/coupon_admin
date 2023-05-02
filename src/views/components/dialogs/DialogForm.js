@@ -26,7 +26,7 @@ const DialogForm = (props) => {
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
         <div style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ margin: '0 auto' }}>{headIcon}</div>
-          <DialogTitle id='form-dialog-title' style={{ margin: "0 auto" }}>{data?.table} {data?.user_name} 비밀번호 변경</DialogTitle>
+          <DialogTitle id='form-dialog-title' style={{ margin: "0 auto" }}>{data?.table} {data?.phone_num || data?.user_name} 비밀번호 변경</DialogTitle>
           <DialogContentText style={{ margin: "0 auto" }} >
             {'변경할 비밀번호를 입력해 주세요.'}
           </DialogContentText>

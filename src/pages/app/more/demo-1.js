@@ -34,7 +34,7 @@ const More1 = (props) => {
     <>
       <ContentWrapper>
 
-        <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name} 님</Font1>
+        <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name || user?.phone_num} 님</Font1>
         <Menu onClick={() => {
         }}
         >

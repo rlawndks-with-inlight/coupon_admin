@@ -109,10 +109,15 @@ const ManagerBrandEdit = (props) => {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
-      obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
+      if (!obj['theme_css']) {
+        obj['theme_css'] = "{}";
+      }
+      obj['theme_css'] = JSON.parse(obj['theme_css']);
       obj['theme_css'] = Object.assign(defaultObj.theme_css, obj['theme_css']);
-
-      obj['options'] = JSON.parse(obj['options'] ?? "{}");
+      if (!obj['options']) {
+        obj['options'] = "{}";
+      }
+      obj['options'] = JSON.parse(obj['options']);
       obj['options'] = Object.assign(defaultObj.options, obj['options']);
       setValues({ ...obj });
     }
@@ -504,7 +509,7 @@ const ManagerBrandEdit = (props) => {
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          <iframe className='none-show-scroll' src={`${window.location.origin}/app/home?dark_background_color=${values?.options?.app.dark_background_color.replace('#', '%23')}&dark_box_color=${values?.options?.app.dark_box_color.replace('#', '%23')}&dark_font_color=${values?.options?.app?.dark_font_color.replace('#', '%23')}`} style={{ border: 'none', height: '500px' }} />
+                          <iframe className='none-show-scroll' src={`${window.location.origin}/app/home?dark_background_color=${(values?.options?.app.dark_background_color ?? "").replace('#', '%23')}&dark_box_color=${(values?.options?.app.dark_box_color ?? "").replace('#', '%23')}&dark_font_color=${(values?.options?.app?.dark_font_color ?? "").replace('#', '%23')}`} style={{ border: 'none', height: '500px' }} />
                         </Grid>
                       </Grid>
                     </CardContent>
