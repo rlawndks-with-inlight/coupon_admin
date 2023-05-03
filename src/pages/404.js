@@ -41,7 +41,6 @@ const Error404 = () => {
 
   return (
     <>
-      <HeadContent />
       <Box className='content-center'>
         <Box sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <BoxWrapper>

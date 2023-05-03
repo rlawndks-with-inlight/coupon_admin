@@ -7,11 +7,7 @@ import { returnMoment } from "src/@core/utils/function";
 const HeadContent = (props) => {
   const [dnsData, setDnsData] = useState({});
   const { title, dns_data } = props;
-  useEffect(() => {
-    if (!dns_data?.name) {
 
-    }
-  }, [])
   useEffect(() => {
     getDnsData(dns_data);
   }, [])
@@ -19,7 +15,7 @@ const HeadContent = (props) => {
   const getDnsData = async (dns_data_) => {
     try {
       if (!dns_data_) {
-        let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+        let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
         dns_data = JSON.parse(dns_data);
         if (!dns_data?.name) {
           const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
@@ -30,6 +26,7 @@ const HeadContent = (props) => {
       } else {
         setDnsData(dns_data_)
       }
+
     } catch (err) {
       console.log(err);
     }
@@ -61,16 +58,6 @@ const HeadContent = (props) => {
     </>
   )
 }
-// HeadContent.getInitialProps = async ({ req, res }) => {
-//   try {
-//     const res = await fetch(`http:${req ? req.headers.host : ''}/api/get-domain-data`);
-//     const json = await res.json();
-//     return {
-//       dns_data: json
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+
 
 export default HeadContent;

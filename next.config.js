@@ -42,5 +42,6 @@ module.exports = {
   env: {
     MAIN_FRONT_URL: process.env.MAIN_FRONT_URL,
     NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
+    BACK_URL: process.env.BACK_URL,
   }
 }
