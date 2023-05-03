@@ -108,6 +108,34 @@ margin: 4rem 0;
   display:none;
 }
 `
+const getProfileImg = (theme, item) => {
+  let img_src = false;
+  let style = {}
+  if (theme.palette.mode == 'dark') {
+    if (item?.profile_img) {
+      img_src = item?.profile_img;
+    } else if (item?.dark_logo_img) {
+      img_src = item?.dark_logo_img;
+      style = {
+        height: 'auto'
+      }
+    }
+  } else {
+    if (item?.profile_img) {
+      img_src = item?.profile_img;
+    } else if (item?.logo_img) {
+      img_src = item?.logo_img;
+      style = {
+        height: 'auto'
+      }
+    }
+  }
+  if (img_src) {
+    return <MerchandiseImg src={img_src} style={style} />
+  } else {
+    return <Icon icon='fluent:building-shop-20-filled' style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`, fontSize: '64px', margin: 'auto' }} />
+  }
+}
 const Merchandise = (props) => {
 
   const { item, theme, router, idx, dnsData, } = props;
@@ -160,7 +188,7 @@ const Merchandise = (props) => {
           </Row>
         </MerchandiseExplain>
         <MerchandiseImgContainer>
-          <MerchandiseImg src={item?.profile_img} />
+          {getProfileImg(theme, item)}
         </MerchandiseImgContainer>
         {/* {dateMinus(returnMoment().substring(0, 10), item?.created_at.substring(0, 10)) <= 30 ?
           <>
