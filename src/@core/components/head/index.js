@@ -13,18 +13,22 @@ const HeadContent = (props) => {
     }
   }, [])
   useEffect(() => {
-    getDnsData();
+    getDnsData(dns_data);
   }, [])
 
-  const getDnsData = async () => {
+  const getDnsData = async (dns_data_) => {
     try {
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      dns_data = JSON.parse(dns_data);
-      if (!dns_data?.name) {
-        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-        setDnsData(response?.data);
+      if (!dns_data_) {
+        let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+        dns_data = JSON.parse(dns_data);
+        if (!dns_data?.name) {
+          const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+          setDnsData(response?.data);
+        } else {
+          setDnsData(dns_data);
+        }
       } else {
-        setDnsData(dns_data);
+        setDnsData(dns_data_)
       }
     } catch (err) {
       console.log(err);
