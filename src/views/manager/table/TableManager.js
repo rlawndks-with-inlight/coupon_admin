@@ -85,6 +85,7 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
   let size = head_columns[idx]?.size;
   let start_idx = 0;
   let host = window.location.host;
+  console.log(host)
   for (var i = 0; i < idx; i++) {
     start_idx += head_columns[i]?.size;
   }
