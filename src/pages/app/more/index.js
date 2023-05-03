@@ -45,7 +45,7 @@ const Order = () => {
     <>
       {loading ?
         <>
-          <FallbackSpinner sx={{ height: '300px' }} />
+          <FallbackSpinner sx={{ height: '85vh' }} />
         </>
         :
         <>
