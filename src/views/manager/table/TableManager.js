@@ -86,11 +86,14 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
   let start_idx = 0;
   let host = window.location.host;
   console.log(host)
+  console.log()
   for (var i = 0; i < idx; i++) {
     start_idx += head_columns[i]?.size;
   }
   for (var i = start_idx; i < start_idx + item?.size; i++) {
     let column = columns?.columns[i]?.column;
+    console.log(host != process.env.MAIN_FRONT_URL)
+    console.log(column)
     if (
       !isShowCell({
         param_table: param_table,
@@ -111,10 +114,9 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
 }
 const TableManager = (props) => {
   const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption, onlyTeamSeeColumn } = props;
-
   const theme = useTheme();
   useEffect(() => {
-
+    console.log(`${process.env.MAIN_FRONT_URL}`)
   }, [posts])
 
   const renderCard = useCallback((post, index, columns) => {
@@ -135,9 +137,7 @@ const TableManager = (props) => {
       />
     )
   }, []);
-  useEffect(() => {
-    console.log(notSearchOption)
-  }, [])
+
 
   return (
     <TableContainer className={`table-container${theme.palette.mode == 'dark' ? '-dark' : ''}`} component={Paper}>

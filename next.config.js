@@ -38,5 +38,9 @@ module.exports = {
     }
 
     return config
+  },
+  env: {
+    MAIN_FRONT_URL: process.env.MAIN_FRONT_URL,
+    NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
   }
 }

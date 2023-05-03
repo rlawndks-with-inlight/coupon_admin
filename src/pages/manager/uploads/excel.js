@@ -83,6 +83,7 @@ const Excel = (props) => {
       let dataParseObj = {};
       let wsnameObj = {};
       let wsObj = {};
+
       for (var i = 0; i < obj_key_list.length; i++) {
 
         wsnameObj[obj_key_list[i]] = readedData.SheetNames[i];
@@ -130,6 +131,7 @@ const Excel = (props) => {
       }
       setRowObj(dataParseObj);
       setIsAbleAdd(true);
+      setErrorObj({});
     };
 
     reader.readAsBinaryString(f);
@@ -152,6 +154,8 @@ const Excel = (props) => {
     } catch (err) {
       console.log(err);
       let push_lick = await processCatch(err);
+      let err_obj = { ...err?.response?.data?.data };
+      setErrorObj(err_obj ?? {});
     }
 
   }
@@ -272,6 +276,7 @@ const Excel = (props) => {
                           return (<TableRow>
                             {excelUploadTableObj[item] && excelUploadTableObj[item].columns.map((column, idx) => {
                               let color = "";
+                              let text = "값을 넣어주세요"
                               if (errorObj[`${column?.column}`] && errorObj[`${column?.column}`].includes(index)) {
                                 color = 'red !important';
                               }

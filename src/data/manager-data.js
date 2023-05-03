@@ -39,7 +39,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('포인트이력', 'point_history', 'point_history', ''),// 검색 level == 0일 경우에만
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
-      managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),
+      managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],
     table_width: '',
     default_search_obj: {}
@@ -340,7 +340,7 @@ export const excelUploadTableObj = {
       { column: 'user_name', name: '아이디', type: 'text' },
       { column: 'user_pw', name: '패스워드', type: 'text' },
       { column: 'nick_name', name: '닉네임', type: 'text' },
-      { column: 'birth_date', name: '생년월일', type: 'date' },
+      { column: 'birth_date', name: '생년월일', type: 'text' },
       { column: 'mcht_name', name: '가맹점 상호', type: 'text' },
       { column: 'addr', name: '가맹점 주소', type: 'text' },
       { column: 'point_flag', name: '포인트 사용여부', type: 'number' },
@@ -370,7 +370,7 @@ export const excelUploadTableObj = {
     columns: [
       { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
       { column: 'nick_name', name: '유저 닉네임', type: 'text' },
-      { column: 'birth_date', name: '유저 생년월일', type: 'date' },
+      { column: 'birth_date', name: '유저 생년월일', type: 'text' },
     ]
   },
   points: {
@@ -383,7 +383,7 @@ export const excelUploadTableObj = {
     ],
     columns: [
       { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
-      { column: 'mcht_name', name: '사용된 가맹점 아이디', type: 'text' },
+      { column: 'user_name', name: '사용된 가맹점 아이디', type: 'text' },
       { column: 'purchase_price', name: '상품 구매 총금액', type: 'number' },
       { column: 'use_amount', name: '사용된 포인트', type: 'number' },
       { column: 'point_rate', name: '포인트 적립 비율', type: 'number' },
