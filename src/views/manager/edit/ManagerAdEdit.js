@@ -1,27 +1,16 @@
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import Tab from '@mui/material/Tab'
 import Grid from '@mui/material/Grid'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import TabContext from '@mui/lab/TabContext'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
 import FormControl from '@mui/material/FormControl'
-import CardActions from '@mui/material/CardActions'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
 import Select from '@mui/material/Select'
 import { useEffect, useState } from 'react'
-import CardSnippet from 'src/@core/components/card-snippet'
+
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
-import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import { useEditPageImg } from 'src/@core/utils/function'
+
 
 const ManagerAdEdit = (props) => {
   const { getItem, editItem } = props;

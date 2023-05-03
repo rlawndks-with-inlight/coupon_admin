@@ -10,12 +10,12 @@ import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 
 import { axiosIns } from 'src/@fake-db/backend'
 // ** Third Party Imports
-import { EditorState, convertFromHTML, convertToRaw } from 'draft-js'
+import { EditorState, convertToRaw } from 'draft-js'
 // ** Component Import
 import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
 import { toast } from 'react-hot-toast'
