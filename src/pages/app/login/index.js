@@ -78,6 +78,7 @@ const Login = ({ dns_data }) => {
 
   const checkDns = async () => {
     try {
+      toast.success('1');
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
@@ -85,7 +86,9 @@ const Login = ({ dns_data }) => {
       obj['options'] = JSON.parse(obj['options']);
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
+      toast.success('2');
     } catch (err) {
+      toast.success('3');
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
@@ -95,6 +98,7 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
+      toast.success('4');
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -103,12 +107,15 @@ const Login = ({ dns_data }) => {
         }
       });
       if (response_auth?.id > 0) {
+        toast.success('5');
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
+        toast.success('6');
         setTimeout(() => {
           router.push('/app/home');
         }, 1300)
       }
     } catch (err) {
+      toast.success('7');
       console.log(err);
       setTimeout(() => {
         setLoading(false);
