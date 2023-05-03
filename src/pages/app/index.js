@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 // ** MUI Components
 
-import { styled, useTheme } from '@mui/material/styles'
-import MuiCard from '@mui/material/Card'
-import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import { useTheme } from '@mui/material/styles'
+
 
 import toast from 'react-hot-toast';
 
@@ -18,7 +17,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Demo Imports
 import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
-import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
+import { getCookie } from 'src/@core/utils/react-cookie'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import Loading from 'src/@core/layouts/components/app/Loading'

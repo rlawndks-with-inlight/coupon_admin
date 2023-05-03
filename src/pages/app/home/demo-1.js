@@ -1,7 +1,7 @@
-import { ContentWrapper, Font1, Font2, Font4, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
+import { ContentWrapper, Font2, Font4, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
 import { Icon } from "@iconify/react"
 import styled from 'styled-components';
-import { commarNumber, dateMinus, returnMoment } from 'src/@core/utils/function';
+import { commarNumber } from 'src/@core/utils/function';
 import { motion } from "framer-motion"
 import { useTheme } from '@emotion/react';
 import FallbackSpinner from 'src/@core/components/spinner';
