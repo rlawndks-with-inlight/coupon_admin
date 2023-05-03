@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import AppLayout from "src/@core/layouts/AppLayout"
-import { Wrapper } from "src/@core/layouts/components/app/style-component"
 import Home1 from "./demo-1"
 import { axiosIns } from "src/@fake-db/backend"
 import { getLocation, processCatch } from "src/@core/utils/function"

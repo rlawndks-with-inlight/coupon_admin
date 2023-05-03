@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react"
 import styled from 'styled-components';
 import { commarNumber, dateMinus, returnMoment } from 'src/@core/utils/function';
 import { motion } from "framer-motion"
-import themeConfig from 'src/configs/themeConfig';
 import { useTheme } from '@emotion/react';
 import FallbackSpinner from 'src/@core/components/spinner';
 import { useEffect } from 'react';

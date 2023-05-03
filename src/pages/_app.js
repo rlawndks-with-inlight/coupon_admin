@@ -48,7 +48,7 @@ import 'src/iconify-bundle/icons-bundle-react'
 import '../../styles/globals.css'
 import { useEffect } from 'react'
 import { setLocalStorage } from 'src/@core/utils/local-storage'
-import { backUrl, LOCALSTORAGE } from 'src/data/data'
+import { LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 
 import Script from 'next/script'
@@ -117,7 +117,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-    const res = await fetch(`${backUrl}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
+    const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
     const json = (await res.json());
     return {
       dns_data: json

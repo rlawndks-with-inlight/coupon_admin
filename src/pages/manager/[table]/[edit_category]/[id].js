@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 
-import { styled, alpha, useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 
 import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import Icon from 'src/@core/components/icon'

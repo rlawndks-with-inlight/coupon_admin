@@ -1,9 +1,6 @@
 import { Icon } from '@iconify/react';
-import { Button, IconButton } from '@mui/material';
 import { useState } from 'react';
-import { useRef } from 'react';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
+
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
 import NaverMap from 'src/@core/layouts/components/app/NaverMap';
 import { ContentWrapper, Row, themeObj } from 'src/@core/layouts/components/app/style-component';

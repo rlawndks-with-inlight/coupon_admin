@@ -6,8 +6,7 @@ import Link from 'next/link'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
+
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import Typography from '@mui/material/Typography'
@@ -19,11 +18,10 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
-import axios from 'axios'
+
 import $ from 'jquery';
 import toast from 'react-hot-toast';
-import Spinner from 'src/@core/components/spinner'
-import CircularProgress from '@mui/material/CircularProgress'
+
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -38,10 +36,8 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
-import FallbackSpinner from 'src/@core/components/spinner'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
-import { backUrl, LOCALSTORAGE } from 'src/data/data'
-import HeadContent from 'src/@core/components/head'
+import { LOCALSTORAGE } from 'src/data/data'
 import { processCatch } from 'src/@core/utils/function'
 
 // ** Styled Components
