@@ -89,6 +89,7 @@ const Login = ({ dns_data }) => {
       toast.success('2');
     } catch (err) {
       toast.success('3');
+      toast.success(`3: ${JSON.stringify(err)}`);
       console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
@@ -116,7 +117,7 @@ const Login = ({ dns_data }) => {
       }
     } catch (err) {
       toast.success('7');
-      console.log(err);
+      toast.success(`7: ${JSON.stringify(err)}`);
       setTimeout(() => {
         setLoading(false);
       }, 1300)
