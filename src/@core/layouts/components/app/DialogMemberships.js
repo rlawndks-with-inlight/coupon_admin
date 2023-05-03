@@ -14,7 +14,6 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 // ** Icon Imports
-import styled from 'styled-components'
 import { Row, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { Toaster, toast } from 'react-hot-toast'
@@ -23,6 +22,7 @@ import Slide from '@mui/material/Slide'
 import { commarNumber, detetimeFormat } from 'src/@core/utils/function'
 import Barcode from 'react-barcode'
 import QRCode from 'qrcode.react'
+import styled from 'styled-components'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
@@ -39,11 +39,10 @@ margin-left: 1rem;
 font-size:${themeObj.font_size.font4};
 `
 const CardContainer = styled.div`
-margin:0.25rem auto 0.75rem auto;
 width:100%;
 max-width:600px;
-padding: 1vw;
-border-radius:16px;
+margin: 0 auto;
+position:relative;
 `
 const CardContent = styled.div`
 padding: 3vw;
@@ -51,28 +50,32 @@ border-radius:16px;
 display:flex;
 flex-direction:column;
 `
-
 const CouponContetnt = (props) => {
   const { item, dnsData, theme } = props;
   return (
     <>
-      <CardContainer style={{
-        background: `${dnsData?.theme_css?.main_color}`
-      }}>
-        <div style={{
-          fontWeight: 'bold',
-          color: themeObj.yellow,
-          margin: '0.5rem auto 0.5rem 12px'
-        }}>Coupon</div>
+      <CardContainer>
+        <div
+          style={{
+            position: 'absolute',
+            borderBottom: `1px dashed ${themeObj.grey[400]}`,
+            top: 0,
+            left: '-5vw',
+            right: '-5vw',
+            bottom: 0,
+          }} />
         <CardContent style={{
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`
         }}>
-          <img src={item?.coupon_img} style={{ margin: '0 auto', maxWidth: '300px', width: '80%' }} />
-          <div style={{ margin: '0.5rem auto 0 auto' }}>{item?.name}</div>
+          <img src={item?.coupon_img} style={{ margin: '0 auto', width: '200px', borderRadius: '8px', boxShadow: `4px 4px 8px #00000055` }} />
+          <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold' }}>{item?.name}</div>
+          <div style={{ margin: '0.25rem auto 0.5rem auto', fontSize: themeObj.font_size.font3 }}>
+            {item?.valid_e_dt} ~ {item?.valid_s_dt}
+          </div>
           <div style={{ width: '100%', display: 'flex' }} className='membership-barcode'>
             {item?.code_type == 1 ?
               <>
-                <QRCode value={item?.barcode_num} style={{ margin: '0.5rem auto' }} />
+                <QRCode value={item?.barcode_num} style={{ margin: '0.75rem auto 0.5rem auto', width: '84px', height: 'auto' }} />
               </>
               :
               <>
@@ -80,11 +83,12 @@ const CouponContetnt = (props) => {
                   format='CODE128'
                   textMargin={10}
                   value={item?.barcode_num}
-                  height={'52px'}
+                  height={'44px'}
                   style={{ margin: '0 auto' }}
                 />
               </>}
           </div>
+
         </CardContent>
       </CardContainer>
     </>
@@ -176,7 +180,7 @@ const DialogMemberships = (props) => {
               <Icon icon='tabler:x' style={{ fontSize: themeObj.font_size.font1 }} />
             </IconButton>
           </DialogTitle>
-          <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '0 1.5rem 1.25rem 1.5rem' }}>
+          <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '0' }}>
             <TabContext value={tabValue}>
               <TabList onChange={handleChange} aria-label='simple tabs example' variant='fullWidth'>
                 <Tab value='points' label='포인트' style={{ padding: '12px 16px', display: `${mcht?.point_flag == 1 ? '' : 'none'}` }} />
@@ -201,7 +205,7 @@ const DialogMemberships = (props) => {
                   </>
                 ))}
               </TabPanel>
-              <TabPanel value='coupons' style={{ padding: '0' }}>
+              <TabPanel value='coupons' style={{ padding: '0', position: 'relative' }}>
                 {data?.coupons && data?.coupons.map((item, idx) => (
                   <>
                     <CouponContetnt

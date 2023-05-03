@@ -40,8 +40,8 @@ width:100%;
 max-width:700px;
 margin: 0 auto;
 `
-function Countdown({ seconds }) {
-  const [timeLeft, setTimeLeft] = useState(seconds);
+function Countdown({ seconds, timeLeft, setTimeLeft }) {
+
 
   useEffect(() => {
     // 1초마다 timeLeft 값을 1씩 감소시킵니다.
@@ -96,6 +96,8 @@ const DialogLoginForm = (props) => {
       $('.rand_num').focus();
       toast.success("인증번호가 성공적으로 전송 되었습니다.");
       setIsSendSms(true);
+      setIsCheckPhone(false);
+      setTimeLeft(180);
     } catch (err) {
       console.log(err)
       toast.error(err?.response?.data?.message);
@@ -159,6 +161,7 @@ const DialogLoginForm = (props) => {
       console.log(err)
     }
   }
+  const [timeLeft, setTimeLeft] = useState(180);
   return (
     <div>
 
@@ -226,7 +229,11 @@ const DialogLoginForm = (props) => {
                 id='icons-start-adornment'
                 label='인증번호 입력'
                 size='small'
-                style={{ width: '100%', paddingRight: '0', marginTop: '1rem' }}
+                style={{
+                  width: '100%',
+                  paddingRight: '0',
+                  marginTop: '1rem'
+                }}
                 onFocus={() => {
                   setFocusItem('rand_num');
                 }}
@@ -246,15 +253,22 @@ const DialogLoginForm = (props) => {
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
-                        background: `${focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : ''}`
+                        width: `${isCheckPhone ? '101.59px' : ''}`,
+                        background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : '')}`,
+                        color: '#fff'
                       }}
                       onClick={requestVerify}
+                      disabled={isCheckPhone}
                     >
-                      인증번호 확인
+                      {isCheckPhone ? '확인 완료' : '인증번호 확인'}
                     </Button>
                     {isSendSms && !isCheckPhone ?
                       <>
-                        <Countdown seconds={180} />
+                        <Countdown
+                          seconds={180}
+                          timeLeft={timeLeft}
+                          setTimeLeft={setTimeLeft}
+                        />
                       </>
                       :
                       <>

@@ -38,6 +38,9 @@ input[type='color']::-webkit-color-swatch-wrapper {
 div.img-content > svg > g > text {
   font-weight: bold !important;
 }
+.none-padding {
+  padding: 0 !important;
+}
 .merchandise-content {
   width: 20.83%;
   display: flex;
@@ -105,6 +108,11 @@ code[class*='language-'] {
 }
 div.membership-barcode > svg {
   margin: 0 auto;
+}
+div.membership-barcode > svg > g > text {
+  font-family: Nanumgothic !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
 .none-show-scroll {
   -ms-overflow-style: none; /* IE and Edge */

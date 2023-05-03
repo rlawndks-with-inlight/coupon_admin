@@ -126,3 +126,4 @@ font-size:${themeObj.font_size.font5};
 export const Font5 = styled.div`
 font-size:${themeObj.font_size.font5};
 `
+
