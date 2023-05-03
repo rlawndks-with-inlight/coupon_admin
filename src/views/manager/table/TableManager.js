@@ -88,10 +88,8 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
   for (var i = 0; i < idx; i++) {
     start_idx += head_columns[i]?.size;
   }
-  console.log(notSearchOption)
   for (var i = start_idx; i < start_idx + item?.size; i++) {
     let column = columns?.columns[i]?.column;
-    console.log(column)
     if (
       !isShowCell({
         param_table: param_table,
