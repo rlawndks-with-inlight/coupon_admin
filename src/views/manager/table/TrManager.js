@@ -201,7 +201,7 @@ const TrManager = (props) => {
   const onCouponActive = async () => {
 
     try {
-      let user_category = '유저아이디';
+      let user_category = '유저휴대폰번호';
       let user_category_en = 'user'
       let find_user_obj = {
         user: 1,
