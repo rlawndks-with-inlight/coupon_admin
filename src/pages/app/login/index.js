@@ -28,6 +28,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import { processCatch } from 'src/@core/utils/function'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
 import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
+import Loading from 'src/@core/layouts/components/app/Loading'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -72,7 +73,6 @@ const Login = ({ dns_data }) => {
     setLoading(true);
     await checkDns();
     await checkAuth();
-    setLoading(false);
   }
 
 
@@ -102,13 +102,17 @@ const Login = ({ dns_data }) => {
           "Content-Type": "application/json",
         }
       });
-      if (response_auth?.level > 0) {
+      if (response_auth?.id > 0) {
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
-        router.push('/app/home');
-      } else {
+        setTimeout(() => {
+          router.push('/app/home');
+        }, 1300)
       }
     } catch (err) {
       console.log(err);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1300)
     }
   }
   const handleChange = prop => event => {
@@ -155,81 +159,89 @@ const Login = ({ dns_data }) => {
   }
   return (
     <>
-      <DialogLoginForm
-        open={loginOpen}
-        handleClose={handleLoginClose}
-        dnsData={dnsData}
-        router={router}
-        style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
-        }}
-      />
-      <Box className='content-center' style={{
-        display: `${loading ? 'none' : ''}`,
-      }}>
-        {/* <AuthIllustrationV1Wrapper> */}
-        <Card style={{
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : '#fff'}`,
-        }}>
-          <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
-            <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src={theme.palette.mode == 'dark' ? dnsData?.dark_logo_img : dnsData?.logo_img} style={{ height: '4rem', width: 'auto' }} />
-            </Box>
-            <Box sx={{ mb: 9 }}>
-              <Typography variant='h6' sx={{ mb: 1.5 }}>
-                {`Welcome ${themeConfig.templateName}! 👋🏻`}
-              </Typography>
-            </Box>
-            {/* <Box sx={{ mb: 9 }}>
+      {loading ?
+        <>
+          <Loading />
+        </>
+        :
+        <>
+          <DialogLoginForm
+            open={loginOpen}
+            handleClose={handleLoginClose}
+            dnsData={dnsData}
+            router={router}
+            style={{
+              color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
+              background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
+            }}
+          />
+          <Box className='content-center' style={{
+            display: `${loading ? 'none' : ''}`,
+          }}>
+            {/* <AuthIllustrationV1Wrapper> */}
+            <Card style={{
+              background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : '#fff'}`,
+            }}>
+              <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
+                <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src={theme.palette.mode == 'dark' ? dnsData?.dark_logo_img : dnsData?.logo_img} style={{ height: '4rem', width: 'auto' }} />
+                </Box>
+                <Box sx={{ mb: 9 }}>
+                  <Typography variant='h6' sx={{ mb: 1.5 }}>
+                    {`Welcome ${themeConfig.templateName}! 👋🏻`}
+                  </Typography>
+                </Box>
+                {/* <Box sx={{ mb: 9 }}>
               <Typography variant='h8' sx={{ mb: 1.5, whiteSpace: 'pre', fontWeight: 'bold' }}>
                 {dnsData?.og_description}
               </Typography>
             </Box> */}
-            <Box
-              sx={{
-                mb: '1rem',
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
+                <Box
+                  sx={{
+                    mb: '1rem',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
-            </Box>
-            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
-              if (!loading) {
-                onClickKakaoButton();
-              }
-            }}>
-              {loading ?
-                <>
-                  Loading...
-                </>
-                :
-                <>
-                  카카오로 로그인
-                </>}
-            </Button>
-            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
-              if (!loading) {
-                handleLoginOpen();
-              }
-            }}>
-              {loading ?
-                <>
-                  Loading...
-                </>
-                :
-                <>
-                  휴대폰으로 로그인
-                </>}
-            </Button>
-          </CardContent>
-        </Card>
-        {/* </AuthIllustrationV1Wrapper> */}
-      </Box>
+                </Box>
+                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
+                  if (!loading) {
+                    onClickKakaoButton();
+                  }
+                }}>
+                  {loading ?
+                    <>
+                      Loading...
+                    </>
+                    :
+                    <>
+                      카카오로 로그인
+                    </>}
+                </Button>
+                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+                  if (!loading) {
+                    handleLoginOpen();
+                  }
+                }}>
+                  {loading ?
+                    <>
+                      Loading...
+                    </>
+                    :
+                    <>
+                      휴대폰으로 로그인
+                    </>}
+                </Button>
+              </CardContent>
+            </Card>
+            {/* </AuthIllustrationV1Wrapper> */}
+          </Box>
+        </>}
+
     </>
   )
 }
