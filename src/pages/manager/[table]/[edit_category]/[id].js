@@ -2,54 +2,27 @@
 import { useEffect, useState } from 'react'
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Table from '@mui/material/Table'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Tooltip from '@mui/material/Tooltip'
-import TableRow from '@mui/material/TableRow'
-import Collapse from '@mui/material/Collapse'
-import TableBody from '@mui/material/TableBody'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import InputAdornment from '@mui/material/InputAdornment'
-import TableContainer from '@mui/material/TableContainer'
+
 import { styled, alpha, useTheme } from '@mui/material/styles'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import TableCell from '@mui/material/TableCell'
-import CardContent from '@mui/material/CardContent'
+
 import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import Icon from 'src/@core/components/icon'
 // ** Third Party Components
-import axios from 'axios'
 
-// ** Demo Components Imports
-import AddCard from 'src/views/apps/invoice/add/AddCard'
-import AddActions from 'src/views/apps/invoice/add/AddActions'
-import AddNewCustomers from 'src/views/apps/invoice/add/AddNewCustomer'
 
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { useRouter } from 'next/router'
 import ManagerUserEdit from 'src/views/manager/edit/ManagerUserEdit'
 import ManagerAdEdit from 'src/views/manager/edit/ManagerAdEdit'
-import ManagerNoticeEdit from 'src/views/manager/edit/ManagerNoticeEdit'
 import ManagerBrandEdit from 'src/views/manager/edit/ManagerBrandEdit'
 import { objDataGridColumns } from 'src/data/manager-data'
 import { axiosIns } from 'src/@fake-db/backend'
-import DialogAlert from 'src/views/components/dialogs/DialogAlert'
 import { toast } from "react-hot-toast";
-import { getCookie } from 'src/@core/utils/react-cookie'
 import ManagerDeviceEdit from 'src/views/manager/edit/ManagerDeviceEdit'
 import ManagerPointEdit from 'src/views/manager/edit/ManagerPointEdit'
 import ManagerMerchandiseEdit from 'src/views/manager/edit/ManagerMerchandiseEdit'
 import ManagerOperatorEdit from 'src/views/manager/edit/ManagerOperatorEdit'
-import HeadContent from 'src/@core/components/head'
 import { processCatch } from 'src/@core/utils/function'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 import { getLocalStorage } from 'src/@core/utils/local-storage'

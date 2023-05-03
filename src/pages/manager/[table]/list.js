@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, forwardRef } from "react";
+import { useEffect, useState } from "react";
 import { getCookie } from "src/@core/utils/react-cookie";
 import { axiosIns } from "src/@fake-db/backend";
 
@@ -10,25 +10,15 @@ import Pagination from '@mui/material/Pagination'
 
 import TableHeader from 'src/views/apps/invoice/list/TableHeader'
 import Box from '@mui/material/Box'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
+
 
 // ** Styled Components
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { excelDownload, makeMaxPage, objToQuery, processCatch } from "src/@core/utils/function";
-import TableBasic from "src/views/table/data-grid/TableBasic";
 import TableManager from "src/views/manager/table/TableManager";
 import { Divider } from "@mui/material";
-import $ from "jquery";
-import { toast } from "react-hot-toast";
 import FallbackSpinner from "src/@core/components/spinner";
 import { objDataGridColumns } from "src/data/manager-data";
-import DialogAlert from "src/views/components/dialogs/DialogAlert";
-import TablePagination from '@mui/material/TablePagination'
 import { useTheme } from "@emotion/react";
-import HeadContent from "src/@core/components/head";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 const List = ({ dns_data }) => {

@@ -1,6 +1,5 @@
 // ** Next Imports
-import Head from 'next/head'
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
 
 // ** Store Imports
 import { store } from 'src/store'
@@ -10,11 +9,11 @@ import { Provider } from 'react-redux'
 import NProgress from 'nprogress'
 
 // ** Emotion Imports
-import { CacheProvider, useTheme } from '@emotion/react'
+import { CacheProvider } from '@emotion/react'
 
 // ** Config Imports
 import 'src/configs/i18n'
-import themeConfig from 'src/configs/themeConfig'
+
 
 // ** Third Party Import
 import { Toaster } from 'react-hot-toast'
@@ -48,15 +47,10 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import { useEffect } from 'react'
-import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
+import { setLocalStorage } from 'src/@core/utils/local-storage'
 import { backUrl, LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
-import { returnMoment } from 'src/@core/utils/function'
-import axios from 'axios'
-import { useSettings } from 'src/@core/hooks/useSettings'
-import { Html } from 'next/document'
-import "react-quill/dist/quill.snow.css";
-import "react-quill-emoji/dist/quill-emoji.css";
+
 import Script from 'next/script'
 const clientSideEmotionCache = createEmotionCache()
 
