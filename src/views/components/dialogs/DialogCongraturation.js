@@ -25,7 +25,6 @@ const DialogCongraturation = (props) => {
   const { open, handleClose, saveSearchOption, goToManagerPage } = props;
   const [checked, setChecked] = useState(true)
   const checkRef = useRef();
-  const [notSearchOptions, setNotSearchOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   return (

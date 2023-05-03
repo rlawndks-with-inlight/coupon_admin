@@ -139,7 +139,7 @@ const Register = () => {
     resolver: yupResolver(accountSchema)
   })
   useEffect(() => {
-    if (window.location.host != 'team.comagain.kr') {
+    if (window.location.host != process.env.MAIN_FRONT_URL) {
       //router.push('/404');
     }
   }, [])

@@ -81,6 +81,35 @@ const settingColumnName = (col_, user_data, param_table) => {
   }
   return col?.title;
 }
+const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param_table, user_data, search_obj, onlyTeamSeeColumn) => {
+  let size = head_columns[idx]?.size;
+  let start_idx = 0;
+  let host = window.location.host;
+  for (var i = 0; i < idx; i++) {
+    start_idx += head_columns[i]?.size;
+  }
+  console.log(notSearchOption)
+  for (var i = start_idx; i < start_idx + item?.size; i++) {
+    let column = columns?.columns[i]?.column;
+    console.log(column)
+    if (
+      !isShowCell({
+        param_table: param_table,
+        user_data: user_data,
+        column: column,
+        search_obj: search_obj
+      })//함수에 의해 보이지 않는경루
+      ||
+      (notSearchOption['list'] && notSearchOption['list'].includes(column))//검색옵션에 의해 보이지 않는 경우
+      ||
+      (onlyTeamSeeColumn[param_table] && host != process.env.MAIN_FRONT_URL && onlyTeamSeeColumn[param_table].includes(column))// team.comagain.kr일때만 보이는 경우
+    ) {
+      size--;
+    }
+  }
+
+  return size;
+}
 const TableManager = (props) => {
   const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption, onlyTeamSeeColumn } = props;
 
@@ -108,6 +137,7 @@ const TableManager = (props) => {
     )
   }, []);
   useEffect(() => {
+    console.log(notSearchOption)
   }, [])
 
   return (
@@ -123,28 +153,56 @@ const TableManager = (props) => {
                 }}>
                 {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.map((item, idx) => (
                   <>
-                    <TableCell align='center'
-                      colSpan={notSearchOption['head_columns'] && (item?.size - (notSearchOption['head_columns'][idx] ?? 0))}
-                      sx={{
-                        position: 'relative'
-                      }}>
-                      <div style={{
-                        position: 'absolute',
-                        width: '2px',
-                        height: '100%',
-                        display: 'flex',
-                        left: '0',
-                        top: '0'
-                      }}>
-                        <div style={{
-                          width: '2px',
-                          height: '14px',
-                          margin: 'auto 0',
-                          background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
-                        }} />
-                      </div>
-                      {item?.title}
-                    </TableCell>
+                    {getTopMenuSize(
+                      objDataGridColumns[param_table]?.head_columns,
+                      item,
+                      idx,
+                      objDataGridColumns[param_table],
+                      notSearchOption,
+                      param_table,
+                      userData,
+                      searchObj,
+                      onlyTeamSeeColumn
+                    ) > 0 ?
+                      <>
+                        <TableCell align='center'
+                          colSpan={getTopMenuSize(
+                            objDataGridColumns[param_table]?.head_columns,
+                            item,
+                            idx,
+                            objDataGridColumns[param_table],
+                            notSearchOption,
+                            param_table,
+                            userData,
+                            searchObj,
+                            onlyTeamSeeColumn
+                          )}
+                          sx={{
+                            position: 'relative'
+                          }}>
+                          <div style={{
+                            position: 'absolute',
+                            width: '2px',
+                            height: '100%',
+                            display: 'flex',
+                            left: '0',
+                            top: '0'
+                          }}>
+                            <div style={{
+                              width: '2px',
+                              height: '14px',
+                              margin: 'auto 0',
+                              background: `${idx != 0 ? `${theme.palette.mode == 'dark' ? '#5d6282' : '#dedee0'}` : ''}`,
+                            }} />
+                          </div>
+                          {item?.title}
+                        </TableCell>
+                      </>
+                      :
+                      <>
+                      </>
+                    }
+
                   </>
                 ))}
               </TableRow>
@@ -159,7 +217,7 @@ const TableManager = (props) => {
             }}>
             {columns && columns.map((col, idx) => (
               <>
-                {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
+                {(onlyTeamSeeColumn[param_table] && window.location.host != process.env.MAIN_FRONT_URL && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
                   <>
                   </>
                   :

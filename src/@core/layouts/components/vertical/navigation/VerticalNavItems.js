@@ -31,7 +31,7 @@ const VerticalNavItems = props => {
     setUserData(user_data);
   }
   const settingItems = (item) => {
-    // if (item?.title == '오퍼레이터관리' && window.location.hostname != 'team.comagain.kr') {
+    // if (item?.title == '오퍼레이터관리' && window.location.hostname != process.env.MAIN_FRONT_URL) {
     //   return false;
     // }
     if (item?.path == "/manager/operators") {

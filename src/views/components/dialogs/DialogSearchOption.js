@@ -64,7 +64,7 @@ const DialogSearchOption = (props) => {
               <FormGroup row sx={{ maxWidth: '425px' }} ref={checkRef}>
                 {data?.columns && data?.columns.map((item, idx) => (
                   <>
-                    {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(item?.column)) ?
+                    {(onlyTeamSeeColumn[param_table] && window.location.host != process.env.MAIN_FRONT_URL && onlyTeamSeeColumn[param_table].includes(item?.column)) ?
                       <>
                       </>
                       :

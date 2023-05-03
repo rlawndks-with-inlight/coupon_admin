@@ -331,7 +331,7 @@ const TrManager = (props) => {
       >
         {columns && columns.map((col, idx) => (
           <>
-            {(onlyTeamSeeColumn[param_table] && window.location.host != 'team.comagain.kr' && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
+            {(onlyTeamSeeColumn[param_table] && window.location.host != process.env.MAIN_FRONT_URL && onlyTeamSeeColumn[param_table].includes(col?.column)) ?
               <>
               </>
               :

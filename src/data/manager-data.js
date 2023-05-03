@@ -72,7 +72,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_add: true,
     is_see_add_condition: 35,
     head_columns: [
-      { title: '가맹점정보', size: 7 },
+      { title: '가맹점정보', size: 8 },
       { title: '포인트정보', size: 2 },
       { title: '스탬프정보', size: 2 },
       { title: '', size: 3 },
@@ -80,6 +80,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
     columns: [
       managerListFormat('ID', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('가맹점아이디', 'user_name', 'text', ''),
       managerListFormat('상위아이디', 'group_name', 'text', ''),// 검색 level >=10 일시
@@ -162,7 +163,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_see_add_condition: 50,
     search_placeholder: '쿠폰 모델명 검색',//검색 placeholder
     head_columns: [
-      { title: '쿠폰정보', size: 9 },
+      { title: '쿠폰정보', size: 10 },
       { title: '발행완료', size: 2 },
       { title: '발행취소', size: 2 },
       { title: '지급완료', size: 2 },
@@ -171,6 +172,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('쿠폰 이미지', 'coupon_img', 'img', ''),
       managerListFormat('쿠폰 모델명', 'name', 'text', ''),
       managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
@@ -207,6 +209,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
       managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
@@ -285,6 +288,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '유저휴대폰번호, 가맹점명 검색',
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('구매금액', 'purchase_price', 'number', ''),
@@ -306,6 +310,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '맥주소, 가맹점명 검색',
     columns: [
       managerListFormat('장비ID', 'id', 'number', ''),
+      managerListFormat('브랜드명', 'brand_name', 'text', ''),
       // managerListFormat('브랜드 ID', 'brand_id', 'number', ''),
       //  managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점 ID', 'mcht_id', 'number', ''),
