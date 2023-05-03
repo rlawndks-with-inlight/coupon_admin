@@ -19,7 +19,7 @@ const Merchandise = () => {
   const router = useRouter();
   const theme = useTheme();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
   const [mcht, setMcht] = useState({});
@@ -30,6 +30,7 @@ const Merchandise = () => {
   })
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
+    setLoading(true);
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
@@ -52,6 +53,8 @@ const Merchandise = () => {
       let query = objToQuery(obj);
       const response = await axiosIns().get(`/api/v1/app/membership${query}`);
       setHistory(Object.assign(history, response?.data))
+
+      setLoading(false);
     } catch (err) {
       console.log(err)
     }

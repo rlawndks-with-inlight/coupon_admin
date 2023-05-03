@@ -21,7 +21,7 @@ const Home = () => {
   const router = useRouter();
   const theme = useTheme();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [total, setTotal] = useState({})
   const [mchts, setMchts] = useState([]);
