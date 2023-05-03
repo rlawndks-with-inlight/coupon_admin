@@ -282,7 +282,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     breadcrumb: '포인트',
     is_add: true,
     is_see_add_condition: 35,
-    search_placeholder: '유저명, 가맹점명 검색',
+    search_placeholder: '유저휴대폰번호, 가맹점명 검색',
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
       managerListFormat('가맹점명', 'mcht_name', 'text', ''),
