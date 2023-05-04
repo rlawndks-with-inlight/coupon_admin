@@ -133,7 +133,7 @@ const getProfileImg = (theme, item) => {
   if (img_src) {
     return <MerchandiseImg src={img_src} style={style} />
   } else {
-    return <Icon icon='fluent:building-shop-20-filled' style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`, fontSize: '64px', margin: 'auto' }} />
+    return <Icon icon='fluent:building-shop-20-filled' style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : themeObj.grey[500]}`, fontSize: '64px', margin: 'auto' }} />
   }
 }
 const Merchandise = (props) => {

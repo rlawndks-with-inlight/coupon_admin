@@ -40,7 +40,7 @@ const HeadContent = (props) => {
           content={(dns_data?.og_description || dnsData?.og_description) ?? ""}
         />
         <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
-        <meta name='keywords' content={dnsData?.name} />
+        <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
