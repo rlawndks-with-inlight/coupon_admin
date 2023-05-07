@@ -33,7 +33,7 @@ import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 
 // ** Utils Imports
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
-
+import fetch from 'isomorphic-unfetch';
 // ** Prismjs Styles
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -112,15 +112,15 @@ const App = props => {
 }
 App.getInitialProps = async ({ Component, ctx }) => {
   try {
-    if (!ctx.req) {
-      return {
-        dns_data: {}
-      }
-    }
+    const pageProps = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {};
+
     const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
     const json = (await res.json());
     return {
-      dns_data: json
+      dns_data: json,
+      pageProps
     }
   } catch (err) {
     console.log(err)
