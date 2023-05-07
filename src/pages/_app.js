@@ -13,8 +13,6 @@ import { CacheProvider } from '@emotion/react'
 
 // ** Config Imports
 import 'src/configs/i18n'
-
-
 // ** Third Party Import
 import { Toaster } from 'react-hot-toast'
 
@@ -119,8 +117,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
     const json = (await res.json());
     return {
-      dns_data: json,
-      pageProps
+      dns_data: json
     }
   } catch (err) {
     console.log(err)
