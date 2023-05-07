@@ -148,7 +148,7 @@ const Merchandise1 = (props) => {
         <>
         </>
       }
-      <MapBox src={`http://172.30.1.90:3000/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${JSON.stringify(dnsData)}`}></MapBox>
+      <MapBox src={`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${JSON.stringify(dnsData)}`}></MapBox>
     </>
   )
 }
