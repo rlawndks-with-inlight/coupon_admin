@@ -42,6 +42,8 @@ const Merchandise1 = (props) => {
     func: {
       router,
     } } = props;
+
+  const [mapLoading, setMapLoading] = useState(true);
   const [membershipOpen, setMembershipOpen] = useState(false);
   const [membershipCategory, setMembershipCategory] = useState('point')
   const handleMembershipClose = () => setMembershipOpen(false);
@@ -141,24 +143,24 @@ const Merchandise1 = (props) => {
               <MchtContent>12:00 ~ 24:00</MchtContent>
             </Row>
           </ContentWrapper>
-          <NaverMap
-            center={{
-              lat: mcht?.location?.coordinates[1],
-              lng: mcht?.location?.coordinates[0],
-            }}
-            markers={[
-              { lat: mcht?.location?.coordinates[1], lng: mcht?.location?.coordinates[0], }
-            ]}
-            dnsData={dnsData}
-          />
         </>
         :
         <>
         </>
       }
+      <MapBox src={`http://172.30.1.90:3000/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${JSON.stringify(dnsData)}`}></MapBox>
 
     </>
   )
 }
-
+const MapBox = styled.iframe`
+  width: 1200px;
+  height: 600px;
+  margin: 0 auto;
+  border: none;
+  @media (max-width: 1200px) {
+    width: 100%;
+     height: 60vw;
+}
+`;
 export default Merchandise1;

@@ -157,7 +157,6 @@ const ManagerUserEdit = (props) => {
                 <CardContent>
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
-
                     <Grid item xs={12}>
                       <TextField
                         fullWidth

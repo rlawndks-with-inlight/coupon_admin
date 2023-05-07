@@ -89,6 +89,8 @@ const LoginV1 = ({ dns_data }) => {
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
+      if (typeof obj['theme_css'] == 'string') obj['theme_css'] = JSON.parse(obj['theme_css']);
+      if (typeof obj['options'] == 'string') obj['options'] = JSON.parse(obj['options']);
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
       setDnsData(obj);
