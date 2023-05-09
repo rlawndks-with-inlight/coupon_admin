@@ -84,7 +84,7 @@ const More1 = (props) => {
           <Icon icon='mdi:customer-service' style={{ fontSize: themeObj.font_size.font1 }} />
           <MenuTitle>고객센터</MenuTitle>
         </Menu>
-        <Menu onClick={() => handleLogout(router, '/app/login')}
+        <Menu onClick={() => handleLogout(router, '/app')}
         >
           <Icon icon='ri:logout-circle-r-line' style={{ fontSize: themeObj.font_size.font1 }} />
           <MenuTitle>로그아웃</MenuTitle>

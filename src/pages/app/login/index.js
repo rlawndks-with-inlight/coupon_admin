@@ -29,7 +29,7 @@ import { processCatch } from 'src/@core/utils/function'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
 import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
 import Loading from 'src/@core/layouts/components/app/Loading'
-import { onMessageHandler, onPostWebview } from 'src/@core/utils/webview-connect'
+import { onPostWebview } from 'src/@core/utils/webview-connect'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -62,6 +62,7 @@ const Login = ({ dns_data }) => {
   const [dnsLoadingFlag, setDnsLoadingFlag] = useState(false);
   const [authLoadingFlag, setAuthLoadingFlag] = useState(false);
 
+  const [bridgeData, setBridgeData] = useState({});
 
   // ** Hook
   const theme = useTheme();
@@ -70,6 +71,29 @@ const Login = ({ dns_data }) => {
     settings();
   }, [])
   useEffect(() => {
+    const onMessageHandler = (e) => {
+      const event = JSON.parse(e.data)
+
+      if (event.method == 'kakao_login') {
+        if (event?.data?.id) {
+          if (event?.data?.phone) {//폰번호저장시
+            onLogin({
+              id: event?.data?.id,
+              type: 1,
+              phone: event?.data?.phone
+            });
+          } else { //폰번호 저장 아닐시
+            handleLoginOpen();
+            setSnsData({
+              id: event?.data?.id,
+              type: 1
+            })
+          }
+        }
+      } else if (1) {
+
+      }
+    }
     const isUIWebView = () => {
       return navigator.userAgent
         .toLowerCase()
@@ -80,7 +104,7 @@ const Login = ({ dns_data }) => {
     return () => {
       receiver.removeEventListener('message', onMessageHandler)
     }
-  })
+  }, [])
   const settings = async () => {
     setLoading(true);
     await checkDns();
@@ -91,8 +115,12 @@ const Login = ({ dns_data }) => {
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
-      if (typeof obj['theme_css'] == 'string') obj['theme_css'] = JSON.parse(obj['theme_css']);
-      if (typeof obj['options'] == 'string') obj['options'] = JSON.parse(obj['options']);
+      if (typeof obj['theme_css'] == 'string') {
+        obj['theme_css'] = JSON.parse(obj['theme_css']);
+      }
+      if (typeof obj['options'] == 'string') {
+        obj['options'] = JSON.parse(obj['options']);
+      }
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
     } catch (err) {
@@ -132,13 +160,13 @@ const Login = ({ dns_data }) => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const onLogin = async () => {
+  const onLogin = async (data) => {
     try {
-      const response = await axiosIns().post('/api/v1/auth/sign-in', {
-        brand_id: values?.brand_id,
-        user_name: values?.id,
-        user_pw: values?.password,
-        login_type: 0,
+      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+        dns: window.location.hostname,
+        phone_num: data?.phone,
+        login_type: data?.type,
+        token: data?.id,
       });
 
       await setCookie('o', response?.data?.access_token, {
@@ -147,27 +175,23 @@ const Login = ({ dns_data }) => {
         sameSite: process.env.COOKIE_SAME_SITE,
       });
       if (response?.status == 200 && response?.data?.user) {
+
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        router.push('/manager/users');
+        router.push('/app/home');
       }
     } catch (err) {
-      let push_lick = await processCatch(err);
-      if (push_lick == -1) {
-        router.back();
-      } else {
-        if (push_lick) {
-          router.push(push_lick);
-        }
-      }
+      console.log(err)
     }
   }
   const [loginOpen, setLoginOpen] = useState(false);
+  const [snsData, setSnsData] = useState({});
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {
     if (window.ReactNativeWebView) {
       onPostWebview('kakao_login');
     } else {
+
     }
   }
   return (
@@ -183,6 +207,7 @@ const Login = ({ dns_data }) => {
             handleClose={handleLoginClose}
             dnsData={dnsData}
             router={router}
+            snsData={snsData}
             style={{
               color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
               background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,

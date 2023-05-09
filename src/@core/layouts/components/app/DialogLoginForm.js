@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 
 // ** Icon Imports
 import { InputAdornment, TextField } from '@mui/material'
@@ -25,6 +24,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
+import { onPostWebview } from 'src/@core/utils/webview-connect'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -61,7 +61,7 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
 }
 const DialogLoginForm = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing, dnsData, style, router } = props;
+  const { open, handleClose, onKeepGoing, dnsData, style, router, snsData } = props;
 
   const theme = useTheme();
 
@@ -148,12 +148,16 @@ const DialogLoginForm = (props) => {
         login_type: 0,
         token: getCookie('phone_token'),
       });
+      if (window.ReactNativeWebView) {
+        onPostWebview('phone_save', { phone: values?.phone_num })
+      }
       await setCookie('o', response?.data?.access_token, {
         path: "/",
         secure: process.env.COOKIE_SECURE,
         sameSite: process.env.COOKIE_SAME_SITE,
       });
       if (response?.status == 200 && response?.data?.user) {
+
         await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
         router.push('/app/home');
       }
