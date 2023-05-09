@@ -52,9 +52,33 @@ const Merchandise = () => {
       }
       let query = objToQuery(obj);
       const response = await axiosIns().get(`/api/v1/app/membership${query}`);
-      setHistory(Object.assign(history, response?.data))
-
       setLoading(false);
+      let point_history = [...response?.data?.points];
+      let point_results = [];
+      let sum_point = 0;
+      for (var i = point_history.length - 1; i >= 0; i--) {//1->적립, -1->사용
+        if (point_history[i]?.save_amount > 0) {
+          sum_point += point_history[i]?.save_amount;
+          point_results.push({
+            ...point_history[i],
+            sum_point: sum_point,
+            type: 1,
+            point: point_history[i]?.save_amount
+          })
+        }
+        if (point_history[i]?.use_amount > 0) {
+          sum_point -= point_history[i]?.use_amount;
+          point_results.push({
+            ...point_history[i],
+            sum_point: sum_point,
+            type: -1,
+            point: point_history[i]?.use_amount
+          })
+        }
+      }
+      point_results = point_results.reverse();
+      let result_data = Object.assign(history, Object.assign(response?.data, { points: point_results }))
+      setHistory(result_data)
     } catch (err) {
       console.log(err)
     }

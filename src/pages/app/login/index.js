@@ -29,6 +29,7 @@ import { processCatch } from 'src/@core/utils/function'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
 import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
 import Loading from 'src/@core/layouts/components/app/Loading'
+import { onMessageHandler, onPostWebview } from 'src/@core/utils/webview-connect'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -68,14 +69,23 @@ const Login = ({ dns_data }) => {
   useEffect(() => {
     settings();
   }, [])
-
+  useEffect(() => {
+    const isUIWebView = () => {
+      return navigator.userAgent
+        .toLowerCase()
+        .match(/\(ip.*applewebkit(?!.*(version|crios))/)
+    }
+    const receiver = isUIWebView() ? window : document
+    receiver.addEventListener('message', onMessageHandler)
+    return () => {
+      receiver.removeEventListener('message', onMessageHandler)
+    }
+  })
   const settings = async () => {
     setLoading(true);
     await checkDns();
     await checkAuth();
   }
-
-
   const checkDns = async () => {
     try {
       let obj = {};
@@ -155,6 +165,10 @@ const Login = ({ dns_data }) => {
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {
+    if (window.ReactNativeWebView) {
+      onPostWebview('kakao_login');
+    } else {
+    }
   }
   return (
     <>

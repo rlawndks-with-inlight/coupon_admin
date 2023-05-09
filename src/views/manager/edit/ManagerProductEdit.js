@@ -15,7 +15,7 @@ import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/File
 
 import { axiosIns } from 'src/@fake-db/backend'
 // ** Third Party Imports
-import { EditorState, convertToRaw } from 'draft-js'
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 // ** Component Import
 import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
 import { toast } from 'react-hot-toast'
@@ -62,18 +62,15 @@ const ManagerProductEdit = (props) => {
     origin_nm: '',
     mfg_nm: '',
     model_nm: '',
+    content: EditorState.createEmpty(),
   }
   const [content, setContent] = useState(EditorState.createEmpty())
   const [values, setValues] = useState(defaultObj);
   const [options, setOptions] = useState([]);
-  useEffect(() => {
-    setValues({ ...values, ['content']: content })
 
-  }, [content])
 
   useEffect(() => {
     if (categoryList.length > 0) {
-      setContent(values?.content)
       setLoading(false);
     }
   }, [categoryList])
@@ -136,10 +133,13 @@ const ManagerProductEdit = (props) => {
   }
   const onEditItem = () => {
     let img_key_list = ['product_img'];
-    let obj = {
-      ...values,
-      ['content']: draftToHtml(convertToRaw(content.getCurrentContent()))
-    };
+    let editor_key_list = ['content'];
+
+    let obj = { ...values };
+
+    for (var i = 0; i < editor_key_list.length; i++) {
+      obj[editor_key_list[i]] = convertToRaw(obj[editor_key_list[i]].getCurrentContent())
+    }
     for (var i = 0; i < img_key_list.length; i++) {
       if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
         delete obj[img_key_list[i]];
@@ -147,6 +147,9 @@ const ManagerProductEdit = (props) => {
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
       }
     }
+    console.log(obj)
+    return;
+
     editItem(obj);
   }
   return (
@@ -236,9 +239,9 @@ const ManagerProductEdit = (props) => {
                           <EditorWrapper>
                             <ReactDraftWysiwyg
                               editorClassName='editor-edit'
-                              editorState={content}
+                              editorState={values.content}
                               onEditorStateChange={data => {
-                                setContent(data)
+                                setValues({ ...values, ['content']: data })
                               }}
                             />
                           </EditorWrapper>

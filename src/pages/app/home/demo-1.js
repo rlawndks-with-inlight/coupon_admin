@@ -1,7 +1,7 @@
 import { ContentWrapper, Font2, Font4, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
 import { Icon } from "@iconify/react"
 import styled from 'styled-components';
-import { commarNumber } from 'src/@core/utils/function';
+import useCountNum, { commarNumber } from 'src/@core/utils/function';
 import { motion } from "framer-motion"
 import { useTheme } from '@emotion/react';
 import FallbackSpinner from 'src/@core/components/spinner';
@@ -108,6 +108,17 @@ margin: 4rem 0;
   display:none;
 }
 `
+const GrowUpCount = styled.div`
+animation: count 1s linear forwards;
+@keyframes count {
+  from {
+    counter-reset: number 0;
+  }
+  to {
+    counter-increment: number 10000;
+  }
+}
+`
 const getProfileImg = (theme, item) => {
   let img_src = false;
   let style = {}
@@ -143,7 +154,7 @@ const Merchandise = (props) => {
   return (
     <>
       <motion.div
-        whileHover={{ scale: 1.01, boxShadow: `4px 12px 30px 6px rgba(0, 0, 0, 0.19)`, transform: `translateY(-0.5rem)` }}
+        whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
         style={{
@@ -165,7 +176,7 @@ const Merchandise = (props) => {
             {(item?.count?.point || typeof item?.count?.point == 'number') && item?.point_flag ?
               <>
                 <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.point)}</div>
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.point))}</div>
               </>
               :
               <>
@@ -173,7 +184,7 @@ const Merchandise = (props) => {
             {(item?.count?.stamp || typeof item?.count?.stamp == 'number') && item?.stamp_flag ?
               <>
                 <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.stamp)}</div>
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.stamp))}</div>
               </>
               :
               <>
@@ -181,7 +192,7 @@ const Merchandise = (props) => {
             {item?.count?.coupon || typeof item?.count?.coupon == 'number' || true ?
               <>
                 <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(item?.count?.coupon)}</div>
+                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.coupon))}</div>
               </>
               :
               <>
@@ -256,17 +267,17 @@ const Home1 = (props) => {
             </TopText>
             <Row style={{ justifyContent: 'space-between', fontSize: themeObj.font_size.font3, margin: '0 auto 0 0', maxWidth: '400px' }}>
               <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: 'auto', fontSize: '1.6rem' }} />
+                <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                 <div>포인트</div>
                 <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.point)}</div>
               </Row>
               <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: 'auto', fontSize: '1.6rem' }} />
+                <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                 <div >스탬프</div>
                 <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.stamp)}</div>
               </Row>
               <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: 'auto', fontSize: '1.6rem' }} />
+                <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                 <div>쿠폰</div>
                 <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
               </Row>

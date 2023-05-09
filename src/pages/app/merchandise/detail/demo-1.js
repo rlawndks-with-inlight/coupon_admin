@@ -77,7 +77,7 @@ const Merchandise1 = (props) => {
               {mcht?.point_flag == 1 ?
                 <>
                   <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                    <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: 'auto', fontSize: '1.6rem' }} />
+                    <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                     <div>포인트</div>
                     <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.point)}</div>
                   </Row>
@@ -88,7 +88,7 @@ const Merchandise1 = (props) => {
               {mcht?.stamp_flag == 1 ?
                 <>
                   <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                    <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: 'auto', fontSize: '1.6rem' }} />
+                    <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                     <div >스탬프</div>
                     <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.stamp)}</div>
                   </Row>
@@ -97,7 +97,7 @@ const Merchandise1 = (props) => {
                 <>
                 </>}
               <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: 'auto', fontSize: '1.6rem' }} />
+                <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                 <div>쿠폰</div>
                 <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.coupon)}</div>
               </Row>

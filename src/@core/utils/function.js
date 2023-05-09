@@ -342,3 +342,28 @@ export const getKakaoInfo = () => {
 export const detetimeFormat = (datetime) => {
   return `${datetime.substring(0, 4)}년 ${datetime.substring(5, 7)}월 ${datetime.substring(8, 10)}일 ${datetime.substring(11, 19)}`
 }
+import { useEffect, useState } from 'react'
+
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
+}
+
+export default function useCountNum(end, start = 0, duration = 2000) {
+  const [count, setCount] = useState(start)
+  const frameRate = 1000 / 60
+  const totalFrame = Math.round(duration / frameRate)
+
+  useEffect(() => {
+    let currentNumber = start
+    const counter = setInterval(() => {
+      const progress = easeOutExpo(++currentNumber / totalFrame)
+      setCount(Math.round(end * progress))
+
+      if (progress === 1) {
+        clearInterval(counter)
+      }
+    }, frameRate)
+  }, [end, frameRate, start, totalFrame])
+
+  return count
+}

@@ -7,7 +7,6 @@ import Dialog from '@mui/material/Dialog'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
@@ -23,7 +22,12 @@ import { commarNumber, detetimeFormat } from 'src/@core/utils/function'
 import Barcode from 'react-barcode'
 import QRCode from 'qrcode.react'
 import styled from 'styled-components'
+import { styled as muiStyled } from '@mui/material'
+import { DialogContent } from '@mui/material';
 
+const CustomizedDialogContent = styled(DialogContent)(({ theme }) => ({
+  paddingTop: '0px !important'
+}));
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -35,8 +39,8 @@ padding: 0.75rem 0;
 align-items:flex-start;
 `
 const PointExplain = styled.div`
-margin-left: 1rem;
 font-size:${themeObj.font_size.font4};
+width:100%;
 `
 const CardContainer = styled.div`
 width:100%;
@@ -105,46 +109,61 @@ const getPointHistoryString = (item) => {
 
 }
 const PointContetnt = (props) => {
-  const { item, idx } = props;
+  const { item, idx, dnsData, pointType } = props;
 
+  const getPointItem = (item) => {
+    if (item?.type == 1) {
+      return (
+        <>
+          <Row style={{ fontWeight: 'bold' }}>
+            <div>{item?.mcht_name}</div>
+            <div style={{ marginLeft: 'auto', color: themeObj.blue }}>+{commarNumber(item?.point)}P</div>
+          </Row>
+          <Row style={{ color: themeObj.grey[500] }}>
+            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.updated_at.substring(0, 16)}</div>
+            <div style={{ paddingLeft: '0.25rem' }}>적립</div>
+            <Row style={{ marginLeft: 'auto' }}>
+              <div>잔액포인트:</div>
+              <div style={{ width: '58px', textAlign: 'end', fontWeight: 'bold' }}>{commarNumber(item?.sum_point)}P</div>
+            </Row>
+          </Row >
+
+        </>
+      )
+    } else if (item?.type == -1) {
+      return (
+        <>
+          <Row style={{ fontWeight: 'bold' }}>
+            <div>{item?.mcht_name}</div>
+            <div style={{ marginLeft: 'auto', color: themeObj.red }}>-{commarNumber(item?.point)}P</div>
+          </Row>
+          <Row style={{ color: themeObj.grey[500] }}>
+            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.updated_at.substring(0, 16)}</div>
+            <div style={{ paddingLeft: '0.25rem' }}>사용</div>
+            <Row style={{ marginLeft: 'auto' }}>
+              <div>잔액포인트:</div>
+              <div style={{ width: '58px', textAlign: 'end', fontWeight: 'bold' }}>{commarNumber(item?.sum_point)}P</div>
+            </Row>
+          </Row>
+        </>
+      )
+    }
+  }
   return (
     <>
-      <PointContainer>
-        <img src={item?.profile_img}
-          style={{ height: '72px', borderRadius: '10px' }} />
-        <PointExplain style={{ width: '' }}>
-          <Row style={{ fontWeight: 'bold' }}>
-            <div style={{ width: '50px' }}>가맹점:</div>
-            <div>{item?.mcht_name}</div>
-          </Row>
-          <Row>
-            <Row>
-              <div style={{ width: '50px' }}>구매:</div>
-              <div style={{ width: '72px' }}>{commarNumber(item?.purchase_price)} &#8361;</div>
-            </Row>
-            <Row>
-              <div style={{ width: '50px' }}>적립:</div>
-              <div style={{ color: `${themeObj.blue}`, width: '72px' }}>+{commarNumber(item?.save_amount)} P</div>
-            </Row>
-          </Row>
-          <Row>
-            <Row>
-              <div style={{ width: '50px' }}>사용:</div>
-              <div style={{ color: `${themeObj.red}`, width: '72px' }}>-{commarNumber(item?.use_amount)} P</div>
-            </Row>
-            <Row style={{ fontWeight: 'bold' }}>
-              <div style={{ width: '50px' }}>변동:</div>
-              <div style={{ color: `${item?.save_amount - item?.use_amount >= 0 ? themeObj.blue : themeObj.red}`, width: '72px' }}>
-                {item?.save_amount - item?.use_amount >= 0 ? '+' : ''}
-                {commarNumber(item?.save_amount - item?.use_amount)} P
-              </div>
-            </Row>
-          </Row>
-          <Row style={{ margin: '0.25rem 0.25rem 0 0' }}>
-            <div style={{ color: themeObj.grey[500], marginLeft: '122px' }}>{item?.updated_at}</div>
-          </Row>
-        </PointExplain>
-      </PointContainer>
+      {pointType == 'all' || item?.type == pointType ?
+        <>
+          <PointContainer>
+            <PointExplain>
+              {getPointItem(item)}
+            </PointExplain>
+          </PointContainer>
+        </>
+        :
+        <>
+        </>
+      }
+
     </>
   )
 }
@@ -152,6 +171,7 @@ const DialogMemberships = (props) => {
   // ** State
   const { open, handleClose, dnsData, style, data, membershipCategory, mcht, theme } = props;
 
+  const [pointType, setPointType] = useState('all');
   const handleChange = (event, newValue) => {
     setTabValue(newValue)
   }
@@ -159,6 +179,7 @@ const DialogMemberships = (props) => {
   }, [])
   useEffect(() => {
     setTabValue(membershipCategory)
+    setPointType('all')
   }, [open])
 
   const [tabValue, setTabValue] = useState('')
@@ -166,32 +187,45 @@ const DialogMemberships = (props) => {
     <div>
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <DialogTitle id='full-screen-dialog-title' style={{}}>
+          <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '1rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
-              <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold' }}>
-                멤버십 자세히보기
+              <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold', fontSize: themeObj.font_size.font3 }}>
+                자세히보기
               </div>
             </Typography>
             <IconButton
               aria-label='close'
               onClick={handleClose}
-              sx={{ top: 16, right: 12, position: 'absolute', color: 'grey.500' }}
+              sx={{ top: 12, right: 12, position: 'absolute', color: 'grey.500' }}
             >
               <Icon icon='tabler:x' style={{ fontSize: themeObj.font_size.font1 }} />
             </IconButton>
           </DialogTitle>
-          <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '0' }}>
+          <CustomizedDialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <TabContext value={tabValue}>
               <TabList onChange={handleChange} aria-label='simple tabs example' variant='fullWidth'>
-                <Tab value='points' label='포인트' style={{ padding: '12px 16px', display: `${mcht?.point_flag == 1 ? '' : 'none'}` }} />
-                <Tab value='stamps' label='스탬프' style={{ padding: '12px 16px', display: `${mcht?.stamp_flag == 1 ? '' : 'none'}` }} />
-                <Tab value='coupons' label='쿠폰' style={{ padding: '12px 16px' }} />
+                <Tab value='points' label='포인트' style={{ padding: '0 16px', display: `${mcht?.point_flag == 1 ? '' : 'none'}` }} />
+                <Tab value='stamps' label='스탬프' style={{ padding: '0 16px', display: `${mcht?.stamp_flag == 1 ? '' : 'none'}` }} />
+                <Tab value='coupons' label='쿠폰' style={{ padding: '0 16px' }} />
               </TabList>
               <TabPanel value='points' style={{ padding: '0' }}>
+                <Row style={{ marginTop: '0.5rem' }}>
+                  <Button variant={pointType == 'all' ? 'contained' : 'outlined'} size='small' onClick={() => setPointType('all')}>
+                    전체
+                  </Button>
+                  <Button variant={pointType == '1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
+                    적립
+                  </Button>
+                  <Button variant={pointType == '-1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
+                    사용
+                  </Button>
+                </Row>
                 {data?.points && data?.points.map((item, idx) => (
                   <>
                     <PointContetnt
                       item={item}
+                      dnsData={dnsData}
+                      pointType={pointType}
                     />
                   </>
                 ))}
@@ -217,7 +251,7 @@ const DialogMemberships = (props) => {
                 ))}
               </TabPanel>
             </TabContext>
-          </DialogContent>
+          </CustomizedDialogContent>
 
         </div>
         <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />

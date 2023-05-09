@@ -67,7 +67,7 @@ const More1 = (props) => {
         ))}
         <Menu onClick={() => router.push('/app/auth/privacy?type=0')}
         >
-          <Icon icon='iconoir:privacy-policy' style={{ fontSize: themeObj.font_size.font1 }} />
+          <Icon icon='icon-park-outline:message-privacy' style={{ fontSize: themeObj.font_size.font1, fontWeight: 'bold' }} />
           <MenuTitle>이용약관</MenuTitle>
         </Menu>
         <Menu onClick={() => router.push('/app/auth/privacy?type=1')}
