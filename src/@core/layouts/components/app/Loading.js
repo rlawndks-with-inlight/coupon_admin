@@ -2,7 +2,7 @@ const { useTheme } = require("@emotion/react");
 
 const Loading = (props) => {
   const theme = useTheme();
-  const { text } = props;
+  const { text, style } = props;
   return (
     <>
       <div style={{ width: '100%', display: 'flex', height: '100vh' }}>
@@ -10,7 +10,8 @@ const Loading = (props) => {
           style={{
             margin: 'auto',
             width: '100%',
-            maxWidth: '700px'
+            maxWidth: '700px',
+            ...style
           }} />
       </div>
     </>

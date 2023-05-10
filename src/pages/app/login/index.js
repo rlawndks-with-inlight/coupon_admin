@@ -30,6 +30,7 @@ import { themeObj } from 'src/@core/layouts/components/app/style-component'
 import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
 import Loading from 'src/@core/layouts/components/app/Loading'
 import { onPostWebview } from 'src/@core/utils/webview-connect'
+import DialogLoading from 'src/@core/layouts/components/app/DialogLoading'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -59,9 +60,7 @@ const Login = ({ dns_data }) => {
   })
   const [dnsData, setDnsData] = useState({})
   const [loading, setLoading] = useState(true);
-  const [dnsLoadingFlag, setDnsLoadingFlag] = useState(false);
-  const [authLoadingFlag, setAuthLoadingFlag] = useState(false);
-
+  const [snsLoading, setSnsLoading] = useState(false);
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
@@ -160,15 +159,16 @@ const Login = ({ dns_data }) => {
 
   const onSnsLogin = async (data) => {
     try {
+      setSnsLoading(true)
       let result = await onSignIn({
         dns: window.location.hostname,
         phone_num: data?.phone_num,
         login_type: data?.login_type,
         token: data?.id
       })
-
+      setSnsLoading(false);
     } catch (err) {
-      console.log(err)
+      setSnsLoading(false);
       if (err?.response?.status == 403) {
         handleLoginOpen();
         setSnsData({
@@ -227,6 +227,14 @@ const Login = ({ dns_data }) => {
   }
   return (
     <>
+      {snsLoading ?
+        <>
+          <DialogLoading
+            theme={theme} />
+        </>
+        :
+        <>
+        </>}
       {loading ?
         <>
           <Loading />
