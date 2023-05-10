@@ -195,7 +195,6 @@ const DialogLoginForm = (props) => {
         })
       } catch (err) {
         console.log(err)
-        alert(JSON.stringify(err?.response?.status))
         if (err?.response?.status == 403) {
           let result = await onSignUp({
             dns: dnsData?.dns,
