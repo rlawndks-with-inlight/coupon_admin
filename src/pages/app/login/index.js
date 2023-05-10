@@ -62,8 +62,6 @@ const Login = ({ dns_data }) => {
   const [dnsLoadingFlag, setDnsLoadingFlag] = useState(false);
   const [authLoadingFlag, setAuthLoadingFlag] = useState(false);
 
-  const [bridgeData, setBridgeData] = useState({});
-
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
@@ -76,17 +74,17 @@ const Login = ({ dns_data }) => {
 
       if (event.method == 'kakao_login') {
         if (event?.data?.id) {
-          if (event?.data?.phone) {//폰번호저장시
+          if (event?.data?.phone) {//기기에 폰번호 저장시
             onLogin({
               id: event?.data?.id,
-              type: 1,
+              login_type: 1,
               phone: event?.data?.phone
             });
-          } else { //폰번호 저장 아닐시
+          } else { //기기에 폰번호 저장 아닐시
             handleLoginOpen();
             setSnsData({
               id: event?.data?.id,
-              type: 1
+              login_type: 1,
             })
           }
         }
@@ -165,7 +163,7 @@ const Login = ({ dns_data }) => {
       const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
         dns: window.location.hostname,
         phone_num: data?.phone,
-        login_type: data?.type,
+        login_type: data?.login_type,
         token: data?.id,
       });
 
@@ -184,7 +182,10 @@ const Login = ({ dns_data }) => {
     }
   }
   const [loginOpen, setLoginOpen] = useState(false);
-  const [snsData, setSnsData] = useState({});
+  const [snsData, setSnsData] = useState({
+    id: undefined,
+    login_type: 0,
+  });
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {

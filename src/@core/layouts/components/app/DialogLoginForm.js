@@ -124,45 +124,94 @@ const DialogLoginForm = (props) => {
       toast.error(err?.response?.data?.message);
     }
   }
+  const onSignUp = async (data) => {
+    let obj = {
+      dns: data?.dns,
+      phone_num: data?.phone_num,
+      login_type: data?.login_type,
+      phone_token: getCookie('phone_token')
+    }
+    if (data?.login_type != 0) {
+      obj['sns_token'] = data?.sns_token
+    }
+    const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, obj)
+    return;
+  }
+  const onSignIn = async (data) => {
+    const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+      dns: data?.dns,
+      phone_num: data?.phone_num,
+      login_type: data?.login_type,
+      token: data?.token,
+    });
+    if (window.ReactNativeWebView) {
+      await onPostWebview('phone_save', { phone: values?.phone_num })
+    }
+    await setCookie('o', response?.data?.access_token, {
+      path: "/",
+      secure: process.env.COOKIE_SECURE,
+      sameSite: process.env.COOKIE_SAME_SITE,
+    });
+    if (response?.status == 200 && response?.data?.user) {
+      await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+      router.push('/app/home');
+    }
+  }
   const onConfirm = async () => {
-    try {
-      if (!isSendSms) {
-        toast.error('휴대폰 인증번호를 발송해 주세요.');
-        return;
-      }
-      if (!isCheckPhone) {
-        toast.error('휴대폰 인증을 완료해 주세요.');
-        return;
-      }
-      if (!values.is_exist) {
-        const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, {
+    if (!isSendSms) {
+      toast.error('휴대폰 인증번호를 발송해 주세요.');
+      return;
+    }
+    if (!isCheckPhone) {
+      toast.error('휴대폰 인증을 완료해 주세요.');
+      return;
+    }
+    if (snsData?.login_type == 0) {//일반 휴대폰 로그인
+      try {
+        if (!values.is_exist) {//휴대폰으로 로그인일때 회원이 존재 안할때
+          let result = await onSignUp({
+            dns: dnsData?.dns,
+            phone_num: values?.phone_num,
+            login_type: 0,
+            phone_token: getCookie('phone_token')
+          })
+        }
+        let result = await onSignIn({
           dns: dnsData?.dns,
           phone_num: values?.phone_num,
           login_type: 0,
-          phone_token: getCookie('phone_token')
+          token: getCookie('phone_token')
         })
+      } catch (err) {
+        console.log(err)
       }
-      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
-        dns: dnsData?.dns,
-        phone_num: values?.phone_num,
-        login_type: 0,
-        token: getCookie('phone_token'),
-      });
-      if (window.ReactNativeWebView) {
-        onPostWebview('phone_save', { phone: values?.phone_num })
+    } else {//sns 로그인
+      try {
+        let result = await onSignIn({
+          dns: dnsData?.dns,
+          phone_num: values?.phone_num,
+          login_type: snsData?.login_type,
+          token: snsData?.id
+        })
+      } catch (err) {
+        console.log(err)
+        alert(JSON.stringify(err?.response?.status))
+        if (err?.response?.status == 403) {
+          let result = await onSignUp({
+            dns: dnsData?.dns,
+            phone_num: values?.phone_num,
+            login_type: snsData?.login_type,
+            phone_token: getCookie('phone_token'),
+            sns_token: snsData?.id
+          })
+          let result2 = await onSignIn({
+            dns: dnsData?.dns,
+            phone_num: values?.phone_num,
+            login_type: snsData?.login_type,
+            token: snsData?.id
+          })
+        }
       }
-      await setCookie('o', response?.data?.access_token, {
-        path: "/",
-        secure: process.env.COOKIE_SECURE,
-        sameSite: process.env.COOKIE_SAME_SITE,
-      });
-      if (response?.status == 200 && response?.data?.user) {
-
-        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        router.push('/app/home');
-      }
-    } catch (err) {
-      console.log(err)
     }
   }
   const [timeLeft, setTimeLeft] = useState(180);
@@ -280,7 +329,7 @@ const DialogLoginForm = (props) => {
                   </InputAdornment>
                 }}
               />
-
+              { }
             </Content>
           </DialogContent>
           <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
