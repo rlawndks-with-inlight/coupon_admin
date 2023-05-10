@@ -75,10 +75,10 @@ const Login = ({ dns_data }) => {
       if (event.method == 'kakao_login') {
         if (event?.data?.id) {
           if (event?.data?.phone) {//기기에 폰번호 저장시
-            onLogin({
+            onSnsLogin({
               id: event?.data?.id,
               login_type: 1,
-              phone: event?.data?.phone
+              phone_num: event?.data?.phone
             });
           } else { //기기에 폰번호 저장 아닐시
             handleLoginOpen();
@@ -158,27 +158,64 @@ const Login = ({ dns_data }) => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
 
-  const onLogin = async (data) => {
+  const onSnsLogin = async (data) => {
     try {
-      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+      let result = await onSignIn({
         dns: window.location.hostname,
-        phone_num: data?.phone,
+        phone_num: data?.phone_num,
         login_type: data?.login_type,
-        token: data?.id,
-      });
-
-      await setCookie('o', response?.data?.access_token, {
-        path: "/",
-        secure: process.env.COOKIE_SECURE,
-        sameSite: process.env.COOKIE_SAME_SITE,
-      });
-      if (response?.status == 200 && response?.data?.user) {
-
-        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        router.push('/app/home');
-      }
+        token: data?.id
+      })
     } catch (err) {
       console.log(err)
+      if (err?.response?.status == 403) {
+        let result = await onSignUp({
+          dns: window.location.hostname,
+          phone_num: data?.phone_num,
+          login_type: data?.login_type,
+          sns_token: data?.id,
+          phone_token: getCookie('phone_token'),
+        })
+        let result2 = await onSignIn({
+          dns: window.location.hostname,
+          phone_num: data?.phone_num,
+          login_type: data?.login_type,
+          token: data?.id
+        })
+      }
+    }
+  }
+  const onSignUp = async (data) => {
+    let obj = {
+      dns: data?.dns,
+      phone_num: data?.phone_num,
+      login_type: data?.login_type,
+      phone_token: getCookie('phone_token')
+    }
+    if (data?.login_type != 0) {
+      obj['sns_token'] = data?.sns_token
+    }
+    const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, obj)
+    return;
+  }
+  const onSignIn = async (data) => {
+    const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+      dns: data?.dns,
+      phone_num: data?.phone_num,
+      login_type: data?.login_type,
+      token: data?.token,
+    });
+    if (window.ReactNativeWebView) {
+      await onPostWebview('phone_save', { phone: data?.phone_num })
+    }
+    await setCookie('o', response?.data?.access_token, {
+      path: "/",
+      secure: process.env.COOKIE_SECURE,
+      sameSite: process.env.COOKIE_SAME_SITE,
+    });
+    if (response?.status == 200 && response?.data?.user) {
+      await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+      router.push('/app/home');
     }
   }
   const [loginOpen, setLoginOpen] = useState(false);
@@ -209,6 +246,8 @@ const Login = ({ dns_data }) => {
             dnsData={dnsData}
             router={router}
             snsData={snsData}
+            onSignUp={onSignUp}
+            onSignIn={onSignIn}
             style={{
               color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
               background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,

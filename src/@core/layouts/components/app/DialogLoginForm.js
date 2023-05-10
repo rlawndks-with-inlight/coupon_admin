@@ -61,7 +61,7 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
 }
 const DialogLoginForm = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing, dnsData, style, router, snsData } = props;
+  const { open, handleClose, onKeepGoing, dnsData, style, router, snsData, onSignIn, onSignUp } = props;
 
   const theme = useTheme();
 
@@ -124,39 +124,7 @@ const DialogLoginForm = (props) => {
       toast.error(err?.response?.data?.message);
     }
   }
-  const onSignUp = async (data) => {
-    let obj = {
-      dns: data?.dns,
-      phone_num: data?.phone_num,
-      login_type: data?.login_type,
-      phone_token: getCookie('phone_token')
-    }
-    if (data?.login_type != 0) {
-      obj['sns_token'] = data?.sns_token
-    }
-    const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, obj)
-    return;
-  }
-  const onSignIn = async (data) => {
-    const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
-      dns: data?.dns,
-      phone_num: data?.phone_num,
-      login_type: data?.login_type,
-      token: data?.token,
-    });
-    if (window.ReactNativeWebView) {
-      await onPostWebview('phone_save', { phone: values?.phone_num })
-    }
-    await setCookie('o', response?.data?.access_token, {
-      path: "/",
-      secure: process.env.COOKIE_SECURE,
-      sameSite: process.env.COOKIE_SAME_SITE,
-    });
-    if (response?.status == 200 && response?.data?.user) {
-      await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-      router.push('/app/home');
-    }
-  }
+
   const onConfirm = async () => {
     if (!isSendSms) {
       toast.error('휴대폰 인증번호를 발송해 주세요.');
