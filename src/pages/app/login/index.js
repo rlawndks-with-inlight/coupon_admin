@@ -166,21 +166,14 @@ const Login = ({ dns_data }) => {
         login_type: data?.login_type,
         token: data?.id
       })
+
     } catch (err) {
       console.log(err)
       if (err?.response?.status == 403) {
-        let result = await onSignUp({
-          dns: window.location.hostname,
-          phone_num: data?.phone_num,
-          login_type: data?.login_type,
-          sns_token: data?.id,
-          phone_token: getCookie('phone_token'),
-        })
-        let result2 = await onSignIn({
-          dns: window.location.hostname,
-          phone_num: data?.phone_num,
-          login_type: data?.login_type,
-          token: data?.id
+        handleLoginOpen();
+        setSnsData({
+          id: data?.id,
+          login_type: 1,
         })
       }
     }
