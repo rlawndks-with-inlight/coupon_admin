@@ -12,6 +12,10 @@ const NaverMap = (props) => {
     if (!dnsData) {
       return;
     }
+    let dns_data = dnsData;
+    if (typeof dns_data == 'string') {
+      dns_data = JSON.parse(dns_data);
+    }
     const location = new naver.maps.LatLng(center?.lat, center?.lng);
     //지도 그리기
     const map = (mapRef.current = new naver.maps.Map('map', {
@@ -32,10 +36,10 @@ const NaverMap = (props) => {
         y: markers[0]?.lat,
       }, //마커 좌표
     }
-    if (dnsData?.map_marker_img) {
+    if (dns_data?.map_marker_img) {
       markerOptions = Object.assign(markerOptions, {
         icon: {
-          url: dnsData?.map_marker_img,
+          url: dns_data?.map_marker_img,
         },
       })
     }
