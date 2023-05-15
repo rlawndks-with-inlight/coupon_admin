@@ -37,10 +37,12 @@ const NaverMap = (props) => {
       }, //마커 좌표
     }
     if (dns_data?.map_marker_img) {
+      const iconStyle = `<img src="${dns_data?.map_marker_img}" style="width:22px; height:33px;">`;
       markerOptions = Object.assign(markerOptions, {
         icon: {
-          url: dns_data?.map_marker_img,
-          size: new naver.maps.Size(22, 33),
+          content: [iconStyle].join(""),
+          //url: dns_data?.map_marker_img,
+          //size: new naver.maps.Size(22, 33),
         },
       })
     }
