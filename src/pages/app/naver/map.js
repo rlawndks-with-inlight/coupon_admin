@@ -5,7 +5,6 @@ import NaverMap from 'src/@core/layouts/components/app/NaverMap';
 
 const Map = (props) => {
   const router = useRouter();
-
   return (
     <>
       <NaverMap
