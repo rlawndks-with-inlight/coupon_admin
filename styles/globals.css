@@ -28,6 +28,9 @@ input[type='color']::-moz-color-swatch {
   width: 600px;
   height: 480px;
 }
+.shop-icon {
+  font-size: 102px;
+}
 .slick-dots {
   bottom: 1vw !important;
 }
@@ -150,6 +153,9 @@ div.membership-barcode > svg > g > text {
 @media (max-width: 650px) {
   .item-img {
     height: 65.73vw;
+  }
+  .shop-icon {
+    font-size: 45px;
   }
 }
 @media (max-width: 320px) {

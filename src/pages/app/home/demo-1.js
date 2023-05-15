@@ -141,11 +141,11 @@ const getProfileImg = (theme, item) => {
       }
     }
   }
-  if (img_src) {
-    return <MerchandiseImg src={img_src} style={style} />
-  } else {
-    return <Icon icon='fluent:building-shop-20-filled' style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : themeObj.grey[500]}`, fontSize: '54px', margin: 'auto' }} />
-  }
+  // if (img_src) {
+  //   return <MerchandiseImg src={img_src} style={style} />
+  // } else {
+  return <Icon icon='solar:shop-2-outline' className='shop-icon' style={{ color: `${theme.palette.mode == 'dark' ? '#fff' : themeObj.grey[500]}`, margin: 'auto' }} />
+  //}
 }
 const Merchandise = (props) => {
 
