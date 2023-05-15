@@ -36,6 +36,7 @@ const More1 = (props) => {
 
         <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name || user?.phone_num} 님</Font1>
         <Menu onClick={() => {
+          router.push('/app/auth/')
         }}
         >
           <Icon icon='material-symbols:settings-outline' style={{ fontSize: themeObj.font_size.font1 }} />
