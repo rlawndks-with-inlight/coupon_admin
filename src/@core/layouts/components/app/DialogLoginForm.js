@@ -184,7 +184,6 @@ const DialogLoginForm = (props) => {
   const [timeLeft, setTimeLeft] = useState(180);
   return (
     <div>
-
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
