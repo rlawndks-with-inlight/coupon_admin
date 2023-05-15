@@ -53,7 +53,6 @@ const Merchandise1 = (props) => {
     setMembershipCategory(category)
     handleMembershipOpen();
   }
-  console.log(dnsData)
   return (
     <>
       <DialogMemberships

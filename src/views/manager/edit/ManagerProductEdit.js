@@ -147,7 +147,6 @@ const ManagerProductEdit = (props) => {
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
       }
     }
-    console.log(obj)
     return;
 
     editItem(obj);
