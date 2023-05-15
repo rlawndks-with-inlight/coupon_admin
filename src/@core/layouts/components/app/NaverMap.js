@@ -40,6 +40,7 @@ const NaverMap = (props) => {
       markerOptions = Object.assign(markerOptions, {
         icon: {
           url: dns_data?.map_marker_img,
+          size: new naver.maps.Size(22, 33),
         },
       })
     }
