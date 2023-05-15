@@ -149,7 +149,7 @@ const Merchandise1 = (props) => {
           <div style={{ height: '340px' }} />
         </>
       }
-      <MapBox src={decodeURI(`http://172.30.1.90:3000/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}></MapBox>
+      <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}></MapBox>
     </>
   )
 }
