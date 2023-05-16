@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
+import FallbackSpinner from 'src/@core/components/spinner';
 
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
 import NaverMap from 'src/@core/layouts/components/app/NaverMap';
@@ -163,7 +164,20 @@ const Merchandise1 = (props) => {
         </>
         :
         <>
-          <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}></MapBox>
+          {mapLoading ?
+            <>
+              <NoneMapBox>
+                <FallbackSpinner sx={{ height: '100%', margin: 'auto' }} />
+              </NoneMapBox>
+            </>
+            :
+            <>
+            </>
+          }
+
+          <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}
+            onLoad={() => setMapLoading(false)}
+          ></MapBox>
         </>
       }
     </>
@@ -179,4 +193,15 @@ const MapBox = styled.iframe`
      height: 60vw;
 }
 `;
+const NoneMapBox = styled.div`
+width: 1200px;
+height: 600px;
+margin: 0 auto;
+border: none;
+display:flex;
+@media (max-width: 1200px) {
+  width: 100%;
+   height: 60vw;
+}
+`
 export default Merchandise1;
