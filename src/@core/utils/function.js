@@ -185,13 +185,13 @@ export const getMyPageParamByNumber = (num) => {
   else if (num == 30)
     return 'users'
   else if (num == 35)
-    return 'users'
+    return 'operators'
   else if (num == 40)
-    return 'users'
+    return 'operators'
   else if (num == 45)
-    return 'users'
+    return 'operators'
   else if (num == 50)
-    return 'users'
+    return 'operators'
   else
     return '잘못된레벨'
 }
