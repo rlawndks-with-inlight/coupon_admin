@@ -174,7 +174,6 @@ const Merchandise1 = (props) => {
             <>
             </>
           }
-
           <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}
             onLoad={() => setMapLoading(false)}
           ></MapBox>
