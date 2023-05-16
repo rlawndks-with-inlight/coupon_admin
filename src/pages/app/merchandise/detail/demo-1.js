@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
+import NaverMap from 'src/@core/layouts/components/app/NaverMap';
 import { ContentWrapper, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
 import { commarNumber, getLocation } from 'src/@core/utils/function';
 import styled from 'styled-components';
@@ -41,7 +42,6 @@ const Merchandise1 = (props) => {
     func: {
       router,
     } } = props;
-
   const [mapLoading, setMapLoading] = useState(true);
   const [membershipOpen, setMembershipOpen] = useState(false);
   const [membershipCategory, setMembershipCategory] = useState('point')
@@ -148,7 +148,24 @@ const Merchandise1 = (props) => {
           <div style={{ height: '340px' }} />
         </>
       }
-      <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}></MapBox>
+      {window.location.host == process.env.MAIN_FRONT_URL ?
+        <>
+          <NaverMap
+            center={{
+              lat: mcht?.location?.coordinates[1],
+              lng: mcht?.location?.coordinates[0],
+            }}
+            markers={[
+              { lat: mcht?.location?.coordinates[1], lng: mcht?.location?.coordinates[0], }
+            ]}
+            dnsData={dnsData}
+          />
+        </>
+        :
+        <>
+          <MapBox src={decodeURI(`https://${process.env.MAIN_FRONT_URL}/app/naver/map?lat=${mcht?.location?.coordinates[1]}&lng=${mcht?.location?.coordinates[0]}&dns_data=${encodeURIComponent(JSON.stringify(dnsData))}`)}></MapBox>
+        </>
+      }
     </>
   )
 }
