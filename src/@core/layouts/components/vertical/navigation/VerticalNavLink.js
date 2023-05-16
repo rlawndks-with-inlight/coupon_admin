@@ -107,17 +107,23 @@ const VerticalNavLink = ({
   const anotherLinks = [
     {
       name: 'log',
-      link: `https://backend.comagain.kr/log-viewer?o=${getCookie('o')}`
+      link: `https://backend.comagain.kr/log-viewer?o=${getCookie('o')}`,
+      type: 'new_tab'
     },
     {
       name: 'guide',
-      link: `https://api.comagain.kr/docs/`
+      link: `https://api.comagain.kr/docs/`,
+      type: 'new_tab'
     },
   ]
   const goToLink = (item) => {
     let find_index = -1;
     find_index = anotherLinks.map(item => { return item.name }).findIndex((e) => e == item.path);
     if (find_index >= 0) {
+      if (anotherLinks[find_index].type == 'new_tab') {
+        window.open(anotherLinks[find_index].link)
+        return '#'
+      }
       return anotherLinks[find_index].link
     }
     return item.path === undefined ? '/' : `${item.path}`;
