@@ -87,8 +87,12 @@ const Login = ({ dns_data }) => {
             })
           }
         }
-      } else if (1) {
-
+      } else if (event.method == 'logined') {// 로그인 정보 불러오기
+        onSignIn({
+          token: event?.data?.token,
+          login_type: event?.data?.login_type,
+          phone_num: event?.data?.phone
+        })
       }
     }
     const isUIWebView = () => {
@@ -130,6 +134,9 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
+      if (window.ReactNativeWebView) {
+        onPostWebview('logined');
+      }
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -192,24 +199,29 @@ const Login = ({ dns_data }) => {
     return;
   }
   const onSignIn = async (data) => {
-    const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
-      dns: data?.dns,
-      phone_num: data?.phone_num,
-      login_type: data?.login_type,
-      token: data?.token,
-    });
-    if (window.ReactNativeWebView) {
-      await onPostWebview('phone_save', { phone: data?.phone_num })
+    try {
+      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+        dns: window.location.hostname,
+        phone_num: data?.phone_num,
+        login_type: data?.login_type,
+        token: data?.token,
+      });
+      if (window.ReactNativeWebView) {
+        await onPostWebview('phone_save', { phone: data?.phone_num, token: data?.token, login_type: data?.login_type })
+      }
+      await setCookie('o', response?.data?.access_token, {
+        path: "/",
+        secure: process.env.COOKIE_SECURE,
+        sameSite: process.env.COOKIE_SAME_SITE,
+      });
+      if (response?.status == 200 && response?.data?.user) {
+        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+        router.push('/app/home');
+      }
+    } catch (err) {
+      alert(err)
     }
-    await setCookie('o', response?.data?.access_token, {
-      path: "/",
-      secure: process.env.COOKIE_SECURE,
-      sameSite: process.env.COOKIE_SAME_SITE,
-    });
-    if (response?.status == 200 && response?.data?.user) {
-      await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-      router.push('/app/home');
-    }
+
   }
   const [loginOpen, setLoginOpen] = useState(false);
   const [snsData, setSnsData] = useState({
