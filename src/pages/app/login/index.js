@@ -132,26 +132,28 @@ const Login = ({ dns_data }) => {
     }
   }
   const checkAuth = async () => {
-    try {
+    if (window.ReactNativeWebView) {
       await onPostWebview('logined');
-
-      const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
-        headers: {
-          "Authorization": `Bearer ${getCookie('o')}`,
-          "Accept": "application/json",
-          "Content-Type": "application/json",
+    } else {
+      try {
+        const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
+          headers: {
+            "Authorization": `Bearer ${getCookie('o')}`,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+        if (response_auth?.id > 0) {
+          await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
+          setTimeout(() => {
+            router.push('/app/home');
+          }, 1300)
         }
-      });
-      if (response_auth?.id > 0) {
-        await setLocalStorage(LOCALSTORAGE.USER_DATA, response_auth);
+      } catch (err) {
         setTimeout(() => {
-          router.push('/app/home');
+          setLoading(false);
         }, 1300)
       }
-    } catch (err) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1300)
     }
   }
   const handleChange = prop => event => {
