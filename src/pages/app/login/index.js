@@ -217,6 +217,7 @@ const Login = ({ dns_data }) => {
         router.push('/app/home');
       }
     } catch (err) {
+      setLoading(false);
       console.log(err)
     }
 
