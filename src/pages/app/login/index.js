@@ -134,9 +134,7 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
-      if (window.ReactNativeWebView) {
-        onPostWebview('logined');
-      }
+      onPostWebview('logined');
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
@@ -206,9 +204,7 @@ const Login = ({ dns_data }) => {
         login_type: data?.login_type,
         token: data?.token,
       });
-      if (window.ReactNativeWebView) {
-        await onPostWebview('phone_save', { phone: data?.phone_num, token: data?.token, login_type: data?.login_type })
-      }
+      await onPostWebview('phone_save', { phone: data?.phone_num, token: data?.token, login_type: data?.login_type })
       await setCookie('o', response?.data?.access_token, {
         path: "/",
         secure: process.env.COOKIE_SECURE,
@@ -231,11 +227,7 @@ const Login = ({ dns_data }) => {
   const handleLoginClose = () => setLoginOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const onClickKakaoButton = () => {
-    if (window.ReactNativeWebView) {
-      onPostWebview('kakao_login');
-    } else {
-
-    }
+    onPostWebview('kakao_login');
   }
   return (
     <>
