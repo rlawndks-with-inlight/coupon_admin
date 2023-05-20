@@ -89,9 +89,9 @@ const Login = ({ dns_data }) => {
         }
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         onSignIn({
-          token: event?.data?.token,
-          login_type: event?.data?.login_type,
-          phone_num: event?.data?.phone
+          token: (event?.data?.token ?? "").toString(),
+          login_type: (event?.data?.login_type ?? "0").toString(),
+          phone_num: (event?.data?.phone ?? "").toString()
         })
       }
     }
