@@ -206,7 +206,7 @@ const Login = ({ dns_data }) => {
         login_type: data?.login_type,
         token: (data?.token).toString(),
       });
-      await onPostWebview('phone_save', { phone: data?.phone_num, token: (data?.token).toString(), login_type: data?.login_type })
+      await onPostWebview('phone_save', { phone: data?.phone_num, token: (data?.token).toString(), login_type: (data?.login_type).toString() })
       await setCookie('o', response?.data?.access_token, {
         path: "/",
         secure: process.env.COOKIE_SECURE,
