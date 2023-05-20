@@ -133,7 +133,8 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     try {
-      onPostWebview('logined');
+      await onPostWebview('logined');
+
       const { data: response_auth } = await axiosIns().post('/api/v1/auth/ok', {}, {
         headers: {
           "Authorization": `Bearer ${getCookie('o')}`,
