@@ -125,7 +125,6 @@ const Login = ({ dns_data }) => {
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
     } catch (err) {
-      console.log(err);
       toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
         router.push('/404');
@@ -202,9 +201,9 @@ const Login = ({ dns_data }) => {
         dns: window.location.hostname,
         phone_num: data?.phone_num,
         login_type: data?.login_type,
-        token: data?.token,
+        token: (data?.token).toString(),
       });
-      await onPostWebview('phone_save', { phone: data?.phone_num, token: data?.token, login_type: data?.login_type })
+      await onPostWebview('phone_save', { phone: data?.phone_num, token: (data?.token).toString(), login_type: data?.login_type })
       await setCookie('o', response?.data?.access_token, {
         path: "/",
         secure: process.env.COOKIE_SECURE,
@@ -215,7 +214,7 @@ const Login = ({ dns_data }) => {
         router.push('/app/home');
       }
     } catch (err) {
-      alert(err)
+      console.log(err)
     }
 
   }
