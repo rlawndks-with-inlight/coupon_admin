@@ -252,6 +252,7 @@ export const handleLogout = async (router, link_) => {
         "Content-Type": "application/json",
       }
     });
+    onPostWebview('logout')
     if (response?.status == 200) {
       await deleteCookie('o');
       await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
@@ -343,6 +344,7 @@ export const detetimeFormat = (datetime) => {
   return `${datetime.substring(0, 4)}년 ${datetime.substring(5, 7)}월 ${datetime.substring(8, 10)}일 ${datetime.substring(11, 19)}`
 }
 import { useEffect, useState } from 'react'
+import { onPostWebview } from "./webview-connect";
 
 function easeOutExpo(t) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
