@@ -33,7 +33,7 @@ const Home = () => {
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
+    dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
     let query_keys = Object.keys(router.query);
     for (var i = 0; i < query_keys.length; i++) {
