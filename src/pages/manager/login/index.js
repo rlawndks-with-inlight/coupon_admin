@@ -149,6 +149,7 @@ const LoginV1 = ({ dns_data }) => {
         router.push('/manager/users');
       }
     } catch (err) {
+      console.log(err)
       let push_lick = await processCatch(err);
       if (push_lick == -1) {
         router.back();

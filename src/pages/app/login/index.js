@@ -199,28 +199,23 @@ const Login = ({ dns_data }) => {
     return;
   }
   const onSignIn = async (data) => {
-    try {
-      const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
-        dns: window.location.hostname,
-        phone_num: data?.phone_num,
-        login_type: data?.login_type,
-        token: (data?.token).toString(),
-      });
-      await onPostWebview('phone_save', { phone: data?.phone_num, token: (data?.token).toString(), login_type: (data?.login_type).toString() })
-      await setCookie('o', response?.data?.access_token, {
-        path: "/",
-        secure: process.env.COOKIE_SECURE,
-        sameSite: process.env.COOKIE_SAME_SITE,
-      });
-      if (response?.status == 200 && response?.data?.user) {
-        await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
-        router.push('/app/home');
-      }
-    } catch (err) {
-      setLoading(false);
-      console.log(err)
+    const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
+      dns: window.location.hostname,
+      phone_num: data?.phone_num,
+      login_type: data?.login_type,
+      token: (data?.token).toString(),
+    });
+    await onPostWebview('phone_save', { phone: data?.phone_num, token: (data?.token).toString(), login_type: (data?.login_type).toString() })
+    await setCookie('o', response?.data?.access_token, {
+      path: "/",
+      secure: process.env.COOKIE_SECURE,
+      sameSite: process.env.COOKIE_SAME_SITE,
+    });
+    if (response?.status == 200 && response?.data?.user) {
+      await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
+      router.push('/app/home');
     }
-
+    return;
   }
   const [loginOpen, setLoginOpen] = useState(false);
   const [snsData, setSnsData] = useState({
