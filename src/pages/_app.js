@@ -113,14 +113,19 @@ App.getInitialProps = async ({ Component, ctx }) => {
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
-
-    const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
-    const json = (await res.json());
-    return {
-      dns_data: json
+    if (ctx.req?.headers) {
+      const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
+      const json = (await res.json());
+      return {
+        dns_data: json
+      }
+    } else {
+      return {
+        dns_data: {}
+      }
     }
+
   } catch (err) {
-    console.log(err)
     return {
       dns_data: {}
     }
