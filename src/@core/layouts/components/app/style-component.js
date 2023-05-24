@@ -127,3 +127,10 @@ export const Font5 = styled.div`
 font-size:${themeObj.font_size.font5};
 `
 
+export const InputLabel = styled.div`
+
+@media (max-width: 350px) {
+  font-size:${themeObj.font_size.font4};
+
+  }
+`

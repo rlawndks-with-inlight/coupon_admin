@@ -158,6 +158,30 @@ div.membership-barcode > svg > g > text {
     font-size: 45px;
   }
 }
+
+@media (max-width: 350px) {
+  /* div.MuiFormControl-root > div > fieldset > legend {
+    font-size: 12px;
+    width: 100px;
+    transition: none;
+    white-space: normal;
+  } */
+  div.phone-num > div > fieldset > legend > span {
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    width: 82px !important;
+  }
+  div.phone-check > div > fieldset > legend > span {
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    width: 66px !important;
+  }
+}
+
 @media (max-width: 320px) {
   .merchandise-content {
     width: 100%;

@@ -10,9 +10,9 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 
 // ** Icon Imports
-import { InputAdornment, TextField } from '@mui/material'
+import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@emotion/react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { axiosIns } from 'src/@fake-db/backend'
@@ -25,6 +25,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
 import { onPostWebview } from 'src/@core/utils/webview-connect'
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -32,6 +33,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 const Title = styled.div`
 font-size: ${themeObj.font_size.font4};
 padding: 0 0 1rem 0;
+@media (max-width:350px) {
+  font-size:${themeObj.font_size.font5};
+}
 `
 const Content = styled.div`
 display:flex;
@@ -40,6 +44,16 @@ width:100%;
 max-width:700px;
 margin: 0 auto;
 `
+const CustomTextField = styled(TextField)`
+@media (max-width:350px) {
+  label {
+    font-size: ${themeObj.font_size.font4};
+    margin-top: 0.15rem;
+  }
+}
+
+`;
+
 function Countdown({ seconds, timeLeft, setTimeLeft }) {
 
 
@@ -76,6 +90,8 @@ const DialogLoginForm = (props) => {
   })
   const [isSendSms, setIsSendSms] = useState(false);
   const [isCheckPhone, setIsCheckPhone] = useState(false);
+
+  const isMobile = useMediaQuery('(max-width: 350px)')
 
   useEffect(() => {
     if (open) {
@@ -212,13 +228,14 @@ const DialogLoginForm = (props) => {
                   padding: '1rem 0 0.5rem 0',
                   fontWeight: 'bold'
                 }}>휴대전화번호 입력</Title>
-              <TextField
+              <CustomTextField
                 id='icons-start-adornment'
                 label='휴대전화번호 입력'
                 size='small'
                 onFocus={() => {
                   setFocusItem('phone_num');
                 }}
+                className='phone-num'
                 onBlur={() => {
                   if (focusItem == 'phone_num') {
                     setFocusItem('')
@@ -227,6 +244,10 @@ const DialogLoginForm = (props) => {
                 onChange={handleChange('phone_num')}
                 style={{ width: '100%', marginTop: '0.5rem' }}
                 InputProps={{
+                  style: {
+                    fontSize: (isMobile ? themeObj.font_size.font4 : ''),
+                    height: '38px'
+                  },
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
                       style={{
@@ -235,7 +256,8 @@ const DialogLoginForm = (props) => {
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
-                        background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`
+                        background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`,
+                        width: '100px'
                       }}
                       onClick={requestVerifyCode}
                     >
@@ -244,15 +266,16 @@ const DialogLoginForm = (props) => {
                   </InputAdornment>
                 }}
               />
-              <TextField
+              <CustomTextField
                 id='icons-start-adornment'
                 label='인증번호 입력'
                 size='small'
                 style={{
                   width: '100%',
                   paddingRight: '0',
-                  marginTop: '1rem'
+                  marginTop: '1rem',
                 }}
+                className='phone-check'
                 onFocus={() => {
                   setFocusItem('rand_num');
                 }}
@@ -262,8 +285,11 @@ const DialogLoginForm = (props) => {
                   }
                 }}
                 onChange={handleChange('rand_num')}
-                className='rand_num'
                 InputProps={{
+                  style: {
+                    fontSize: (isMobile ? themeObj.font_size.font4 : ''),
+                    height: '38px'
+                  },
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
                       style={{
@@ -272,9 +298,9 @@ const DialogLoginForm = (props) => {
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
-                        width: `${isCheckPhone ? '101.59px' : ''}`,
                         background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : '')}`,
-                        color: '#fff'
+                        color: '#fff',
+                        width: '100px'
                       }}
                       onClick={requestVerify}
                       disabled={isCheckPhone}
@@ -293,6 +319,9 @@ const DialogLoginForm = (props) => {
                       <>
                       </>}
                   </InputAdornment>
+                }}
+                InputLabelProps={{
+
                 }}
               />
               { }

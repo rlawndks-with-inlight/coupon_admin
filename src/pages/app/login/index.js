@@ -31,6 +31,7 @@ import DialogLoginForm from 'src/@core/layouts/components/app/DialogLoginForm'
 import Loading from 'src/@core/layouts/components/app/Loading'
 import { onPostWebview } from 'src/@core/utils/webview-connect'
 import DialogLoading from 'src/@core/layouts/components/app/DialogLoading'
+import { useMediaQuery } from '@mui/material'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -64,6 +65,7 @@ const Login = ({ dns_data }) => {
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
+  const isMobile = useMediaQuery('(max-width: 350px)')
   useEffect(() => {
     settings();
   }, [])
@@ -303,7 +305,7 @@ const Login = ({ dns_data }) => {
                   {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
                 </Box>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
+                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000', fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     onClickKakaoButton();
                   }
@@ -317,7 +319,7 @@ const Login = ({ dns_data }) => {
                       카카오로 로그인
                     </>}
                 </Button>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     handleLoginOpen();
                   }
