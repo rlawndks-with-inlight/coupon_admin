@@ -203,6 +203,15 @@ const Login = ({ dns_data }) => {
     return;
   }
   const onSignIn = async (data) => {
+    if (!data?.token) {
+      throw {
+        err: {
+          response: {
+            status: 409
+          }
+        }
+      }
+    }
     const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
       dns: window.location.hostname,
       phone_num: data?.phone_num,
