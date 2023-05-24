@@ -257,7 +257,8 @@ const DialogLoginForm = (props) => {
                         fontSize: themeObj.font_size.font3,
                         padding: '8px',
                         background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`,
-                        width: '100px'
+                        width: '100px',
+                        height: '39px'
                       }}
                       onClick={requestVerifyCode}
                     >
@@ -297,10 +298,10 @@ const DialogLoginForm = (props) => {
                         borderTopLeftRadius: '0',
                         borderBottomLeftRadius: '0',
                         fontSize: themeObj.font_size.font3,
-                        padding: '8px',
                         background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : '')}`,
                         color: '#fff',
-                        width: '100px'
+                        width: '100px',
+                        height: '39px'
                       }}
                       onClick={requestVerify}
                       disabled={isCheckPhone}
