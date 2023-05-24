@@ -68,7 +68,7 @@ const Login = ({ dns_data }) => {
     settings();
   }, [])
   useEffect(() => {
-    const onMessageHandler = (e) => {
+    const onMessageHandler = async (e) => {
       const event = JSON.parse(e.data)
 
       if (event.method == 'kakao_login') {
@@ -89,16 +89,14 @@ const Login = ({ dns_data }) => {
         }
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
-          onSignIn({
+          let result = await onSignIn({
             token: (event?.data?.token ?? "").toString(),
             login_type: (event?.data?.login_type ?? "0").toString(),
             phone_num: (event?.data?.phone ?? "").toString()
           })
         } catch (err) {
           setLoading(false);
-          console.log(err)
         }
-
       }
     }
     const isUIWebView = () => {
@@ -203,10 +201,8 @@ const Login = ({ dns_data }) => {
     }
     const res_sign_up = await axiosIns().post(`/api/v1/app/auth/sign-up`, obj)
     return;
-
   }
   const onSignIn = async (data) => {
-
     const response = await axiosIns().post('/api/v1/app/auth/sign-in', {
       dns: window.location.hostname,
       phone_num: data?.phone_num,
@@ -223,9 +219,9 @@ const Login = ({ dns_data }) => {
       await setLocalStorage(LOCALSTORAGE.USER_DATA, response?.data?.user);
       router.push('/app/home');
     }
-
-
+    return;
   }
+
   const [loginOpen, setLoginOpen] = useState(false);
   const [snsData, setSnsData] = useState({
     id: undefined,
