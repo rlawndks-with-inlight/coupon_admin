@@ -246,7 +246,7 @@ const DialogLoginForm = (props) => {
                 InputProps={{
                   style: {
                     fontSize: (isMobile ? themeObj.font_size.font4 : ''),
-                    height: '38px'
+                    height: '39px'
                   },
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'
@@ -288,7 +288,7 @@ const DialogLoginForm = (props) => {
                 InputProps={{
                   style: {
                     fontSize: (isMobile ? themeObj.font_size.font4 : ''),
-                    height: '38px'
+                    height: '39px'
                   },
                   endAdornment: <InputAdornment position='end'>
                     <Button variant='contained' color='secondary'

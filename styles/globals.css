@@ -167,17 +167,9 @@ div.membership-barcode > svg > g > text {
     white-space: normal;
   } */
   div.phone-num > div > fieldset > legend > span {
-    font-size: 12px;
-    padding-left: 0;
-    padding-right: 0;
-    display: flex;
     width: 82px !important;
   }
   div.phone-check > div > fieldset > legend > span {
-    font-size: 12px;
-    padding-left: 0;
-    padding-right: 0;
-    display: flex;
     width: 66px !important;
   }
 }
