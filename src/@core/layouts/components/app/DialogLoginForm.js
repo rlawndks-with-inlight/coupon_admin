@@ -26,6 +26,9 @@ import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
 import { onPostWebview } from 'src/@core/utils/webview-connect'
 
+import { Pane, Label, TextInput } from 'evergreen-ui';
+import TextInputComponent from './TextInputComponent'
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -324,7 +327,9 @@ const DialogLoginForm = (props) => {
 
                 }}
               />
-              { }
+              <TextInputComponent
+                dnsData={dnsData} />
+
             </Content>
           </DialogContent>
           <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
