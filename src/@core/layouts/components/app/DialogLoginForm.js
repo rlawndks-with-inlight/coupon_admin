@@ -19,15 +19,10 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import $ from 'jquery';
 import { Toaster, toast } from 'react-hot-toast'
-import { setLocalStorage } from 'src/@core/utils/local-storage'
-import { LOCALSTORAGE } from 'src/data/data'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
-import { onPostWebview } from 'src/@core/utils/webview-connect'
 
-import { Pane, Label, TextInput } from 'evergreen-ui';
-import TextInputComponent from './TextInputComponent'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
