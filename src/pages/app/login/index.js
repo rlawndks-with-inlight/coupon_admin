@@ -305,7 +305,7 @@ const Login = ({ dns_data }) => {
                   {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
                 </Box>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: themeObj.yellow, color: '#000' }} sx={{ mb: 4 }} onClick={() => {
+                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: '#f7e600', color: '#000', fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     onClickKakaoButton();
                   }
@@ -316,7 +316,10 @@ const Login = ({ dns_data }) => {
                     </>
                     :
                     <>
-                      카카오로 로그인
+                      <img src='/icon/kakao.png' style={{ height: '1rem', marginRight: '0.5rem' }} />
+                      <div>
+                        카카오로 로그인
+                      </div>
                     </>}
                 </Button>
                 <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
