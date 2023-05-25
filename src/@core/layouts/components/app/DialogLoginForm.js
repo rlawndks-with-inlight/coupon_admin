@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent'
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@emotion/react'
 import styled, { css } from 'styled-components'
-import { Font4, themeObj } from './style-component'
+import { Font3, Font4, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
@@ -65,11 +65,11 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
     return () => clearInterval(timer);
   }, [seconds]);
 
-  return <Font4 style={{
-    right: '110px',
+  return <Font3 style={{
+    right: '100px',
     position: 'absolute',
     color: themeObj.red
-  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font4>;
+  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font3>;
 }
 const DialogLoginForm = (props) => {
   // ** State
@@ -229,6 +229,7 @@ const DialogLoginForm = (props) => {
                 id='icons-start-adornment'
                 label='휴대전화번호 입력'
                 size='small'
+                type='tel'
                 onFocus={() => {
                   setFocusItem('phone_num');
                 }}
@@ -251,10 +252,10 @@ const DialogLoginForm = (props) => {
                         transform: `translateX(14px)`,
                         borderTopLeftRadius: '0',
                         borderBottomLeftRadius: '0',
-                        fontSize: themeObj.font_size.font3,
+                        fontSize: themeObj.font_size.font4,
                         padding: '8px',
                         background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`,
-                        width: '100px',
+                        width: '90px',
                         height: '39px'
                       }}
                       onClick={requestVerifyCode}
@@ -268,6 +269,7 @@ const DialogLoginForm = (props) => {
                 id='icons-start-adornment'
                 label='인증번호 입력'
                 size='small'
+                type='tel'
                 style={{
                   width: '100%',
                   paddingRight: '0',
@@ -294,10 +296,10 @@ const DialogLoginForm = (props) => {
                         transform: `translateX(14px)`,
                         borderTopLeftRadius: '0',
                         borderBottomLeftRadius: '0',
-                        fontSize: themeObj.font_size.font3,
+                        fontSize: themeObj.font_size.font4,
                         background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : '')}`,
                         color: '#fff',
-                        width: '100px',
+                        width: '90px',
                         height: '39px'
                       }}
                       onClick={requestVerify}
