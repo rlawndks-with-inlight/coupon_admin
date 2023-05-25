@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent'
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@emotion/react'
 import styled, { css } from 'styled-components'
-import { themeObj } from './style-component'
+import { Font4, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
@@ -53,9 +53,7 @@ const CustomTextField = styled(TextField)`
 }
 
 `;
-
 function Countdown({ seconds, timeLeft, setTimeLeft }) {
-
 
   useEffect(() => {
     // 1초마다 timeLeft 값을 1씩 감소시킵니다.
@@ -67,11 +65,11 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
     return () => clearInterval(timer);
   }, [seconds]);
 
-  return <div style={{
+  return <Font4 style={{
     right: '110px',
     position: 'absolute',
     color: themeObj.red
-  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</div>;
+  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font4>;
 }
 const DialogLoginForm = (props) => {
   // ** State
@@ -199,7 +197,6 @@ const DialogLoginForm = (props) => {
   const [timeLeft, setTimeLeft] = useState(180);
   return (
     <div>
-
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
