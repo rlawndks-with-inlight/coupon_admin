@@ -32,6 +32,7 @@ import Loading from 'src/@core/layouts/components/app/Loading'
 import { onPostWebview } from 'src/@core/utils/webview-connect'
 import DialogLoading from 'src/@core/layouts/components/app/DialogLoading'
 import { useMediaQuery } from '@mui/material'
+import { Icon } from '@iconify/react'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -62,6 +63,7 @@ const Login = ({ dns_data }) => {
   const [dnsData, setDnsData] = useState({})
   const [loading, setLoading] = useState(true);
   const [snsLoading, setSnsLoading] = useState(false);
+  const [isIos, setIsIos] = useState(false);
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
@@ -89,8 +91,11 @@ const Login = ({ dns_data }) => {
             })
           }
         }
+      } else if (event.method == 'apple_login') {
+
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
+          setIsIos(event?.data?.token == 'ios');
           let result = await onSignIn({
             token: (event?.data?.token ?? "").toString(),
             login_type: (event?.data?.login_type ?? "0").toString(),
@@ -243,6 +248,9 @@ const Login = ({ dns_data }) => {
   const onClickKakaoButton = () => {
     onPostWebview('kakao_login');
   }
+  const onClickAppleButton = () => {
+    onPostWebview('apple_login');
+  }
   return (
     <>
       {snsLoading ?
@@ -305,6 +313,29 @@ const Login = ({ dns_data }) => {
                   {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
               <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
                 </Box>
+                {isIos ?
+                  <>
+                    <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: `${theme.palette.mode == 'dark' ? '#fff' : '#000'}`, color: `${theme.palette.mode == 'dark' ? '#000' : '#fff'}`, fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
+                      if (!loading) {
+                        onClickAppleButton();
+                      }
+                    }}>
+                      {loading ?
+                        <>
+                          Loading...
+                        </>
+                        :
+                        <>
+                          <Icon icon='ic:baseline-apple' style={{ fontSize: '1rem', marginRight: '0.5rem' }} />
+                          <div>
+                            애플 로그인
+                          </div>
+                        </>}
+                    </Button>
+                  </>
+                  :
+                  <>
+                  </>}
                 <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}`, background: '#f7e600', color: '#000', fontSize: (isMobile ? themeObj.font_size.font4 : '') }} sx={{ mb: 4 }} onClick={() => {
                   if (!loading) {
                     onClickKakaoButton();
