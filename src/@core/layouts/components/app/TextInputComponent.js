@@ -11,9 +11,8 @@ const CustomTextInput = styled(TextInput)`
 `;
 
 const TextInputComponent = (props) => {
-  const { dnsData } = props;
+  const { dnsData, value, setValue } = props;
   const [isFocused, setIsFocused] = useState(false);
-  const [textFieldValue, setTextFieldValue] = useState("")
   const handleFocus = () => {
     setIsFocused(true);
   };
@@ -27,15 +26,15 @@ const TextInputComponent = (props) => {
       <Label
         htmlFor="myInput"
         position="absolute"
-        top={isFocused || textFieldValue ? '-9px' : '10px'}
+        top={isFocused || value ? '-9px' : '10px'}
         left={'10px'}
         zIndex={1}
         transition="top 0.2s ease-in-out, font-size 0.2s ease-in-out, color 0.2s ease-in-out"
         background="white"
         paddingLeft="4px"
         paddingRight="4px"
-        fontSize={isFocused || textFieldValue ? themeObj.font_size.font5 : themeObj.font_size.font3}
-        color={isFocused || textFieldValue ? dnsData?.theme_css?.main_color : themeObj.grey[500]}
+        fontSize={isFocused || value ? themeObj.font_size.font5 : themeObj.font_size.font3}
+        color={isFocused || value ? dnsData?.theme_css?.main_color : themeObj.grey[500]}
       >
         인증번호 입력
       </Label>
@@ -46,9 +45,10 @@ const TextInputComponent = (props) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={(e) => {
-          setTextFieldValue(e.target.value)
+          setValue(e.target.value)
         }}
       />
+
     </Pane>
   );
 }

@@ -327,9 +327,10 @@ const DialogLoginForm = (props) => {
 
                 }}
               />
-              <TextInputComponent
+              {/* <TextInputComponent
                 dnsData={dnsData} />
-
+              <TextInputComponent
+                dnsData={dnsData} /> */}
             </Content>
           </DialogContent>
           <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
