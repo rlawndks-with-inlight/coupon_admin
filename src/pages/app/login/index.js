@@ -95,7 +95,7 @@ const Login = ({ dns_data }) => {
 
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
-          setIsIos(event?.data?.token == 'ios');
+          setIsIos(event?.data?.os == 'ios');
           let result = await onSignIn({
             token: (event?.data?.token ?? "").toString(),
             login_type: (event?.data?.login_type ?? "0").toString(),
