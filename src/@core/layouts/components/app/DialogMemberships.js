@@ -7,7 +7,6 @@ import Dialog from '@mui/material/Dialog'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogTitle from '@mui/material/DialogTitle'
-import DialogActions from '@mui/material/DialogActions'
 import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
@@ -22,7 +21,6 @@ import { commarNumber, detetimeFormat } from 'src/@core/utils/function'
 import Barcode from 'react-barcode'
 import QRCode from 'qrcode.react'
 import styled from 'styled-components'
-import { styled as muiStyled } from '@mui/material'
 import { DialogContent } from '@mui/material';
 
 const CustomizedDialogContent = styled(DialogContent)(({ theme }) => ({
@@ -210,15 +208,43 @@ const DialogMemberships = (props) => {
               </TabList>
               <TabPanel value='points' style={{ padding: '0' }}>
                 <Row style={{ marginTop: '0.5rem' }}>
-                  <Button variant={pointType == 'all' ? 'contained' : 'outlined'} size='small' onClick={() => setPointType('all')}>
-                    전체
-                  </Button>
-                  <Button variant={pointType == '1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
-                    적립
-                  </Button>
-                  <Button variant={pointType == '-1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
-                    사용
-                  </Button>
+                  {pointType == 'all' ?
+                    <>
+                      <Button variant={'contained'} size='small' onClick={() => setPointType('all')}>
+                        전체
+                      </Button>
+                    </>
+                    :
+                    <>
+                      <Button variant={'outlined'} size='small' onClick={() => setPointType('all')}>
+                        전체
+                      </Button>
+                    </>}
+                  {pointType == '1' ?
+                    <>
+                      <Button variant={'contained'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
+                        적립
+                      </Button>
+                    </>
+                    :
+                    <>
+                      <Button variant={'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
+                        적립
+                      </Button>
+                    </>}
+                  {pointType == '-1' ?
+                    <>
+                      <Button variant={'contained'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
+                        사용
+                      </Button>
+                    </>
+                    :
+                    <>
+                      <Button variant={'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
+                        사용
+                      </Button>
+                    </>}
+
                 </Row>
                 {data?.points && data?.points.map((item, idx) => (
                   <>

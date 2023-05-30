@@ -24,7 +24,6 @@ import { LOCALSTORAGE } from 'src/data/data'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
-import { onPostWebview } from 'src/@core/utils/webview-connect'
 import Loading from './Loading'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
