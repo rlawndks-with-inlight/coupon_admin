@@ -253,6 +253,19 @@ const Login = ({ dns_data }) => {
   }
   return (
     <>
+      <DialogLoginForm
+        open={loginOpen}
+        handleClose={handleLoginClose}
+        dnsData={dnsData}
+        router={router}
+        snsData={snsData}
+        onSignUp={onSignUp}
+        onSignIn={onSignIn}
+        style={{
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
+        }}
+      />
       {snsLoading ?
         <>
           <DialogLoading
@@ -267,19 +280,7 @@ const Login = ({ dns_data }) => {
         </>
         :
         <>
-          <DialogLoginForm
-            open={loginOpen}
-            handleClose={handleLoginClose}
-            dnsData={dnsData}
-            router={router}
-            snsData={snsData}
-            onSignUp={onSignUp}
-            onSignIn={onSignIn}
-            style={{
-              color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
-              background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
-            }}
-          />
+
           <Box className='content-center' style={{
             display: `${loading ? 'none' : ''}`,
           }}>
