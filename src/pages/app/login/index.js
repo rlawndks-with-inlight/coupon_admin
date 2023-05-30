@@ -55,7 +55,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 const Login = ({ dns_data }) => {
 
-  const { saveSettings } = useSettings()
+  const { settings, saveSettings } = useSettings()
 
   // ** State
   const [values, setValues] = useState({
@@ -73,7 +73,7 @@ const Login = ({ dns_data }) => {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 350px)')
   useEffect(() => {
-    settings();
+    onSettings();
   }, [])
   useEffect(() => {
     const onMessageHandler = async (e) => {
@@ -109,7 +109,7 @@ const Login = ({ dns_data }) => {
           setLoading(false);
         }
       } else if (event.method == 'mode') {
-        saveSettings(event?.data?.mode ?? "light");
+        saveSettings({ ...settings, mode: event?.data?.mode ?? "light" });
       }
     }
     const isUIWebView = () => {
@@ -123,7 +123,7 @@ const Login = ({ dns_data }) => {
       receiver.removeEventListener('message', onMessageHandler)
     }
   }, [])
-  const settings = async () => {
+  const onSettings = async () => {
     setLoading(true);
     await checkDns();
     await checkAuth();
