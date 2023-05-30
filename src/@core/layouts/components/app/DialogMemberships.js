@@ -208,43 +208,15 @@ const DialogMemberships = (props) => {
               </TabList>
               <TabPanel value='points' style={{ padding: '0' }}>
                 <Row style={{ marginTop: '0.5rem' }}>
-                  {pointType == 'all' ?
-                    <>
-                      <Button variant={'contained'} size='small' onClick={() => setPointType('all')}>
-                        전체
-                      </Button>
-                    </>
-                    :
-                    <>
-                      <Button variant={'outlined'} size='small' onClick={() => setPointType('all')}>
-                        전체
-                      </Button>
-                    </>}
-                  {pointType == '1' ?
-                    <>
-                      <Button variant={'contained'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
-                        적립
-                      </Button>
-                    </>
-                    :
-                    <>
-                      <Button variant={'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
-                        적립
-                      </Button>
-                    </>}
-                  {pointType == '-1' ?
-                    <>
-                      <Button variant={'contained'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
-                        사용
-                      </Button>
-                    </>
-                    :
-                    <>
-                      <Button variant={'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
-                        사용
-                      </Button>
-                    </>}
-
+                  <Button variant={pointType == 'all' ? 'contained' : 'outlined'} size='small' onClick={() => setPointType('all')}>
+                    전체
+                  </Button>
+                  <Button variant={pointType == '1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
+                    적립
+                  </Button>
+                  <Button variant={pointType == '-1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
+                    사용
+                  </Button>
                 </Row>
                 {data?.points && data?.points.map((item, idx) => (
                   <>
