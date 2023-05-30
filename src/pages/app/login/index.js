@@ -33,6 +33,7 @@ import { onPostWebview } from 'src/@core/utils/webview-connect'
 import DialogLoading from 'src/@core/layouts/components/app/DialogLoading'
 import { useMediaQuery } from '@mui/material'
 import { Icon } from '@iconify/react'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -53,6 +54,9 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const Login = ({ dns_data }) => {
+
+  const { saveSettings } = useSettings()
+
   // ** State
   const [values, setValues] = useState({
     id: '',
@@ -104,6 +108,8 @@ const Login = ({ dns_data }) => {
         } catch (err) {
           setLoading(false);
         }
+      } else if (event.method == 'mode') {
+        saveSettings(event?.data?.mode ?? "light");
       }
     }
     const isUIWebView = () => {
@@ -144,6 +150,7 @@ const Login = ({ dns_data }) => {
   }
   const checkAuth = async () => {
     if (window.ReactNativeWebView) {
+      await onPostWebview('mode');
       await onPostWebview('logined');
     } else {
       try {

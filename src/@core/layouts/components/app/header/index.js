@@ -13,6 +13,7 @@ import { getBackgroundColor, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
+import { onPostWebview } from "src/@core/utils/webview-connect";
 
 const TopWrapper = styled.header`
 width:90%;
@@ -118,12 +119,17 @@ const Header = () => {
   const handleModeChange = mode => {
     saveSettings({ ...settings, mode: mode })
   }
-  const handleModeToggle = () => {
+  const handleModeToggle = async () => {
+    let mode = '';
     if (settings.mode === 'light') {
-      handleModeChange('dark')
+      mode = 'dark';
     } else {
-      handleModeChange('light')
+      mode = 'light';
     }
+    handleModeChange(mode);
+    onPostWebview('mode', {
+      mode: mode
+    })
   }
   const getCategoryList = async () => {
     try {

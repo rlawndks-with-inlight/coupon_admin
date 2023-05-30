@@ -91,19 +91,20 @@ const Merchandise = () => {
         </>
         :
         <>
-          {getDemo(1, {
-            data: {
-              data,
-              mcht,
-              dnsData,
-              theme,
-              history
-            },
-            func: {
-              router
-            }
-          })}
         </>}
+      {getDemo(1, {
+        data: {
+          data,
+          mcht,
+          dnsData,
+          theme,
+          history,
+          loading
+        },
+        func: {
+          router
+        }
+      })}
     </>
   )
 }
