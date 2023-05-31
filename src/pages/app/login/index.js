@@ -96,7 +96,21 @@ const Login = ({ dns_data }) => {
           }
         }
       } else if (event.method == 'apple_login') {
-
+        if (event?.data?.id) {
+          if (event?.data?.phone) {//기기에 폰번호 저장시
+            onSnsLogin({
+              id: event?.data?.id,
+              login_type: 2,
+              phone_num: event?.data?.phone
+            });
+          } else { //기기에 폰번호 저장 아닐시
+            handleLoginOpen();
+            setSnsData({
+              id: event?.data?.id,
+              login_type: 2,
+            })
+          }
+        }
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
           setIsIos(event?.data?.os == 'ios');
