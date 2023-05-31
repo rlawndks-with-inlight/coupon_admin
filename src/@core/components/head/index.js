@@ -26,7 +26,6 @@ const HeadContent = (props) => {
       } else {
         setDnsData(dns_data_)
       }
-
     } catch (err) {
       console.log(err);
     }

@@ -7,7 +7,6 @@ import { Provider } from 'react-redux'
 
 // ** Loader Import
 import NProgress from 'nprogress'
-
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
 
@@ -50,6 +49,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 
 import Script from 'next/script'
+import { returnMoment } from 'src/@core/utils/function'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
@@ -66,6 +66,7 @@ Router.events.on('routeChangeComplete', () => {
 
 // ** Configure JSS & ClassName
 const App = props => {
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
   const saveDnsData = () => {
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
@@ -114,7 +115,8 @@ App.getInitialProps = async ({ Component, ctx }) => {
       ? await Component.getInitialProps(ctx)
       : {};
     if (ctx.req?.headers) {
-      const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${ctx.req.headers.host.split(':')[0]}`);
+      const host = ctx.req.headers.host.split(':')[0];
+      const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
       const json = (await res.json());
       return {
         dns_data: json
@@ -124,7 +126,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
         dns_data: {}
       }
     }
-
   } catch (err) {
     return {
       dns_data: {}

@@ -36,6 +36,7 @@ const BlankLayout = ({ children }) => {
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = "{}"
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
