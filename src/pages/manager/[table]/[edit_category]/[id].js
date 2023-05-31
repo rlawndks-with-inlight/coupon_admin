@@ -176,7 +176,6 @@ const Edit = ({ dns_data }) => {
         saveText={'저장'}
         data={editConfirmData}
       />
-      {/* <HeadContent title={`${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'edit' ? '수정' : '추가'}`} dns_data={dns_data} /> */}
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
           {renderPage({

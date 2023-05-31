@@ -13,7 +13,6 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 // ** Demo Imports
 import FooterIllustrations from 'src/views/pages/misc/FooterIllustrations'
 import { useRouter } from 'next/router'
-import HeadContent from 'src/@core/components/head'
 
 // ** Styled Components
 const BoxWrapper = styled(Box)(({ theme }) => ({

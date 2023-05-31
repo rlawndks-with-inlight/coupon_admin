@@ -46,7 +46,6 @@ import '../../styles/globals.css'
 import { useEffect, useState } from 'react'
 import { setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
-import HeadContent from 'src/@core/components/head'
 
 import Script from 'next/script'
 import { returnMoment } from 'src/@core/utils/function'
