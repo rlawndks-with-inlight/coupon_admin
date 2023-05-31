@@ -71,7 +71,7 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
 }
 const DialogLoginForm = (props) => {
   // ** State
-  const { open, handleClose, onKeepGoing, dnsData, style, router, snsData, onSignIn, onSignUp } = props;
+  const { open, handleClose, onKeepGoing, dnsData, style, router, snsData, onSignIn, onSignUp, verificationCode } = props;
 
   const theme = useTheme();
 
@@ -95,6 +95,11 @@ const DialogLoginForm = (props) => {
       setIsCheckPhone(false)
     }
   }, [open])
+  useEffect(() => {
+    if (verificationCode) {
+      setValues({ ...values, ['rand_num']: verificationCode })
+    }
+  }, [verificationCode])
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }

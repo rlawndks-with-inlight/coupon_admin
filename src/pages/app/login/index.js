@@ -72,6 +72,7 @@ const Login = ({ dns_data }) => {
   const theme = useTheme();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 350px)')
+  const [verificationCode, setVerificationCode] = useState("");
   useEffect(() => {
     onSettings();
   }, [])
@@ -124,6 +125,8 @@ const Login = ({ dns_data }) => {
         }
       } else if (event.method == 'mode') {
         saveSettings({ ...settings, mode: event?.data?.mode ?? "light" });
+      } else if (event.method == 'verification_code') {
+        setVerificationCode(event?.data?.code);
       }
     }
     const isUIWebView = () => {
@@ -282,6 +285,7 @@ const Login = ({ dns_data }) => {
         snsData={snsData}
         onSignUp={onSignUp}
         onSignIn={onSignIn}
+        verificationCode={verificationCode}
         style={{
           color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : ''}`,
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
