@@ -43,13 +43,14 @@ import 'src/iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
 import '../../styles/globals.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import HeadContent from 'src/@core/components/head'
 
 import Script from 'next/script'
 import { returnMoment } from 'src/@core/utils/function'
+import Head from 'next/head'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
@@ -73,8 +74,28 @@ const App = props => {
   }
   useEffect(() => {
     saveDnsData();
+    getDnsData(dns_data);
   }, [])
+  const [dnsData, setDnsData] = useState({});
 
+  const getDnsData = async (dns_data_) => {
+    try {
+      if (!dns_data_) {
+        let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
+        dns_data = JSON.parse(dns_data);
+        if (!dns_data?.name) {
+          const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+          setDnsData(response?.data);
+        } else {
+          setDnsData(dns_data);
+        }
+      } else {
+        setDnsData(dns_data_)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =
@@ -84,7 +105,28 @@ const App = props => {
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        <HeadContent dns_data={dns_data} />
+        <Head>
+          <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
+          <meta
+            name='description'
+            content={(dns_data?.og_description || dnsData?.og_description) ?? ""}
+          />
+          <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
+          <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
+          <meta property="og:image" content={(dns_data?.og_img || dnsData?.og_img) ?? ""} />
+          <meta property="og:url" content={'https:' + (dns_data?.dns || dnsData?.dns) ?? ""} />
+          <meta property="og:description" content={(dns_data?.og_description || dnsData?.og_description) ?? ""} />
+          <meta name="author" content="purplevery" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=0" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
+          <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
+          <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
+        </Head>
         <Script
           strategy="beforeInteractive"
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
@@ -111,7 +153,9 @@ const App = props => {
 }
 App.getInitialProps = async ({ Component, ctx }) => {
   try {
-
+    const pageProps = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {};
     if (ctx.req?.headers) {
       const host = ctx.req.headers.host.split(':')[0];
       const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
