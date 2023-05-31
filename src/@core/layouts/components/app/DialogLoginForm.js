@@ -174,7 +174,7 @@ const DialogLoginForm = (props) => {
           token: snsData?.id
         })
       } catch (err) {
-        if (err?.response?.status == 409) {
+        if (err?.response?.status == 409 || err?.response?.status == 403) {
           let result = await onSignUp({
             dns: dnsData?.dns,
             phone_num: values?.phone_num,
