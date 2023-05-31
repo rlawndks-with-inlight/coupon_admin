@@ -22,6 +22,7 @@ import { Toaster, toast } from 'react-hot-toast'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
+import { onPostWebview } from 'src/@core/utils/webview-connect'
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -197,6 +198,11 @@ const DialogLoginForm = (props) => {
       }
     }
   }
+  useEffect(() => {
+    onPostWebview('message_time_left', {
+      time_left: timeLeft
+    })
+  }, [timeLeft])
   const [timeLeft, setTimeLeft] = useState(180);
   return (
     <div>
