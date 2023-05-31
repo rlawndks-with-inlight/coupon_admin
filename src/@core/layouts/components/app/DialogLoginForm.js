@@ -109,7 +109,7 @@ const DialogLoginForm = (props) => {
       const response = await axiosIns().post(`/api/v1/app/auth/verify/code`, {
         dns: dnsData?.dns,
         phone_num: values?.phone_num,
-        hash_key: '12345',
+        hash_key: 'xbTl1F9+TKm',
       })
       setValues({ ...values, ['is_exist']: response?.data?.is_exist })
       $('.rand_num').focus();
