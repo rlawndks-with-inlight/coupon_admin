@@ -89,7 +89,8 @@ padding-top:5rem;
 }
 
 `
-const Header = () => {
+const Header = (props) => {
+
   const router = useRouter();
   const theme = useTheme();
   const { settings, saveSettings } = useSettings();
@@ -128,7 +129,8 @@ const Header = () => {
     }
     handleModeChange(mode);
     onPostWebview('mode', {
-      mode: mode
+      mode: mode,
+      backgroundColor: `${mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
     })
   }
   const getCategoryList = async () => {

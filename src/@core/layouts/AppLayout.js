@@ -39,6 +39,7 @@ const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
+
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
@@ -51,6 +52,7 @@ const AppLayout = ({ children, scrollToTop }) => {
     }
     setDnsData(dns_data)
   }, [])
+
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{
       color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
