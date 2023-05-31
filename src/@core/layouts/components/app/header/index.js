@@ -127,11 +127,11 @@ const Header = (props) => {
     } else {
       mode = 'light';
     }
-    handleModeChange(mode);
     onPostWebview('mode', {
       mode: mode,
       backgroundColor: `${mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
     })
+    handleModeChange(mode);
   }
   const getCategoryList = async () => {
     try {
