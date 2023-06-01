@@ -184,6 +184,13 @@ const TableHeader = props => {
         return false;
       }
     }
+    if (param_table == 'points') {
+      if (user_data?.level == 45 || user_data?.level < objDataGridColumns[param_table]?.is_see_add_condition) {
+        return false;
+      } else {
+        return true;
+      }
+    }
     if (user_data?.level >= objDataGridColumns[param_table]?.is_see_add_condition) {
       return true;
     } else {

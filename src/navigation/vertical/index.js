@@ -126,7 +126,6 @@ const project_navigation = [
   //   ]
   // },
 ]
-const is_project = false;
 
 const navigation = () => {
   return project_navigation
