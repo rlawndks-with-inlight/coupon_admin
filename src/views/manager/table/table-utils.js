@@ -65,7 +65,6 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
           height: '32px', width: '32px'
         }
       }
-
       result = (<LazyLoadImage src={item} style={style} onClick={() => {
         onClickImage(item, 'img')
       }} />);
@@ -92,7 +91,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         <CustomChip rounded label='사용' skin='light' color='success' />
         :
         <CustomChip rounded label='사용안함' skin='light' color='error' />;
-      if (is_excel) result = item == 1 ? '사용' : '사용안함';
+      if (is_excel) result = (item == 1 ? '사용' : '사용안함');
 
     }
     if (column?.type == 'code_type') {//

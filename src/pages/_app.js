@@ -127,7 +127,6 @@ const App = props => {
       </Head>
       <Provider store={store}>
         <CacheProvider value={emotionCache}>
-
           <Script
             strategy="beforeInteractive"
             src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}

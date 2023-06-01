@@ -104,12 +104,16 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const excelFileExtension = '.xlsx';
   const excelFileName = `${param_table}_${returnMoment().substring(0, 10).replaceAll('-', '')}`;
-  let ignore_name_list = ['맨위로', '수정', '삭제', '관리'];
+  let ignore_name_list = ['맨위로', '수정', '삭제', '관리', '수정/삭제'];
   let name_list = [];
   let column_list = [];
   for (var i = 0; i < objDataGridColumns[param_table].columns.length; i++) {
-    if (!ignore_name_list.includes(objDataGridColumns[param_table].columns[i].name)) {
-      name_list.push(objDataGridColumns[param_table].columns[i].title)
+    if (!ignore_name_list.includes(objDataGridColumns[param_table].columns[i].title)) {
+      let name = objDataGridColumns[param_table].columns[i].title;
+      if (objDataGridColumns[param_table].columns[i]?.type_option?.search_option_label) {
+        name = objDataGridColumns[param_table].columns[i]?.type_option?.search_option_label + name
+      }
+      name_list.push(name)
       column_list.push(objDataGridColumns[param_table].columns[i])
     }
   }
@@ -117,9 +121,7 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   dns_data = JSON.parse(dns_data);
 
   const ws = XLSX.utils.aoa_to_sheet([
-    [`${param_table}_${returnMoment().substring(0, 10).replaceAll('-', '')}`]
-    , []
-    , name_list
+    name_list
   ]);
 
   let result = [...excelData];
@@ -127,7 +129,7 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   for (var i = 0; i < result.length; i++) {
     excel_list[i] = [];
     for (var j = 0; j < column_list.length; j++) {
-      let data = await getItemByType(result[i], column_list[j], param_table, undefined, undefined, true)
+      let data = await getItemByType(result[i], column_list[j], param_table, true, undefined, true)
       await excel_list[i].push(data);
     }
   }
