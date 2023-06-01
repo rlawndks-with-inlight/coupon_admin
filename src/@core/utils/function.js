@@ -104,7 +104,7 @@ export const excelDownload = async (excelData, objDataGridColumns, param_table) 
   const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const excelFileExtension = '.xlsx';
   const excelFileName = `${param_table}_${returnMoment().substring(0, 10).replaceAll('-', '')}`;
-  let ignore_name_list = ['맨위로', '수정', '삭제', '관리', '수정/삭제'];
+  let ignore_name_list = ['맨위로', '수정', '삭제', '관리', '수정/삭제', '포인트이력', '발행하기', '발행취소하기', '발행삭제하기', '유저지급하기', '사용하기', '사용취소하기'];
   let name_list = [];
   let column_list = [];
   for (var i = 0; i < objDataGridColumns[param_table].columns.length; i++) {
