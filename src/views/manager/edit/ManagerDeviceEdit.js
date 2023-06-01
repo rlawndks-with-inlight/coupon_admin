@@ -13,6 +13,8 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { LOCALSTORAGE } from 'src/data/data'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
+import _ from 'lodash'
+import { Autocomplete } from '@mui/material'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
@@ -47,11 +49,10 @@ const ManagerDeviceEdit = (props) => {
 
       const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       let partner_list = [...response?.data?.user_id?.partners];
-      let mcht_list = [...response?.data?.mcht_id];
+      let mcht_list = _.sortBy(response?.data?.mcht_id, 'user_name');
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
-      setMchtList(response?.data?.mcht_id);
       setPartnerList(response?.data?.user_id?.partners);
       if (response?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
@@ -63,6 +64,7 @@ const ManagerDeviceEdit = (props) => {
       } else {
         setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'], 'partner_id': partner_list[0]['id'] });
       }
+      setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
     } catch (err) {
       console.log(err);
     }
@@ -107,7 +109,7 @@ const ManagerDeviceEdit = (props) => {
           <Card>
             <CardContent>
               <Grid container spacing={5}>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
                     <Select
@@ -125,6 +127,18 @@ const ManagerDeviceEdit = (props) => {
 
                     </Select>
                   </FormControl>
+                </Grid> */}
+                <Grid item xs={12}>
+                  <Autocomplete
+                    id="mcht_id"
+                    defaultValue={_.find(mchtList, { mcht_id: values?.mcht_id })?.user_name}
+                    onChange={(e) => {
+                      let idx = e.target.id.split('-')[2];
+                      setValues({ ...values, mcht_id: mchtList[idx]?.id });
+                    }}
+                    options={mchtList && mchtList.map((option) => option.user_name)}
+                    renderInput={(params) => <TextField {...params} label="가맹점명" />}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
