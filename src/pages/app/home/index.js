@@ -46,7 +46,9 @@ const Home = () => {
     const onMessageHandler = async (e) => {
       const event = JSON.parse(e.data)
       if (event.method == 'get_location') {
-        console.log(event?.data?.location)
+        let location = event?.data;
+        setLocation(location);
+        getHomeContent(1, true, dnsData, location)
       }
     }
     const isUIWebView = () => {
