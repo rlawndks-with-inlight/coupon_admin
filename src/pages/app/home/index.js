@@ -76,6 +76,7 @@ const Home = () => {
       onPostWebview('get_location')
     } else {
       let location = await getLocation(true);
+      setLocation(location)
       getHomeContent(1, true, dns_data, location)
     }
   }
