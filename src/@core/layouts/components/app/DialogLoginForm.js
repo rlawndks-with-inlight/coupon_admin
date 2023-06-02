@@ -357,7 +357,7 @@ const DialogLoginForm = (props) => {
                 dnsData={dnsData} /> */}
             </Content>
           </DialogContent>
-          <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
+          <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 4rem auto', height: '50px', width: '90%', maxWidth: '500px' }} >
             로그인
           </Button>
         </div>
