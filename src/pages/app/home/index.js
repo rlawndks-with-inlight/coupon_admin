@@ -48,7 +48,7 @@ const Home = () => {
       if (event.method == 'get_location') {
         let location = event?.data;
         setLocation(location);
-        getHomeContent(1, true, dnsData, location)
+        getHomeContent(1, true, dns_data, location)
       }
     }
     const isUIWebView = () => {
