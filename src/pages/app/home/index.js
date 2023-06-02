@@ -46,9 +46,9 @@ const Home = () => {
     const onMessageHandler = async (e) => {
       const event = JSON.parse(e.data)
       if (event.method == 'get_location') {
-        let location = event?.data;
-        setLocation(location);
-        getHomeContent(1, true, dns_data, location)
+        let location_ = event?.data;
+        setLocation(location_);
+        getHomeContent(1, true, dns_data, location_)
       }
     }
     const isUIWebView = () => {
@@ -75,9 +75,9 @@ const Home = () => {
     if (window.ReactNativeWebView) {
       onPostWebview('get_location')
     } else {
-      let location = await getLocation(true);
-      setLocation(location)
-      getHomeContent(1, true, dns_data, location)
+      let location_ = await getLocation(true);
+      setLocation(location_)
+      getHomeContent(1, true, dns_data, location_)
     }
   }
   const getHomeContent = async (pag, is_first, dns_data_, location) => {

@@ -313,7 +313,7 @@ const Home1 = (props) => {
                   </>
                   :
                   <>
-                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, location) }} ref={scrollRef} />
+                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, dnsData, location) }} ref={scrollRef} />
                   </>}
               </>}
           </ContentWrapper>
