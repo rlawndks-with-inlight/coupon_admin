@@ -17,7 +17,6 @@ const getDemo = (num, common) => {
 }
 
 const Home = () => {
-
   const router = useRouter();
   const theme = useTheme();
 

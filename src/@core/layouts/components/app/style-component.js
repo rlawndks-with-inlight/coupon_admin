@@ -77,6 +77,7 @@ export const themeObj = {
     font3: '13px',
     font4: '12px',
     font5: '10px',
+    font6: '9px',
   },
   grey: {
     50: '#FAFAFA',

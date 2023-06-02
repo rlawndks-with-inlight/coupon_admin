@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react"
 import AppLayout from "src/@core/layouts/AppLayout"
-import { Wrapper } from "src/@core/layouts/components/app/style-component"
-import { axiosIns } from "src/@fake-db/backend"
-import { getLocation, processCatch } from "src/@core/utils/function"
 import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"

@@ -50,8 +50,14 @@ const CustomTextField = styled(TextField)`
     margin-top: 0.15rem;
   }
 }
-
 `;
+const GreyContainer = styled.div`
+padding:0.5rem;
+border-radius:4px;
+font-size: ${themeObj.font_size.font5};
+margin-top:1rem;
+`
+
 function Countdown({ seconds, timeLeft, setTimeLeft }) {
 
   useEffect(() => {
@@ -226,7 +232,7 @@ const DialogLoginForm = (props) => {
           </DialogTitle>
           <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <Title style={{ padding: '0 0 1rem 0', margin: '0 auto', width: '100%', maxWidth: '700px' }}>
-              휴대전화번호를 등록하셔야 스탬프 적립이 가능합니다.
+              휴대전화번호를 등록하셔야 멤버십 적립이 가능합니다.
               <br />
               개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
             </Title>
@@ -335,6 +341,16 @@ const DialogLoginForm = (props) => {
 
                 }}
               />
+              <GreyContainer style={{ background: `${theme.palette.mode == 'dark' ? '' : themeObj.grey[100]}` }}>
+                <Title
+                  style={{
+                    padding: '0',
+                    fontWeight: 'bold'
+                  }}>휴대전화번호 입력</Title>
+                <div>목적: 스탬프 적립, 쿠폰사용 등 사용 및 취소정보, CS신청정보</div>
+                <div>항목: 휴대전화번호</div>
+                <div>보유기간: 회원탈퇴 즉시 또는 이용 목적 달성 즉시 파기</div>
+              </GreyContainer>
               {/* <TextInputComponent
                 dnsData={dnsData} />
               <TextInputComponent

@@ -288,7 +288,6 @@ export const getDnsData = async () => {
 }
 export function getLocation() {
   if (navigator.geolocation) {
-
     // GPS를 지원하면
     return new Promise(resolve => {
       navigator.geolocation.getCurrentPosition(

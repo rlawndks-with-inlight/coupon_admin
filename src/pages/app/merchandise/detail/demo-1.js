@@ -5,7 +5,7 @@ import FallbackSpinner from 'src/@core/components/spinner';
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
 import NaverMap from 'src/@core/layouts/components/app/NaverMap';
 import { ContentWrapper, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
-import { commarNumber, getLocation } from 'src/@core/utils/function';
+import { commarNumber } from 'src/@core/utils/function';
 import styled from 'styled-components';
 
 
