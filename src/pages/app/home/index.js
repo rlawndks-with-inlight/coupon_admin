@@ -9,6 +9,7 @@ import { useTheme } from "@emotion/react"
 import { useRef } from "react"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
+import { onPostWebview } from "src/@core/utils/webview-connect"
 
 
 const getDemo = (num, common) => {
@@ -28,6 +29,7 @@ const Home = () => {
   const [pageStack, setPageStack] = useState([]);
   const [dnsData, setDnsData] = useState({});
   const [isDataEnd, setIsDataEnd] = useState(false);
+  const [location, setLocation] = useState({});
   const PAGE_SIZE = 10;
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
@@ -40,7 +42,23 @@ const Home = () => {
     }
     setDnsData(dns_data)
     getTotalCount(dns_data)
-    getHomeContent(1, true, dns_data)
+    getLocate(dns_data)
+    const onMessageHandler = async (e) => {
+      const event = JSON.parse(e.data)
+      if (event.method == 'get_location') {
+        console.log(event?.data?.location)
+      }
+    }
+    const isUIWebView = () => {
+      return navigator.userAgent
+        .toLowerCase()
+        .match(/\(ip.*applewebkit(?!.*(version|crios))/)
+    }
+    const receiver = isUIWebView() ? window : document
+    receiver.addEventListener('message', onMessageHandler)
+    return () => {
+      receiver.removeEventListener('message', onMessageHandler)
+    }
   }, [])
   const getTotalCount = async (dns_data) => {
     try {
@@ -51,7 +69,15 @@ const Home = () => {
       console.log(err)
     }
   }
-  const getHomeContent = async (pag, is_first, dns_data_) => {
+  const getLocate = async (dns_data) => {
+    if (window.ReactNativeWebView) {
+      onPostWebview('get_location')
+    } else {
+      let location = await getLocation(true);
+      getHomeContent(1, true, dns_data, location)
+    }
+  }
+  const getHomeContent = async (pag, is_first, dns_data_, location) => {
     try {
       let dns_data = dns_data_;
       if (pageStack.includes(pag)) {
@@ -68,7 +94,6 @@ const Home = () => {
       if (is_first) {
         setLoading(true);
       }
-      let location = await getLocation(true);
       const response = await axiosIns().get(`/api/v1/app/home?latitude=${location?.latitude}&longitude=${location?.longitude}&radius=100&page=${pag}&page_size=${PAGE_SIZE}&brand_id=${dnsData?.id || dns_data?.id}`);
       if (is_first) {
         setData(response?.data);
@@ -108,7 +133,8 @@ const Home = () => {
               page: page,
               dnsData: dnsData,
               isDataEnd: isDataEnd,
-              total, total
+              total, total,
+              location: location
             },
             func: {
               onClickMembershipCategory,

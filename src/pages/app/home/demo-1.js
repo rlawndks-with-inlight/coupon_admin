@@ -221,7 +221,8 @@ const Home1 = (props) => {
       page,
       dnsData,
       isDataEnd,
-      total
+      total,
+      location
     },
     func: {
       onClickMembershipCategory,
@@ -312,7 +313,7 @@ const Home1 = (props) => {
                   </>
                   :
                   <>
-                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false) }} ref={scrollRef} />
+                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, location) }} ref={scrollRef} />
                   </>}
               </>}
           </ContentWrapper>
