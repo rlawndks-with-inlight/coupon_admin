@@ -357,7 +357,19 @@ const DialogLoginForm = (props) => {
                 dnsData={dnsData} /> */}
             </Content>
           </DialogContent>
-          <Button onClick={onConfirm} type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 4rem auto', height: '50px', width: '90%', maxWidth: '500px' }} >
+          <Button
+            color='secondary'
+            onClick={onConfirm}
+            type='submit'
+            variant='contained'
+            sx={{
+              mr: 2,
+              margin: 'auto auto 4rem auto',
+              height: '50px',
+              width: '90%',
+              maxWidth: '500px',
+              background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
+            }} >
             로그인
           </Button>
         </div>
@@ -366,5 +378,4 @@ const DialogLoginForm = (props) => {
     </div>
   )
 }
-
 export default DialogLoginForm
