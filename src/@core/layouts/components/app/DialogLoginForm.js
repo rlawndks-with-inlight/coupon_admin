@@ -346,7 +346,7 @@ const DialogLoginForm = (props) => {
                   style={{
                     padding: '0',
                     fontWeight: 'bold'
-                  }}>휴대전화번호 입력</Title>
+                  }}>개인정보 수집</Title>
                 <div>목적: 스탬프 적립, 쿠폰사용 등 사용 및 취소정보, CS신청정보</div>
                 <div>항목: 휴대전화번호</div>
                 <div>보유기간: 회원탈퇴 즉시 또는 이용 목적 달성 즉시 파기</div>
