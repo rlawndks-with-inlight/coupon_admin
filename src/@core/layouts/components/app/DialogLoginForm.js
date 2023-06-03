@@ -70,12 +70,22 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
     return () => clearInterval(timer);
   }, [seconds]);
 
-  return <Font3 style={{
-    right: '100px',
-    position: 'absolute',
-    top: '18px',
-    color: themeObj.red
-  }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font3>;
+  return (
+    <>
+      {timeLeft > 0 ?
+        <>
+          <Font3 style={{
+            right: '100px',
+            position: 'absolute',
+            top: '18px',
+            color: themeObj.red
+          }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font3>
+        </>
+        :
+        <>
+        </>}
+    </>
+  );
 }
 const DialogLoginForm = (props) => {
   // ** State
