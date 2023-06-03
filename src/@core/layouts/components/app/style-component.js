@@ -289,13 +289,7 @@ export const MakeInput = (props) => {
     </>
   )
 }
-export const MakeDialogFullScreen = () => {
-  const { } = props;
-  return (
-    <>
-    </>
-  )
-}
+
 const ButtonStyle = styled.button`
   position: relative;
   overflow: hidden;
@@ -325,6 +319,43 @@ export const MakeButton = (props) => {
       }}
         onClick={onClick}
       >{children}</ButtonStyle>
+    </>
+  )
+}
+
+const DialogBackground = styled.div`
+position:fixed;
+top:0;
+width:100vw;
+height:100vh;
+z-index: 9999;
+transition-duration: 300ms;
+`
+const DialogFullScreenStyle = styled.div`
+position:fixed;
+top:0;
+width:100vw;
+height:100vh;
+z-index: 10000;
+transition-duration: 300ms;
+right:-100vw;
+`
+export const MakeDialogFullScreen = (props) => {
+  const { children, open, onClose, dnsData } = props;
+  const theme = useTheme();
+  return (
+    <>
+      <DialogBackground style={{
+        visibility: `${open ? 'visible' : 'hidden'}`,
+        background: `${open ? 'rgba(51, 48, 60, 0.7)' : 'rgba(51, 48, 60, 0.1)'}`
+      }} />
+      <DialogFullScreenStyle style={{
+        //display: `${open ? '' : 'none'}`,
+        background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.options)?.app?.dark_background_color) : '#fff')}`,
+        right: `${open ? '0' : '-100vw'}`
+      }}>
+        {children}
+      </DialogFullScreenStyle>
     </>
   )
 }

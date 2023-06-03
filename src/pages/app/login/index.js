@@ -127,7 +127,7 @@ const Login = ({ dns_data }) => {
         saveSettings({ ...settings, mode: event?.data?.mode ?? "light" });
       } else if (event.method == 'verification_code') {
         setVerificationCode(event?.data?.code);
-      } 
+      }
     }
     const isUIWebView = () => {
       return navigator.userAgent

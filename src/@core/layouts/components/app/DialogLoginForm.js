@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent'
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@emotion/react'
 import styled, { css } from 'styled-components'
-import { Font3, Font4, MakeButton, MakeInput, themeObj } from './style-component'
+import { Font3, Font4, MakeButton, MakeDialogFullScreen, MakeInput, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
@@ -232,7 +232,7 @@ const DialogLoginForm = (props) => {
   }, [timeLeft])
   return (
     <div>
-      <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
+      <MakeDialogFullScreen fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
@@ -360,7 +360,7 @@ const DialogLoginForm = (props) => {
           </Button>
         </div>
         <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
-      </Dialog>
+      </MakeDialogFullScreen>
     </div>
   )
 }

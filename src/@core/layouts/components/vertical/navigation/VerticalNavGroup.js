@@ -232,10 +232,13 @@ const VerticalNavGroup = props => {
               transition: 'margin .25s ease-in-out',
               ...(parent && navCollapsed && !navHover ? {} : { mr: 2 }),
               ...(navCollapsed && !navHover ? { mr: 0 } : {}),
-              ...(parent && item.children ? { ml: 1.5, mr: 3.5 } : {})
+              ...(parent && item.children ? { ml: 1.5, mr: 3.5 } : {}),
+              ...(item?.menu_depth == 1 ? { ml: 3.5 } : {}),
+              ...(item?.menu_depth == 2 ? { ml: 5.5 } : {}),
             }}
           >
-            <UserIcon icon={icon} {...(parent && { fontSize: '0.625rem' })} />
+
+            <UserIcon icon={icon} {...(parent && { fontSize: '0.625rem', })} />
           </ListItemIcon>
           <MenuItemTextWrapper sx={{ ...menuGroupCollapsedStyles, ...(isSubToSub ? { ml: 2 } : {}) }}>
             <Typography
@@ -250,6 +253,7 @@ const VerticalNavGroup = props => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+
                 '& svg': {
                   transition: 'transform .25s ease-in-out',
                   color: mode === 'semi-dark' ? `rgba(${theme.palette.customColors.dark}, 0.38)` : 'text.disabled',

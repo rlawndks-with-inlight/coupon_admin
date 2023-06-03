@@ -21,11 +21,13 @@ const project_navigation = [
     children: [
       {
         title: '가맹점관리',
+        menu_depth: 1,
         path: '/manager/merchandises',
         level: 10
       },
       {
         title: '장비관리',
+        menu_depth: 1,
         path: '/manager/devices',
         level: 40
       },
@@ -39,11 +41,13 @@ const project_navigation = [
     children: [
       {
         title: '유저관리',
+        menu_depth: 1,
         path: '/manager/users',
         level: 10
       },
       {
         title: '포인트관리',
+        menu_depth: 1,
         path: '/manager/points',
         level: 10
       },
@@ -57,11 +61,13 @@ const project_navigation = [
     children: [
       {
         title: '쿠폰모델관리',
+        menu_depth: 1,
         path: '/manager/couponModels',
         level: 10
       },
       {
         title: '쿠폰관리',
+        menu_depth: 1,
         path: '/manager/coupons',
         level: 10
       },
@@ -75,11 +81,13 @@ const project_navigation = [
     children: [
       {
         title: '카테고리관리',
+        menu_depth: 1,
         path: '/manager/categories',
         level: 10
       },
       {
         title: '상품관리',
+        menu_depth: 1,
         path: '/manager/products',
         level: 10
       },
@@ -98,6 +106,43 @@ const project_navigation = [
     path: '/manager/uploads/excel',
     table: 'uploads',
     level: 40
+  },
+  {
+    title: '결제관리',
+    icon: 'material-symbols:payments-outline-sharp',
+    level: 10,
+    table: 'transactions',
+    menu_depth: 0,
+    children: [
+      {
+        title: '구독신청',
+        path: 'subscribe',
+        level: 10,
+        menu_depth: 1,
+        children: [
+          {
+            title: '카드등록',
+            path: '/manager/transactions/subscribe/bill-key',
+            level: 10,
+            menu_depth: 2,
+
+          },
+          {
+            title: '내통장입금',
+            path: '/manager/transactions/subscribe/into-my-account',
+            level: 10,
+            menu_depth: 2,
+
+          },
+        ]
+      },
+      {
+        title: '결제내역',
+        menu_depth: 1,
+        path: '/manager/transactions',
+        level: 10
+      },
+    ]
   },
   {
     title: '이용가이드',

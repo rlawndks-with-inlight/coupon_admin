@@ -155,7 +155,8 @@ const VerticalNavLink = ({
           sx={{
             transition: 'margin .25s ease-in-out',
             ...(navCollapsed && !navHover ? { mr: 0 } : { mr: 2 }),
-            ...(parent ? { ml: 1.5, mr: 3.5 } : {}),
+            ...(item?.menu_depth == 1 ? { ml: 3.5 } : {}),
+            ...(item?.menu_depth == 2 ? { ml: 5.5 } : {}),
             '& svg': {
               fontSize: '0.625rem',
               ...(!parent ? { fontSize: '1.375rem' } : {}),
