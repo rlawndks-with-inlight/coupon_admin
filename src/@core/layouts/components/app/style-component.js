@@ -300,11 +300,11 @@ const ButtonStyle = styled.button`
   overflow: hidden;
   transition: background 400ms;
   color: #fff;
-  background: #6200ee;
+  background: transparent;
   font-family: 'Roboto', sans-serif;
   font-size:${themeObj.font_size.font3};
   height: 40px;
-  width:90px;
+  width:95px;
   outline: 0;
   border: 0;
   border-radius: 0.25rem;
