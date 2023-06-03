@@ -329,7 +329,7 @@ top:0;
 width:100vw;
 height:100vh;
 z-index: 9999;
-transition-duration: 300ms;
+transition-duration: 200ms;
 `
 const DialogFullScreenStyle = styled.div`
 position:fixed;
@@ -337,7 +337,7 @@ top:0;
 width:100vw;
 height:100vh;
 z-index: 10000;
-transition-duration: 300ms;
+transition-duration: 200ms;
 right:-100vw;
 `
 export const MakeDialogFullScreen = (props) => {
@@ -347,7 +347,7 @@ export const MakeDialogFullScreen = (props) => {
     <>
       <DialogBackground style={{
         visibility: `${open ? 'visible' : 'hidden'}`,
-        background: `${open ? 'rgba(51, 48, 60, 0.7)' : 'rgba(51, 48, 60, 0.1)'}`
+        background: `${open ? '#9B9A9F' : '#E4E6E529'}`
       }} />
       <DialogFullScreenStyle style={{
         //display: `${open ? '' : 'none'}`,
