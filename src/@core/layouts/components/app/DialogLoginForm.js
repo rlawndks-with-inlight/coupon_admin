@@ -221,11 +221,11 @@ const DialogLoginForm = (props) => {
   }
 
   const [timeLeft, setTimeLeft] = useState(180);
-  // useEffect(() => {
-  //   onPostWebview('message_time_left', {
-  //     time_left: timeLeft
-  //   })
-  // }, [timeLeft])
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setIsSendSms(false)
+    }
+  }, [timeLeft])
   return (
     <div>
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
