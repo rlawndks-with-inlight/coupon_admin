@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent'
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@emotion/react'
 import styled, { css } from 'styled-components'
-import { Font3, Font4, themeObj } from './style-component'
+import { Font3, Font4, MakeButton, MakeInput, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
@@ -73,6 +73,7 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
   return <Font3 style={{
     right: '100px',
     position: 'absolute',
+    top: '18px',
     color: themeObj.red
   }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font3>;
 }
@@ -112,6 +113,10 @@ const DialogLoginForm = (props) => {
   }
   const requestVerifyCode = async () => {
     try {
+      setIsSendSms(true);
+      if (isSendSms) {
+        return;
+      }
       const response = await axiosIns().post(`/api/v1/app/auth/verify/code`, {
         dns: dnsData?.dns,
         phone_num: values?.phone_num,
@@ -120,7 +125,6 @@ const DialogLoginForm = (props) => {
       setValues({ ...values, ['is_exist']: response?.data?.is_exist })
       $('.rand_num').focus();
       toast.success("인증번호가 성공적으로 전송 되었습니다.");
-      setIsSendSms(true);
       setIsCheckPhone(false);
       setTimeLeft(180);
     } catch (err) {
@@ -236,111 +240,79 @@ const DialogLoginForm = (props) => {
               <br />
               개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
             </Title>
+
             <Content>
+
+
               <Title
                 style={{
                   padding: '1rem 0 0.5rem 0',
                   fontWeight: 'bold'
                 }}>휴대전화번호 입력</Title>
-              <CustomTextField
-                id='icons-start-adornment'
-                label='휴대전화번호 입력'
-                size='small'
-                type='tel'
+              <MakeInput
+                id={'phone_num'}
+                label={'휴대전화번호'}
+                type={'tel'}
+                dnsData={dnsData}
                 onFocus={() => {
                   setFocusItem('phone_num');
                 }}
-                className='phone-num'
                 onBlur={() => {
                   if (focusItem == 'phone_num') {
                     setFocusItem('')
                   }
                 }}
                 onChange={handleChange('phone_num')}
-                style={{ width: '100%', marginTop: '0.5rem' }}
-                InputProps={{
+                endButtonProps={{
+                  text: '인증번호 발송',
+                  onClick: requestVerifyCode,
                   style: {
-                    fontSize: (isMobile ? themeObj.font_size.font4 : ''),
-                    height: '39px'
-                  },
-                  endAdornment: <InputAdornment position='end'>
-                    <Button variant='contained' color='secondary'
-                      style={{
-                        transform: `translateX(14px)`,
-                        borderTopLeftRadius: '0',
-                        borderBottomLeftRadius: '0',
-                        fontSize: themeObj.font_size.font4,
-                        padding: '8px',
-                        background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : ''}`,
-                        width: '90px',
-                        height: '39px'
-                      }}
-                      onClick={requestVerifyCode}
-                    >
-                      인증번호 발송
-                    </Button>
-                  </InputAdornment>
-                }}
-              />
-              <CustomTextField
-                id='icons-start-adornment'
-                label='인증번호 입력'
-                size='small'
-                type='tel'
-                style={{
-                  width: '100%',
-                  paddingRight: '0',
-                  marginTop: '1rem',
-                }}
-                className='phone-check'
-                onFocus={() => {
-                  setFocusItem('rand_num');
-                }}
-                onBlur={() => {
-                  if (focusItem == 'rand_num') {
-                    setFocusItem('')
+                    background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400]}`,
                   }
                 }}
-                onChange={handleChange('rand_num')}
-                InputProps={{
-                  style: {
-                    fontSize: (isMobile ? themeObj.font_size.font4 : ''),
-                    height: '39px'
-                  },
-                  endAdornment: <InputAdornment position='end'>
-                    <Button variant='contained' color='secondary'
-                      style={{
-                        transform: `translateX(14px)`,
-                        borderTopLeftRadius: '0',
-                        borderBottomLeftRadius: '0',
-                        fontSize: themeObj.font_size.font4,
-                        background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : '')}`,
-                        color: '#fff',
-                        width: '90px',
-                        height: '39px'
-                      }}
-                      onClick={requestVerify}
-                      disabled={isCheckPhone}
-                    >
-                      {isCheckPhone ? '확인 완료' : '인증번호 확인'}
-                    </Button>
-                    {isSendSms && !isCheckPhone ?
-                      <>
-                        <Countdown
-                          seconds={180}
-                          timeLeft={timeLeft}
-                          setTimeLeft={setTimeLeft}
-                        />
-                      </>
-                      :
-                      <>
-                      </>}
-                  </InputAdornment>
-                }}
-                InputLabelProps={{
-
-                }}
               />
+              <div style={{ position: 'relative' }}>
+                <MakeInput
+                  id={'phone_check'}
+                  label={'인증번호 입력'}
+                  type={'tel'}
+                  dnsData={dnsData}
+                  onFocus={() => {
+                    setFocusItem('rand_num');
+                  }}
+                  style={{
+                    container: {
+                      marginTop: '0.5rem'
+                    }
+                  }}
+                  onBlur={() => {
+                    if (focusItem == 'rand_num') {
+                      setFocusItem('')
+                    }
+                  }}
+                  onChange={handleChange('rand_num')}
+                  endButtonProps={{
+                    text: isCheckPhone ? '확인 완료' : '인증번호 확인',
+                    onClick: requestVerify,
+                    style: {
+                      background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400])}`,
+                    }
+                  }}
+                />
+                {isSendSms && !isCheckPhone ?
+                  <>
+                    <Countdown
+                      seconds={180}
+                      timeLeft={timeLeft}
+                      setTimeLeft={setTimeLeft}
+                    />
+                  </>
+                  :
+                  <>
+                  </>}
+              </div>
+
+
               <GreyContainer style={{ background: `${theme.palette.mode == 'dark' ? '' : themeObj.grey[100]}` }}>
                 <Title
                   style={{

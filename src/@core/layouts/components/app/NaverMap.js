@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const NaverMap = (props) => {
-  const { markers, center, dnsData } = props;
+  const { markers, center, dnsData, style } = props;
   const [lat, setLat] = useState(37.74913611)
   const [lng, setLng] = useState(128.8784972)
   const mapRef = useRef(null)
@@ -46,7 +46,7 @@ const NaverMap = (props) => {
     mapRef.current = new naver.maps.Marker(markerOptions);
   }, [center, markers, dnsData]);
 
-  return <MapBox id="map"></MapBox>;
+  return <MapBox id="map" style={{ ...style }}></MapBox>;
 }
 const MapBox = styled.div`
   width: 1200px;

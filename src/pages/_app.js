@@ -110,6 +110,7 @@ const App = props => {
           content={(dns_data?.og_description || dnsData?.og_description) ?? ""}
         />
         <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
+        <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
         <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
@@ -123,7 +124,7 @@ const App = props => {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
         <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
-        <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
+
       </Head>
       <Provider store={store}>
         <CacheProvider value={emotionCache}>

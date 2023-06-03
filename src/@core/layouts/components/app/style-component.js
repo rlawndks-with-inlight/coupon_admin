@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useState } from "react";
+import { getLocalStorage } from "src/@core/utils/local-storage";
+import { LOCALSTORAGE } from "src/data/data";
 
 export const PageTransition = ({ children, router, }) => {
   const [isUseAnimation, setIsUseAnimation] = useState(false);
@@ -135,3 +137,190 @@ export const InputLabel = styled.div`
 
   }
 `
+
+const InputContainer = styled.div`
+position:relative;
+`
+const InputStyle = styled.input`
+border-radius: 6px;
+padding:8.5px 14px;
+width:100%;
+font-size:${themeObj.font_size.font2};
+border-width:1px;
+border-style:solid;
+border-color:${themeObj.grey[400]};
+outline:none;
+background:transparent;
+&:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+`
+const Label = styled.label`
+transition-duration: 150ms;
+position:absolute;
+font-size:${themeObj.font_size.font4};
+padding:0 2px;
+cursor:text;
+`
+const Placeholder = styled.div`
+position: absolute;
+transition-duration: 200ms;
+`
+export const MakeInput = (props) => {
+  const {
+    id, label, size, type, className, style, dnsData, placeholder,
+    onFocus, onBlur, onChange, endAdornment,
+    endButtonProps
+  } = props;
+
+  const theme = useTheme();
+
+  const size_style_obj = {
+    size1: {
+
+    },
+    size2: {
+      input: {
+
+      },
+      label: {
+        top: {
+          true: '-6px',
+          false: '9px',
+        }
+      }
+    },
+    size3: {
+
+    },
+  }
+
+  const [isFocus, setIsFocus] = useState(false);
+  const [value, setValue] = useState("");
+
+  return (
+    <>
+      <InputContainer style={{ ...style?.container }}>
+        <Label
+          for={id}
+          style={{
+            ...style?.label,
+            color: `${(isFocus || value) ? dnsData?.theme_css?.main_color : themeObj.grey[600]}`,
+            fontSize: `${(isFocus || value) ? themeObj.font_size.font5 : themeObj.font_size.font2}`,
+            left: '14px',
+            top: `${(isFocus || value) ? size_style_obj['size2']['label'].top['true'] : size_style_obj['size2']['label'].top['false']}`,
+            background: `${(isFocus || value) ? (theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff') : ''}`,
+            padding: `${(isFocus || value) ? '0 4px' : ''}`
+          }}
+        >{label}</Label>
+        {placeholder ?
+          <>
+            <Placeholder
+              style={{
+                ...style?.placeholder,
+                left: '16px',
+                top: `${size_style_obj['size2']['label'].top['false']}`,
+                fontSize: themeObj.font_size.font2,
+                opacity: `${(isFocus && !value) ? '1' : '0'}`,
+                visibility: `${(isFocus && !value) ? 'visible' : 'hidden'}`,
+                color: themeObj.grey[400]
+              }}
+            >{placeholder}</Placeholder>
+          </>
+          :
+          <>
+          </>}
+        <InputStyle
+          id={id}
+          className={className}
+          type={type}
+          style={{
+            color: `${theme.palette.mode == 'dark' ? '#fff' : themeObj.grey[700]}`,
+            ...style,
+            borderColor: `${isFocus ? dnsData?.theme_css?.main_color : ''}`,
+            borderWidth: `${isFocus ? '2px' : ''}`,
+            margin: `${isFocus ? '0px' : '1px'}`,
+            boxShadow: `${isFocus ? '0 2px 3px 0 rgba(51, 48, 60, 0.1)' : ''}`,
+            paddingRight: `${endButtonProps ? '110px' : ''}`
+          }}
+          onFocus={() => {
+            onFocus();
+            setIsFocus(true);
+          }}
+          onBlur={() => {
+            onBlur();
+            setIsFocus(false);
+          }}
+          onChange={(e) => {
+            onChange(e);
+            setValue(e.target.value);
+          }}
+        />
+        {endAdornment ?
+          <>
+            {endAdornment}
+          </>
+          :
+          <>
+          </>}
+        {endButtonProps ?
+          <>
+            <MakeButton onClick={endButtonProps?.onClick}
+              style={{
+                height: '36px',
+                position: 'absolute',
+                right: '-1px',
+                boxShadow: 'none',
+                top: '1px',
+                borderTopLeftRadius: '0',
+                borderTopRightRadius: '6px',
+                borderBottomLeftRadius: '0',
+                borderBottomRightRadius: '6px',
+                ...endButtonProps?.style
+              }}
+            >{endButtonProps?.text}</MakeButton>
+          </>
+          :
+          <>
+          </>}
+      </InputContainer>
+    </>
+  )
+}
+export const MakeDialogFullScreen = () => {
+  const { } = props;
+  return (
+    <>
+    </>
+  )
+}
+const ButtonStyle = styled.button`
+  position: relative;
+  overflow: hidden;
+  transition: background 400ms;
+  color: #fff;
+  background: #6200ee;
+  font-family: 'Roboto', sans-serif;
+  font-size:${themeObj.font_size.font3};
+  height: 40px;
+  width:90px;
+  outline: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3); /* black with 30% opacity */
+  cursor: pointer;
+`
+export const MakeButton = (props) => {
+  const { children, style, dnsData, onClick } = props;
+  return (
+    <>
+      <ButtonStyle style={{
+        background: `${dnsData ? dnsData?.theme_css?.main_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.theme_css)?.main_color}`,
+        ...style,
+      }}
+        onClick={onClick}
+      >{children}</ButtonStyle>
+    </>
+  )
+}
