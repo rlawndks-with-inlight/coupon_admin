@@ -123,10 +123,14 @@ const DialogLoginForm = (props) => {
   }
   const requestVerifyCode = async () => {
     try {
-      setIsSendSms(true);
+      if (!values?.phone_num) {
+        toast.error('휴대폰 번호를 입력해 주세요.');
+        return;
+      }
       if (isSendSms) {
         return;
       }
+      setIsSendSms(true);
       const response = await axiosIns().post(`/api/v1/app/auth/verify/code`, {
         dns: dnsData?.dns,
         phone_num: values?.phone_num,

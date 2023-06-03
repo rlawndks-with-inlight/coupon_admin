@@ -143,7 +143,7 @@ position:relative;
 `
 const InputStyle = styled.input`
 border-radius: 6px;
-padding:8.5px 14px;
+padding:9px 14px;
 width:100%;
 font-size:${themeObj.font_size.font2};
 border-width:1px;
@@ -169,7 +169,7 @@ transition-duration: 200ms;
 `
 export const MakeInput = (props) => {
   const {
-    id, label, size, type, className, style, dnsData, placeholder,
+    id, label, size = 'size2', type, className, style, dnsData, placeholder,
     onFocus, onBlur, onChange, endAdornment,
     endButtonProps
   } = props;
@@ -209,7 +209,7 @@ export const MakeInput = (props) => {
             color: `${(isFocus || value) ? dnsData?.theme_css?.main_color : themeObj.grey[600]}`,
             fontSize: `${(isFocus || value) ? themeObj.font_size.font5 : themeObj.font_size.font2}`,
             left: '14px',
-            top: `${(isFocus || value) ? size_style_obj['size2']['label'].top['true'] : size_style_obj['size2']['label'].top['false']}`,
+            top: `${(isFocus || value) ? size_style_obj[size]['label'].top['true'] : size_style_obj[size]['label'].top['false']}`,
             background: `${(isFocus || value) ? (theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color : '#fff') : ''}`,
             padding: `${(isFocus || value) ? '0 4px' : ''}`
           }}
@@ -220,7 +220,7 @@ export const MakeInput = (props) => {
               style={{
                 ...style?.placeholder,
                 left: '16px',
-                top: `${size_style_obj['size2']['label'].top['false']}`,
+                top: `${size_style_obj[size]['label'].top['false']}`,
                 fontSize: themeObj.font_size.font2,
                 opacity: `${(isFocus && !value) ? '1' : '0'}`,
                 visibility: `${(isFocus && !value) ? 'visible' : 'hidden'}`,
@@ -268,15 +268,16 @@ export const MakeInput = (props) => {
           <>
             <MakeButton onClick={endButtonProps?.onClick}
               style={{
-                height: '37px',
                 position: 'absolute',
+                height: '38px',
                 right: '-1px',
                 boxShadow: 'none',
-                top: '1px',
+                top: '1.5px',
                 borderTopLeftRadius: '0',
                 borderTopRightRadius: '6px',
                 borderBottomLeftRadius: '0',
                 borderBottomRightRadius: '6px',
+                width: '98px',
                 ...endButtonProps?.style
               }}
             >{endButtonProps?.text}</MakeButton>
@@ -301,15 +302,18 @@ const ButtonStyle = styled.button`
   transition: background 400ms;
   color: #fff;
   background: transparent;
-  font-family: 'Roboto', sans-serif;
   font-size:${themeObj.font_size.font3};
   height: 40px;
-  width:95px;
+  width:90px;
   outline: 0;
   border: 0;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3); /* black with 30% opacity */
   cursor: pointer;
+  padding:0;
+  @media (max-width:350px) {
+      font-size: ${themeObj.font_size.font4};
+  }
 `
 export const MakeButton = (props) => {
   const { children, style, dnsData, onClick } = props;
