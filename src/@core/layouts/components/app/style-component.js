@@ -347,7 +347,7 @@ export const MakeDialogFullScreen = (props) => {
     <>
       <DialogBackground style={{
         visibility: `${open ? 'visible' : 'hidden'}`,
-        background: `${open ? '#9B9A9F' : '#E4E6E529'}`
+        //background: `${open ? '#9B9A9F' : '#E4E6E529'}`
       }} />
       <DialogFullScreenStyle style={{
         //display: `${open ? '' : 'none'}`,
