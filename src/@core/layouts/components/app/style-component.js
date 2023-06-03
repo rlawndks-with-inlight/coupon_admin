@@ -208,7 +208,7 @@ export const MakeInput = (props) => {
           for={id}
           style={{
             ...style?.label,
-            color: `${(isFocus || value) ? dnsData?.theme_css?.main_color : themeObj.grey[600]}`,
+            color: `${(isFocus) ? dnsData?.theme_css?.main_color : themeObj.grey[600]}`,
             fontSize: `${(isFocus || value) ? themeObj.font_size.font5 : themeObj.font_size.font2}`,
             left: '14px',
             top: `${(isFocus || value) ? size_style_obj[size]['label'].top['true'] : size_style_obj[size]['label'].top['false']}`,
