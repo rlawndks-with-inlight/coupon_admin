@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react'
 import Header from './components/app/header/index'
 import Footer from './components/app/footer/index'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
-import { useEffect } from 'react'
+import { cloneElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import BottomMenu from './components/app/bottom-menu'
 import { PageTransition, Wrapper } from './components/app/style-component'
@@ -39,7 +39,7 @@ const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
-
+  const [isHeaderShow, setIsHeaderShow] = useState(true);
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
@@ -59,7 +59,7 @@ const AppLayout = ({ children, scrollToTop }) => {
       background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
     }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        <Header />
+        <Header isHeaderShow={isHeaderShow} />
         <PageTransition router={router}>
           <Wrapper dns_data={dnsData}>
             {children}

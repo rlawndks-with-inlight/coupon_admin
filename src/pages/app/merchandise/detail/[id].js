@@ -14,11 +14,9 @@ const getDemo = (num, common) => {
   if (num == 1)
     return <Merchandise1 {...common} />
 }
-const Merchandise = () => {
-
+const Merchandise = (props) => {
   const router = useRouter();
   const theme = useTheme();
-
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
@@ -102,7 +100,7 @@ const Merchandise = () => {
           loading
         },
         func: {
-          router
+          router,
         }
       })}
     </>

@@ -12,7 +12,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 // ** Icon Imports
-import { Row, themeObj } from './style-component'
+import { MakeButton, MakeDialogFullScreen, Row, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
 import { Toaster, toast } from 'react-hot-toast'
 import { useEffect } from 'react'
@@ -165,10 +165,19 @@ const PointContetnt = (props) => {
     </>
   )
 }
+const makePointCategoryButtonStyle = (is_point_type, main_color) => {
+  return {
+    background: `${is_point_type ? main_color : 'transparent'}`,
+    color: `${is_point_type ? '#fff' : main_color}`,
+    border: `1px solid ${main_color}`,
+    width: '56px',
+    height: '28px',
+    boxShadow: 'none'
+  }
+}
 const DialogMemberships = (props) => {
   // ** State
   const { open, handleClose, dnsData, style, data, membershipCategory, mcht, theme } = props;
-
   const [pointType, setPointType] = useState('all');
   const handleChange = (event, newValue) => {
     setTabValue(newValue)
@@ -183,7 +192,7 @@ const DialogMemberships = (props) => {
   const [tabValue, setTabValue] = useState('')
   return (
     <div>
-      <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
+      <Dialog fullScreen onClose={handleClose} open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '1rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
@@ -208,15 +217,15 @@ const DialogMemberships = (props) => {
               </TabList>
               <TabPanel value='points' style={{ padding: '0' }}>
                 <Row style={{ marginTop: '0.5rem' }}>
-                  <Button variant={pointType == 'all' ? 'contained' : 'outlined'} size='small' onClick={() => setPointType('all')}>
+                  <MakeButton style={{ ...makePointCategoryButtonStyle(pointType == 'all', dnsData?.theme_css?.main_color) }} onClick={() => setPointType('all')}>
                     전체
-                  </Button>
-                  <Button variant={pointType == '1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('1')}>
+                  </MakeButton>
+                  <MakeButton style={{ marginLeft: '0.5rem', ...makePointCategoryButtonStyle(pointType == '1', dnsData?.theme_css?.main_color) }} onClick={() => setPointType('1')}>
                     적립
-                  </Button>
-                  <Button variant={pointType == '-1' ? 'contained' : 'outlined'} size='small' sx={{ ml: '0.5rem' }} onClick={() => setPointType('-1')}>
+                  </MakeButton>
+                  <MakeButton style={{ marginLeft: '0.5rem', ...makePointCategoryButtonStyle(pointType == '-1', dnsData?.theme_css?.main_color) }} onClick={() => setPointType('-1')}>
                     사용
-                  </Button>
+                  </MakeButton>
                 </Row>
                 {data?.points && data?.points.map((item, idx) => (
                   <>

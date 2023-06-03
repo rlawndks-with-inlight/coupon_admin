@@ -25,6 +25,7 @@ export const PageTransition = ({ children, router, }) => {
             initial={{ transform: 'translateX(100vw)' }}
             animate={{ transform: 'translateX(0)' }}
             exit={{ transform: 'translateX(100vw)' }}
+            style={{ position: 'relative' }}
           >
             {children}
           </motion.div>
@@ -43,6 +44,7 @@ display:flex;
 flex-direction:column;
 min-height:90vh;
 padding: 0 0 4rem 0;
+position: relative;
 `
 export const Wrapper = (props) => {
   const { children, style, dns_data } = props;
@@ -328,7 +330,7 @@ position:fixed;
 top:0;
 width:100vw;
 height:100vh;
-z-index: 9999;
+z-index: 9999 !important;
 transition-duration: 200ms;
 `
 const DialogFullScreenStyle = styled.div`
@@ -336,12 +338,12 @@ position:fixed;
 top:0;
 width:100vw;
 height:100vh;
-z-index: 10000;
+z-index: 10000 !important;
 transition-duration: 200ms;
 right:-100vw;
 `
 export const MakeDialogFullScreen = (props) => {
-  const { children, open, onClose, dnsData } = props;
+  const { children, open, onClose, dnsData, style } = props;
   const theme = useTheme();
   return (
     <>
@@ -351,8 +353,9 @@ export const MakeDialogFullScreen = (props) => {
       }} />
       <DialogFullScreenStyle style={{
         //display: `${open ? '' : 'none'}`,
+        ...style,
         background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.options)?.app?.dark_background_color) : '#fff')}`,
-        right: `${open ? '0' : '-100vw'}`
+        right: `${open ? '0' : '-100vw'}`,
       }}>
         {children}
       </DialogFullScreenStyle>

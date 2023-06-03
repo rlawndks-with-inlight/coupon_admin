@@ -43,8 +43,6 @@ const DialogResign = (props) => {
   // ** State
   const { open, handleClose, style, } = props;
 
-
-
   return (
     <div>
       <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>

@@ -44,6 +44,7 @@ const Merchandise1 = (props) => {
     func: {
       router,
     } } = props;
+
   const [mapLoading, setMapLoading] = useState(true);
   const [membershipOpen, setMembershipOpen] = useState(false);
   const [membershipCategory, setMembershipCategory] = useState('point')

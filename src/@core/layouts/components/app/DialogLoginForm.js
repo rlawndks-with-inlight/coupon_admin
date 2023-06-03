@@ -1,9 +1,8 @@
 // ** React Imports
-import { useState, forwardRef } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -11,7 +10,6 @@ import DialogContent from '@mui/material/DialogContent'
 
 // ** Icon Imports
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
-import { useTheme } from '@emotion/react'
 import styled, { css } from 'styled-components'
 import { Font3, Font4, MakeButton, MakeDialogFullScreen, MakeInput, themeObj } from './style-component'
 import { Icon } from '@iconify/react'
@@ -19,15 +17,8 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import $ from 'jquery';
 import { Toaster, toast } from 'react-hot-toast'
-
+import { useTheme } from '@emotion/react'
 import Slide from '@mui/material/Slide'
-import { useEffect } from 'react'
-import { onPostWebview } from 'src/@core/utils/webview-connect'
-
-
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction='left' ref={ref} {...props} />
-})
 
 const Title = styled.div`
 font-size: ${themeObj.font_size.font4};
@@ -43,14 +34,7 @@ width:100%;
 max-width:700px;
 margin: 0 auto;
 `
-const CustomTextField = styled(TextField)`
-@media (max-width:350px) {
-  label {
-    font-size: ${themeObj.font_size.font4};
-    margin-top: 0.15rem;
-  }
-}
-`;
+
 const GreyContainer = styled.div`
 padding:0.5rem;
 border-radius:4px;
@@ -231,137 +215,135 @@ const DialogLoginForm = (props) => {
     }
   }, [timeLeft])
   return (
-    <div>
-      <MakeDialogFullScreen fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
-        <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
-            <Typography variant='h6' component='span' style={{ display: 'flex' }}>
-              <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold' }}>
-                휴대전화로 로그인
-              </div>
-            </Typography>
-            <IconButton
-              aria-label='close'
-              onClick={handleClose}
-              sx={{ top: 18, left: 10, position: 'absolute', color: 'grey.500' }}
-            >
-              <Icon icon='ooui:previous-ltr' style={{ fontSize: themeObj.font_size.font1 }} />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <Title style={{ padding: '0 0 1rem 0', margin: '0 auto', width: '100%', maxWidth: '700px' }}>
-              휴대전화번호를 등록하셔야 멤버십 적립이 가능합니다.
-              <br />
-              개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
-            </Title>
+    <MakeDialogFullScreen onClose={handleClose} open={open}>
+      <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
+          <Typography variant='h6' component='span' style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold' }}>
+              휴대전화로 로그인
+            </div>
+          </Typography>
+          <IconButton
+            aria-label='close'
+            onClick={handleClose}
+            sx={{ top: 18, left: 10, position: 'absolute', color: 'grey.500' }}
+          >
+            <Icon icon='ooui:previous-ltr' style={{ fontSize: themeObj.font_size.font1 }} />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+          <Title style={{ padding: '0 0 1rem 0', margin: '0 auto', width: '100%', maxWidth: '700px' }}>
+            휴대전화번호를 등록하셔야 멤버십 적립이 가능합니다.
+            <br />
+            개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
+          </Title>
 
-            <Content>
+          <Content>
 
 
-              <Title
-                style={{
-                  padding: '1rem 0 0.5rem 0',
-                  fontWeight: 'bold'
-                }}>휴대전화번호 입력</Title>
+            <Title
+              style={{
+                padding: '1rem 0 0.5rem 0',
+                fontWeight: 'bold'
+              }}>휴대전화번호 입력</Title>
+            <MakeInput
+              id={'phone_num'}
+              label={'휴대전화번호'}
+              type={'tel'}
+              dnsData={dnsData}
+              onFocus={() => {
+                setFocusItem('phone_num');
+              }}
+              onBlur={() => {
+                if (focusItem == 'phone_num') {
+                  setFocusItem('')
+                }
+              }}
+              onChange={handleChange('phone_num')}
+              endButtonProps={{
+                text: '인증번호 발송',
+                onClick: requestVerifyCode,
+                style: {
+                  background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400]}`,
+                }
+              }}
+            />
+            <div style={{ position: 'relative' }}>
               <MakeInput
-                id={'phone_num'}
-                label={'휴대전화번호'}
+                id={'phone_check'}
+                label={'인증번호 입력'}
                 type={'tel'}
                 dnsData={dnsData}
                 onFocus={() => {
-                  setFocusItem('phone_num');
+                  setFocusItem('rand_num');
+                }}
+                style={{
+                  container: {
+                    marginTop: '0.5rem'
+                  }
                 }}
                 onBlur={() => {
-                  if (focusItem == 'phone_num') {
+                  if (focusItem == 'rand_num') {
                     setFocusItem('')
                   }
                 }}
-                onChange={handleChange('phone_num')}
+                onChange={handleChange('rand_num')}
                 endButtonProps={{
-                  text: '인증번호 발송',
-                  onClick: requestVerifyCode,
+                  text: isCheckPhone ? '확인 완료' : '인증번호 확인',
+                  onClick: requestVerify,
                   style: {
-                    background: `${focusItem == 'phone_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400]}`,
+                    background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400])}`,
                   }
                 }}
               />
-              <div style={{ position: 'relative' }}>
-                <MakeInput
-                  id={'phone_check'}
-                  label={'인증번호 입력'}
-                  type={'tel'}
-                  dnsData={dnsData}
-                  onFocus={() => {
-                    setFocusItem('rand_num');
-                  }}
-                  style={{
-                    container: {
-                      marginTop: '0.5rem'
-                    }
-                  }}
-                  onBlur={() => {
-                    if (focusItem == 'rand_num') {
-                      setFocusItem('')
-                    }
-                  }}
-                  onChange={handleChange('rand_num')}
-                  endButtonProps={{
-                    text: isCheckPhone ? '확인 완료' : '인증번호 확인',
-                    onClick: requestVerify,
-                    style: {
-                      background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400])}`,
-                    }
-                  }}
-                />
-                {isSendSms && !isCheckPhone ?
-                  <>
-                    <Countdown
-                      seconds={180}
-                      timeLeft={timeLeft}
-                      setTimeLeft={setTimeLeft}
-                    />
-                  </>
-                  :
-                  <>
-                  </>}
-              </div>
+              {isSendSms && !isCheckPhone ?
+                <>
+                  <Countdown
+                    seconds={180}
+                    timeLeft={timeLeft}
+                    setTimeLeft={setTimeLeft}
+                  />
+                </>
+                :
+                <>
+                </>}
+            </div>
 
 
-              <GreyContainer style={{ background: `${theme.palette.mode == 'dark' ? '' : themeObj.grey[100]}` }}>
-                <Title
-                  style={{
-                    padding: '0',
-                    fontWeight: 'bold'
-                  }}>개인정보 수집</Title>
-                <div>목적: 스탬프 적립, 쿠폰사용 등 사용 및 취소정보, CS신청정보</div>
-                <div>항목: 휴대전화번호</div>
-                <div>보유기간: 회원탈퇴 즉시 또는 이용 목적 달성 즉시 파기</div>
-              </GreyContainer>
-              {/* <TextInputComponent
+            <GreyContainer style={{ background: `${theme.palette.mode == 'dark' ? '' : themeObj.grey[100]}` }}>
+              <Title
+                style={{
+                  padding: '0',
+                  fontWeight: 'bold'
+                }}>개인정보 수집</Title>
+              <div>목적: 스탬프 적립, 쿠폰사용 등 사용 및 취소정보, CS신청정보</div>
+              <div>항목: 휴대전화번호</div>
+              <div>보유기간: 회원탈퇴 즉시 또는 이용 목적 달성 즉시 파기</div>
+            </GreyContainer>
+            {/* <TextInputComponent
                 dnsData={dnsData} />
               <TextInputComponent
                 dnsData={dnsData} /> */}
-            </Content>
-          </DialogContent>
-          <Button
-            color='secondary'
-            onClick={onConfirm}
-            type='submit'
-            variant='contained'
-            sx={{
-              mr: 2,
-              margin: 'auto auto 4rem auto',
-              height: '50px',
-              width: '90%',
-              maxWidth: '500px',
-              background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
-            }} >
-            로그인
-          </Button>
-        </div>
-        <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
-      </MakeDialogFullScreen>
-    </div>
+          </Content>
+        </DialogContent>
+        <Button
+          color='secondary'
+          onClick={onConfirm}
+          type='submit'
+          variant='contained'
+          sx={{
+            mr: 2,
+            margin: 'auto auto 4rem auto',
+            height: '50px',
+            width: '90%',
+            maxWidth: '500px',
+            background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
+          }} >
+          로그인
+        </Button>
+      </div>
+      <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
+    </MakeDialogFullScreen>
   )
 }
 export default DialogLoginForm

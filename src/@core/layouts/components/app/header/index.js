@@ -15,7 +15,7 @@ import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
 import { onPostWebview } from "src/@core/utils/webview-connect";
 
-const TopWrapper = styled.header`
+const TopWrapper = styled.div`
 width:90%;
 max-width:1200px;
 margin:0 auto;
@@ -90,7 +90,6 @@ padding-top:5rem;
 
 `
 const Header = (props) => {
-
   const router = useRouter();
   const theme = useTheme();
   const { settings, saveSettings } = useSettings();
@@ -176,7 +175,7 @@ const Header = (props) => {
         width: '100%',
         position: 'fixed',
         top: '0',
-        display: 'flex',
+        display: `flex`,
         flexDirection: 'column',
         zIndex: '10',
         color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
