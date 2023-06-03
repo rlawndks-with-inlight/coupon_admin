@@ -268,7 +268,7 @@ export const MakeInput = (props) => {
           <>
             <MakeButton onClick={endButtonProps?.onClick}
               style={{
-                height: '36px',
+                height: '37px',
                 position: 'absolute',
                 right: '-1px',
                 boxShadow: 'none',
