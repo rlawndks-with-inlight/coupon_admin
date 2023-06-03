@@ -201,7 +201,7 @@ const Login = ({ dns_data }) => {
 
   const onSnsLogin = async (data) => {
     try {
-      setSnsLoading(true)
+      //setSnsLoading(true)
       let result = await onSignIn({
         dns: window.location.hostname,
         phone_num: data?.phone_num,
