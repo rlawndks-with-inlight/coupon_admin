@@ -110,7 +110,7 @@ const project_navigation = [
   {
     title: '결제관리',
     icon: 'material-symbols:payments-outline-sharp',
-    level: 10,
+    level: 50,
     table: 'transactions',
     menu_depth: 0,
     children: [
