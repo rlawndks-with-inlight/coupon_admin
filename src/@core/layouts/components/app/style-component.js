@@ -358,7 +358,7 @@ export const MakeDialogFullScreen = (props) => {
     const deltaX = startX - currentX;
     if (deltaX < -70) {
       // 왼쪽으로 화면 이동
-      console.log('Move to the left');
+      onClose();
       // 이동에 따른 필요한 작업 수행
     }
   };
