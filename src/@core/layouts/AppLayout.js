@@ -71,7 +71,6 @@ const AppLayout = ({ children, scrollToTop }) => {
     if (deltaX < -70) {
       setIsMoveBack(true);
       router.back();
-      console.log('Move to the left');
     }
   };
   return (
