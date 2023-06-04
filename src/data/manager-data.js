@@ -75,6 +75,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       { title: '가맹점정보', size: 8 },
       { title: '포인트정보', size: 2 },
       { title: '스탬프정보', size: 2 },
+      { title: '결제정보', size: 2 },
       { title: '', size: 3 },
     ],
     search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
@@ -91,6 +92,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('적립비율', 'point_rate', 'percent', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'stamp_flag', 'use_status', '', { search_option_label: '스탬프' }),// 검색 level == 10일 경우에만
       managerListFormat('저장갯수', 'stamp_save_count', 'number', '', { search_option_label: '스탬프' }),// 검색 level == 10일 경우에만
+      managerListFormat('정기결제일', 'bill_key_pay_day', 'text', ''),
+      managerListFormat('최근결제일', 'last_pay_dt', 'text', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),

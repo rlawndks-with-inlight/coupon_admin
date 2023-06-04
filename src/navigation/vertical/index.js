@@ -56,7 +56,7 @@ const project_navigation = [
   {
     title: '쿠폰관리',
     icon: 'tabler:ticket',
-    level: 10,
+    level: 25,
     table: 'coupons',
     children: [
       {
@@ -109,37 +109,46 @@ const project_navigation = [
   },
   {
     title: '결제관리',
-    icon: 'material-symbols:payments-outline-sharp',
-    level: 50,
+    icon: 'fluent-payment-32-regular',
+    level: 10,
     table: 'transactions',
     menu_depth: 0,
     children: [
       {
-        title: '구독신청',
+        title: '정기결제등록',
         path: 'subscribe',
         level: 10,
         menu_depth: 1,
         children: [
           {
-            title: '카드등록',
+            title: '신용카드등록',
             path: '/manager/transactions/subscribe/bill-key',
             level: 10,
             menu_depth: 2,
 
           },
-          {
-            title: '내통장입금',
-            path: '/manager/transactions/subscribe/into-my-account',
-            level: 10,
-            menu_depth: 2,
+          // {
+          //   title: '내통장입금',
+          //   path: '/manager/transactions/subscribe/into-my-account',
+          //   level: 10,
+          //   menu_depth: 2,
 
-          },
+          // },
         ]
       },
+    ]
+  },
+  {
+    title: '매출관리',
+    icon: 'ic-outline-payments',
+    level: 50,
+    table: 'pays',
+    menu_depth: 0,
+    children: [
       {
         title: '결제내역',
         menu_depth: 1,
-        path: '/manager/transactions',
+        path: '/manager/pays',
         level: 10
       },
     ]

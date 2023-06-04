@@ -41,6 +41,14 @@ const VerticalNavItems = props => {
         return false;
       }
     }
+    if (item?.table == "transactions") {
+      return false;
+      if (userData?.level == 10) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     if (userData?.level == 45) {
       let z_can_show_table = ['users', 'merchandises', 'users', 'brands'];
       let z_can_show_path = ['/manager/merchandises', '/manager/devices', '/manager/users', '/manager/points']

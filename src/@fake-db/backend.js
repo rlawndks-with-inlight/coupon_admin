@@ -22,3 +22,22 @@ export const axiosIns = (host, protocol) => {
   return axiosIns;
 }
 
+export const notiAxiosIns = (host, protocol) => {
+  let dns_info = {
+    // You can add your headers here
+    // ================================
+    baseURL: (protocol || window.location.protocol) + "//" + (host || window.location.host),
+    timeout: 10000,
+    headers: {
+      "Authorization": `Bearer ${getCookie('o')}`,
+      'Accept': 'application/json',
+      "Content-Type": "application/json",
+    },
+    withCredentials: false
+  }
+
+  const axiosIns = axios.create(dns_info)
+
+  return axiosIns;
+}
+

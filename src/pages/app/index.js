@@ -51,7 +51,6 @@ const Index = ({ dns_data }) => {
 
   const checkDns = async () => {
     try {
-      console.log(LOCALSTORAGE.DNS_DATA)
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
