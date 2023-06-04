@@ -40,6 +40,8 @@ const AppLayout = ({ children, scrollToTop }) => {
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
   const [isHeaderShow, setIsHeaderShow] = useState(true);
+  const [isMoveBack, setIsMoveBack] = useState(false);
+
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
@@ -52,16 +54,40 @@ const AppLayout = ({ children, scrollToTop }) => {
     }
     setDnsData(dns_data)
   }, [])
+  useEffect(() => {
+    setIsMoveBack(false);
+  }, [router.asPath])
 
+  const [startX, setStartX] = useState(null);
+  const handleTouchStart = (event) => {
+    setStartX(event.touches[0].clientX);
+  };
+  const handleTouchMove = (event) => {
+    if (isMoveBack) {
+      return;
+    }
+    const currentX = event.touches[0].clientX;
+    const deltaX = startX - currentX;
+    if (deltaX < -70) {
+      setIsMoveBack(true);
+      router.back();
+      console.log('Move to the left');
+    }
+  };
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{
       color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
       background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
     }}>
-      <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
+      <Box
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        className='app-content'
+        sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
         <Header isHeaderShow={isHeaderShow} />
         <PageTransition router={router}>
-          <Wrapper dns_data={dnsData}>
+          <Wrapper
+            dns_data={dnsData}>
             {children}
           </Wrapper>
           <Footer />
