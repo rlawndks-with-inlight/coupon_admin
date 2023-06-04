@@ -42,7 +42,6 @@ const VerticalNavItems = props => {
       }
     }
     if (item?.table == "transactions") {
-      return false;
       if (userData?.level == 10) {
         return true;
       } else {

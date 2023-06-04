@@ -1,5 +1,4 @@
 import { useTheme } from "@emotion/react";
-import { Icon } from "@iconify/react"
 import styled from "styled-components"
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
@@ -346,20 +345,39 @@ right:-100vw;
 export const MakeDialogFullScreen = (props) => {
   const { children, open, onClose, dnsData, style } = props;
   const theme = useTheme();
+
+  const [startX, setStartX] = useState(null);
+  const handleTouchStart = (event) => {
+    setStartX(event.touches[0].clientX);
+  };
+  const handleTouchMove = (event) => {
+    if (!open) {
+      return;
+    }
+    const currentX = event.touches[0].clientX;
+    const deltaX = startX - currentX;
+    if (deltaX < -50) {
+      // 왼쪽으로 화면 이동
+      onClose();
+      console.log('Move to the left');
+      // 이동에 따른 필요한 작업 수행
+    }
+  };
   return (
     <>
-      <DialogBackground style={{
-        visibility: `${open ? 'visible' : 'hidden'}`,
-        //background: `${open ? '#9B9A9F' : '#E4E6E529'}`
-      }} />
-      <DialogFullScreenStyle style={{
-        //display: `${open ? '' : 'none'}`,
-        ...style,
-        background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.options)?.app?.dark_background_color) : '#fff')}`,
-        right: `${open ? '0' : '-100vw'}`,
-      }}>
+      <DialogFullScreenStyle
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        style={{
+          //display: `${open ? '' : 'none'}`,
+          ...style,
+          background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.options)?.app?.dark_background_color) : '#fff')}`,
+          right: `${open ? '0' : '-100vw'}`,
+        }}>
         {children}
       </DialogFullScreenStyle>
     </>
   )
 }
+
+
