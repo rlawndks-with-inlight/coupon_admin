@@ -3,7 +3,7 @@ import AppLayout from "src/@core/layouts/AppLayout"
 import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
-import More1 from "./demo-1"
+import More1 from "src/views/app/more/demo-1"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import AppLayout from "src/@core/layouts/AppLayout"
-import Home1 from "./demo-1"
+import Home1 from "src/views/app/home/demo-1"
 import { axiosIns } from "src/@fake-db/backend"
 import { getLocation, processCatch } from "src/@core/utils/function"
 import { useRouter } from "next/router"

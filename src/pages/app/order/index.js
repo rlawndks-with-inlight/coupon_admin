@@ -5,8 +5,7 @@ import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
-import Order1 from "./demo-1"
-
+import Order1 from "src/views/app/order/demo-1"
 
 const getDemo = (num, common) => {
   if (num == 1)

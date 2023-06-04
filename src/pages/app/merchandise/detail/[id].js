@@ -5,7 +5,7 @@ import { objToQuery, processCatch } from "src/@core/utils/function"
 import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
-import Merchandise1 from "./demo-1"
+import Merchandise1 from "src/views/app/merchandise/detail/demo-1"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 

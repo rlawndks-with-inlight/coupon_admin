@@ -237,6 +237,7 @@ export const MakeInput = (props) => {
           id={id}
           className={className}
           type={type}
+          autoComplete="false"
           style={{
             color: `${theme.palette.mode == 'dark' ? '#fff' : themeObj.grey[700]}`,
             ...style,

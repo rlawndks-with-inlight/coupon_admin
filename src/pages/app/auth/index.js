@@ -5,7 +5,7 @@ import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
-import Index1 from "./index/demo-1"
+import Index1 from "src/views/app/auth/index/demo-1"
 
 const getDemo = (num, common) => {
   if (num == 1)
