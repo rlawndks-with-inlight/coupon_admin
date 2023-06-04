@@ -356,7 +356,7 @@ export const MakeDialogFullScreen = (props) => {
     }
     const currentX = event.touches[0].clientX;
     const deltaX = startX - currentX;
-    if (deltaX < -50) {
+    if (deltaX < -70) {
       // 왼쪽으로 화면 이동
       onClose();
       console.log('Move to the left');
