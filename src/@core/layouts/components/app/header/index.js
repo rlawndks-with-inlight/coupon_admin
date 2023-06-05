@@ -85,7 +85,7 @@ display:none;
 const PaddingTop = styled.div`
 padding-top:5rem;
 @media (max-width: 1200px) {
-  height: 3.5rem;
+  padding-top:3.5rem;
 }
 
 `
