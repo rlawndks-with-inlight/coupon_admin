@@ -2,25 +2,37 @@
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useEffect, useState } from 'react'
 
-const FallbackSpinner = ({ sx }) => {
+const FallbackSpinner = ({ sx, second }) => {
+  const [loadingComponent, setLoadingComponent] = useState(undefined);
   // ** Hook
-  const theme = useTheme()
+  useEffect(() => {
+
+    setTimeout(() => {
+      setLoadingComponent(
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            ...sx
+          }}
+        >
+          <CircularProgress disableShrink sx={{ m: 'auto' }} />
+        </Box>
+      )
+    }, second)
+  }, [])
 
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        ...sx
-      }}
-    >
-      <CircularProgress disableShrink sx={{ m: 'auto' }} />
-    </Box>
+    <>
+      {loadingComponent}
+    </>
   )
+
 }
 
 export default FallbackSpinner

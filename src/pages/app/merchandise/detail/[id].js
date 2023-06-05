@@ -85,7 +85,7 @@ const Merchandise = (props) => {
     <>
       {loading ?
         <>
-          <FallbackSpinner sx={{ height: '85vh' }} />
+          <FallbackSpinner sx={{ height: '85vh' }} second={1000} />
         </>
         :
         <>

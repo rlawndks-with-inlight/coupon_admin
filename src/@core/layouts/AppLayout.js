@@ -69,8 +69,12 @@ const AppLayout = ({ children, scrollToTop }) => {
     const currentX = event.touches[0].clientX;
     const deltaX = startX - currentX;
     if (deltaX < -70) {
-      setIsMoveBack(true);
-      router.back();
+      if (router.pathname == '/app/home') {
+        //홈에서 뒤로가기 할때
+      } else {
+        setIsMoveBack(true);
+        router.back();
+      }
     }
   };
   return (
