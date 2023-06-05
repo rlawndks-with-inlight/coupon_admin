@@ -80,7 +80,7 @@ const Home = () => {
       getHomeContent(1, true, dns_data, location_)
     }
   }
-  const getHomeContent = async (pag, is_first, dns_data_, location) => {
+  const getHomeContent = async (pag, is_first, dns_data_, location, options) => {
     try {
       let dns_data = dns_data_;
       if (pageStack.includes(pag)) {

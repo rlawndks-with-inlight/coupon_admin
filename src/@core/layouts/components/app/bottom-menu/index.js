@@ -53,7 +53,9 @@ margin-bottom:auto;
   }
 `
 
-const BottomMenu = () => {
+const BottomMenu = (props) => {
+
+  const { isGoBack } = props;
 
   const router = useRouter();
   const [colorList, setColorList] = useState([]);
@@ -99,12 +101,9 @@ const BottomMenu = () => {
         justifyContent: 'space-around'
       })
     }
-
     setColorList(color_list);
   }, [router.asPath])
-  useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-  }, [])
+
   const getColor = (is_menu, mode) => {
     if (is_menu) {
       if (mode == 'dark') {
@@ -126,6 +125,7 @@ const BottomMenu = () => {
         style={{
           color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
+          display: `${isGoBack ? 'none' : ''}`
         }}>
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {

@@ -8,12 +8,12 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE, zBottomMenu } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
-import { toast } from "react-hot-toast";
 import { getBackgroundColor, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
 import { onPostWebview } from "src/@core/utils/webview-connect";
+import { themeObj } from "../style-component";
 
 const TopWrapper = styled.div`
 width:90%;
@@ -90,6 +90,8 @@ padding-top:5rem;
 
 `
 const Header = (props) => {
+
+  const { isGoBack } = props;
   const router = useRouter();
   const theme = useTheme();
   const { settings, saveSettings } = useSettings();
@@ -107,9 +109,13 @@ const Header = (props) => {
     getLocalStorageData();
     getCategoryList();
   }, [])
+
   useEffect(() => {
     setQuery({ ...query, ['cate_id']: router.query?.cate_id })
+
   }, [router.asPath, categoryList])
+
+
   const getLocalStorageData = async () => {//로컬 스토리지 관련 데이터 불러오기
     let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user = JSON.parse(user);
@@ -140,10 +146,11 @@ const Header = (props) => {
       dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
 
       let query_keys = Object.keys(router.query);
-      for (var i = 0; i < query_keys.length; i++) {
-        dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+      if (router.query['dark_background_color']) {
+        for (var i = 0; i < query_keys.length; i++) {
+          dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+        }
       }
-
       setDnsData(dns_data);
     } catch (err) {
       let push_lick = await processCatch(err);
@@ -161,6 +168,54 @@ const Header = (props) => {
   const handleSearchClose = () => setSearchOpen(false);
   const handleSearchOpen = () => setSearchOpen(true);
 
+  const MenuContent = () => {
+    return <>
+      {dnsData?.logo_img ?
+        <>
+          <Logo src={dnsData[theme.palette.mode == 'dark' ? 'dark_logo_img' : 'logo_img']} onClick={() => {
+            router.push('/app/home')
+          }} />
+        </>
+        :
+        <>
+          <div />
+        </>}
+      <MenuList display={menuDisplay} theme={theme} mobileBackground={getBackgroundColor(theme)}>
+        {zBottomMenu.map((item, idx) => (
+          <>
+            {idx != 0 ?
+              <>
+                {isShowMenu(dnsData, item) ?
+                  <>
+                    <Menu theme={theme} onClick={() => {
+                      router.push(item.link)
+                    }}
+                    >{item.title}</Menu>
+                  </>
+                  :
+                  <>
+                  </>}
+              </>
+              :
+              <>
+              </>
+            }
+          </>
+        ))}
+      </MenuList>
+      <Icons>
+        <IconButton color='inherit' aria-haspopup='true' >
+          <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
+        </IconButton>
+        <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen}>
+          <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
+        </IconButton>
+        <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
+          <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
+        </IconButton>
+      </Icons>
+    </>
+  }
   return (
     <>
       <DialogSearchMobile
@@ -182,51 +237,30 @@ const Header = (props) => {
         background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
       }} className="header-wrapper">
         <TopWrapper>
-          {dnsData?.logo_img ?
+          {window.innerWidth > 1200 ?
             <>
-              <Logo src={dnsData[theme.palette.mode == 'dark' ? 'dark_logo_img' : 'logo_img']} onClick={() => {
-                router.push('/app/home')
-              }} />
+              <MenuContent />
             </>
             :
             <>
-              <div />
+              {isGoBack ?
+                <>
+                  <IconButton color='inherit' style={{
+                    transform: 'translateX(-0.5rem)',
+                    color: `${settings.mode === 'dark' ? '#fff' : '#000'}`
+                  }} aria-haspopup='true' onClick={() => {
+                    router.back();
+                  }}>
+                    <Icon fontSize='1.3rem' icon={'ic:round-arrow-back-ios'} />
+                  </IconButton>
+                  <div />
+                </>
+                :
+                <>
+                  <MenuContent />
+                </>
+              }
             </>}
-          <MenuList display={menuDisplay} theme={theme} mobileBackground={getBackgroundColor(theme)}>
-            {zBottomMenu.map((item, idx) => (
-              <>
-                {idx != 0 ?
-                  <>
-                    {isShowMenu(dnsData, item) ?
-                      <>
-                        <Menu theme={theme} onClick={() => {
-                          router.push(item.link)
-                        }}
-                        >{item.title}</Menu>
-                      </>
-                      :
-                      <>
-                      </>}
-
-                  </>
-                  :
-                  <>
-                  </>
-                }
-              </>
-            ))}
-          </MenuList>
-          <Icons>
-            <IconButton color='inherit' aria-haspopup='true' >
-              <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
-            </IconButton>
-            <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen}>
-              <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
-            </IconButton>
-            <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
-              <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
-            </IconButton>
-          </Icons>
         </TopWrapper>
       </header>
       <PaddingTop />

@@ -213,6 +213,14 @@ const Merchandise = (props) => {
     </>
   )
 }
+
+const OptionPopup = (props) => {
+
+  return (
+    <>
+    </>
+  )
+}
 const Home1 = (props) => {
   const {
     data: {
@@ -234,6 +242,12 @@ const Home1 = (props) => {
   const theme = useTheme();
   const [mchtLoading, setMchtLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+
+
+  const [options, setOptions] = useState({
+
+  })
+  const [optionsOpen, setOptionsOpen] = useState(false);
 
   const scrollRef = useRef(null);
   const handleScroll = () => {
@@ -260,6 +274,14 @@ const Home1 = (props) => {
   }, [mchts])
   return (
     <>
+      <OptionPopup
+        data={{
+
+        }}
+        func={{
+
+        }}
+      />
       {isVisible ?
         <>
           <ContentWrapper>
@@ -283,13 +305,13 @@ const Home1 = (props) => {
                 <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
               </Row>
             </Row>
-            {/* <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
-          <div />
-          <Row style={{ alignItems: 'center', cursor: 'pointer' }} onClick={onFilterClick}>
-            <div>거리순</div>
-            <Icon icon='mi:filter' style={{ marginLeft: '0.1rem', fontSize: '1.2rem' }} />
-          </Row>
-        </Row> */}
+            <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
+              <div />
+              <Row style={{ alignItems: 'center', cursor: 'pointer' }} onClick={onFilterClick}>
+                <div>거리순</div>
+                <Icon icon='mi:filter' style={{ marginLeft: '0.1rem', fontSize: '1.2rem' }} />
+              </Row>
+            </Row>
             <MerchandiseContainer>
               {mchts && mchts.map((item, idx) => {
                 return <Merchandise
@@ -313,7 +335,7 @@ const Home1 = (props) => {
                   </>
                   :
                   <>
-                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, dnsData, location) }} ref={scrollRef} />
+                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, dnsData, location, options) }} ref={scrollRef} />
                   </>}
               </>}
           </ContentWrapper>

@@ -10,7 +10,7 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 import { cloneElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import BottomMenu from './components/app/bottom-menu'
-import { PageTransition, Wrapper } from './components/app/style-component'
+import { PageTransition } from './components/app/style-component'
 import { useState } from 'react'
 import { getLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
@@ -42,21 +42,39 @@ const AppLayout = ({ children, scrollToTop }) => {
   const [isHeaderShow, setIsHeaderShow] = useState(true);
   const [isMoveBack, setIsMoveBack] = useState(false);
 
+  const [isGoBack, setIsGoBack] = useState(false);
+
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
     dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
     let query_keys = Object.keys(router.query);
-    for (var i = 0; i < query_keys.length; i++) {
-
-      dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+    if (router.query['dark_background_color']) {
+      for (var i = 0; i < query_keys.length; i++) {
+        dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
+      }
     }
     setDnsData(dns_data)
   }, [])
   useEffect(() => {
     setIsMoveBack(false);
+    checkIsGoBack();
   }, [router.asPath])
+
+
+  const z_go_back_link = [
+    '/app/merchandise/detail'
+  ]
+  const checkIsGoBack = () => {
+    let is_go_back = false;
+    for (var i = 0; i < z_go_back_link.length; i++) {
+      if (router.asPath.includes(z_go_back_link[i])) {
+        is_go_back = true;
+      }
+    }
+    setIsGoBack(is_go_back)
+  }
 
   const [startX, setStartX] = useState(null);
   const handleTouchStart = (event) => {
@@ -87,15 +105,12 @@ const AppLayout = ({ children, scrollToTop }) => {
         onTouchMove={handleTouchMove}
         className='app-content'
         sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        <Header isHeaderShow={isHeaderShow} />
         <PageTransition router={router}>
-          <Wrapper
-            dns_data={dnsData}>
-            {children}
-          </Wrapper>
+          <Header isHeaderShow={isHeaderShow} isGoBack={isGoBack} />
+          {children}
           <Footer />
+          <BottomMenu isGoBack={isGoBack} />
         </PageTransition>
-        <BottomMenu />
 
       </Box>
       {scrollToTop ? (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AppLayout from "src/@core/layouts/AppLayout"
 import { axiosIns } from "src/@fake-db/backend"
-import { objToQuery, processCatch } from "src/@core/utils/function"
+import { objToQuery } from "src/@core/utils/function"
 import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
@@ -51,7 +51,7 @@ const Merchandise = (props) => {
       let query = objToQuery(obj);
       const response = await axiosIns().get(`/api/v1/app/membership${query}`);
       setLoading(false);
-      let point_history = [...response?.data?.points];
+      let point_history = [...response?.data?.points ?? []];
       let point_results = [];
       let sum_point = 0;
       for (var i = point_history.length - 1; i >= 0; i--) {//1->적립, -1->사용
