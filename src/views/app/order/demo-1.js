@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ContentWrapper, Font1, Font2, Row, themeObj } from "src/@core/layouts/components/app/style-component";
+import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
 import { zBottomMenu } from "src/data/data";
 import styled from "styled-components";
@@ -28,8 +28,10 @@ const Order1 = (props) => {
   }, [])
   return (
     <>
-      <ContentWrapper>
-      </ContentWrapper>
+      <Wrapper>
+        <ContentWrapper>
+        </ContentWrapper>
+      </Wrapper>
     </>
   )
 }

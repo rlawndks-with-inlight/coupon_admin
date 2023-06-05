@@ -192,7 +192,7 @@ const DialogMemberships = (props) => {
   const [tabValue, setTabValue] = useState('')
   return (
     <div>
-      <Dialog fullScreen onClose={handleClose} open={open} TransitionComponent={Transition}>
+      <MakeDialogFullScreen onClose={handleClose} open={open}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '1rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
@@ -259,10 +259,9 @@ const DialogMemberships = (props) => {
               </TabPanel>
             </TabContext>
           </CustomizedDialogContent>
-
         </div>
         <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
-      </Dialog>
+      </MakeDialogFullScreen>
     </div>
   )
 }

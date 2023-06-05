@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DialogResign from "src/@core/layouts/components/app/DialogResign";
-import { ContentWrapper, Font1, Font2, Row, themeObj } from "src/@core/layouts/components/app/style-component";
+import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
 import { handleLogout } from "src/@core/utils/function";
 import { zBottomMenu } from "src/data/data";
@@ -52,16 +52,18 @@ const Index1 = (props) => {
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
         }}
       />
-      <ContentWrapper>
-        <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>계정설정</Font1>
-        <Menu onClick={() => {
-          handleResignOpen();
-        }}
-        >
-          <Icon icon='material-symbols:cancel-outline' style={{ fontSize: themeObj.font_size.font1 }} />
-          <MenuTitle>회원탈퇴</MenuTitle>
-        </Menu>
-      </ContentWrapper>
+      <Wrapper dns_data={dnsData}>
+        <ContentWrapper>
+          <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>계정설정</Font1>
+          <Menu onClick={() => {
+            handleResignOpen();
+          }}
+          >
+            <Icon icon='material-symbols:cancel-outline' style={{ fontSize: themeObj.font_size.font1 }} />
+            <MenuTitle>회원탈퇴</MenuTitle>
+          </Menu>
+        </ContentWrapper>
+      </Wrapper>
     </>
   )
 }

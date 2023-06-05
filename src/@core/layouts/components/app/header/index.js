@@ -204,7 +204,7 @@ const Header = (props) => {
         ))}
       </MenuList>
       <Icons>
-        <IconButton color='inherit' aria-haspopup='true' >
+        <IconButton color='inherit' aria-haspopup='true'>
           <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
         </IconButton>
         <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen}>

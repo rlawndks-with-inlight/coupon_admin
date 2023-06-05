@@ -1,4 +1,4 @@
-import { ContentWrapper, Font2, Font4, Row, themeObj } from 'src/@core/layouts/components/app/style-component';
+import { ContentWrapper, Font2, Font4, Row, Wrapper, themeObj } from 'src/@core/layouts/components/app/style-component';
 import { Icon } from "@iconify/react"
 import styled from 'styled-components';
 import useCountNum, { commarNumber } from 'src/@core/utils/function';
@@ -282,69 +282,70 @@ const Home1 = (props) => {
 
         }}
       />
-      {isVisible ?
-        <>
-          <ContentWrapper>
-            <TopText>
-              Comagain에 오신 것을 환영합니다.
-            </TopText>
-            <Row style={{ justifyContent: 'space-between', fontSize: themeObj.font_size.font3, margin: '0 auto 0 0', maxWidth: '400px' }}>
-              <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.2rem' }} />
-                <div>포인트</div>
-                <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.point)}</div>
+      <Wrapper dns_data={dnsData}>
+        {isVisible ?
+          <>
+            <ContentWrapper>
+              <TopText>
+                Comagain에 오신 것을 환영합니다.
+              </TopText>
+              <Row style={{ justifyContent: 'space-between', fontSize: themeObj.font_size.font3, margin: '0 auto 0 0', maxWidth: '400px' }}>
+                <Row style={{ alignItems: 'center', width: '33.33%' }}>
+                  <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.2rem' }} />
+                  <div>포인트</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.point)}</div>
+                </Row>
+                <Row style={{ alignItems: 'center', width: '33.33%' }}>
+                  <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.2rem' }} />
+                  <div >스탬프</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.stamp)}</div>
+                </Row>
+                <Row style={{ alignItems: 'center', width: '33.33%' }}>
+                  <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.2rem' }} />
+                  <div>쿠폰</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
+                </Row>
               </Row>
-              <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.2rem' }} />
-                <div >스탬프</div>
-                <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.stamp)}</div>
+              <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                <div />
+                <Row style={{ alignItems: 'center', cursor: 'pointer' }} onClick={onFilterClick}>
+                  <div>거리순</div>
+                  <Icon icon='mi:filter' style={{ marginLeft: '0.1rem', fontSize: '1.2rem' }} />
+                </Row>
               </Row>
-              <Row style={{ alignItems: 'center', width: '33.33%' }}>
-                <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.2rem' }} />
-                <div>쿠폰</div>
-                <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
-              </Row>
-            </Row>
-            <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
-              <div />
-              <Row style={{ alignItems: 'center', cursor: 'pointer' }} onClick={onFilterClick}>
-                <div>거리순</div>
-                <Icon icon='mi:filter' style={{ marginLeft: '0.1rem', fontSize: '1.2rem' }} />
-              </Row>
-            </Row>
-            <MerchandiseContainer>
-              {mchts && mchts.map((item, idx) => {
-                return <Merchandise
-                  idx={idx}
-                  item={item}
-                  theme={theme}
-                  router={router}
-                  dnsData={dnsData}
-                  setIsVisible={setIsVisible}
-                />
-              })}
-            </MerchandiseContainer>
-            {isDataEnd ?
-              <>
-              </>
-              :
-              <>
-                {mchtLoading ?
-                  <>
-                    <FallbackSpinner sx={{ height: '72px' }} />
-                  </>
-                  :
-                  <>
-                    <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, dnsData, location, options) }} ref={scrollRef} />
-                  </>}
-              </>}
-          </ContentWrapper>
-        </>
-        :
-        <>
-        </>
-      }
-
+              <MerchandiseContainer>
+                {mchts && mchts.map((item, idx) => {
+                  return <Merchandise
+                    idx={idx}
+                    item={item}
+                    theme={theme}
+                    router={router}
+                    dnsData={dnsData}
+                    setIsVisible={setIsVisible}
+                  />
+                })}
+              </MerchandiseContainer>
+              {isDataEnd ?
+                <>
+                </>
+                :
+                <>
+                  {mchtLoading ?
+                    <>
+                      <FallbackSpinner sx={{ height: '72px' }} />
+                    </>
+                    :
+                    <>
+                      <Button className='more-page' onClick={() => { getHomeContent(page + 1, false, dnsData, location, options) }} ref={scrollRef} />
+                    </>}
+                </>}
+            </ContentWrapper>
+          </>
+          :
+          <>
+          </>
+        }
+      </Wrapper>
     </>
   )
 }
