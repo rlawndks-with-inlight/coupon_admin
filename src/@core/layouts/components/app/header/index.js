@@ -25,7 +25,7 @@ justify-content:space-between;
 align-items:center;
 height: 5rem;
 @media (max-width: 1200px) {
-  height: 3rem;
+  height: 3.5rem;
 }
 `
 const Logo = styled.img`
@@ -247,7 +247,7 @@ const Header = (props) => {
                 <>
                   <IconButton color='inherit' style={{
                     transform: 'translateX(-0.5rem)',
-                    color: `${settings.mode === 'dark' ? '#fff' : '#000'}`
+                    color: `${settings.mode === 'dark' ? '#fff' : themeObj.grey[500]}`
                   }} aria-haspopup='true' onClick={() => {
                     router.back();
                   }}>
