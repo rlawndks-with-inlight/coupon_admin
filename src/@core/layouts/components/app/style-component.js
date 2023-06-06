@@ -24,7 +24,7 @@ export const PageTransition = ({ children, router, }) => {
             initial={{ transform: 'translateX(100vw)' }}
             animate={{ transform: 'translateX(0)' }}
             exit={{ transform: 'translateX(100vw)' }}
-            style={{ position: 'relative' }}
+            style={{ position: 'relative', boxShadow: '-14px -0px 15px #00000029' }}
           >
             {children}
           </motion.div>
