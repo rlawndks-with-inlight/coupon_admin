@@ -122,7 +122,6 @@ const BottomMenu = (props) => {
     }
   }
   const goToLink = (item, is_true) => {
-    toast.success(is_true)
     if (is_true) {
       if (!notChangeRouter) {
         router.push(item.link)
