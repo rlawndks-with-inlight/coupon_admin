@@ -158,7 +158,8 @@ const Merchandise = (props) => {
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
         style={{
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : ''}`
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : '#fff'}`,
+          cursor: 'pointer'
         }}
         className={`merchandise-content mcht-${idx}`}
         onClick={() => {
