@@ -137,8 +137,8 @@ const BottomMenu = (props) => {
           display: `${isGoBack ? 'none' : ''}`
         }}>
         <MenuContainer style={menuContainerStyle}>
-          {zBottomMenu.map((item, idx) => (
-            <>
+          {zBottomMenu.map((item, idx) => {
+            return <>
               {isShowMenu(dnsData, item) ?
                 <>
                   <OneMenuContainer
@@ -157,7 +157,7 @@ const BottomMenu = (props) => {
                 <>
                 </>}
             </>
-          ))}
+          })}
         </MenuContainer>
       </Container>
     </>
