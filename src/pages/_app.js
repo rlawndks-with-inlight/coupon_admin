@@ -53,14 +53,21 @@ import Head from 'next/head'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
-Router.events.on('routeChangeStart', () => {
-  NProgress.start()
+Router.events.on('routeChangeStart', (link) => {
+  if (link.split('/')[1] != 'app') {
+    NProgress.start()
+  }
 })
-Router.events.on('routeChangeError', () => {
-  NProgress.done()
+Router.events.on('routeChangeError', (link) => {
+  if (link.split('/')[1] != 'app') {
+    NProgress.done()
+  }
 })
-Router.events.on('routeChangeComplete', () => {
-  NProgress.done()
+Router.events.on('routeChangeComplete', (link) => {
+  console.log(link.split('/')[1])
+  if (link.split('/')[1] != 'app') {
+    NProgress.done()
+  }
 })
 
 
