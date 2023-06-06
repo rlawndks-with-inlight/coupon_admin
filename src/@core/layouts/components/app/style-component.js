@@ -8,12 +8,15 @@ import { LOCALSTORAGE } from "src/data/data";
 
 export const PageTransition = ({ children, router, }) => {
   const [isUseAnimation, setIsUseAnimation] = useState(false);
+  const [path, setPath] = useState("");
   useEffect(() => {
-    if (router.asPath.includes('/app/merchandise/detail/')) {
+    console.log(path)
+    if (router.asPath.includes('/app/merchandise/detail/') || path.includes('/app/merchandise/detail/')) {
       setIsUseAnimation(true)
     } else {
       setIsUseAnimation(false)
     }
+    setPath(router.asPath);
   }, [router])
 
   return (
