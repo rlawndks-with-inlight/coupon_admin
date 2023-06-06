@@ -8,7 +8,7 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE, zBottomMenu } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
-import { getBackgroundColor, processCatch } from "src/@core/utils/function";
+import { getBackgroundColor, isPc, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
@@ -125,18 +125,20 @@ const Header = (props) => {
   const handleModeChange = mode => {
     saveSettings({ ...settings, mode: mode })
   }
-  const handleModeToggle = async () => {
-    let mode = '';
-    if (settings.mode === 'light') {
-      mode = 'dark';
-    } else {
-      mode = 'light';
+  const handleModeToggle = async (is_true) => {
+    if (is_true) {
+      let mode = '';
+      if (settings.mode === 'light') {
+        mode = 'dark';
+      } else {
+        mode = 'light';
+      }
+      onPostWebview('mode', {
+        mode: mode,
+        backgroundColor: `${mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
+      })
+      handleModeChange(mode);
     }
-    onPostWebview('mode', {
-      mode: mode,
-      backgroundColor: `${mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : ''}`,
-    })
-    handleModeChange(mode);
   }
   const getCategoryList = async () => {
     try {
@@ -166,7 +168,12 @@ const Header = (props) => {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const handleSearchClose = () => setSearchOpen(false);
-  const handleSearchOpen = () => setSearchOpen(true);
+  const handleSearchOpen = (is_true) => {
+    console.log(is_true)
+    if (is_true) {
+      setSearchOpen(true)
+    }
+  };
 
   const MenuContent = () => {
     return <>
@@ -203,17 +210,7 @@ const Header = (props) => {
           </>
         ))}
       </MenuList>
-      <Icons>
-        <IconButton color='inherit' aria-haspopup='true'>
-          <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
-        </IconButton>
-        <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen} onTouchEnd={handleSearchOpen}>
-          <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
-        </IconButton>
-        <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle} onTouchEnd={handleModeToggle}>
-          <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
-        </IconButton>
-      </Icons>
+
     </>
   }
   return (
@@ -237,32 +234,45 @@ const Header = (props) => {
         background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
       }} className="header-wrapper">
         <TopWrapper>
-          {window.innerWidth > 1200 ?
+          {window.innerWidth > 1200 || !isGoBack ?
             <>
               <MenuContent />
+              <Icons>
+                <IconButton color='inherit' aria-haspopup='true'>
+                  <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
+                </IconButton>
+                <IconButton
+                  color='inherit'
+                  aria-haspopup='true'
+                  className="pointer"
+                  onClick={() => handleSearchOpen(isPc())}
+                  onTouchEnd={() => handleSearchOpen(!isPc())}>
+                  <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
+                </IconButton>
+                <IconButton
+                  color='inherit'
+                  aria-haspopup='true'
+                  className="pointer"
+                  onClick={() => handleModeToggle(isPc())}
+                  onTouchEnd={() => handleModeToggle(!isPc())}>
+                  <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
+                </IconButton>
+              </Icons>
             </>
             :
             <>
-              {isGoBack ?
-                <>
-                  <IconButton color='inherit' style={{
-                    transform: 'translateX(-0.5rem)',
-                    color: `${settings.mode === 'dark' ? '#fff' : themeObj.grey[500]}`
-                  }} aria-haspopup='true' onClick={() => {
-                    router.back();
-                  }}>
-                    <Icon fontSize='1.3rem' icon={'ic:round-arrow-back-ios'} />
-                  </IconButton>
-                  <div />
-                </>
-                :
-                <>
-                  <MenuContent />
-                </>
-              }
+              <IconButton color='inherit' style={{
+                transform: 'translateX(-0.5rem)',
+                color: `${settings.mode === 'dark' ? '#fff' : themeObj.grey[500]}`
+              }} aria-haspopup='true' onClick={() => {
+                router.back();
+              }}>
+                <Icon fontSize='1.3rem' icon={'ic:round-arrow-back-ios'} />
+              </IconButton>
+              <div />
             </>}
         </TopWrapper>
-      </header>
+      </header >
       <PaddingTop />
     </>
   )

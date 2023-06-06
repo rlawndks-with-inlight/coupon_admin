@@ -7,6 +7,8 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { Icon } from '@iconify/react'
 import { themeObj } from '../style-component'
 import { isShowMenu } from 'src/@core/layouts/utils'
+import { isPc } from 'src/@core/utils/function'
+import { toast } from 'react-hot-toast'
 const Container = styled.aside`
     position: fixed;
     right: 0;
@@ -119,9 +121,12 @@ const BottomMenu = (props) => {
       }
     }
   }
-  const goToLink = (item) => {
-    if (!notChangeRouter) {
-      router.push(item.link)
+  const goToLink = (item, is_true) => {
+    toast.success(is_true)
+    if (is_true) {
+      if (!notChangeRouter) {
+        router.push(item.link)
+      }
     }
   }
   return (
@@ -133,30 +138,27 @@ const BottomMenu = (props) => {
           display: `${isGoBack ? 'none' : ''}`
         }}>
         <MenuContainer style={menuContainerStyle}>
-          {zBottomMenu.map((item, idx) => {
-            if (isShowMenu(dnsData, item)) {
-              return <OneMenuContainer
-                className='pointer'
-                onClick={() => {
-                  if (!notChangeRouter) {
-                    router.push(item.link)
-                  }
-                }}
-                onTouchEnd={() => {
-                  if (!notChangeRouter) {
-                    router.push(item.link)
-                  }
-                }}
-                style={{
-                  color: `${getColor(menuIndex == idx, theme.palette.mode)}`
-                }} key={idx}>
-                <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
-                <OneMenuName>
-                  {item.title}
-                </OneMenuName>
-              </OneMenuContainer>
-            }
-          })}
+          {zBottomMenu.map((item, idx) => (
+            <>
+              {isShowMenu(dnsData, item) ?
+                <>
+                  <OneMenuContainer
+                    onClick={() => goToLink(item, isPc())}
+                    onTouchEnd={() => goToLink(item, !isPc())}
+                    style={{
+                      color: `${getColor(menuIndex == idx, theme.palette.mode)}`
+                    }} key={idx}>
+                    <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
+                    <OneMenuName>
+                      {item.title}
+                    </OneMenuName>
+                  </OneMenuContainer>
+                </>
+                :
+                <>
+                </>}
+            </>
+          ))}
         </MenuContainer>
       </Container>
     </>

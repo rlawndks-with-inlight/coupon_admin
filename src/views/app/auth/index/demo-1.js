@@ -36,9 +36,17 @@ const Index1 = (props) => {
 
   const [resignOpen, setResignOpen] = useState(false);
   const [resignCategory, setResignCategory] = useState('point')
-  const handleResignClose = () => setResignOpen(false);
-  const handleResignOpen = () => {
-    setResignOpen(true)
+  const handleResignClose = (is_true) => {
+    console.log(is_true)
+    if (is_true) {
+      setResignOpen(false)
+    }
+  };
+  const handleResignOpen = (is_true) => {
+    console.log(is_true)
+    if (is_true) {
+      setResignOpen(true)
+    }
   };
 
   return (
@@ -57,11 +65,12 @@ const Index1 = (props) => {
         <ContentWrapper>
           <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>계정설정</Font1>
           <Menu
+            className="pointer"
             onClick={() => {
-              handleResignOpen();
+              handleResignOpen(isPc());
             }}
             onTouchEnd={() => {
-              handleResignOpen();
+              handleResignOpen(!isPc());
             }}
           >
             <Icon icon='material-symbols:cancel-outline' style={{ fontSize: themeObj.font_size.font1 }} />

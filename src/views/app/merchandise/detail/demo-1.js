@@ -5,7 +5,7 @@ import FallbackSpinner from 'src/@core/components/spinner';
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
 import NaverMap from 'src/@core/layouts/components/app/NaverMap';
 import { ContentWrapper, Row, Wrapper, themeObj } from 'src/@core/layouts/components/app/style-component';
-import { commarNumber } from 'src/@core/utils/function';
+import { commarNumber, isPc } from 'src/@core/utils/function';
 import styled from 'styled-components';
 
 
@@ -52,9 +52,11 @@ const Merchandise1 = (props) => {
   const handleMembershipOpen = () => {
     setMembershipOpen(true)
   };
-  const onOpenMembershipDialog = (category) => {
-    setMembershipCategory(category)
-    handleMembershipOpen();
+  const onOpenMembershipDialog = (category, is_true) => {
+    if (is_true) {
+      setMembershipCategory(category)
+      handleMembershipOpen();
+    }
   }
   return (
     <>
@@ -115,8 +117,8 @@ const Merchandise1 = (props) => {
               {mcht?.point_flag == 1 ?
                 <>
                   <Menu
-                    onTouchEnd={() => { onOpenMembershipDialog('points') }}
-                    onClick={() => { onOpenMembershipDialog('points') }}
+                    onTouchEnd={() => { onOpenMembershipDialog('points', isPc()) }}
+                    onClick={() => { onOpenMembershipDialog('points', !isPc()) }}
                   >
                     <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: themeObj.font_size.font1 }} />
                     <MenuTitle>포인트 자세히보기</MenuTitle>
@@ -128,8 +130,8 @@ const Merchandise1 = (props) => {
               {mcht?.stamp_flag == 1 ?
                 <>
                   <Menu
-                    onTouchEnd={() => { onOpenMembershipDialog('stamps') }}
-                    onClick={() => { onOpenMembershipDialog('stamps') }}
+                    onTouchEnd={() => { onOpenMembershipDialog('stamps', isPc()) }}
+                    onClick={() => { onOpenMembershipDialog('stamps', !isPc()) }}
                   >
                     <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: themeObj.font_size.font1 }} />
                     <MenuTitle>스탬프 자세히보기</MenuTitle>
@@ -139,8 +141,8 @@ const Merchandise1 = (props) => {
                 <>
                 </>}
               <Menu
-                onTouchEnd={() => { onOpenMembershipDialog('coupons') }}
-                onClick={() => { onOpenMembershipDialog('coupons') }}
+                onTouchEnd={() => { onOpenMembershipDialog('coupons', isPc()) }}
+                onClick={() => { onOpenMembershipDialog('coupons', !isPc()) }}
               >
                 <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: themeObj.font_size.font1 }} />
                 <MenuTitle>쿠폰 자세히보기</MenuTitle>

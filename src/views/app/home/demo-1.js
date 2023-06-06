@@ -1,7 +1,7 @@
 import { ContentWrapper, Font2, Font4, Row, Wrapper, themeObj } from 'src/@core/layouts/components/app/style-component';
 import { Icon } from "@iconify/react"
 import styled from 'styled-components';
-import useCountNum, { commarNumber } from 'src/@core/utils/function';
+import useCountNum, { commarNumber, isPc } from 'src/@core/utils/function';
 import { motion } from "framer-motion"
 import { useTheme } from '@emotion/react';
 import FallbackSpinner from 'src/@core/components/spinner';
@@ -151,22 +151,45 @@ const Merchandise = (props) => {
 
   const { item, theme, router, idx, dnsData, setIsVisible } = props;
 
-  const goToLink = () => {
-
-    setIsVisible(false);
-    router.push({
-      pathname: `/app/merchandise/detail/${item?.id}`,
-      query: { item: JSON.stringify(item) }
-    })
+  const goToLink = (is_true) => {
+    if (is_true) {
+      setIsVisible(false);
+      router.push({
+        pathname: `/app/merchandise/detail/${item?.id}`,
+        query: { item: JSON.stringify(item) }
+      })
+    }
   }
+  const [startY, setStartY] = useState(null);
+  const [moveY, setMoveY] = useState(null);
+  const handleTouchStart = (event) => {
+    setStartY(event.touches[0].clientY);
+  };
+  const handleTouchMove = (event) => {
+    if (!isPc()) {
+      if (event.touches.length == 0) {
+        if (moveY > -5 && moveY < 5) {
+          return goToLink(true);
+        } else {
+          return;
+        }
+      }
+      const currentY = event.touches[0].clientY;
+      const deltaY = startY - currentY;
+      setMoveY(deltaY)
+      if (deltaY > -5 && deltaY < 5) {
+      }
+    }
+
+  };
   return (
     <>
       <motion.div
         whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
-        onHoverStart={e => { }}
-        onHoverEnd={e => { }}
-        onClick={() => goToLink()}
-        onTouchEnd={() => goToLink()}
+        onClick={() => goToLink(isPc())}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchMove}
         // onPointerEnter={() => goToLink(window.innerWidth < 1000)}
         // onClick={() => goToLink(window.innerWidth >= 1000)}
         style={{

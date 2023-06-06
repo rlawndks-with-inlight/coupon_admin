@@ -24,6 +24,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
+import { isPc } from 'src/@core/utils/function'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -45,7 +46,7 @@ const DialogResign = (props) => {
 
   return (
     <div>
-      <Dialog fullScreen onClose={handleClose} aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
+      <Dialog fullScreen aria-labelledby='full-screen-dialog-title' open={open} TransitionComponent={Transition}>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
@@ -55,7 +56,8 @@ const DialogResign = (props) => {
             </Typography>
             <IconButton
               aria-label='close'
-              onClick={handleClose}
+              onClick={() => handleClose(isPc())}
+              onTouchEnd={() => handleClose(!isPc())}
               sx={{ top: 18, left: 10, position: 'absolute', color: 'grey.500' }}
             >
               <Icon icon='ooui:previous-ltr' style={{ fontSize: themeObj.font_size.font1 }} />

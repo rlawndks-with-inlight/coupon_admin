@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
-import { handleLogout } from "src/@core/utils/function";
+import { handleLogout, isPc } from "src/@core/utils/function";
 import { zBottomMenu } from "src/data/data";
 import styled from "styled-components";
 
@@ -30,14 +30,24 @@ const More1 = (props) => {
 
   useEffect(() => {
   }, [])
+
+  const goToLink = (link, is_true) => {
+    if (is_true) {
+      router.push(link)
+    }
+  }
+  const onLogout = (is_true) => {
+    if (is_true) {
+      handleLogout(router, '/app')
+    }
+  }
   return (
     <>
       <Wrapper dns_data={dnsData}>
         <ContentWrapper>
           <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name || user?.phone_num} 님</Font1>
-          <Menu onClick={() => {
-            router.push('/app/auth/')
-          }}
+          <Menu onClick={() => goToLink('/app/auth/', isPc())}
+            onTouchEnd={() => goToLink('/app/auth/', !isPc())}
           >
             <Icon icon='material-symbols:settings-outline' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>계정설정</MenuTitle>
@@ -48,9 +58,8 @@ const More1 = (props) => {
                 <>
                   {isShowMenu(dnsData, item) ?
                     <>
-                      <Menu onClick={() => {
-                        router.push(item.link)
-                      }}
+                      <Menu onClick={() => goToLink(item.link, isPc())}
+                        onTouchEnd={() => goToLink(item.link, !isPc())}
                       >
                         <Icon icon={item.icon} style={{ fontSize: themeObj.font_size.font1 }} />
                         <MenuTitle>{item.title}</MenuTitle>
@@ -66,20 +75,20 @@ const More1 = (props) => {
               }
             </>
           ))}
-          <Menu onClick={() => router.push('/app/auth/privacy?type=0')}
-            onTouchEnd={() => router.push('/app/auth/privacy?type=0')}
+          <Menu onClick={() => goToLink('/app/auth/privacy?type=0', isPc())}
+            onTouchEnd={() => goToLink('/app/auth/privacy?type=0', !isPc())}
           >
             <Icon icon='icon-park-outline:message-privacy' style={{ fontSize: themeObj.font_size.font1, fontWeight: 'bold' }} />
             <MenuTitle>이용약관</MenuTitle>
           </Menu>
-          <Menu onClick={() => router.push('/app/auth/privacy?type=1')}
-            onTouchEnd={() => router.push('/app/auth/privacy?type=1')}
+          <Menu onClick={() => goToLink('/app/auth/privacy?type=1', isPc())}
+            onTouchEnd={() => goToLink('/app/auth/privacy?type=1', !isPc())}
           >
             <Icon icon='ic:outline-privacy-tip' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>개인정보처리방침</MenuTitle>
           </Menu>
-          <Menu onClick={() => router.push('/app/auth/privacy?type=2')}
-            onTouchEnd={() => router.push('/app/auth/privacy?type=2')}
+          <Menu onClick={() => goToLink('/app/auth/privacy?type=2', isPc())}
+            onTouchEnd={() => goToLink('/app/auth/privacy?type=2', !isPc())}
           >
             <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>저작권정책</MenuTitle>
@@ -89,8 +98,9 @@ const More1 = (props) => {
             <Icon icon='mdi:customer-service' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>고객센터</MenuTitle>
           </Menu>
-          <Menu onClick={() => handleLogout(router, '/app')}
-            onTouchEnd={() => handleLogout(router, '/app')}
+          <Menu
+            onClick={() => onLogout(isPc())}
+            onTouchEnd={() => onLogout(!isPc())}
           >
             <Icon icon='ri:logout-circle-r-line' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>로그아웃</MenuTitle>
