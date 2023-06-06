@@ -151,9 +151,16 @@ const Merchandise = (props) => {
 
   const { item, theme, router, idx, dnsData, setIsVisible } = props;
 
+  const goToLink = () => {
+    setIsVisible(false);
+    router.push({
+      pathname: `/app/merchandise/detail/${item?.id}`,
+      query: { item: JSON.stringify(item) }
+    })
+  }
   return (
     <>
-      <motion.a
+      <motion.div
         whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
@@ -162,13 +169,7 @@ const Merchandise = (props) => {
           cursor: 'pointer'
         }}
         className={`merchandise-content mcht-${idx}`}
-        onClick={() => {
-          setIsVisible(false);
-          router.push({
-            pathname: `/app/merchandise/detail/${item?.id}`,
-            query: { item: JSON.stringify(item) }
-          })
-        }}
+        onClick={goToLink}
       >
         <MerchandiseExplain>
           <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
@@ -210,7 +211,7 @@ const Merchandise = (props) => {
           :
           <>
           </>} */}
-      </motion.a>
+      </motion.div>
     </>
   )
 }
