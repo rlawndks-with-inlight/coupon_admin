@@ -153,7 +153,7 @@ const Merchandise = (props) => {
 
   return (
     <>
-      <motion.div
+      <motion.a
         whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
@@ -209,7 +209,7 @@ const Merchandise = (props) => {
           :
           <>
           </>} */}
-      </motion.div>
+      </motion.a>
     </>
   )
 }
