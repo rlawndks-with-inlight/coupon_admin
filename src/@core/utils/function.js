@@ -370,3 +370,6 @@ export default function useCountNum(end, start = 0, duration = 2000) {
 
   return count
 }
+export const isPc = () => {
+  return window.innerWidth > 1000;
+}

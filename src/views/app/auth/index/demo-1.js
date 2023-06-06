@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import DialogResign from "src/@core/layouts/components/app/DialogResign";
 import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
-import { handleLogout } from "src/@core/utils/function";
+import { handleLogout, isPc } from "src/@core/utils/function";
 import { zBottomMenu } from "src/data/data";
 import styled from "styled-components";
 
@@ -39,7 +39,6 @@ const Index1 = (props) => {
   const handleResignClose = () => setResignOpen(false);
   const handleResignOpen = () => {
     setResignOpen(true)
-    toast.success("asd")
   };
 
   return (
