@@ -71,6 +71,7 @@ const DialogSearchMobile = (props) => {
             <IconButton
               aria-label='close'
               onClick={handleClose}
+              onTouchEnd={handleClose}
               sx={{ top: 18, right: 10, position: 'absolute', color: 'grey.500' }}
             >
               <Icon icon='tabler:x' />

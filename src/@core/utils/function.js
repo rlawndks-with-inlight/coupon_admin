@@ -261,7 +261,7 @@ export const handleLogout = async (router, link_) => {
       router.push(link);
     }
   } catch (err) {
-    toast.error(err?.response?.data?.message || err?.message);
+    //toast.error(err?.response?.data?.message || err?.message);
     if ([401, 403, 409].includes(err?.response?.status)) {
       await deleteCookie('o');
       await deleteLocalStorage(LOCALSTORAGE.USER_DATA);

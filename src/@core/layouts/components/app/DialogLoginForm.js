@@ -216,7 +216,7 @@ const DialogLoginForm = (props) => {
   }, [timeLeft])
   return (
     <MakeDialogFullScreen onClose={handleClose} open={open}>
-      <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ ...style, height: '100%', display: 'flex', flexDirection: 'column' }}>
         <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '0rem' }}>
           <Typography variant='h6' component='span' style={{ display: 'flex' }}>
             <div style={{ display: 'flex', margin: 'auto', fontWeight: 'bold' }}>
@@ -237,10 +237,7 @@ const DialogLoginForm = (props) => {
             <br />
             개인정보 수탁사 : 업무의 내용 :  인증번호 문자 발송 대행
           </Title>
-
           <Content>
-
-
             <Title
               style={{
                 padding: '1rem 0 0.5rem 0',
@@ -308,8 +305,6 @@ const DialogLoginForm = (props) => {
                 <>
                 </>}
             </div>
-
-
             <GreyContainer style={{ background: `${theme.palette.mode == 'dark' ? '' : themeObj.grey[100]}` }}>
               <Title
                 style={{
@@ -324,23 +319,24 @@ const DialogLoginForm = (props) => {
                 dnsData={dnsData} />
               <TextInputComponent
                 dnsData={dnsData} /> */}
+
           </Content>
+          <Button
+            color='secondary'
+            onClick={onConfirm}
+            type='submit'
+            variant='contained'
+            sx={{
+              mr: 2,
+              margin: 'auto auto 16vh auto',
+              height: '50px',
+              width: '90%',
+              maxWidth: '500px',
+              background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
+            }} >
+            로그인
+          </Button>
         </DialogContent>
-        <Button
-          color='secondary'
-          onClick={onConfirm}
-          type='submit'
-          variant='contained'
-          sx={{
-            mr: 2,
-            margin: 'auto auto 4rem auto',
-            height: '50px',
-            width: '90%',
-            maxWidth: '500px',
-            background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
-          }} >
-          로그인
-        </Button>
       </div>
       <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
     </MakeDialogFullScreen>

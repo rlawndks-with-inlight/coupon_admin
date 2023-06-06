@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import DialogResign from "src/@core/layouts/components/app/DialogResign";
 import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
 import { isShowMenu } from "src/@core/layouts/utils";
@@ -38,6 +39,7 @@ const Index1 = (props) => {
   const handleResignClose = () => setResignOpen(false);
   const handleResignOpen = () => {
     setResignOpen(true)
+    toast.success("asd")
   };
 
   return (
@@ -55,9 +57,13 @@ const Index1 = (props) => {
       <Wrapper dns_data={dnsData}>
         <ContentWrapper>
           <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>계정설정</Font1>
-          <Menu onClick={() => {
-            handleResignOpen();
-          }}
+          <Menu
+            onClick={() => {
+              handleResignOpen();
+            }}
+            onTouchEnd={() => {
+              handleResignOpen();
+            }}
           >
             <Icon icon='material-symbols:cancel-outline' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>회원탈퇴</MenuTitle>

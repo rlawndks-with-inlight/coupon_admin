@@ -119,6 +119,11 @@ const BottomMenu = (props) => {
       }
     }
   }
+  const goToLink = (item) => {
+    if (!notChangeRouter) {
+      router.push(item.link)
+    }
+  }
   return (
     <>
       <Container className='menu-container'
@@ -131,7 +136,13 @@ const BottomMenu = (props) => {
           {zBottomMenu.map((item, idx) => {
             if (isShowMenu(dnsData, item)) {
               return <OneMenuContainer
+                className='pointer'
                 onClick={() => {
+                  if (!notChangeRouter) {
+                    router.push(item.link)
+                  }
+                }}
+                onTouchEnd={() => {
                   if (!notChangeRouter) {
                     router.push(item.link)
                   }

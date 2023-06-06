@@ -152,6 +152,7 @@ const Merchandise = (props) => {
   const { item, theme, router, idx, dnsData, setIsVisible } = props;
 
   const goToLink = () => {
+
     setIsVisible(false);
     router.push({
       pathname: `/app/merchandise/detail/${item?.id}`,
@@ -164,12 +165,14 @@ const Merchandise = (props) => {
         whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
         onHoverStart={e => { }}
         onHoverEnd={e => { }}
+        onClick={() => goToLink()}
+        onTouchEnd={() => goToLink()}
+        // onPointerEnter={() => goToLink(window.innerWidth < 1000)}
+        // onClick={() => goToLink(window.innerWidth >= 1000)}
         style={{
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_box_color ?? "#222224" : '#fff'}`,
-          cursor: 'pointer'
         }}
-        className={`merchandise-content mcht-${idx}`}
-        onClick={goToLink}
+        className={`merchandise-content mcht-${idx} pointer`}
       >
         <MerchandiseExplain>
           <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>

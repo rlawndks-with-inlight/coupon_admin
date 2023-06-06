@@ -70,11 +70,11 @@ const DialogResign = (props) => {
               <br />
               재가입은 탈퇴일로부터 30일 후 가능합니다.
             </Title>
-
+            <Button type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
+              탈퇴
+            </Button>
           </DialogContent>
-          <Button type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
-            탈퇴
-          </Button>
+
         </div>
         <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
       </Dialog>

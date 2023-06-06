@@ -207,10 +207,10 @@ const Header = (props) => {
         <IconButton color='inherit' aria-haspopup='true'>
           <Icon icon='fontisto:bell' style={{ fontSize: '1.3rem' }} />
         </IconButton>
-        <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen}>
+        <IconButton color='inherit' aria-haspopup='true' onClick={handleSearchOpen} onTouchEnd={handleSearchOpen}>
           <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
         </IconButton>
-        <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
+        <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle} onTouchEnd={handleModeToggle}>
           <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
         </IconButton>
       </Icons>

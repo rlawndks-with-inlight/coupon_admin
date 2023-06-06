@@ -50,23 +50,35 @@ import { LOCALSTORAGE } from 'src/data/data'
 import Script from 'next/script'
 import { returnMoment } from 'src/@core/utils/function'
 import Head from 'next/head'
+
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
-Router.events.on('routeChangeStart', (link) => {
-  if (link.split('/')[1] != 'app') {
-    NProgress.start()
+Router.events.on('routeChangeStart', (link_) => {
+  try {
+    let link = link_ ?? "/";
+    if (link.split('/')[1] != 'app') {
+      NProgress.start()
+    }
+  } catch (err) {
   }
 })
-Router.events.on('routeChangeError', (link) => {
-  if (link.split('/')[1] != 'app') {
-    NProgress.done()
+Router.events.on('routeChangeError', (link_) => {
+  try {
+    let link = link_ ?? "/";
+    if (link.split('/')[1] != 'app') {
+      NProgress.done()
+    }
+  } catch (err) {
   }
 })
-Router.events.on('routeChangeComplete', (link) => {
-  console.log(link.split('/')[1])
-  if (link.split('/')[1] != 'app') {
-    NProgress.done()
+Router.events.on('routeChangeComplete', (link_) => {
+  try {
+    let link = link_ ?? "/";
+    if (link.split('/')[1] != 'app') {
+      NProgress.done()
+    }
+  } catch (err) {
   }
 })
 
@@ -145,7 +157,9 @@ const App = props => {
                 return (
                   <ThemeComponent settings={settings}>
                     <WindowWrapper>
-                      {getLayout(<Component {...pageProps} />)}
+                      <div onclick="void(0);">
+                        {getLayout(<Component {...pageProps} />)}
+                      </div>
                     </WindowWrapper>
                     <ReactHotToast>
                       <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
