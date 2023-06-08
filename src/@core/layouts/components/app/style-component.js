@@ -10,7 +10,6 @@ export const PageTransition = ({ children, router, }) => {
   const [isUseAnimation, setIsUseAnimation] = useState(false);
   const [path, setPath] = useState("");
   useEffect(() => {
-    console.log(path)
     if (router.asPath.includes('/app/merchandise/detail/') || path.includes('/app/merchandise/detail/')) {
       setIsUseAnimation(true)
     } else {
@@ -18,7 +17,6 @@ export const PageTransition = ({ children, router, }) => {
     }
     setPath(router.asPath);
   }, [router])
-
   return (
     <>
       {isUseAnimation ?

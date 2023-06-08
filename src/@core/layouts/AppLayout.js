@@ -109,9 +109,8 @@ const AppLayout = ({ children, scrollToTop }) => {
           <Header isHeaderShow={isHeaderShow} isGoBack={isGoBack} />
           {children}
           <Footer />
-          <BottomMenu isGoBack={isGoBack} />
         </PageTransition>
-
+        <BottomMenu isGoBack={isGoBack} />
       </Box>
       {scrollToTop ? (
         scrollToTop(props)

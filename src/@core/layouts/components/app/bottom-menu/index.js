@@ -20,7 +20,7 @@ const Container = styled.aside`
     max-width:1200px;
     margin: 0 auto;
     @media screen and (max-width:1200px) {
-        display:flex;
+        display:${props => props.display};
     }
 `
 const MenuContainer = styled.nav`
@@ -131,10 +131,10 @@ const BottomMenu = (props) => {
   return (
     <>
       <Container className='menu-container'
+        display={isGoBack ? 'none' : 'flex'}
         style={{
           color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
-          display: `${isGoBack ? 'none' : ''}`
         }}>
         <MenuContainer style={menuContainerStyle}>
           {zBottomMenu.map((item, idx) => {
