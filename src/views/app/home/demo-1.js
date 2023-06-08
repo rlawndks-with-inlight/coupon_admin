@@ -302,14 +302,7 @@ const Home1 = (props) => {
   }, [mchts])
   return (
     <>
-      <OptionPopup
-        data={{
 
-        }}
-        func={{
-
-        }}
-      />
       <Wrapper dns_data={dnsData}>
         {isVisible ?
           <>

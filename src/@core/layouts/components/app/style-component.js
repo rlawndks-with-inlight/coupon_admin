@@ -19,22 +19,26 @@ export const PageTransition = ({ children, router, }) => {
   }, [router])
   return (
     <>
-      {isUseAnimation ?
-        <>
-          <motion.div
-            initial={{ transform: 'translateX(100vw)' }}
-            animate={{ transform: 'translateX(0)' }}
-            exit={{ transform: 'translateX(100vw)' }}
-            style={{ position: 'relative', boxShadow: '-14px -0px 15px #00000029' }}
-          >
+      <AnimatePresence>
+
+        {isUseAnimation ?
+          <>
+            <motion.div
+              initial={{ transform: 'translateX(100vw)' }}
+              animate={{ transform: 'translateX(0)' }}
+              exit={{ transform: 'translateX(100vw)' }}
+              style={{ position: 'relative', boxShadow: '-14px -0px 15px #00000029' }}
+            >
+              {children}
+            </motion.div>
+          </>
+          :
+          <>
             {children}
-          </motion.div>
-        </>
-        :
-        <>
-          {children}
-        </>
-      }
+          </>
+        }
+      </AnimatePresence>
+
     </>
   );
 };
