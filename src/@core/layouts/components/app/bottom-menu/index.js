@@ -121,11 +121,9 @@ const BottomMenu = (props) => {
       }
     }
   }
-  const goToLink = (item, is_true) => {
-    if (is_true) {
-      if (!notChangeRouter) {
-        router.push(item.link)
-      }
+  const goToLink = (item) => {
+    if (!notChangeRouter) {
+      router.push(item.link)
     }
   }
   return (
@@ -142,8 +140,8 @@ const BottomMenu = (props) => {
               {isShowMenu(dnsData, item) ?
                 <>
                   <OneMenuContainer
-                    onClick={() => goToLink(item, isPc())}
-                    onTouchEnd={() => goToLink(item, !isPc())}
+                    onClick={() => goToLink(item)}
+                    onTouchEnd={() => goToLink(item)}
                     style={{
                       color: `${getColor(menuIndex == idx, theme.palette.mode)}`
                     }} key={idx}>
