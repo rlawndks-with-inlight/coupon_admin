@@ -5,7 +5,28 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
+import { Transition, TransitionGroup } from "react-transition-group";
+const TIMEOUT = 100;
+const getTransitionStyles = {
+  entering: {
+    position: `absolute`,
+    transform: `translateX(100vw)`,
+    opacity: 0,
+  },
+  entered: {
+    transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
+    transform: `translateX(0)`,
+    opacity: 1,
+  },
+  exiting: {
+    transition: `opacity ${TIMEOUT}ms ease-in-out, transform ${TIMEOUT}ms ease-in-out`,
+    transform: `translateX(100vw)`,
+    opacity: 0,
+  },
+  none: {
 
+  }
+};
 export const PageTransition = ({ children, router, }) => {
   const [isUseAnimation, setIsUseAnimation] = useState(false);
   const [path, setPath] = useState("");
@@ -19,26 +40,25 @@ export const PageTransition = ({ children, router, }) => {
   }, [router])
   return (
     <>
-      <AnimatePresence>
-
-        {isUseAnimation ?
-          <>
-            <motion.div
-              initial={{ transform: 'translateX(100vw)' }}
-              animate={{ transform: 'translateX(0)' }}
-              exit={{ transform: 'translateX(100vw)' }}
-              style={{ position: 'relative', boxShadow: '-14px -0px 15px #00000029' }}
+      <TransitionGroup style={{ position: "relative" }}>
+        <Transition
+          key={router.pathname}
+          timeout={{
+            enter: TIMEOUT,
+            exit: TIMEOUT,
+          }}
+        >
+          {(status) => (
+            <div
+              style={{
+                ...getTransitionStyles[`${isUseAnimation ? status : 'none'}`],
+              }}
             >
               {children}
-            </motion.div>
-          </>
-          :
-          <>
-            {children}
-          </>
-        }
-      </AnimatePresence>
-
+            </div>
+          )}
+        </Transition>
+      </TransitionGroup>
     </>
   );
 };
