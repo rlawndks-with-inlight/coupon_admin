@@ -367,6 +367,13 @@ export const MakeDialogFullScreen = (props) => {
       // 이동에 따른 필요한 작업 수행
     }
   };
+  const getLocalStorageDnsData = () => {
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    if (typeof dns_data == 'string') {
+      dns_data = JSON.parse(dns_data);
+    }
+    return;
+  }
   return (
     <>
       <DialogFullScreenStyle
@@ -375,7 +382,7 @@ export const MakeDialogFullScreen = (props) => {
         style={{
           //display: `${open ? '' : 'none'}`,
           ...style,
-          background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.options)?.app?.dark_background_color) : '#fff')}`,
+          background: `${(theme.palette.mode == 'dark' ? (dnsData ? dnsData?.options?.app?.dark_background_color : getLocalStorageDnsData()?.options?.app?.dark_background_color) : '#fff')}`,
           right: `${open ? '0' : '-100vw'}`,
         }}>
         {children}
