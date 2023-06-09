@@ -128,9 +128,7 @@ const App = props => {
                 return (
                   <ThemeComponent settings={settings}>
                     <WindowWrapper>
-                      <div onclick="void(0);">
-                        {getLayout(<Component {...pageProps} />)}
-                      </div>
+                      {getLayout(<Component {...pageProps} />)}
                     </WindowWrapper>
                     <ReactHotToast>
                       <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />

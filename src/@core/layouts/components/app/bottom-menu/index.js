@@ -9,7 +9,7 @@ import { themeObj } from '../style-component'
 import { isShowMenu } from 'src/@core/layouts/utils'
 import { isPc } from 'src/@core/utils/function'
 import { toast } from 'react-hot-toast'
-const Container = styled.aside`
+const Container = styled.div`
     position: fixed;
     right: 0;
     bottom: -1px;
@@ -20,7 +20,7 @@ const Container = styled.aside`
     max-width:1200px;
     margin: 0 auto;
     @media screen and (max-width:1200px) {
-        display:${props => props.display};
+        display:flex;
     }
 `
 const MenuContainer = styled.nav`
@@ -32,10 +32,10 @@ display: flex;
 margin: 0 auto;
 justify-content:space-between;
 `
-const OneMenuContainer = styled.div`
+const OneMenuContainer = styled.a`
     color: inherit;
     text-decoration: none;
-    width: 20%;
+    width: 50%;
     min-width: 20%;
     height: 100%;
     display: flex;
@@ -45,10 +45,12 @@ const OneMenuContainer = styled.div`
     text-align: center;
     cursor:pointer;
     align-items:center;
+    background:transparent;
 `
-const OneMenuName = styled.span`
+const OneMenuName = styled.div`
 font-weight: 400;
 font-size:${themeObj.font_size.font4};
+cursor:pointer;
 margin-bottom:auto;
   @media screen and (max-width:330px) {
     font-size:0.7rem;
@@ -65,7 +67,6 @@ const BottomMenu = (props) => {
   const theme = useTheme();
   const [menuIndex, setMenuIndex] = useState(0);
   const [menuContainerStyle, setMenuContainerStyle] = useState({});
-  const [notChangeRouter, setNotChangeRouter] = useState(false);
   useEffect(() => {
 
   }, [])
@@ -80,12 +81,10 @@ const BottomMenu = (props) => {
     if (query_keys.includes('dark_background_color')) {
       for (var i = 0; i < query_keys.length; i++) {
         if (router.query[query_keys[i]]) {
-          setNotChangeRouter(true);
           dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
         }
       }
     } else {
-      setNotChangeRouter(false);
     }
     setDnsData(dns_data);
 
@@ -122,42 +121,44 @@ const BottomMenu = (props) => {
     }
   }
   const goToLink = (item) => {
-    if (!notChangeRouter) {
-      router.push(item.link)
-    }
   }
   return (
     <>
-      <Container className='menu-container'
-        display={isGoBack ? 'none' : 'flex'}
-        style={{
-          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
-          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
-        }}>
-        <MenuContainer style={menuContainerStyle}>
-          {zBottomMenu.map((item, idx) => {
-            return <>
-              {isShowMenu(dnsData, item) ?
-                <>
-                  <OneMenuContainer
-                    onClick={() => goToLink(item)}
-                    onTouchEnd={() => goToLink(item)}
-                    style={{
-                      color: `${getColor(menuIndex == idx, theme.palette.mode)}`
-                    }} key={idx}>
-                    <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
-                    <OneMenuName>
-                      {item.title}
-                    </OneMenuName>
-                  </OneMenuContainer>
-                </>
-                :
-                <>
-                </>}
-            </>
-          })}
-        </MenuContainer>
-      </Container>
+      {isGoBack ?
+        <>
+        </>
+        :
+        <>
+          <Container className='menu-container'
+            style={{
+              color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
+              background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
+            }}>
+            <MenuContainer style={menuContainerStyle}>
+              {zBottomMenu.map((item, idx) => (<>
+                {isShowMenu(dnsData, item) ?
+                  <>
+                    <OneMenuContainer
+                      onClick={() => router.push(item.link)}
+                      onTouchEnd={() => router.push(item.link)}
+                      style={{
+                        color: `${getColor(menuIndex == idx, theme.palette.mode)}`
+                      }} key={idx}>
+                      <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem', cursor: 'pointer' }} />
+                      <OneMenuName>
+                        {item.title}
+                      </OneMenuName>
+                    </OneMenuContainer>
+                  </>
+                  :
+                  <>
+                  </>}
+              </>
+              ))}
+            </MenuContainer>
+          </Container>
+        </>}
+
     </>
   )
 }
