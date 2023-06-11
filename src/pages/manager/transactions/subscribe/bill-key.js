@@ -67,14 +67,14 @@ const PaymentMethodCard = () => {
   const initialPage = (user_data) => {
     setUserData(user_data);
     if (user_data?.bill_key) {
-      setCardNumber("**** **** **** ****")
-      setName("****")
-      setExpiry("**/**")
-      setCardPw("**")
-      setAuthNo("******")
-      setDialogText("카드 등록을 취소 하시겠습니까?")
-      setDialogIcon(<Icon icon='material-symbols:cancel-outline' style={{ fontSize: '40px' }} />);
-      setDialogSaveText("등록취소");
+      setCardNumber("")
+      setName("")
+      setExpiry("")
+      setCardPw("")
+      setAuthNo("")
+      setDialogText("카드를 수정 하시겠습니까?")
+      setDialogIcon(<Icon icon='ion:card-outline' style={{ fontSize: '40px' }} />);
+      setDialogSaveText("수정");
     } else {
       setCardNumber("")
       setName("")
@@ -107,7 +107,7 @@ const PaymentMethodCard = () => {
     setExpiry('')
     setCardNumber('')
   }
-  const onRegisterBillKey = async () => {
+  const onRegisterBillKey = async (param) => {
     try {
       let obj = {
         amount: 100,
@@ -119,16 +119,14 @@ const PaymentMethodCard = () => {
         auth_no: authNo,
         card_pw: cardPw
       }
-      const response = await notiAxiosIns().post(`/api/v2/comagain/billkey/subscribe`, obj);
-
+      const response = await notiAxiosIns().post(`/api/v2/comagain/billkey/subscribe${param}`, obj);
       if (response?.status == 200) {
-        toast.success("성공적으로 카드가 등록 되었습니다.")
+        toast.success("성공적으로 카드가 저장 되었습니다.")
         handleEditConfirmClose();
         setUserData({ ...userData, ['bill_key']: response?.data?.billKey })
         setLocalStorage(LOCALSTORAGE.USER_DATA, JSON.stringify({ ...userData, ['bill_key']: response?.data?.billKey }));
         initialPage({ ...userData, ['bill_key']: response?.data?.billKey })
       }
-
     } catch (err) {
       toast.error(err?.response?.data?.result_msg)
       handleEditConfirmClose();
@@ -162,9 +160,9 @@ const PaymentMethodCard = () => {
         handleClose={handleEditConfirmClose}
         onKeepGoing={() => {
           if (userData?.bill_key) {
-            onCancelBillKey();
+            onRegisterBillKey('-change');
           } else {
-            onRegisterBillKey();
+            onRegisterBillKey('');
           }
         }}
         text={dialogText}
@@ -191,7 +189,6 @@ const PaymentMethodCard = () => {
                     autoComplete='off'
                     label='카드 번호 입력'
                     onBlur={handleBlur}
-                    disabled={userData?.bill_key}
                     onChange={handleInputChange}
                     placeholder='0000 0000 0000 0000'
                     onFocus={e => setFocus(e.target.name)}
@@ -204,7 +201,6 @@ const PaymentMethodCard = () => {
                     onBlur={handleBlur}
                     label='카드사용자명'
                     placeholder='홍길동'
-                    disabled={userData?.bill_key}
                     onChange={e => setName(e.target.value)}
                     onFocus={e => setFocus(e.target.name)}
                   />
@@ -217,7 +213,6 @@ const PaymentMethodCard = () => {
                       value={expiry}
                       onBlur={handleBlur}
                       placeholder='MM/YY'
-                      disabled={userData?.bill_key}
                       onChange={handleInputChange}
                       inputProps={{ maxLength: '5' }}
                       onFocus={e => setFocus(e.target.name)}
@@ -229,7 +224,6 @@ const PaymentMethodCard = () => {
                       value={cardPw}
                       autoComplete='off'
                       onBlur={handleBlur}
-                      disabled={userData?.bill_key}
                       onChange={(e) => { setCardPw(e.target.value) }}
                       inputProps={{ maxLength: '2' }}
                       onFocus={e => setFocus(e.target.name)}
@@ -255,7 +249,6 @@ const PaymentMethodCard = () => {
                     label='카드소유자번호'
                     value={authNo}
                     onBlur={handleBlur}
-                    disabled={userData?.bill_key}
                     onChange={(e) => { setAuthNo(e.target.value) }}
                     onFocus={e => setFocus(e.target.name)}
                     inputProps={{ maxLength: '12' }}
@@ -265,8 +258,9 @@ const PaymentMethodCard = () => {
                   <Grid item xs={12}>
                     {userData?.bill_key ?
                       <>
-                        <Button type='reset' variant='contained' color='secondary' onClick={onEditConfirmOpen}>
-                          카드등록취소
+                        <Button type='submit' variant='contained' sx={{ mr: 4 }}
+                          onClick={onEditConfirmOpen}>
+                          카드 수정
                         </Button>
                       </>
                       :
@@ -282,11 +276,9 @@ const PaymentMethodCard = () => {
                   </Grid>
                 </ColumnContainer>
                 <ColumnContainer>
-                  test
                 </ColumnContainer>
               </Grid>
             </Grid>
-
           </Grid>
         </CardContent>
       </Card>

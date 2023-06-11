@@ -93,11 +93,11 @@ const More1 = (props) => {
             <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>저작권정책</MenuTitle>
           </Menu>
-          <Menu onClick={() => { }}
+          {/* <Menu onClick={() => { }}
             onTouchEnd={() => { }}>
             <Icon icon='mdi:customer-service' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>고객센터</MenuTitle>
-          </Menu>
+          </Menu> */}
           <Menu
             onClick={() => onLogout(isPc())}
             onTouchEnd={() => onLogout(!isPc())}

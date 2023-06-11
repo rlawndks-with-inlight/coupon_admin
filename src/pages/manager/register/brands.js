@@ -224,7 +224,7 @@ const Register = () => {
       delete obj['showPasswordCheck'];
       const response = await axiosIns().post('/api/v1/auth/sign-up/brand', obj);
       setToken(response?.data?.access_token);
-      if (response?.status == 200 && response?.data?.user) {
+      if (response?.status == 201 && response?.data?.user) {
         setActiveStep(activeStep + 1);
       }
     } catch (err) {
@@ -297,7 +297,6 @@ const Register = () => {
             <Grid item xs={12}>
               <TextField autoFocus fullWidth id='dns' value={values?.dns} onChange={handleChange('dns')} onKeyPress={(e) => { e.key == 'Enter' ? onCheckNameServer() : '' }} placeholder='example.com' label='도메인입력' sx={{ mb: 4 }} />
             </Grid>
-
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button size='large' variant='outlined' color='secondary' onClick={() => setActiveStep(activeStep - 1)}>
                 Back
@@ -491,9 +490,7 @@ const Register = () => {
             </Stepper>
           </StepperWrapper>
         </CardContent>
-
         <Divider sx={{ m: '0 !important' }} />
-
         <CardContent>{renderContent()}</CardContent>
       </Card>
     </Box>

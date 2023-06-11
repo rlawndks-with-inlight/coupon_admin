@@ -1,3 +1,2 @@
 import LoginV1 from "./login";
-
-export default LoginV1;
+export default LoginV1

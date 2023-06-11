@@ -212,7 +212,7 @@ const ManagerMerchandiseEdit = (props) => {
                   <>
                   </>}
                 <Grid item xs={12}>
-                  <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
+                <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' className='nick_name' onChange={handleChangeValue('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
                 </Grid>
                 {/* {userData?.level >= 15 ?
                   <>
@@ -240,7 +240,7 @@ const ManagerMerchandiseEdit = (props) => {
                   </>} */}
 
                 <Grid item xs={12}>
-                  <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
+                <TextField fullWidth label='가맹점 상호' placeholder='가맹점 상호를 입력해 주세요.' className='mcht_name' onChange={handleChangeValue('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField fullWidth label='가맹점 주소' placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChangeValue('addr')} inputProps={{
@@ -250,7 +250,7 @@ const ManagerMerchandiseEdit = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='휴대폰번호' placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
+                <TextField fullWidth label='휴대폰번호' placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
