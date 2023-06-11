@@ -32,7 +32,6 @@ const ManagerUserEdit = (props) => {
     phone_num: '',
     user_pw: '',
     nick_name: '',
-    birth_date: returnMoment(false, new Date()).substring(0, 10),
   }
   const [values, setValues] = useState(defaultObj)
 
@@ -211,29 +210,6 @@ const ManagerUserEdit = (props) => {
                             </InputAdornment>
                           )
                         }}
-                      />
-                    </Grid>
-
-
-                    <Grid item xs={12}>
-                      <DatePicker
-                        showYearDropdown
-                        showMonthDropdown
-                        selected={bDt}
-                        id='month-year-dropdown'
-                        placeholderText='YYYY-MM-DD'
-                        dateFormat={'yyyy-MM-dd'}
-                        popperPlacement={popperPlacement}
-                        onChange={async (date) => {
-                          try {
-                            setBDt(date);
-                            handleChange('birth_date', returnMoment(false, date).substring(0, 10));
-                          } catch (err) {
-                            console.log(err);
-                          }
-
-                        }}
-                        customInput={<CustomInput label='유저 생년월일' />}
                       />
                     </Grid>
                   </Grid>

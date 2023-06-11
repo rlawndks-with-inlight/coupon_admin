@@ -343,7 +343,6 @@ export const excelUploadTableObj = {
       { column: 'user_name', name: '아이디', type: 'text' },
       { column: 'user_pw', name: '패스워드', type: 'text' },
       { column: 'nick_name', name: '닉네임', type: 'text' },
-      { column: 'birth_date', name: '생년월일', type: 'text' },
       { column: 'mcht_name', name: '가맹점 상호', type: 'text' },
       { column: 'addr', name: '가맹점 주소', type: 'text' },
       { column: 'point_flag', name: '포인트 사용여부', type: 'number' },
@@ -373,7 +372,6 @@ export const excelUploadTableObj = {
     columns: [
       { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
       { column: 'nick_name', name: '유저 닉네임', type: 'text' },
-      { column: 'birth_date', name: '유저 생년월일', type: 'text' },
     ]
   },
   points: {

@@ -176,7 +176,7 @@ const DialogExcelUpload = (props) => {
         <DialogContent>
           {count == 0 ?
             <>
-              <Button sx={{ mb: 2 }} href={"/file/정보 대량등록 양식_v1_2023-03-03.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
+              <Button sx={{ mb: 2 }} href={"/file/정보 대량등록 양식_v1_2023-06-12.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
                 양식추출
               </Button>
               <Button sx={{ mb: 2, ml: 4 }} onClick={() => { setCount(1) }} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
