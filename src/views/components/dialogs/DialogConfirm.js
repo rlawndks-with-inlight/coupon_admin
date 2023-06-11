@@ -16,7 +16,7 @@ const Dialog = styled(MuiDialog)({
   },
 })
 const DialogConfirm = (props) => {
-  const { open, handleClose, onKeepGoing, text, subText, data, saveText, headIcon } = props;
+  const { open, handleClose, onKeepGoing, text, subText, data, saveText, headIcon, isNotUseCancel } = props;
 
   const [clickCount, setClickCount] = useState(0);
   useEffect(() => {
@@ -27,7 +27,7 @@ const DialogConfirm = (props) => {
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
         <div style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ margin: '0 auto' }}>{headIcon}</div>
-          <DialogTitle id='form-dialog-title'>{text}</DialogTitle>
+          <DialogTitle id='form-dialog-title' style={{ whiteSpace: 'pre' }}>{text}</DialogTitle>
           <DialogContent>
             {subText ?
               <>
@@ -40,6 +40,14 @@ const DialogConfirm = (props) => {
               </>}
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
+            {isNotUseCancel ?
+              <>
+                <div />
+              </>
+              :
+              <>
+              </>
+            }
             <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => {
 
               if (clickCount == 0) {
@@ -47,7 +55,14 @@ const DialogConfirm = (props) => {
               }
               setClickCount(clickCount + 1);
             }}>{saveText}</Button>
-            <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
+            {isNotUseCancel ?
+              <>
+                <div />
+              </>
+              :
+              <>
+                <Button sx={{ mr: "auto" }} type='submit' variant='contained' onClick={handleClose}>취소</Button>
+              </>}
           </DialogActions>
         </div>
 

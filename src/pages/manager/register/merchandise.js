@@ -55,7 +55,7 @@ const Tour = dynamic(
   { ssr: false },
 );
 
-function Countdown({ seconds, timeLeft, setTimeLeft }) {
+function Countdown({ seconds, timeLeft, setTimeLeft, style }) {
 
   useEffect(() => {
     // 1초마다 timeLeft 값을 1씩 감소시킵니다.
@@ -73,7 +73,8 @@ function Countdown({ seconds, timeLeft, setTimeLeft }) {
         <>
           <Font2 style={{
             color: themeObj.red,
-            marginLeft: 'auto'
+            marginLeft: 'auto',
+            ...style
           }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font2>
         </>
         :
@@ -187,7 +188,7 @@ const Register = () => {
     addr: '',
     phone_num: '',
     stamp_flag: 0,
-    stamp_save_count: 0,
+    stamp_save_count: 1,
     point_flag: 0,
     point_rate: 0,
     user_pw: '',
@@ -261,7 +262,7 @@ const Register = () => {
       setTourSteps([
         {
           selector: '.card-info',
-          content: "정기결제에 사용될 카드를 입력해 주세요.",
+          content: "정기결제에 사용될 카드정보를 입력해 주세요.",
         },
       ])
       setTourOpen(true);
@@ -272,6 +273,9 @@ const Register = () => {
   }, [activeStep])
   useEffect(() => {
     $('html').click(function () {
+      setTimeLeft(180)
+    });
+    $(document).keydown(function (event) {
       setTimeLeft(180)
     });
   }, [])
@@ -285,7 +289,7 @@ const Register = () => {
         setTourSteps([
           {
             selector: '.goto-contract',
-            content: "'계약하기' 버튼을 클릭 후 계약하는 링크로 이동해 주세요.",
+            content: "'계약하기' 버튼을 클릭 후 계약을 진행해 주세요.",
           },
         ])
         setTourOpen(true);
@@ -297,23 +301,12 @@ const Register = () => {
   }
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
-    if (prop == 'stamp_flag') {
-      if (event.target.value == 1) {
-        setTourSteps([
-          {
-            selector: '.stamp-info',
-            content: '상품당 스탬프 저장개수를 입력해주세요.\n ex) 2 입력 -> 적립마다 스탬프 2개 추가',
-          },
-        ])
-        setTourOpen(true);
-      }
-
-    } else if (prop == 'point_flag') {
+    if (prop == 'point_flag') {
       if (event.target.value == 1) {
         setTourSteps([
           {
             selector: '.point-info',
-            content: '상품당 포인트 변환률을 입력해 주세요.\n ex) 2 입력 -> 1000원 상품 구매시, 2%인 20포인트 적립',
+            content: '상품당 포인트 적립률을 입력해 주세요.\n ex) 2 입력 -> 1000원 상품 구매시, 2%인 20포인트 적립',
           },
         ])
         setTourOpen(true);
@@ -373,11 +366,17 @@ const Register = () => {
         setActiveStep(activeStep + 1);
         return;
       }
-      for (var i = 0; i < Object.keys(values).length; i++) {
-        if (!values[Object.keys(values)[i]]) {
-          toast.error('필수값을 입력해 주세요.');
-          return;
-        }
+      if (
+        !values.user_name ||
+        !values.nick_name ||
+        !values.password ||
+        !values.passwordCheck ||
+        !values.addr ||
+        !values.mcht_name ||
+        !values.phone_num
+      ) {
+        toast.error('필수값을 입력해 주세요.');
+        return;
       }
       if (values.password != values.passwordCheck) {
         toast.error('비밀번호가 일치하지 않습니다.');
@@ -581,22 +580,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6} className='stamp-info'>
-                {values?.stamp_flag == 1 ?
-                  <>
-                    <TextField
-                      fullWidth
-                      label='상품당 스탬프 저장개수'
-                      placeholder='상품당 스탬프 저장개수를 입력해 주세요.'
-                      className='stamp_save_count'
-                      onChange={handleChange('stamp_save_count')}
-                      defaultValue={values?.stamp_save_count}
-                      value={values?.stamp_save_count}
-                      onFocus={closeTour}
-                    />
-                  </>
-                  :
-                  <>
-                  </>}
+
               </Grid>
             </Grid>
             <Grid container spacing={5} sx={{ mt: '0' }} >
@@ -622,8 +606,8 @@ const Register = () => {
                   <>
                     <TextField
                       fullWidth
-                      label='포인트 변환률'
-                      placeholder='포인트 변환률을 입력해 주세요.'
+                      label='포인트 적립률'
+                      placeholder='포인트 적립률을 입력해 주세요.'
                       className='point_rate'
                       onChange={handleChange('point_rate')}
                       onFocus={closeTour}
@@ -922,10 +906,18 @@ const Register = () => {
         onKeepGoing={() => {
           handleTimeLeftClose();
         }}
-        text={"1분뒤 자동 로그아웃 됩니다."}
+        text={"1분뒤 자동 로그아웃 됩니다.\n로그인화면에서 아이디 비번을 입력 후\n이어서 진행해 주세요."}
         //subText={'삭제하시면 복구할 수 없습니다.'}
-        headIcon={<Icon icon='gridicons:notice-outline' style={{ fontSize: '40px' }} />}
+        headIcon={<Countdown
+          seconds={180}
+          timeLeft={timeLeft}
+          setTimeLeft={setTimeLeft}
+          style={{
+            fontSize: '20px'
+          }}
+        />}
         saveText={"확인"}
+        isNotUseCancel={true}
       />
       <DialogConfirm
         open={editConfirmOpen}
