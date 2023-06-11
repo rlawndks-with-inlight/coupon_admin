@@ -46,7 +46,7 @@ import { MenuItem, Select } from '@mui/material'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
-import { themeObj } from 'src/@core/layouts/components/app/style-component'
+import { Font2, themeObj } from 'src/@core/layouts/components/app/style-component'
 import FallbackSpinner from 'src/@core/components/spinner'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 import dynamic from 'next/dynamic';
@@ -55,12 +55,33 @@ const Tour = dynamic(
   { ssr: false },
 );
 
-const tourOptions = {
-  defaultStepOptions: { showCancelLink: true },
-  useModalOverlay: true,
-  keyboardNavigation: false
-};
+function Countdown({ seconds, timeLeft, setTimeLeft }) {
 
+  useEffect(() => {
+    // 1초마다 timeLeft 값을 1씩 감소시킵니다.
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+
+    // 컴포넌트가 언마운트되면 타이머를 정리합니다.
+    return () => clearInterval(timer);
+  }, [seconds]);
+
+  return (
+    <>
+      {timeLeft > 0 ?
+        <>
+          <Font2 style={{
+            color: themeObj.red,
+            marginLeft: 'auto'
+          }}>{Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}</Font2>
+        </>
+        :
+        <>
+        </>}
+    </>
+  );
+}
 const ColumnContainer = styled(Grid)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -245,7 +266,15 @@ const Register = () => {
       ])
       setTourOpen(true);
     }
+    if ((activeStep == 1 || activeStep == 2) && timeLeft < 0) {
+      setTimeLeft(180)
+    }
   }, [activeStep])
+  useEffect(() => {
+    $('html').click(function () {
+      setTimeLeft(180)
+    });
+  }, [])
   const getContractInfo = async () => {
     try {
       const response = await axiosIns().post(`/api/v1/auth/contract/create`, {
@@ -344,9 +373,14 @@ const Register = () => {
         setActiveStep(activeStep + 1);
         return;
       }
+      for (var i = 0; i < Object.keys(values).length; i++) {
+        if (!values[Object.keys(values)[i]]) {
+          toast.error('필수값을 입력해 주세요.');
+          return;
+        }
+      }
       if (values.password != values.passwordCheck) {
         toast.error('비밀번호가 일치하지 않습니다.');
-
         return;
       }
       let obj = { ...values };
@@ -857,6 +891,20 @@ const Register = () => {
     setTourOpen(false);
     setTourSteps([]);
   };
+
+  const [timeLeft, setTimeLeft] = useState(-1);
+  const [timeLeftOpen, setTimeLeftOpen] = useState(false);
+  const handleTimeLeftClose = () => setTimeLeftOpen(false);
+  useEffect(() => {
+    if (timeLeft == 60) {
+      setTimeLeftOpen(true)
+    }
+    if (timeLeft == 0) {
+      if (activeStep >= 1) {
+        handleLogout(router, '/manager/login/merchandise')
+      }
+    }
+  }, [timeLeft])
   return (
     <>
       <DialogAddress
@@ -867,6 +915,17 @@ const Register = () => {
         subText={'삭제하시면 복구할 수 없습니다.'}
         saveText={'삭제'}
         headIcon={<Icon icon='tabler:trash' style={{ fontSize: '40px' }} />}
+      />
+      <DialogConfirm
+        open={timeLeftOpen}
+        handleClose={handleTimeLeftClose}
+        onKeepGoing={() => {
+          handleTimeLeftClose();
+        }}
+        text={"1분뒤 자동 로그아웃 됩니다."}
+        //subText={'삭제하시면 복구할 수 없습니다.'}
+        headIcon={<Icon icon='gridicons:notice-outline' style={{ fontSize: '40px' }} />}
+        saveText={"확인"}
       />
       <DialogConfirm
         open={editConfirmOpen}
@@ -891,13 +950,13 @@ const Register = () => {
       <Box className='content-center'>
         <Card>
           <CardContent style={{ display: 'flex', flexDirection: 'column', paddingTop: `${activeStep >= 1 ? '0.5rem' : ''}` }}>
-            {activeStep >= 1 ?
+            {activeStep >= 1 && timeLeft > 0 ?
               <>
-                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', fontSize: themeObj.font_size.font4, marginBottom: '0.5rem', cursor: 'pointer' }}
-                  onClick={() => handleLogout(router, '/manager/login/merchandise')}>
-                  <Icon icon='ant-design:logout-outlined' />
-                  <div>다음에 이어서 하기</div>
-                </div>
+                <Countdown
+                  seconds={180}
+                  timeLeft={timeLeft}
+                  setTimeLeft={setTimeLeft}
+                />
               </>
               :
               <>
@@ -933,7 +992,6 @@ const Register = () => {
                       labelProps.error = false
                     }
                   }
-
                   return (
                     <Step key={index}>
                       <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
