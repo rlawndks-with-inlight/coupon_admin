@@ -42,7 +42,7 @@ import { useRouter } from 'next/router'
 
 import { handleLogout, processCatch } from 'src/@core/utils/function'
 import DialogAddress from 'src/views/components/dialogs/DialogAddress'
-import { MenuItem, Select } from '@mui/material'
+import { FormHelperText, MenuItem, Select } from '@mui/material'
 import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
@@ -525,6 +525,8 @@ const Register = () => {
                 <FormControl fullWidth sx={{ mb: 1.5 }}>
                   <InputLabel htmlFor='auth-login-password-check'>비밀번호확인</InputLabel>
                   <OutlinedInput
+                    helperText='Some important text'
+                    error={values?.passwordCheck && (values?.password != values?.passwordCheck)}
                     onFocus={closeTour}
                     label='Password'
                     value={values?.passwordCheck}
@@ -544,7 +546,17 @@ const Register = () => {
                       </InputAdornment>
                     }
                   />
+                  {values?.passwordCheck && (values?.password != values?.passwordCheck) ?
+                    <>
+                      <FormHelperText error id="accountId-error">
+                        {'비밀번호가 일치하지 않습니다.'}
+                      </FormHelperText>
+                    </>
+                    :
+                    <>
+                    </>}
                 </FormControl>
+
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField fullWidth label='가맹점 상호' onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
