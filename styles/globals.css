@@ -13,13 +13,20 @@ input[type='color']::-moz-color-swatch {
 #___reactour > div:nth-child(4) > div {
   border-radius: 8px;
   white-space: pre-wrap;
-  padding-top: 3rem;
+  padding-top: 2rem;
 }
 #___reactour > div:nth-child(4) > div > span {
   display: none;
 }
 #___reactour > div:nth-child(4) > div > div {
   display: none;
+}
+#mask-main > rect:nth-child(2) {
+  rx: 16;
+}
+#___reactour > div:nth-child(4) > div > button {
+  top: 17px;
+  right: 16px;
 }
 .none-scroll {
   -ms-overflow-style: none; /* IE and Edge */

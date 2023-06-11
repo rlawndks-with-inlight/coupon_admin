@@ -119,7 +119,7 @@ const LoginV1 = ({ dns_data }) => {
         if (
           (response_auth?.contract_status != 2 || !response_auth?.bill_key)
           && response_auth?.level == 10
-          && window.location.host == process.env.MAIN_FRONT_URL
+          //&& window.location.host == process.env.MAIN_FRONT_URL
         ) {
           router.push('/manager/register/merchandise');
         } else {
@@ -156,7 +156,7 @@ const LoginV1 = ({ dns_data }) => {
         if (
           (response?.data?.user?.contract_status != 2 || !response?.data?.user?.bill_key)
           && response?.data?.user?.level == 10
-          && window.location.host == process.env.MAIN_FRONT_URL
+          //&& window.location.host == process.env.MAIN_FRONT_URL
         ) {
           router.push('/manager/register/merchandise');
         } else {
@@ -248,7 +248,9 @@ const LoginV1 = ({ dns_data }) => {
                       로그인
                     </>}
                 </Button>
-                {window.location.host == process.env.MAIN_FRONT_URL ?
+                {window.location.host == process.env.MAIN_FRONT_URL
+                  || true
+                  ?
                   <>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                       <Typography sx={{ color: 'text.secondary', mr: 2 }}>처음 방문하셨나요?</Typography>
