@@ -130,7 +130,7 @@ const Index = () => {
                     </Box>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Button sx={{ margin: '0 auto', width: '100%' }} variant={'contained'}
+                    <Button sx={{ margin: '0 auto 0.5rem auto', width: '100%' }} variant={'contained'}
                       onClick={() => { router.push('/manager/register/brands') }}>
                       {'가입하기'}
                     </Button>
@@ -224,7 +224,7 @@ const Index = () => {
                     </Box>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Button sx={{ margin: '0 auto', width: '100%' }} variant={'contained'}
+                    <Button sx={{ margin: '0 auto 0.5rem auto', width: '100%' }} variant={'contained'}
                       onClick={() => { router.push('/manager/register/merchandise') }}>
                       {'가입하기'}
                     </Button>
