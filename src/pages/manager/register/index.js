@@ -61,7 +61,7 @@ const Index = () => {
                     <>
                     </>}
                   <Icon icon={'clarity:building-line'} style={{ fontSize: '70px', marginBottom: '0.5rem' }} />
-                  <Typography variant='h5'>{'브랜드 가입'}</Typography>
+                  <Typography variant='h5' style={{ fontWeight: 'bold' }}>{'브랜드 가입'}</Typography>
                   <Typography sx={{ mb: 2, mt: 2, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
                     <div style={{ fontWeight: 'bold' }}>{'월 1,100,000 원 이상'}</div>
                     <div style={{ fontSize: '0.8rem', marginLeft: '0.2rem' }}>{'(부가세 포함)'}</div>
@@ -157,7 +157,7 @@ const Index = () => {
                     <>
                     </>}
                   <Icon icon={'solar:shop-outline'} style={{ fontSize: '70px', marginBottom: '0.5rem' }} />
-                  <Typography variant='h5'>{'가맹점 가입'}</Typography>
+                  <Typography variant='h5' style={{ fontWeight: 'bold' }}>{'가맹점 가입'}</Typography>
                   <Typography sx={{ mb: 2, mt: 2, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
                     <div style={{ fontWeight: 'bold' }}>{'월 11,000 원'}</div>
                     <div style={{ fontSize: '0.8rem', marginLeft: '0.2rem' }}>{'(부가세 포함)'}</div>
