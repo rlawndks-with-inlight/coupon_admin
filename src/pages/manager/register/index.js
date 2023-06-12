@@ -47,9 +47,11 @@ const Index = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <Icon icon={'clarity:building-line'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'브랜드 가입'}</Typography>
-                  <Typography sx={{ mb: 1, color: 'text.secondary' }}>{'프랜차이즈 및 여러가맹점 보유 업체'}</Typography>
-                  <Typography sx={{ mb: 1, color: 'text.secondary' }}>{'최소금액 월 1,000,000₩ ~'}</Typography>
-                  <Typography sx={{ mb: 5, color: 'text.secondary' }}>{'옵션에 따라서 가격이 변동될 수 있습니다.'}</Typography>
+                  <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                    <div style={{ fontWeight: 'bold' }}>{'월 1,100,000 원 이상'}</div>
+                    <div style={{ fontSize: '0.8rem', marginLeft: '0.2rem' }}>{'(부가세 포함)'}</div>
+                  </Typography>
+                  <Typography sx={{ mb: 5, color: 'text.secondary', fontSize: '0.8rem' }}>{'옵션에 따라서 가격이 변동될 수 있습니다.'}</Typography>
                   <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                     <Box
                       sx={{
@@ -135,9 +137,11 @@ const Index = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <Icon icon={'solar:shop-outline'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'가맹점 가입'}</Typography>
-                  <Typography sx={{ mb: 1, color: 'text.secondary' }}>{'소상공인 및 하나의 업체'}</Typography>
-                  <Typography sx={{ mb: 1, color: 'text.secondary' }}>{'최소금액 월 10,000₩ ~'}</Typography>
-                  <Typography sx={{ mb: 5, color: 'text.secondary' }}>{'옵션에 따라서 가격이 변동될 수 있습니다.'}</Typography>
+                  <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                    <div style={{ fontWeight: 'bold' }}>{'월 11,000 원'}</div>
+                    <div style={{ fontSize: '0.8rem', marginLeft: '0.2rem' }}>{'(부가세 포함)'}</div>
+                  </Typography>
+                  <Typography sx={{ mb: 5, color: 'text.secondary', fontSize: '0.8rem' }}>{'옵션에 따라서 가격이 변동될 수 있습니다.'}</Typography>
                   <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                     <Box
                       sx={{
