@@ -46,7 +46,6 @@ margin:1.5rem auto 0 1.5rem;
 
 const PaymentMethodCard = () => {
   // ** States
-  const [name, setName] = useState('')
   const [cvc, setCvc] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [focus, setFocus] = useState()
@@ -68,7 +67,6 @@ const PaymentMethodCard = () => {
     setUserData(user_data);
     if (user_data?.bill_key) {
       setCardNumber("")
-      setName("")
       setExpiry("")
       setCardPw("")
       setAuthNo("")
@@ -77,7 +75,6 @@ const PaymentMethodCard = () => {
       setDialogSaveText("수정");
     } else {
       setCardNumber("")
-      setName("")
       setExpiry("")
       setCardPw("")
       setAuthNo("")
@@ -103,7 +100,6 @@ const PaymentMethodCard = () => {
 
   const handleResetForm = () => {
     setCvc('')
-    setName('')
     setExpiry('')
     setCardNumber('')
   }
@@ -112,7 +108,6 @@ const PaymentMethodCard = () => {
       let obj = {
         amount: 100,
         item_nm: `컴어게인 ${userData?.mcht_name} 가맹점 구독신청`,
-        buyer_nm: name,
         card_num: cardNumber.replaceAll(' ', ''),
         yymm: `${expiry.split('/')[1]}${expiry.split('/')[0]}`,
         instment: '00',
@@ -179,7 +174,7 @@ const PaymentMethodCard = () => {
                 <ColumnContainer>
                   <Grid item xs={12} style={{ display: 'flex' }}>
                     <CardWrapper style={{ margin: '0 auto' }}>
-                      <Cards cvc={cvc} focused={focus} expiry={expiry} name={name} number={cardNumber} />
+                      <Cards cvc={cvc} focused={focus} expiry={expiry} name={' '} number={cardNumber} />
                     </CardWrapper>
                   </Grid>
                   <TextField
@@ -191,17 +186,6 @@ const PaymentMethodCard = () => {
                     onBlur={handleBlur}
                     onChange={handleInputChange}
                     placeholder='0000 0000 0000 0000'
-                    onFocus={e => setFocus(e.target.name)}
-                  />
-                  <TextField
-                    fullWidth
-                    name='name'
-                    value={name}
-                    autoComplete='off'
-                    onBlur={handleBlur}
-                    label='카드사용자명'
-                    placeholder='홍길동'
-                    onChange={e => setName(e.target.value)}
                     onFocus={e => setFocus(e.target.name)}
                   />
 

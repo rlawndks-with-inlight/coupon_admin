@@ -453,7 +453,6 @@ const Register = () => {
     setValues({ ...values, ['addr']: data?.address })
   }
   //card start
-  const [name, setName] = useState('')
   const [cvc, setCvc] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [focus, setFocus] = useState()
@@ -483,7 +482,6 @@ const Register = () => {
       let obj = {
         amount: 100,
         item_nm: `컴어게인 ${userData?.mcht_name} 가맹점 구독신청`,
-        buyer_nm: name,
         card_num: cardNumber.replaceAll(' ', ''),
         yymm: `${expiry.split('/')[1]}${expiry.split('/')[0]}`,
         instment: '00',
@@ -524,10 +522,10 @@ const Register = () => {
           <>
             <Grid container spacing={5}>
               <Grid item xs={12}>
-                <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+                <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', fontSize: '16px' }}>
                   {steps[0].title}
                 </Typography>
-                <Typography variant='caption' component='p'>
+                <Typography variant='caption' component='p' style={{ fontSize: '14px' }}>
                   {steps[0].subtitle}
                 </Typography>
               </Grid>
@@ -700,10 +698,10 @@ const Register = () => {
         return (
           <Grid container spacing={5}>
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+              <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', fontSize: '16px' }}>
                 {steps[1].title}
               </Typography>
-              <Typography variant='caption' component='p'>
+              <Typography variant='caption' component='p' style={{ fontSize: '14px' }}>
                 {steps[1].subtitle}<br />
                 본 계약서의 유효기간은 링크이동 기준 14일 입니다.<br />
                 14일 안에 계약서 작성완료 부탁 드립니다.
@@ -768,10 +766,10 @@ const Register = () => {
         return (
           <>
             <Grid item xs={12}>
-              <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+              <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', fontSize: '16px' }}>
                 {steps[2].title}
               </Typography>
-              <Typography variant='caption' component='p'>
+              <Typography variant='caption' component='p' style={{ fontSize: '14px' }}>
                 {steps[2].subtitle}<br />
                 결제일 기준으로 매달 해당 일에 자동결제
                 ex) 결제일 2023-06-10 {'->'}다음 결제일 2023-07-10
@@ -780,7 +778,7 @@ const Register = () => {
             <ColumnContainer className='card-info'>
               <Grid item xs={12} style={{ display: 'flex', margin: '0 auto' }}>
                 <CardWrapper style={{ margin: '0 auto' }}>
-                  <Cards cvc={cvc} focused={focus} expiry={expiry} name={name} number={cardNumber} />
+                  <Cards cvc={cvc} focused={focus} expiry={expiry} name={' '} number={cardNumber} />
                 </CardWrapper>
               </Grid>
               {userData?.bill_key ?
@@ -804,21 +802,6 @@ const Register = () => {
                     onChange={handleInputChange}
                     error={cardErrorColumn == 'cardNumber'}
                     placeholder='0000 0000 0000 0000'
-                    onFocus={e => {
-                      setFocus(e.target.name)
-                      closeTour();
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    name='name'
-                    value={name}
-                    autoComplete='off'
-                    onBlur={handleBlur}
-                    label='카드사용자명'
-                    placeholder='홍길동'
-                    disabled={userData?.bill_key}
-                    onChange={e => setName(e.target.value)}
                     onFocus={e => {
                       setFocus(e.target.name)
                       closeTour();
@@ -897,10 +880,10 @@ const Register = () => {
           <form key={3} onSubmit={handleSocialSubmit(onSubmit)}>
             <Grid container spacing={5}>
               <Grid item xs={12}>
-                <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+                <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', fontSize: '16px' }}>
                   {steps[3].title}
                 </Typography>
-                <Typography variant='caption' component='p'>
+                <Typography variant='caption' component='p' style={{ fontSize: '14px' }}>
                   {steps[3].subtitle}
                 </Typography>
               </Grid>
@@ -1079,9 +1062,9 @@ const Register = () => {
                   }
                   return (
                     <>
-                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep == index ? '' : 'none'}` }}>
+                      <Step key={index} >
                         <StepLabel {...labelProps}
-                          StepIconComponent={window.innerWidth > 850 ? StepperCustomDot : ''}
+                          StepIconComponent={StepperCustomDot}
                         >
                           <div className='step-label'>
                             <Typography className='step-number'>{`0${index + 1}`}</Typography>
