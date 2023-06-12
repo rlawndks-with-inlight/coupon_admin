@@ -1057,7 +1057,7 @@ const Register = () => {
                   }
                   return (
                     <>
-                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep == index ? '' : 'none'}` }}>
+                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep <= index ? '' : 'none'}` }}>
                         <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
                           <div className='step-label'>
                             <Typography className='step-number'>{`0${index + 1}`}</Typography>
