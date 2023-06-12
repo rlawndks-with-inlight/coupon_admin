@@ -683,7 +683,7 @@ const Register = () => {
               {userData?.contract_status == 2 ?
                 <>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                    <div style={{ margin: 'auto auto 0 auto' }}>계약이 완료 되었습니다.</div>
+                    <div style={{ margin: 'auto auto 0 auto' }}>계약이 완료 되었습니다. 👏</div>
                     <Icon icon={'fluent-mdl2:completed'} style={{ fontSize: '40px', margin: '1rem auto 0 auto' }} />
                   </div>
                 </>
@@ -694,7 +694,7 @@ const Register = () => {
                       {router.query?.is_wait_contract ?
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                            <div style={{ margin: 'auto auto 0 auto' }}>계약완료를 기다리는 중입니다. 👏</div>
+                            <div style={{ margin: 'auto auto 0 auto' }}>계약완료를 기다리는 중입니다.</div>
                             <FallbackSpinner sx={{ height: '20px', margin: '1rem auto 0 auto' }} />
                           </div>
                         </>
