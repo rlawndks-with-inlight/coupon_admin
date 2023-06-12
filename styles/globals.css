@@ -15,6 +15,7 @@ input[type='color']::-moz-color-swatch {
   white-space: pre-wrap;
   padding-top: 2rem;
   font-size: 0.9rem !important;
+  font-weight: bold !important;
 }
 #___reactour > div:nth-child(4) > div > span {
   display: none;
