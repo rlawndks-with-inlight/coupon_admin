@@ -173,9 +173,9 @@ const ManagerPointEdit = (props) => {
                   <Autocomplete
                     id="mcht_id"
                     defaultValue={_.find(mchtList, { id: values?.mcht_id })?.user_name ?? ""}
-                    onChange={(e) => {
-                      let idx = e.target.id.split('-')[2];
-                      setValues({ ...values, mcht_id: mchtList[idx]?.id, point_rate: mchtList[idx].point_rate });
+                    onChange={(e, value) => {
+                      let item = _.find(mchtList, { user_name: value });
+                      setValues({ ...values, mcht_id: item?.id, point_rate: item.point_rate });
                     }}
                     options={mchtList && mchtList.map((option) => option.user_name)}
                     renderInput={(params) => <TextField {...params} label="가맹점명" />}

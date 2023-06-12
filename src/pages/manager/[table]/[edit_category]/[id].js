@@ -87,14 +87,12 @@ const Edit = ({ dns_data }) => {
     handleEditConfirmClose();
     try {
       let obj = { ...obj_ };
-
       let formData = new FormData();
       let keys = Object.keys(obj);
       for (var i = 0; i < keys.length; i++) {
         formData.append(keys[i], obj[keys[i]]);
       }
       let response = undefined;
-
       let config = {
         headers: {
           'Content-Type': "multipart/form-data",

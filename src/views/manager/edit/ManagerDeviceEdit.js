@@ -132,9 +132,9 @@ const ManagerDeviceEdit = (props) => {
                   <Autocomplete
                     id="mcht_id"
                     defaultValue={_.find(mchtList, { mcht_id: values?.mcht_id })?.user_name}
-                    onChange={(e) => {
-                      let idx = e.target.id.split('-')[2];
-                      setValues({ ...values, mcht_id: mchtList[idx]?.id });
+                    onChange={(e, value) => {
+                      let item = _.find(mchtList, { user_name: value });
+                      setValues({ ...values, mcht_id: item?.id });
                     }}
                     options={mchtList && mchtList.map((option) => option.user_name)}
                     renderInput={(params) => <TextField {...params} label="가맹점명" />}
@@ -196,7 +196,9 @@ const ManagerDeviceEdit = (props) => {
           </Card>
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
-              <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => editItem({ ...values })}>
+              <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => {
+                editItem({ ...values })
+              }}>
                 저장
               </Button>
               <Button type='reset' variant='outlined' color='secondary' onClick={onReset}>
