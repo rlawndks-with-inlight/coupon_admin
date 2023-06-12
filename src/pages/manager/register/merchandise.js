@@ -278,6 +278,11 @@ const Register = () => {
     $(document).keydown(function (event) {
       setTimeLeft(180)
     });
+    if (activeStep == 1 && router.query?.is_wait_contract) {
+      setInterval(() => {
+        getContractInfo();
+      }, 3000)
+    }
   }, [])
   const getContractInfo = async () => {
     try {
@@ -295,9 +300,13 @@ const Register = () => {
         setTourOpen(true);
       }
     } catch (err) {
+      if (err.response.status == 409) {
+        setUserData(Object.assign(userData, {
+          contract_status: 2
+        }))
+      }
       console.log(err)
     }
-
   }
   const handleChange = prop => event => {
     if (prop == 'phone_num') {
@@ -676,13 +685,23 @@ const Register = () => {
                 <>
                   {embeddedUrl ?
                     <>
-                      <Button size='large' type='submit' variant='contained'
-                        style={{ margin: 'auto', width: '180px' }}
-                        onClick={() => { window.location.href = embeddedUrl }}
-                        startIcon={<Icon icon='carbon:document' />}
-                        className='goto-contract'>
-                        계약하기
-                      </Button>
+                      {router.query?.is_wait_contract ?
+                        <>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <div style={{ margin: 'auto auto 0 auto' }}>계약완료를 기다리는 중입니다...</div>
+                            <FallbackSpinner sx={{ height: '20px', margin: '1rem auto 0 auto' }} />
+                          </div>
+                        </>
+                        :
+                        <>
+                          <Button size='large' type='submit' variant='contained'
+                            style={{ margin: 'auto', width: '180px' }}
+                            onClick={() => { window.location.href = embeddedUrl }}
+                            startIcon={<Icon icon='carbon:document' />}
+                            className='goto-contract'>
+                            계약하기
+                          </Button>
+                        </>}
                     </>
                     :
                     <>
