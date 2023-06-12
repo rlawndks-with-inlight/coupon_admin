@@ -300,6 +300,11 @@ const Register = () => {
 
   }
   const handleChange = prop => event => {
+    if (prop == 'phone_num') {
+      if (isNaN(parseInt(event.target.value[event.target.value.length - 1])) && event.target.value) {
+        return;
+      }
+    }
     setValues({ ...values, [prop]: event.target.value })
     if (prop == 'point_flag') {
       if (event.target.value == 1) {
