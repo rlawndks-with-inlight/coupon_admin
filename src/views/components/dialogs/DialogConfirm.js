@@ -27,7 +27,10 @@ const DialogConfirm = (props) => {
       <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
         <div style={{ padding: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ margin: '0 auto' }}>{headIcon}</div>
-          <DialogTitle id='form-dialog-title' style={{ whiteSpace: 'pre' }}>{text}</DialogTitle>
+          <div>
+
+          </div>
+          <DialogTitle id='form-dialog-title' style={{ whiteSpace: 'pre-line', margin: '0 auto', maxWidth: '400px' }}>{text}</DialogTitle>
           <DialogContent>
             {subText ?
               <>
