@@ -1056,17 +1056,21 @@ const Register = () => {
                     }
                   }
                   return (
-                    <Step key={index}>
-                      <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
-                        <div className='step-label'>
-                          <Typography className='step-number'>{`0${index + 1}`}</Typography>
-                          <div>
-                            <Typography className='step-title'>{step.title}</Typography>
-                            <Typography className='step-subtitle'>{step.subtitle}</Typography>
+                    <>
+
+                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep == index ? '' : 'none'}` }}>
+                        <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
+                          <div className='step-label'>
+                            <Typography className='step-number'>{`0${index + 1}`}</Typography>
+                            <div>
+                              <Typography className='step-title'>{step.title}</Typography>
+                              <Typography className='step-subtitle'>{step.subtitle}</Typography>
+                            </div>
                           </div>
-                        </div>
-                      </StepLabel>
-                    </Step>
+                        </StepLabel>
+                      </Step>
+
+                    </>
                   )
                 })}
               </Stepper>
