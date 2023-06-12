@@ -173,7 +173,7 @@ const Register = () => {
   const [token, setToken] = useState("");
   const [userData, setUserData] = useState({});
   const [embeddedUrl, setEmbeddedUrl] = useState("");
-
+  const [isTryRegister, setIsTryRegister] = useState(false);
   const [state, setState] = useState({
     password: '',
     password2: '',
@@ -392,6 +392,7 @@ const Register = () => {
         !values.mcht_name ||
         !values.phone_num
       ) {
+        setIsTryRegister(true);
         toast.error('필수값을 입력해 주세요.');
         return;
       }
@@ -508,10 +509,10 @@ const Register = () => {
             <Grid container spacing={5} sx={{ mt: '0' }} className='input-user-info'>
               <Grid item xs={12} sm={6}>
                 <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' inputProps={{
-                }} onChange={handleChange('user_name')} onFocus={closeTour} defaultValue={values?.user_name} value={values?.user_name} />
+                }} onChange={handleChange('user_name')} onFocus={closeTour} defaultValue={values?.user_name} value={values?.user_name} error={isTryRegister && !values?.user_name} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' onFocus={closeTour} className='nick_name' onChange={handleChange('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} />
+                <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' onFocus={closeTour} className='nick_name' onChange={handleChange('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} error={isTryRegister && !values?.nick_name} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth sx={{ mb: 1.5 }}>
@@ -520,6 +521,7 @@ const Register = () => {
                     label='Password'
                     onFocus={closeTour}
                     value={values?.password}
+                    error={isTryRegister && !values?.password}
                     id='auth-login-password'
                     onChange={handleChange('password')}
                     onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password-check').focus() : '' }}
@@ -543,7 +545,7 @@ const Register = () => {
                   <InputLabel htmlFor='auth-login-password-check'>비밀번호확인</InputLabel>
                   <OutlinedInput
                     helperText='Some important text'
-                    error={values?.passwordCheck && (values?.password != values?.passwordCheck)}
+                    error={(values?.passwordCheck && (values?.password != values?.passwordCheck)) || (isTryRegister && !values?.passwordCheck)}
                     onFocus={closeTour}
                     label='Password'
                     value={values?.passwordCheck}
@@ -576,17 +578,17 @@ const Register = () => {
 
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='가맹점 상호' onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
+                <TextField fullWidth label='가맹점 상호' error={isTryRegister && !values?.mcht_name} onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='가맹점 주소' onFocus={closeTour} placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChange('addr')} inputProps={{
+                <TextField fullWidth label='가맹점 주소' error={isTryRegister && !values?.addr} onFocus={closeTour} placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChange('addr')} inputProps={{
                   readOnly: true,
                 }} defaultValue={values?.addr} value={values?.addr}
                   onClick={onSelectAddressOpen}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='휴대폰번호' onFocus={closeTour} placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChange('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
+                <TextField fullWidth label='휴대폰번호' error={isTryRegister && !values?.phone_num} onFocus={closeTour} placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChange('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
               </Grid>
               <Grid item xs={12} sm={6} />
             </Grid>
@@ -635,6 +637,7 @@ const Register = () => {
                   <>
                     <TextField
                       fullWidth
+                      error={isTryRegister && (values?.point_flag == 1 && !values?.point_rate)}
                       label='포인트 적립률'
                       placeholder='포인트 적립률을 입력해 주세요.'
                       className='point_rate'

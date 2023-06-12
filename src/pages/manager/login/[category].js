@@ -199,7 +199,7 @@ const LoginV1 = ({ dns_data }) => {
                     {`Welcome ${themeConfig.templateName}! 👋🏻`}
                   </Typography>
                 </Box>
-                <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
+                <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} autoComplete='new-password' onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
                 <FormControl fullWidth sx={{ mb: 1.5 }}>
                   <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
                   <OutlinedInput
@@ -209,6 +209,7 @@ const LoginV1 = ({ dns_data }) => {
                     onChange={handleChange('password')}
                     onKeyPress={(e) => { e.key == 'Enter' ? onLogin() : '' }}
                     type={values.showPassword ? 'text' : 'password'}
+                    autoComplete='new-password'
                     endAdornment={
                       <InputAdornment position='end'>
                         <IconButton
