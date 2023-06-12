@@ -49,7 +49,7 @@ const Index = () => {
     <CustomBox className='content-center' sx={{ display: 'flex' }}>
       {router.query?.category == 'brands' || !router.query?.category ?
         <>
-          <CustomLeftGrid style={{ margin: `${router.query?.category == 'brands' ? '0' : ''}`, maxWidth: `${router.query?.category == 'brands' ? '500px' : ''}` }}>
+          <CustomLeftGrid style={{ margin: `${router.query?.category == 'brands' ? '0' : ''}`, maxWidth: `400px` }}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
@@ -145,7 +145,7 @@ const Index = () => {
         </>}
       {router.query?.category == 'merchandise' || !router.query?.category ?
         <>
-          <CustomRightGrid style={{ margin: `${router.query?.category == 'merchandise' ? '0' : ''}`, maxWidth: `${router.query?.category == 'merchandise' ? '500px' : ''}` }}>
+          <CustomRightGrid style={{ margin: `${router.query?.category == 'merchandise' ? '0' : ''}`, maxWidth: `400px` }}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
