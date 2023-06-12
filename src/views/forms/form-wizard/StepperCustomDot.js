@@ -20,7 +20,6 @@ const Box = styled(MuiBox)(() => ({
 const StepperCustomDot = props => {
   // ** Props
   const { active, completed, error } = props
-
   // ** Hooks
   const theme = useTheme()
   const bgColors = useBgColor()

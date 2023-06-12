@@ -33,8 +33,7 @@ import { formatCVC, formatExpirationDate, formatCreditCardNumber } from 'src/@co
 import Cards from 'react-credit-cards'
 import 'react-credit-cards/es/styles-compiled.css'
 // ** Custom Components Imports
-import StepperCustomDot from '/src/views/forms/form-wizard/StepperCustomDot'
-
+import StepperCustomDot from 'src/views/forms/form-wizard/StepperCustomDot'
 // ** Styled Components
 import StepperWrapper from 'src/@core/styles/mui/stepper'
 import { axiosIns, notiAxiosIns } from 'src/@fake-db/backend'
@@ -1035,45 +1034,19 @@ const Register = () => {
                   const labelProps = {}
                   if (index === activeStep) {
                     labelProps.error = false
-                    if (
-                      (accountErrors.email ||
-                        accountErrors.username ||
-                        accountErrors.password ||
-                        accountErrors['confirm-password']) &&
-                      activeStep === 0
-                    ) {
-                      labelProps.error = true
-                    } else if (
-                      (personalErrors.country ||
-                        personalErrors.language ||
-                        personalErrors['last-name'] ||
-                        personalErrors['first-name']) &&
-                      activeStep === 1
-                    ) {
-                      labelProps.error = true
-                    } else if (
-                      (socialErrors.google || socialErrors.twitter || socialErrors.facebook || socialErrors.linkedIn) &&
-                      activeStep === 2
-                    ) {
-                      labelProps.error = true
-                    } else {
-                      labelProps.error = false
-                    }
                   }
                   return (
-                    <>
-                      <Step key={index}>
-                        <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
-                          <div className='step-label'>
-                            <Typography className='step-number'>{`0${index + 1}`}</Typography>
-                            <div>
-                              <Typography className='step-title'>{step.title}</Typography>
-                              <Typography className='step-subtitle'>{step.subtitle}</Typography>
-                            </div>
+                    <Step key={index} style={{ display: `${(window.innerWidth > 850 || activeStep == index) ? '' : 'none'}` }}>
+                      <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
+                        <div className='step-label'>
+                          <Typography className='step-number'>{`0${index + 1}`}</Typography>
+                          <div>
+                            <Typography className='step-title'>{step.title}</Typography>
+                            <Typography className='step-subtitle'>{step.subtitle}</Typography>
                           </div>
-                        </StepLabel>
-                      </Step>
-                    </>
+                        </div>
+                      </StepLabel>
+                    </Step>
                   )
                 })}
               </Stepper>
