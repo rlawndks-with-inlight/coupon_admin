@@ -10,6 +10,9 @@ import Icon from 'src/@core/components/icon'
 import { Avatar, Card } from '@mui/material'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 const CustomBox = styled(Box)(({ theme }) => ({
   '@media (max-width: 700px)': {
@@ -36,7 +39,12 @@ const CustomRightGrid = styled(Grid)(({ theme }) => ({
 }))
 const Index = () => {
   const router = useRouter();
-
+  const [dnsData, setDnsData] = useState({});
+  useEffect(() => {
+    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+    dns_data = JSON.parse(dns_data);
+    setDnsData(dns_data);
+  }, [])
   return (
     <CustomBox className='content-center' sx={{ display: 'flex' }}>
       {router.query?.category == 'brands' || !router.query?.category ?
@@ -45,6 +53,13 @@ const Index = () => {
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  {router.query?.category == 'brands' ?
+                    <>
+                      <img src={dnsData?.logo_img} style={{ maxWidth: '256px', marginBottom: '1rem' }} />
+                    </>
+                    :
+                    <>
+                    </>}
                   <Icon icon={'clarity:building-line'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'브랜드 가입'}</Typography>
                   <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
@@ -135,6 +150,13 @@ const Index = () => {
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  {router.query?.category == 'merchandise' ?
+                    <>
+                      <img src={dnsData?.logo_img} style={{ maxWidth: '256px', marginBottom: '1rem' }} />
+                    </>
+                    :
+                    <>
+                    </>}
                   <Icon icon={'solar:shop-outline'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'가맹점 가입'}</Typography>
                   <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
