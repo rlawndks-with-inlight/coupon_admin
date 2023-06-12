@@ -282,7 +282,7 @@ const Register = () => {
   const getContractInfo = async () => {
     try {
       const response = await axiosIns().post(`/api/v1/auth/contract/create`, {
-        return_url: `${window.location.protocol}//${window.location.host}/manager/register/merchandise`
+        return_url: `${window.location.protocol}//${window.location.host}/manager/register/merchandise?is_wait_contract=1`
       });
       setEmbeddedUrl(response?.data?.embedded_url);
       if (userData?.contract_status != 2) {
