@@ -501,7 +501,6 @@ const Register = () => {
       }
     } catch (err) {
       toast.error(err?.response?.data?.result_msg)
-      console.log(err?.response?.data?.result_cd)
       let expiry_error_list = ['CA20'];
       let card_pw_error_list = ['CA27', 'CA28', 'CA29'];
       let card_number_error_list = ['CA50', 'CA51', 'CA52', 'CA53', 'CA54', 'CA55', 'CA56', 'CA57'];
