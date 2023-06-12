@@ -233,7 +233,7 @@ const Register = () => {
           setTourSteps([
             {
               selector: '.goto-manager',
-              content: '이제 정상적으로 이용이 가능합니다.\n관리자페이지로 이동해 주세요.',
+              content: '컴어게인의 친구가 되어주셔서 감사합니다!👏\n저희와 함께 즐거운 모험을 떠나볼까요?',
             },
           ])
           setTourOpen(true);
@@ -694,7 +694,7 @@ const Register = () => {
                       {router.query?.is_wait_contract ?
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                            <div style={{ margin: 'auto auto 0 auto' }}>계약완료를 기다리는 중입니다...</div>
+                            <div style={{ margin: 'auto auto 0 auto' }}>계약완료를 기다리는 중입니다. 👏</div>
                             <FallbackSpinner sx={{ height: '20px', margin: '1rem auto 0 auto' }} />
                           </div>
                         </>
