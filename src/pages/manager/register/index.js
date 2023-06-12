@@ -55,12 +55,12 @@ const Index = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   {router.query?.category == 'brands' ?
                     <>
-                      <img src={dnsData?.logo_img} style={{ maxWidth: '256px', marginBottom: '1rem' }} />
+                      <img src={dnsData?.logo_img} style={{ maxWidth: '200px', marginBottom: '1rem' }} />
                     </>
                     :
                     <>
                     </>}
-                  <Icon icon={'clarity:building-line'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
+                  <Icon icon={'clarity:building-line'} style={{ fontSize: '70px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'브랜드 가입'}</Typography>
                   <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
                     <div style={{ fontWeight: 'bold' }}>{'월 1,100,000 원 이상'}</div>
@@ -152,12 +152,12 @@ const Index = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   {router.query?.category == 'merchandise' ?
                     <>
-                      <img src={dnsData?.logo_img} style={{ maxWidth: '256px', marginBottom: '1rem' }} />
+                      <img src={dnsData?.logo_img} style={{ maxWidth: '200px', marginBottom: '1rem' }} />
                     </>
                     :
                     <>
                     </>}
-                  <Icon icon={'solar:shop-outline'} style={{ fontSize: '100px', marginBottom: '0.5rem' }} />
+                  <Icon icon={'solar:shop-outline'} style={{ fontSize: '70px', marginBottom: '0.5rem' }} />
                   <Typography variant='h5'>{'가맹점 가입'}</Typography>
                   <Typography sx={{ mb: 1, color: 'text.secondary', fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
                     <div style={{ fontWeight: 'bold' }}>{'월 11,000 원'}</div>
