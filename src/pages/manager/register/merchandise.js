@@ -460,12 +460,16 @@ const Register = () => {
   const [expiry, setExpiry] = useState('')
   const [authNo, setAuthNo] = useState("");
   const [cardPw, setCardPw] = useState("");
+  const [cardErrorColumn, setCardErrorColumn] = useState({});
   const handleBlur = () => setFocus(undefined)
   const handleInputChange = ({ target }) => {
+
     if (target.name === 'cardNumber') {
+      setCardErrorColumn("")
       target.value = formatCreditCardNumber(target.value, Payment)
       setCardNumber(target.value)
     } else if (target.name === 'expiry') {
+      setCardErrorColumn("")
       target.value = formatExpirationDate(target.value)
       setExpiry(target.value)
     } else if (target.name === 'cvc') {
@@ -497,6 +501,19 @@ const Register = () => {
       }
     } catch (err) {
       toast.error(err?.response?.data?.result_msg)
+      console.log(err?.response?.data?.result_cd)
+      let expiry_error_list = ['CA20'];
+      let card_pw_error_list = ['CA27', 'CA28', 'CA29'];
+      let card_number_error_list = ['CA50', 'CA51', 'CA52', 'CA53', 'CA54', 'CA55', 'CA56', 'CA57'];
+      if (expiry_error_list.includes(err?.response?.data?.result_cd)) {
+        setCardErrorColumn('expiry')
+      }
+      if (card_pw_error_list.includes(err?.response?.data?.result_cd)) {
+        setCardErrorColumn('cardPw')
+      }
+      if (card_number_error_list.includes(err?.response?.data?.result_cd)) {
+        setCardErrorColumn('cardNumber')
+      }
       handleEditConfirmClose();
     }
   }
@@ -786,6 +803,7 @@ const Register = () => {
                     onBlur={handleBlur}
                     disabled={userData?.bill_key}
                     onChange={handleInputChange}
+                    error={cardErrorColumn == 'cardNumber'}
                     placeholder='0000 0000 0000 0000'
                     onFocus={e => {
                       setFocus(e.target.name)
@@ -817,6 +835,7 @@ const Register = () => {
                       onBlur={handleBlur}
                       placeholder='MM/YY'
                       disabled={userData?.bill_key}
+                      error={cardErrorColumn == 'expiry'}
                       onChange={handleInputChange}
                       inputProps={{ maxLength: '5' }}
                       onFocus={e => {
@@ -831,8 +850,12 @@ const Register = () => {
                       value={cardPw}
                       autoComplete='off'
                       onBlur={handleBlur}
+                      error={cardErrorColumn == 'cardPw'}
                       disabled={userData?.bill_key}
-                      onChange={(e) => { setCardPw(e.target.value) }}
+                      onChange={(e) => {
+                        setCardPw(e.target.value)
+                        setCardErrorColumn("")
+                      }}
                       inputProps={{ maxLength: '2' }}
                       onFocus={e => {
                         setFocus(e.target.name)
@@ -1057,8 +1080,10 @@ const Register = () => {
                   }
                   return (
                     <>
-                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep >= index ? '' : 'none'}` }}>
-                        <StepLabel {...labelProps} StepIconComponent={StepperCustomDot}>
+                      <Step key={index} style={{ display: `${window.innerWidth > 850 || activeStep == index ? '' : 'none'}` }}>
+                        <StepLabel {...labelProps}
+                          StepIconComponent={window.innerWidth > 850 ? StepperCustomDot : ''}
+                        >
                           <div className='step-label'>
                             <Typography className='step-number'>{`0${index + 1}`}</Typography>
                             <div>
