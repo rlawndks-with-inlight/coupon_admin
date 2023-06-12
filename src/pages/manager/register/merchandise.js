@@ -233,7 +233,7 @@ const Register = () => {
           setTourSteps([
             {
               selector: '.goto-manager',
-              content: '컴어게인의 친구가 되어주셔서 감사합니다!👫\n저희와 함께 즐거운 모험을 떠나볼까요? 🎉🎊',
+              content: '컴어게인의 친구가 되어주셔서 감사합니다!😀\n저희와 함께 즐거운 모험을 떠나볼까요? 🎉🎉',
             },
           ])
           setTourOpen(true);
@@ -394,6 +394,16 @@ const Register = () => {
       ) {
         setIsTryRegister(true);
         toast.error('필수값을 입력해 주세요.');
+        return;
+      }
+      if (values?.point_flag == 0 && values?.stamp_flag == 0) {
+        setIsTryRegister(true);
+        toast.error('스탬프나 포인트중 최소 하나는 사용해 주세요.');
+        return;
+      }
+      if (values?.point_flag == 1 && values?.point_rate <= 0) {
+        setIsTryRegister(true);
+        toast.error('포인트 적립률을 입력해 주세요.');
         return;
       }
       if (values.password != values.passwordCheck) {
@@ -594,7 +604,9 @@ const Register = () => {
             </Grid>
             <Grid container spacing={5} sx={{ mt: '0' }} >
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
+                <FormControl fullWidth
+                  error={isTryRegister && (values?.stamp_flag == 0 && values?.point_flag == 0)}
+                >
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>스탬프 사용여부</InputLabel>
                   <Select
                     label='Country'
@@ -616,7 +628,9 @@ const Register = () => {
             </Grid>
             <Grid container spacing={5} sx={{ mt: '0' }} >
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
+                <FormControl fullWidth
+                  error={isTryRegister && (values?.stamp_flag == 0 && values?.point_flag == 0)}
+                >
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>포인트 사용여부</InputLabel>
                   <Select
                     label='Country'
@@ -637,7 +651,7 @@ const Register = () => {
                   <>
                     <TextField
                       fullWidth
-                      error={isTryRegister && (values?.point_flag == 1 && !values?.point_rate)}
+                      error={isTryRegister && (values?.point_rate <= 0 && values?.point_flag)}
                       label='포인트 적립률'
                       placeholder='포인트 적립률을 입력해 주세요.'
                       className='point_rate'
