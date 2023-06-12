@@ -274,9 +274,11 @@ const Register = () => {
   useEffect(() => {
     $('html').click(function () {
       setTimeLeft(180)
+      handleTimeLeftClose();
     });
     $(document).keydown(function (event) {
       setTimeLeft(180)
+      handleTimeLeftClose();
     });
   }, [])
   const getContractInfo = async () => {
@@ -768,7 +770,10 @@ const Register = () => {
                     disabled={userData?.bill_key}
                     onChange={handleInputChange}
                     placeholder='0000 0000 0000 0000'
-                    onFocus={e => setFocus(e.target.name)}
+                    onFocus={e => {
+                      setFocus(e.target.name)
+                      closeTour();
+                    }}
                   />
                   <TextField
                     fullWidth
@@ -780,7 +785,10 @@ const Register = () => {
                     placeholder='홍길동'
                     disabled={userData?.bill_key}
                     onChange={e => setName(e.target.value)}
-                    onFocus={e => setFocus(e.target.name)}
+                    onFocus={e => {
+                      setFocus(e.target.name)
+                      closeTour();
+                    }}
                   />
 
                   <div style={{ display: 'flex', columnGap: '1.5rem' }}>
@@ -794,7 +802,10 @@ const Register = () => {
                       disabled={userData?.bill_key}
                       onChange={handleInputChange}
                       inputProps={{ maxLength: '5' }}
-                      onFocus={e => setFocus(e.target.name)}
+                      onFocus={e => {
+                        setFocus(e.target.name)
+                        closeTour();
+                      }}
                     />
                     <TextField
                       fullWidth
@@ -806,7 +817,10 @@ const Register = () => {
                       disabled={userData?.bill_key}
                       onChange={(e) => { setCardPw(e.target.value) }}
                       inputProps={{ maxLength: '2' }}
-                      onFocus={e => setFocus(e.target.name)}
+                      onFocus={e => {
+                        setFocus(e.target.name)
+                        closeTour();
+                      }}
                       placeholder={'00'}
                       maxRows={'2'}
                       type={'password'}
@@ -820,7 +834,10 @@ const Register = () => {
                     onBlur={handleBlur}
                     disabled={userData?.bill_key}
                     onChange={(e) => { setAuthNo(e.target.value) }}
-                    onFocus={e => setFocus(e.target.name)}
+                    onFocus={e => {
+                      setFocus(e.target.name)
+                      closeTour();
+                    }}
                     inputProps={{ maxLength: '12' }}
                     placeholder={'생년월일(YYMMDD) 또는 사업자등록번호'}
                   />
