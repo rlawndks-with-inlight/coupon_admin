@@ -233,7 +233,7 @@ const Register = () => {
           setTourSteps([
             {
               selector: '.goto-manager',
-              content: '컴어게인의 친구가 되어주셔서 감사합니다!👏\n저희와 함께 즐거운 모험을 떠나볼까요?',
+              content: '컴어게인의 친구가 되어주셔서 감사합니다!\n저희와 함께 즐거운 모험을 떠나볼까요? 🎉🎊',
             },
           ])
           setTourOpen(true);
