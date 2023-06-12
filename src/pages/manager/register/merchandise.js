@@ -278,11 +278,6 @@ const Register = () => {
     $(document).keydown(function (event) {
       setTimeLeft(180)
     });
-    if (activeStep == 1 && router.query?.is_wait_contract) {
-      setInterval(() => {
-        getContractInfo();
-      }, 3000)
-    }
   }, [])
   const getContractInfo = async () => {
     try {
@@ -291,13 +286,19 @@ const Register = () => {
       });
       setEmbeddedUrl(response?.data?.embedded_url);
       if (userData?.contract_status != 2) {
-        setTourSteps([
-          {
-            selector: '.goto-contract',
-            content: "'계약하기' 버튼을 클릭 후 계약을 진행해 주세요.",
-          },
-        ])
-        setTourOpen(true);
+        if (!router.query?.is_wait_contract) {
+          setTourSteps([
+            {
+              selector: '.goto-contract',
+              content: "'계약하기' 버튼을 클릭 후 계약을 진행해 주세요.",
+            },
+          ])
+          setTourOpen(true);
+        } else {
+          setTimeout(() => {
+            getContractInfo();
+          }, 3000)
+        }
       }
     } catch (err) {
       if (err.response.status == 409) {
@@ -310,7 +311,7 @@ const Register = () => {
   }
   const handleChange = prop => event => {
     if (prop == 'phone_num') {
-      if (isNaN(parseInt(event.target.value[event.target.value.length - 1])) && event.target.value) {
+      if (isNaN(parseInt(event.target.value[event.target.value.length - 1])) && values.phone_num.length != 1) {
         return;
       }
     }
