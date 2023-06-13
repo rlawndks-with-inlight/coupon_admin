@@ -137,7 +137,11 @@ const ManagerMerchandiseEdit = (props) => {
   const handletSelectAddressClose = () => setSelectAddressOpen(false);
   const onSelectAddress = (data) => {
     handletSelectAddressClose();
-    setValues({ ...values, ['addr']: data?.address })
+    setValues({
+      ...values,
+      ['addr']: data?.address,
+      ['detail_addr']: values?.detail_addr ? values?.detail_addr : " ",
+    })
   }
   return (
     <>

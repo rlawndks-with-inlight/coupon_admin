@@ -197,7 +197,7 @@ const ManagerDeviceEdit = (props) => {
           <Card style={{ marginTop: '24px' }}>
             <CardContent>
               <Button type='submit' sx={{ mr: 2 }} variant='contained' onClick={() => {
-                editItem({ ...values })
+                editItem({ ...values, ['comment']: values?.comment ? values?.comment : " " })
               }}>
                 저장
               </Button>
