@@ -142,7 +142,7 @@ const List = ({ dns_data }) => {
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {
-        router.back();
+        router.push(-1);
       } else {
         if (push_lick) {
           router.push(push_lick);

@@ -219,7 +219,7 @@ export const processCatch = async (err) => {
     push_link = `/${window.location.pathname.split('/')[1]}/login`;
   }
   if (err?.response?.status == 403) {
-    push_link = -1;
+    push_link = `/${window.location.pathname.split('/')[1]}/login`;
   }
   return push_link
 }

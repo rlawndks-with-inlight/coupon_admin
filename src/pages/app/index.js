@@ -48,7 +48,6 @@ const Index = ({ dns_data }) => {
     setLoading(false);
   }
 
-
   const checkDns = async () => {
     try {
       let obj = {};

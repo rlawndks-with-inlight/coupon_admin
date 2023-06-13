@@ -1,6 +1,3 @@
-// ** Next Imports
-import { Router } from 'next/router'
-
 // ** Store Imports
 import { store } from 'src/store'
 import { Provider } from 'react-redux'
@@ -50,6 +47,8 @@ import { LOCALSTORAGE } from 'src/data/data'
 import Script from 'next/script'
 import { returnMoment } from 'src/@core/utils/function'
 import Head from 'next/head'
+import FallbackSpinner from 'src/@core/components/spinner'
+import { useRouter } from 'next/router'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -58,6 +57,33 @@ const clientSideEmotionCache = createEmotionCache()
 const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
+
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setIsLoading(true);
+    };
+
+    const handleRouteChangeComplete = () => {
+      setIsLoading(false);
+    };
+
+    const handleRouteChangeError = () => {
+      setIsLoading(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+    router.events.on('routeChangeError', handleRouteChangeError);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+      router.events.off('routeChangeError', handleRouteChangeError);
+    };
+  }, []);
+
   const saveDnsData = () => {
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
   }
@@ -93,6 +119,7 @@ const App = props => {
 
   return (
     <>
+      {isLoading ? <FallbackSpinner color={'#ccc'} /> : ''}
       <Head>
         <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
         <meta
@@ -114,7 +141,6 @@ const App = props => {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
         <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
-
       </Head>
       <Provider store={store}>
         <CacheProvider value={emotionCache}>

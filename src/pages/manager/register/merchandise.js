@@ -530,7 +530,7 @@ const Register = () => {
               </Grid>
             </Grid>
             <Grid container spacing={5} sx={{ mt: '0' }} className='input-user-info'>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} >
                 <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' inputProps={{
                 }} onChange={handleChange('user_name')} onFocus={closeTour} defaultValue={values?.user_name} value={values?.user_name} error={isTryRegister && !values?.user_name} />
               </Grid>

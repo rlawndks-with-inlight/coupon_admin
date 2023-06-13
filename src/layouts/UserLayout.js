@@ -50,7 +50,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     <>
       {theme.palette.loading ?
         <>
-          {/* <Spinner color={'#ccc'} /> */}
+          <Spinner color={'#ccc'} />
         </>
         :
         <>
