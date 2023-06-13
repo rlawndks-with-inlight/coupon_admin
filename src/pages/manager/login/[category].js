@@ -98,7 +98,7 @@ const LoginV1 = ({ dns_data }) => {
 
     } catch (err) {
       console.log(err);
-      toast.error(err?.response?.data?.message || err?.message);
+      //toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
         router.push('/404');
       }
