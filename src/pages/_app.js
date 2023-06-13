@@ -41,14 +41,11 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import { useEffect, useState } from 'react'
-import { setLocalStorage } from 'src/@core/utils/local-storage'
+import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 
 import Script from 'next/script'
-import { returnMoment } from 'src/@core/utils/function'
 import Head from 'next/head'
-import FallbackSpinner from 'src/@core/components/spinner'
-import { useRouter } from 'next/router'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -58,36 +55,16 @@ const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
 
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setIsLoading(true);
-    };
-
-    const handleRouteChangeComplete = () => {
-      setIsLoading(false);
-    };
-
-    const handleRouteChangeError = () => {
-      setIsLoading(false);
-    };
-    router.events.on('routeChangeStart', handleRouteChangeStart);
-    router.events.on('routeChangeComplete', handleRouteChangeComplete);
-    router.events.on('routeChangeError', handleRouteChangeError);
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChangeStart);
-      router.events.off('routeChangeComplete', handleRouteChangeComplete);
-      router.events.off('routeChangeError', handleRouteChangeError);
-    };
-  }, []);
-
   const saveDnsData = () => {
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
   }
   useEffect(() => {
-    saveDnsData();
-    getDnsData(dns_data);
+    if (typeof window == 'undefined') {
+      saveDnsData();
+      getDnsData(dns_data);
+    } else {
+      getDnsData(false);
+    }
   }, [])
   const [dnsData, setDnsData] = useState({});
 
@@ -117,7 +94,6 @@ const App = props => {
 
   return (
     <>
-      {isLoading ? <FallbackSpinner color={'#ccc'} /> : ''}
       <Head>
         <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
         <meta
