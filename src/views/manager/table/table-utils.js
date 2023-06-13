@@ -94,7 +94,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       if (is_excel) result = (item == 1 ? '사용' : '사용안함');
 
     }
-    if (column?.type == 'code_type') {//
+    if (column?.type == 'barcode_type') {//
       if (item == 1) {
         result = 'QR코드';
         if (!is_excel) result = <Chip label={result} />
@@ -108,8 +108,10 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
     if (column?.type == 'coupon_type') {//
       if (item == 0) {
         result = '할인쿠폰';
+        if (!is_excel) result = <Chip label={result} />
       } else {
         result = '교환쿠폰';
+        if (!is_excel) result = <Chip label={result} variant='outlined' />
       }
     }
     if (column?.type == 'barcode_num') {//
@@ -251,21 +253,26 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       if (is_excel) result = '---';
     }
     if (column?.type == 'mcht_names') {
-      if (item.length == 0) {
-        result = '모든 가맹점'
-        if (!is_excel) result = <CustomChip rounded label='모든 가맹점' skin='light' color='secondary' />
+      result = data?.mchts.join()
+      if (!is_excel) result = (
+        <>
+          {data?.mchts && data?.mchts.map((item, idx) => (
+            <>
+              <Chip variant='outlined' label={item?.mcht_name} skin='light' color='secondary' style={{ margin: '0.5rem 0.5rem 0.5rem 0' }} />
+            </>
+          ))}
+        </>
+      )
+    }
+    if (column?.type == 'spot_type') {
+      if (item == 0) {
+        result = '모든 가맹점';
+        if (!is_excel) result = <Chip label={result} />
+      } else if (item == 1) {
+        result = '지정 가맹점';
+        if (!is_excel) result = <Chip label={result} variant='outlined' />
       } else {
-        result = item.join()
-
-        if (!is_excel) result = (
-          <>
-            {item && item.map((item, idx) => (
-              <>
-                <CustomChip rounded label={item} skin='light' color='secondary' style={{ margin: '0.5rem 0.5rem 0.5rem 0' }} />
-              </>
-            ))}
-          </>
-        )
+        result = '---';
       }
     }
     if (column?.type == 'on_pub') {

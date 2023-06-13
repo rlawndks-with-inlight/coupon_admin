@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import DatePicker from 'react-datepicker'
-
 // ** Custom Component Imports
 import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
@@ -20,6 +19,7 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
 import { Box, Chip } from '@mui/material'
+import _ from 'lodash'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -45,13 +45,15 @@ const ManagerCouponModelEdit = (props) => {
   const [mchtIdObj, setMchtIdObj] = useState([]);
   const defaultObj = {
     coupon_img: undefined,
-    name: '',
-    sale_amt: '',
+    coupon_name: '',
+    coupon_type: 0,
+    product_amount: 0,
+    product_id: 0,
+    spot_type: 0,
+    mcht_ids: [],
+    barcode_type: 0,
     valid_s_dt: returnMoment(false, new Date()).substring(0, 10),
     valid_e_dt: returnMoment(false, new Date()).substring(0, 10),
-    code_type: 0,
-    prod_id: 0,
-    mcht_ids: []
   }
   const [values, setValues] = useState(defaultObj)
 
@@ -93,13 +95,14 @@ const ManagerCouponModelEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
       const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`)
-      setProductList([...[{ id: 0, name: '일반할인쿠폰' }], ...res_products?.data?.content]);
+      console.log(res_products?.data?.content)
+      setProductList([...res_products?.data?.content]);
       const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       if (res_mchts?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
       }
-      let mcht_list = [...[{ id: 0, user_name: '모든 가맹점' }], ...res_mchts?.data?.mcht_id];
+      let mcht_list = [...res_mchts?.data?.mcht_id];
       let mcht_id_obj = {};
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_id_obj[mcht_list[i]?.id] = mcht_list[i];
@@ -110,9 +113,11 @@ const ManagerCouponModelEdit = (props) => {
       if (item) {
         setSDt(new Date(item?.valid_s_dt));
         setEDt(new Date(item?.valid_e_dt));
-        item['mcht_ids'] = JSON.parse(item?.mcht_ids ?? '[]');
+        item['mcht_ids'] = item?.mchts.map(item => { return item?.id })
+        delete item['mchts'];
+
         if (item['mcht_ids'].length == 0) {
-          item['mcht_ids'] = [0];
+          item['mcht_ids'] = [];
         }
         setValues({ ...item, ['mcht_ids']: item['mcht_ids'] });
       } else {
@@ -140,6 +145,42 @@ const ManagerCouponModelEdit = (props) => {
   }
 
   const handleChangeValue = prop => event => {
+    if (prop == 'coupon_type') {
+      if (event.target.value == 1) {
+        setValues({
+          ...values,
+          [prop]: event.target.value,
+          ['product_id']: productList[0]?.id,
+          ['product_amount']: productList[0]?.item_pr
+        });
+        return;
+      } else if (event.target.value == 0) {
+        setValues({
+          ...values,
+          [prop]: event.target.value,
+          ['product_id']: 0,
+          ['product_amount']: 0
+        });
+        return;
+      }
+    }
+    if (prop == 'product_id') {
+      setValues({
+        ...values,
+        [prop]: event.target.value,
+        ['product_amount']: _.find(productList, { id: event.target.value })?.item_pr
+      });
+      return;
+    }
+    if (prop == 'spot_type') {
+      setValues({
+        ...values,
+        [prop]: event.target.value,
+        ['mcht_ids']: []
+      });
+      return;
+    }
+
     setValues({ ...values, [prop]: event.target.value });
   }
   const handleChangeMultiSelect = event => {
@@ -217,8 +258,26 @@ const ManagerCouponModelEdit = (props) => {
                         fullWidth
                         label='쿠폰명'
                         placeholder='쿠폰명를 입력해 주세요.'
-                        onChange={handleChangeValue('name')} defaultValue={values?.name} value={values?.name}
+                        onChange={handleChangeValue('coupon_name')} defaultValue={values?.coupon_name} value={values?.coupon_name}
                       />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>쿠폰타입</InputLabel>
+                        <Select
+                          label='Country'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='coupon_type'
+                          onChange={handleChangeValue('coupon_type')}
+                          defaultValue={values?.coupon_type ?? 0}
+                          value={values?.coupon_type}
+                        >
+                          <MenuItem value={0}>{'할인쿠폰'}</MenuItem>
+                          <MenuItem value={1}>{'교환쿠폰'}</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -226,27 +285,103 @@ const ManagerCouponModelEdit = (props) => {
                         label='할인가'
                         placeholder='숫자를 입력해 주세요.'
                         type='number'
-                        onChange={handleChangeValue('sale_amt')} defaultValue={values?.sale_amt} value={values?.sale_amt}
+                        disabled={values?.coupon_type == 1}
+                        onChange={handleChangeValue('product_amount')} defaultValue={values?.product_amount} value={values?.product_amount}
                       />
                     </Grid>
+                    {values?.coupon_type == 1 ?
+                      <>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label'>상품선택</InputLabel>
+                            <Select
+                              label='상품선택'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='product_id'
+                              onChange={handleChangeValue('product_id')}
+                              defaultValue={values?.product_id ?? 0}
+                              value={values?.product_id}
+                            >
+                              {productList && productList.map((item, idx) => {
+                                return <MenuItem value={item?.id} key={idx}>{item?.name}</MenuItem>
+                              })}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>쿠폰 타입</InputLabel>
+                        <InputLabel id='form-layouts-tabs-select-label'>사용장소타입</InputLabel>
                         <Select
-                          label='Country'
+                          label='사용장소타입'
                           id='form-layouts-tabs-select'
                           labelId='form-layouts-tabs-select-label'
-                          className='code_type'
-                          onChange={handleChangeValue('code_type')}
-                          defaultValue={values?.code_type ?? 0}
-                          value={values?.code_type}
+                          className='spot_type'
+                          onChange={handleChangeValue('spot_type')}
+                          defaultValue={values?.spot_type ?? 0}
+                          value={values?.spot_type}
+                        >
+                          <MenuItem value={0}>{'모든가맹점'}</MenuItem>
+                          <MenuItem value={1}>{'지정가맹점'}</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    {values?.spot_type == 1 ?
+                      <>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='demo-multiple-chip-label'>적용할 가맹점</InputLabel>
+                            <Select
+                              multiple
+                              label='적용할 가맹점'
+                              value={values?.mcht_ids}
+                              MenuProps={MenuProps}
+                              id='demo-multiple-chip'
+                              onChange={handleChangeMultiSelect}
+                              labelId='demo-multiple-chip-label'
+                              renderValue={selected => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                  {selected.map((item, idx) => (
+                                    <Chip key={idx} label={mchtIdObj[item]?.user_name} sx={{ m: 0.75 }} />
+                                  ))}
+                                </Box>
+                              )}
+                            >
+                              {mchtList && mchtList.map((item, idx) => (
+                                <MenuItem key={idx} value={item?.id}>
+                                  {item?.user_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </>
+                      :
+                      <>
+                      </>}
+
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>바코드 타입</InputLabel>
+                        <Select
+                          label='바코드 타입'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='barcode_type'
+                          onChange={handleChangeValue('barcode_type')}
+                          defaultValue={values?.barcode_type ?? 0}
+                          value={values?.barcode_type}
                         >
                           <MenuItem value={0} >{'바코드'}</MenuItem>
                           <MenuItem value={1} >{'QR코드'}</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}>
                       <DatePicker
                         showYearDropdown
                         showMonthDropdown
@@ -255,6 +390,7 @@ const ManagerCouponModelEdit = (props) => {
                         placeholderText='YYYY-MM-DD'
                         dateFormat={'yyyy-MM-dd'}
                         popperPlacement={popperPlacement}
+
                         onChange={async (date) => {
                           try {
                             setSDt(date);
@@ -265,8 +401,7 @@ const ManagerCouponModelEdit = (props) => {
                         }}
                         customInput={<CustomInput label='유효기간 시작일' />}
                       />
-                    </Grid>
-                    <Grid item xs={12}>
+                      <div>~</div>
                       <DatePicker
                         showYearDropdown
                         showMonthDropdown
@@ -285,51 +420,6 @@ const ManagerCouponModelEdit = (props) => {
                         }}
                         customInput={<CustomInput label='유효기간 종료일' />}
                       />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>상품</InputLabel>
-                        <Select
-                          label='상품'
-                          id='form-layouts-tabs-select'
-                          labelId='form-layouts-tabs-select-label'
-                          className='prod_id'
-                          onChange={handleChangeValue('prod_id')}
-                          defaultValue={values?.prod_id ?? 0}
-                          value={values?.prod_id}
-                        >
-                          {productList && productList.map((item, idx) => {
-                            return <MenuItem value={item?.id} key={idx}>{item?.name}</MenuItem>
-                          })}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel id='demo-multiple-chip-label'>적용할 가맹점</InputLabel>
-                        <Select
-                          multiple
-                          label='적용할 가맹점'
-                          value={values?.mcht_ids}
-                          MenuProps={MenuProps}
-                          id='demo-multiple-chip'
-                          onChange={handleChangeMultiSelect}
-                          labelId='demo-multiple-chip-label'
-                          renderValue={selected => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                              {selected.map((item, idx) => (
-                                <Chip key={idx} label={mchtIdObj[item]?.user_name} sx={{ m: 0.75 }} />
-                              ))}
-                            </Box>
-                          )}
-                        >
-                          {mchtList && mchtList.map((item, idx) => (
-                            <MenuItem key={idx} value={item?.id}>
-                              {item?.user_name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
                     </Grid>
                   </Grid>
                 </CardContent>

@@ -32,6 +32,13 @@ const DialogCoupon = (props) => {
           </DialogContentText>
           <DialogContent>
             <TextField sx={{ marginBottom: '12px' }} id='user-name' autoComplete='new-password' autoFocus fullWidth label={head?.label} />
+            {head?.label2 ?
+              <>
+                <TextField sx={{ marginBottom: '12px' }} id='label2' autoComplete='new-password' autoFocus fullWidth label={head?.label2} />
+              </>
+              :
+              <>
+              </>}
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
             <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => {

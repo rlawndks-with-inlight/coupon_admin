@@ -1,11 +1,12 @@
 
-export const managerListFormat = (title, column, type, width, type_option) => {
+export const managerListFormat = (title, column, type, width, type_option, explain) => {
   return {
     title: title,
     column: column,
     type: type,
     width: width,
-    type_option: type_option
+    type_option: type_option,
+    explain: explain
   }
 }
 
@@ -166,7 +167,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_see_add_condition: 50,
     search_placeholder: '쿠폰 모델명 검색',//검색 placeholder
     head_columns: [
-      { title: '쿠폰정보', size: 10 },
+      { title: '쿠폰정보', size: 11 },
       { title: '발행완료', size: 2 },
       { title: '발행취소', size: 2 },
       { title: '지급완료', size: 2 },
@@ -177,13 +178,14 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('쿠폰 이미지', 'coupon_img', 'img', ''),
-      managerListFormat('쿠폰 모델명', 'name', 'text', ''),
-      managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
-      managerListFormat('교환상품', 'prod_name', 'text', ''),
-      managerListFormat('할인가', 'sale_amt', 'number', ''),
-      managerListFormat('쿠폰타입', 'code_type', 'code_type', ''),
+      managerListFormat('쿠폰 모델명', 'coupon_name', 'text', ''),
+      managerListFormat('쿠폰타입', 'coupon_type', 'coupon_type', ''),
+      managerListFormat('교환상품', 'product_name', 'text', ''),
+      managerListFormat('할인가', 'product_amount', 'number', ''),
+      managerListFormat('바코드타입', 'barcode_type', 'barcode_type', ''),
       managerListFormat('유효기간', 'valid_s_dt-valid_e_dt', 'period', ''),
-      managerListFormat('사용가능가맹점', 'mcht_names', 'mcht_names', ''),
+      managerListFormat('사용장소타입', 'spot_type', 'spot_type', ''),
+      managerListFormat('지정가맹점', 'mcht_names', 'mcht_names', ''),
       managerListFormat('금액', 'amount-obj-pub', 'number', '', { search_option_label: '발행완료' }),
       managerListFormat('개수', 'count-obj-pub', 'number', '', { search_option_label: '발행완료' }),
       managerListFormat('금액', 'amount-obj-pub_cxl', 'number', '', { search_option_label: '발행취소' }),
@@ -207,7 +209,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     breadcrumb: '쿠폰',//이름 사용할 것
     is_add: false,
     is_see_add_condition: 35,
-    search_placeholder: '유저휴대폰번호, 쿠폰명 검색',//검색 placeholder
+    search_placeholder: '유저휴대폰번호 검색',//검색 placeholder
     head_columns: [
     ],
     columns: [
@@ -215,10 +217,11 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
-      managerListFormat('코드타입', 'prod_id', 'coupon_type', ''),
-      managerListFormat('교환상품', 'prod_name', 'text', ''),
+      managerListFormat('쿠폰타입', 'coupon_type', 'coupon_type', ''),
+      managerListFormat('교환상품', 'product_name', 'text', ''),
       managerListFormat('상태', 'status', 'coupon_status', ''),
-      managerListFormat('할인금액', 'sale_amt', 'number', ''),
+      managerListFormat('할인금액', 'product_amount', 'number', ''),
+      managerListFormat('보유금액', 'balance', 'number', ''),
       managerListFormat('바코드번호', 'barcode_num', 'barcode_num', ''),
       managerListFormat('유저지급하기', 'on_connect_user_coupon', 'on_connect_user_coupon', ''),
       managerListFormat('사용하기', 'on_use_coupon', 'on_use_coupon', ''),

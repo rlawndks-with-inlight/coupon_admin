@@ -75,7 +75,7 @@ const CouponContetnt = (props) => {
             {item?.valid_e_dt} ~ {item?.valid_s_dt}
           </div>
           <div style={{ width: '100%', display: 'flex' }} className='membership-barcode'>
-            {item?.code_type == 1 ?
+            {item?.barcode_type == 1 ?
               <>
                 <QRCode value={item?.barcode_num} style={{ margin: '0.75rem auto 0.5rem auto', width: '84px', height: 'auto' }} />
               </>

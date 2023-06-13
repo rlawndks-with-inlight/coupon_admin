@@ -229,7 +229,9 @@ const TrManager = (props) => {
         handleCloseCoupon();
         return;
       }
-
+      if (returnCouponIcon()?.label2) {
+        api_obj['balance'] = $('#label2').val()
+      }
       const res_find_user = await axiosIns().post(`/api/v1/manager/utils/search`, find_user_obj)
       if (res_find_user?.data[`${user_category_en}s`] && res_find_user?.data[`${user_category_en}s`].length == 0) {
         toast.error(`${user_category}가 존재하지 않습니다.`);
@@ -271,6 +273,7 @@ const TrManager = (props) => {
       obj['icon'] = <Icon icon='ic:outline-verified-user' style={{ fontSize: '40px' }} />
       obj['title'] = '쿠폰 사용하기'
       obj['label'] = '가맹점아이디'
+      obj['label2'] = '사용할금액'
       obj['sub_title'] = '가맹점아이디를 입력해 주세요.'
     } else if (couponSubApiStr == 'order-cancel') {
       obj['icon'] = <Icon icon='material-symbols:cancel-outline' style={{ fontSize: '40px' }} />

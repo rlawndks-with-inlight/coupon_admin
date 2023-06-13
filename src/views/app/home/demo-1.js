@@ -204,7 +204,7 @@ const Merchandise = (props) => {
             {(item?.count?.point || typeof item?.count?.point == 'number') && item?.point_flag ?
               <>
                 <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.point))}</div>
+                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.point))}</div>
               </>
               :
               <>
@@ -212,7 +212,7 @@ const Merchandise = (props) => {
             {(item?.count?.stamp || typeof item?.count?.stamp == 'number') && item?.stamp_flag ?
               <>
                 <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.stamp))}</div>
+                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.stamp))}</div>
               </>
               :
               <>
@@ -220,7 +220,7 @@ const Merchandise = (props) => {
             {item?.count?.coupon || typeof item?.count?.coupon == 'number' || true ?
               <>
                 <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0.1rem 0.1rem' }}>{commarNumber(useCountNum(item?.count?.coupon))}</div>
+                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.coupon))}</div>
               </>
               :
               <>
