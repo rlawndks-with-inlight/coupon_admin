@@ -185,7 +185,7 @@ const Register = () => {
     user_pw: '',
     mcht_name: '',
     addr: '',
-    detail_addr: '',
+    detail_addr: ' ',
     phone_num: '',
     stamp_flag: 0,
     stamp_save_count: 1,

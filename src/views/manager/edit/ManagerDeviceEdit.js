@@ -29,7 +29,7 @@ const ManagerDeviceEdit = (props) => {
     mcht_id: mchtList[0]?.id ?? 0,
     partner_id: partnerList[0]?.id ?? 0,
     mac_addr: '',
-    comment: '',
+    comment: ' ',
   })
   useEffect(() => {
     if (mchtList.length > 0) {
