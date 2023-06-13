@@ -57,7 +57,7 @@ const ManagerMerchandiseEdit = (props) => {
     mcht_name: '',
     phone_num: '',
     addr: '',
-    detail_addr: ' ',
+    detail_addr: '',
     stamp_flag: 0,
     point_flag: 0,
     stamp_save_count: 0,
@@ -140,7 +140,6 @@ const ManagerMerchandiseEdit = (props) => {
     setValues({
       ...values,
       ['addr']: data?.address,
-      ['detail_addr']: values?.detail_addr ? values?.detail_addr : " ",
     })
   }
   return (
