@@ -341,7 +341,7 @@ export const MakeButton = (props) => {
   return (
     <>
       <ButtonStyle style={{
-        background: `${dnsData ? dnsData?.theme_css?.main_color : JSON.parse(JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.theme_css)?.main_color}`,
+        background: `${dnsData ? dnsData?.theme_css?.main_color : JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.theme_css?.main_color}`,
         ...style,
       }}
         onClick={onClick}

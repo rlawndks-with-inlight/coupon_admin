@@ -180,8 +180,6 @@ if (typeof window == 'undefined') {
       }
     }
   }
-} else {
-  console.log(123)
 }
 
 export default App
