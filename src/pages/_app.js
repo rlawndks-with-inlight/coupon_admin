@@ -76,11 +76,14 @@ const App = props => {
         if (!dns_data?.name) {
           const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
           setDnsData(response?.data);
+          setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(response?.data));
         } else {
           setDnsData(dns_data);
+          setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
         }
       } else {
-        setDnsData(dns_data_)
+        setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data_));
+
       }
     } catch (err) {
       console.log(err);
