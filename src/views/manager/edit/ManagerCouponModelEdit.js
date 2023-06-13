@@ -62,7 +62,7 @@ const ManagerCouponModelEdit = (props) => {
     //getOneItem();
   }, [])
   useEffect(() => {
-    if (productList.length > 0 && mchtList.length > 0) {
+    if (mchtList.length > 0) {
       setLoading(false);
     }
   }, [productList, mchtList])
