@@ -57,6 +57,7 @@ const ManagerMerchandiseEdit = (props) => {
     mcht_name: '',
     phone_num: '',
     addr: '',
+    detail_addr: '',
     stamp_flag: 0,
     point_flag: 0,
     stamp_save_count: 0,
@@ -225,6 +226,9 @@ const ManagerMerchandiseEdit = (props) => {
                   }} defaultValue={values?.addr} value={values?.addr}
                     onClick={onSelectAddressOpen}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='가맹점 상세주소' placeholder='가맹점 상세주소를 입력해 주세요.' className='detail_addr' onChange={handleChangeValue('detail_addr')} defaultValue={values?.detail_addr} value={values?.detail_addr} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField fullWidth label='휴대폰번호' placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChangeValue('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />

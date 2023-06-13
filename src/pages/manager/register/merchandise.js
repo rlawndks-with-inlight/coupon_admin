@@ -185,6 +185,7 @@ const Register = () => {
     user_pw: '',
     mcht_name: '',
     addr: '',
+    detail_addr: '',
     phone_num: '',
     stamp_flag: 0,
     stamp_save_count: 1,
@@ -312,7 +313,7 @@ const Register = () => {
   }
   const handleChange = prop => event => {
     if (prop == 'phone_num') {
-      if (isNaN(parseInt(event.target.value[event.target.value.length - 1])) && values.phone_num.length != 1) {
+      if (isNaN(parseInt(event.target.value[event.target.value.length - 1])) && event.target.value[event.target.value.length - 1]) {
         return;
       }
     }
@@ -601,7 +602,11 @@ const Register = () => {
 
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='가맹점 상호' error={isTryRegister && !values?.mcht_name} onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
+                <TextField
+                  fullWidth label='가맹점 상호' error={isTryRegister && !values?.mcht_name} onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='휴대폰번호' error={isTryRegister && !values?.phone_num} onFocus={closeTour} inputProps={{ maxLength: '11' }} placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChange('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField fullWidth label='가맹점 주소' error={isTryRegister && !values?.addr} onFocus={closeTour} placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChange('addr')} inputProps={{
@@ -611,7 +616,7 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='휴대폰번호' error={isTryRegister && !values?.phone_num} onFocus={closeTour} placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChange('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} type='number' />
+                <TextField fullWidth label='가맹점 상세주소' error={isTryRegister && !values?.detail_addr} onFocus={closeTour} placeholder='가맹점 상세주소를 입력해 주세요. ex)101호' className='detail_addr' onChange={handleChange('detail_addr')} defaultValue={values?.detail_addr} value={values?.detail_addr} />
               </Grid>
               <Grid item xs={12} sm={6} />
             </Grid>
