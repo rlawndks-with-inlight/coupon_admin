@@ -47,6 +47,7 @@ import { LOCALSTORAGE } from 'src/data/data'
 import Script from 'next/script'
 import Head from 'next/head'
 import { axiosIns } from 'src/@fake-db/backend'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -55,6 +56,7 @@ const clientSideEmotionCache = createEmotionCache()
 const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
+
   const saveDnsData = () => {
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
   }
@@ -71,12 +73,9 @@ const App = props => {
   const getDnsData = async (dns_data_) => {
     try {
       if (!dns_data_) {
-        let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-        dns_data = JSON.parse(dns_data);
-        if (!dns_data?.name) {
-          const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-          dns_data = response?.data;
-        }
+        let dns_data = undefined;
+        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+        dns_data = response?.data;
         if (typeof dns_data['theme_css'] == 'string') {
           dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
         }
