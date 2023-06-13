@@ -32,7 +32,6 @@ const Merchandise = (props) => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
-    dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
     setDnsData(dns_data)
     setMcht(JSON.parse(router.query?.item))
     getMerchandiseHistory(dns_data, JSON.parse(router.query?.item))
