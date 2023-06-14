@@ -131,7 +131,6 @@ const List = ({ dns_data }) => {
         }
       });
       let max_page = await makeMaxPage(response?.data?.total, response?.data?.page_size);
-
       setPage(parseInt(response?.data?.page));
       setPageSize(response?.data?.page_size);
       setMaxPage(max_page);

@@ -92,7 +92,6 @@ const TableHeader = props => {
   }, [router.query?.table])
 
   const settings = async () => {
-
     let date = new Date();
     let first_day = new Date(date.getFullYear(), date.getMonth(), 1);
     setSDt('')
@@ -113,7 +112,6 @@ const TableHeader = props => {
       }
     }
     await changePage(1, false, obj);
-
   }
 
   const setDateByButton = async (num) => {
