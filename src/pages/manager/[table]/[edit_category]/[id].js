@@ -77,7 +77,7 @@ const Edit = ({ dns_data }) => {
       return <ManagerCategoryEdit {...common} />
     else if (router.query?.table == 'products')
       return <ManagerProductEdit {...common} />
-    else if (router.query?.table == 'couponModels')
+    else if (router.query?.table == 'coupon-models')
       return <ManagerCouponModelEdit {...common} />
     else
       return <div>없는 페이지 입니다.</div>

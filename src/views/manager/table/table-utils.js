@@ -45,6 +45,10 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
     if (column?.type == 'text') {//
       result = item;
     }
+    if (column?.type == 'bold') {//
+      result = item;
+      if (!is_excel) result = <div style={{ fontWeight: 'bold' }}>{result}</div>
+    }
     if (column?.type == 'number') {//
       if (typeof item != 'number') {
         return "---";
@@ -157,6 +161,13 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         :
         <CustomChip rounded label='적립취소' skin='light' color='error' />;
       if (is_excel) result = item == 0 ? '적립' : '적립취소';
+    }
+    if (column?.type == 'is_appr') {//
+      result = item == 0 ?
+        <CustomChip rounded label='승인' skin='light' color='success' />
+        :
+        <CustomChip rounded label='승인취소' skin='light' color='error' />;
+      if (is_excel) result = item == 0 ? '승인' : '승인취소';
     }
     if (column?.type == 'point_history') {//
       result = (
@@ -346,7 +357,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
             <IconButton
               size='small'
               sx={{ color: 'text.secondary' }}
-              onClick={() => { onChangeOnCouponPopUp(data, 'order') }}
+              onClick={() => { onChangeOnCouponPopUp(data, 'approve') }}
             >
               <Icon icon='ic:outline-verified-user' />
             </IconButton>
@@ -362,7 +373,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
             <IconButton
               size='small'
               sx={{ color: 'text.secondary' }}
-              onClick={() => { onChangeOnCouponPopUp(data, 'order-cancel') }}
+              onClick={() => { onChangeOnCouponPopUp(data, 'cancel') }}
             >
               <Icon icon='material-symbols:cancel-outline' />
             </IconButton>

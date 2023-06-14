@@ -79,14 +79,14 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       { title: '결제정보', size: 2 },
       { title: '', size: 3 },
     ],
-    search_placeholder: '가맹점명, 유저명 검색',//검색 placeholder
+    search_placeholder: '가맹점상호, 유저명 검색',//검색 placeholder
     columns: [
       managerListFormat('ID', 'id', 'number', ''),
       managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('가맹점아이디', 'user_name', 'text', ''),
       managerListFormat('상위아이디', 'group_name', 'text', ''),// 검색 level >=10 일시
-      managerListFormat('가맹점명', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
+      managerListFormat('가맹점상호', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('휴대폰번호', 'phone_num', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'point_flag', 'use_status', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
@@ -160,8 +160,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
-  couponModels: {//param
-    table: 'couponModels',//ajax에 사용할 테이블
+  'coupon-models': {//param
+    table: 'coupon-models',//ajax에 사용할 테이블
     breadcrumb: '쿠폰모델',//이름 사용할 것
     is_add: true,
     is_see_add_condition: 50,
@@ -219,6 +219,9 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
       managerListFormat('쿠폰타입', 'coupon_type', 'coupon_type', ''),
       managerListFormat('교환상품', 'product_name', 'text', ''),
+      managerListFormat('유효기간', 'valid_s_dt-valid_e_dt', 'period', ''),
+      managerListFormat('사용장소타입', 'spot_type', 'spot_type', ''),
+      managerListFormat('지정가맹점', 'mcht_names', 'mcht_names', ''),
       managerListFormat('상태', 'status', 'coupon_status', ''),
       managerListFormat('할인금액', 'product_amount', 'number', ''),
       managerListFormat('보유금액', 'balance', 'number', ''),
@@ -228,6 +231,30 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('사용취소하기', 'on_use_coupon_cxl', 'on_use_coupon_cxl', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      //managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
+  'coupons-histories': {//param
+    table: 'coupons-histories',//ajax에 사용할 테이블
+    breadcrumb: '쿠폰 사용내역',//이름 사용할 것
+    is_add: false,
+    is_see_add_condition: 35,
+    search_placeholder: '승인번호, 유저휴대폰번호 검색',//검색 placeholder
+    head_columns: [
+    ],
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('쿠폰 No.', 'coupon_id', 'number', ''),
+      managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
+      managerListFormat('조회타입', 'is_cancel', 'is_appr', ''),
+      managerListFormat('사용가맹점', 'mcht_name', 'text', ''),
+      managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
+      managerListFormat('승인번호', 'appr_num', 'bold', ''),
+      managerListFormat('쿠폰금액', 'product_amount', 'number', ''),
+      managerListFormat('사용금액', 'amount', 'number', ''),
+      managerListFormat('사용시간', 'created_at', 'datetime', ''),
       //managerListFormat('수정/삭제', 'edit', 'edit', ''),
     ],
     table_width: '',
@@ -291,11 +318,11 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     breadcrumb: '포인트',
     is_add: true,
     is_see_add_condition: 35,
-    search_placeholder: '유저휴대폰번호, 가맹점명 검색',
+    search_placeholder: '유저휴대폰번호, 가맹점상호 검색',
     columns: [
       managerListFormat('포인트ID', 'id', 'number', ''),
       managerListFormat('브랜드명', 'brand_name', 'text', ''),
-      managerListFormat('가맹점명', 'mcht_name', 'text', ''),
+      managerListFormat('가맹점상호', 'mcht_name', 'text', ''),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('구매금액', 'purchase_price', 'number', ''),
       managerListFormat('사용포인트', 'use_amount', 'number', ''),
@@ -313,14 +340,14 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     breadcrumb: '장비',
     is_add: true,
     is_see_add_condition: 40,
-    search_placeholder: '맥주소, 가맹점명 검색',
+    search_placeholder: '맥주소, 가맹점상호 검색',
     columns: [
       managerListFormat('장비ID', 'id', 'number', ''),
       managerListFormat('브랜드명', 'brand_name', 'text', ''),
       // managerListFormat('브랜드 ID', 'brand_id', 'number', ''),
       //  managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('가맹점 ID', 'mcht_id', 'number', ''),
-      managerListFormat('가맹점명', 'mcht_name', 'text', ''),
+      managerListFormat('가맹점상호', 'mcht_name', 'text', ''),
       managerListFormat('포인트사용여부', 'point_flag', 'use_status', ''),
       managerListFormat('포인트적립비율', 'point_rate', 'percent', ''),
       managerListFormat('스탬프사용여부', 'stamp_flag', 'use_status', ''),

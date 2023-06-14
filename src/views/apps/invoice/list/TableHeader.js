@@ -33,11 +33,14 @@ import DialogSearchOption from 'src/views/components/dialogs/DialogSearchOption'
 import { toast } from 'react-hot-toast'
 import DialogExcelUpload from 'src/views/components/dialogs/DialogExcelUpload'
 import CouponSameDateLineBox from './same-date-line/CouponSameDateLineBox'
+import CouponsHistoriesSameDateLineBox from './same-date-line/CouponsHistoriesSameDateLineBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
   if (param_table == 'points')
     return <PointOptionBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
+  else if (param_table == 'coupons-histories')
+    return <CouponsHistoriesSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
   else if (param_table == 'devices')
     return <DeviceOptionBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
 
@@ -48,6 +51,8 @@ const sameDateLineBox = (common) => {
   //   return <DeviceSameDateLineBox defaultSearchObj={defaultSearchObj} changePage={changePage} page={page} searchObj={searchObj} setSearchObj={setSearchObj} handleChange={handleChange} />
   if (common.param_table == 'points')
     return <PointSameDateLineBox {...common} />
+  else if (common.param_table == 'coupons-histories')
+    return <CouponsHistoriesSameDateLineBox {...common} />
   else if (common.param_table == 'operators')
     return <OperatorSameDateLineBox {...common} />
   else if (common.param_table == 'coupons')
@@ -68,6 +73,9 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   }
   if (param_table == 'coupons') {
     result.value['status'] = 0;
+  }
+  if (param_table == 'coupons-histories') {
+    result.value['is_cancel'] = -1;
   }
   return result;
 }

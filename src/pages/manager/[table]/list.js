@@ -169,7 +169,7 @@ const List = ({ dns_data }) => {
     points: ['brand_name'],
     coupons: ['brand_name'],
     devices: ['brand_name'],
-    couponModels: ['brand_name'],
+    'coupon-models': ['brand_name'],
     // devices: ['brand_name', 'brand_id'],
     //users: ['brand_name'],
   }

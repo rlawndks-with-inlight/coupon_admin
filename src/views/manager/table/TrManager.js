@@ -128,7 +128,7 @@ const TrManager = (props) => {
         toast.error('개수를 입력해 주세요.');
         return;
       }
-      const response = await axiosIns().post(`/api/v1/manager/couponModels/issuance${couponModelSubApiStr}`, {
+      const response = await axiosIns().post(`/api/v1/manager/coupon-models/issuance${couponModelSubApiStr}`, {
         cp_mod_id: couponModelId,
         count: $('#coupon-number').val()
       })
@@ -201,45 +201,52 @@ const TrManager = (props) => {
   const onCouponActive = async () => {
 
     try {
-      let user_category = '유저휴대폰번호';
-      let user_category_en = 'user'
       let find_user_obj = {
-        user: 1,
-        mcht: 0,
-        user_name: $('#user-name').val()
       }
       let api_obj = {
 
       }
-      if (couponSubApiStr != 'match') {
-        user_category = '가맹점상호'
-        user_category_en = 'mcht'
-        find_user_obj['user'] = 0;
-        find_user_obj['mcht'] = 1;
-        delete find_user_obj['user_name'];
-        find_user_obj['mcht_name'] = $('#user-name').val();
-        if (couponSubApiStr.includes('-cancel')) {
-          api_obj['is_cancel'] = 1;
+      console.log(couponSelectValue)
+      for (var i = 0; i < returnCouponIcon()?.label.length; i++) {
+        let req_item = returnCouponIcon()?.label[i];
+
+        if (!$(`#${req_item?.id}`).val() && !couponSelectValue[req_item?.id] && typeof couponSelectValue[req_item?.id] != 'number') {
+          toast.error(`${req_item?.label}을(를) 입력해 주세요.`);
+          handleCloseCoupon();
+          return;
+        }
+        if (req_item?.id.includes('user') || req_item?.id.includes('mcht')) {//유저나 가맹점 찾을때
+          let type_name = req_item?.id.split('_')[0];
+          if (req_item?.id.includes('user')) {
+            find_user_obj = {
+              user: 1,
+              mcht: 0,
+              phone_num: $(`#${req_item?.id}`).val()
+            }
+          }
+          if (req_item?.id.includes('mcht')) {
+            find_user_obj = {
+              user: 0,
+              mcht: 1,
+              mcht_name: $(`#${req_item?.id}`).val()
+            }
+          }
+          const res_find_user = await axiosIns().post(`/api/v1/manager/utils/search`, find_user_obj)
+          if (res_find_user?.data[`${type_name}s`] && res_find_user?.data[`${type_name}s`].length == 0) {
+            toast.error(`${req_item?.label}가 존재하지 않습니다.`);
+            handleCloseCoupon();
+            return;
+          }
+          api_obj[`${type_name}_id`] = res_find_user?.data[`${type_name}s`][0]?.id;
         } else {
-          api_obj['is_cancel'] = 0;
+          if (req_item?.type == 'input') {
+            api_obj[req_item?.id] = $(`#${req_item?.id}`).val();
+          } else if (req_item?.type == 'select') {
+            api_obj[req_item?.id] = couponSelectValue[req_item?.id]
+          }
         }
       }
-      if (!$('#user-name').val()) {
-        toast.error(`${user_category}를 입력해 주세요.`);
-        handleCloseCoupon();
-        return;
-      }
-      if (returnCouponIcon()?.label2) {
-        api_obj['balance'] = $('#label2').val()
-      }
-      const res_find_user = await axiosIns().post(`/api/v1/manager/utils/search`, find_user_obj)
-      if (res_find_user?.data[`${user_category_en}s`] && res_find_user?.data[`${user_category_en}s`].length == 0) {
-        toast.error(`${user_category}가 존재하지 않습니다.`);
-        return;
-      }
-      api_obj[`${user_category_en}_id`] = res_find_user?.data[`${user_category_en}s`][0]?.id;
-
-      const response = await axiosIns().post(`api/v1/manager/coupons/${couponId}/${couponSubApiStr.split('-')[0]}`, api_obj)
+      const response = await axiosIns().post(`api/v1/manager/coupons/${couponId}/${couponSubApiStr}`, api_obj)
       handleCloseCoupon();
       if (response?.status == 201 || response?.status == 204) {
         toast.success('성공적으로 저장 되었습니다.')
@@ -257,29 +264,51 @@ const TrManager = (props) => {
       }
     }
   }
+
+  const [couponSelectValue, setCouponSelectValue] = useState({
+    vendor_code: null
+  })
   const returnCouponIcon = () => {
     let obj = {
       icon: '',
       title: '',
       sub_title: '',
-      label: ''
+      label: []
     }
     if (couponSubApiStr == 'match') {
       obj['icon'] = <Icon icon='fluent-mdl2:plug-connected' style={{ fontSize: '40px' }} />
       obj['title'] = '쿠폰 유저 지급하기'
-      obj['label'] = '유저아이디'
+      obj['label'] = [
+        { label: '유저아이디', id: 'user_name', type: 'input' }
+      ]
       obj['sub_title'] = '유저아이디를 입력해 주세요.'
-    } else if (couponSubApiStr == 'order') {
+    } else if (couponSubApiStr == 'approve') {
       obj['icon'] = <Icon icon='ic:outline-verified-user' style={{ fontSize: '40px' }} />
       obj['title'] = '쿠폰 사용하기'
-      obj['label'] = '가맹점아이디'
-      obj['label2'] = '사용할금액'
-      obj['sub_title'] = '가맹점아이디를 입력해 주세요.'
-    } else if (couponSubApiStr == 'order-cancel') {
+      obj['label'] = [
+        { label: '가맹점상호', id: 'mcht_name', type: 'input' },
+        { label: '사용할금액', id: 'use_amount', type: 'input' },
+        {
+          label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
+            { value: null, label: '선택안함' },
+            { value: 0, label: '푸드테크' },
+          ]
+        },
+      ]
+      obj['sub_title'] = '가맹점상호를 입력해 주세요.'
+    } else if (couponSubApiStr == 'cancel') {
       obj['icon'] = <Icon icon='material-symbols:cancel-outline' style={{ fontSize: '40px' }} />
       obj['title'] = '쿠폰 사용 취소하기'
-      obj['label'] = '가맹점아이디'
-      obj['sub_title'] = '가맹점아이디를 입력해 주세요.'
+      obj['label'] = [
+        { label: '승인번호', id: 'appr_num', type: 'input' },
+        {
+          label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
+            { value: null, label: '선택안함' },
+            { value: 0, label: '푸드테크' },
+          ]
+        },
+      ]
+      obj['sub_title'] = '승인번호를 입력해 주세요.'
     }
     return obj
   }
@@ -327,6 +356,8 @@ const TrManager = (props) => {
         handleClickOpen={handleOpenCoupon}
         onKeepGoing={onCouponActive}
         head={returnCouponIcon()}
+        setCouponSelectValue={setCouponSelectValue}
+        couponSelectValue={couponSelectValue}
       />
       <TableRow
         key={index}

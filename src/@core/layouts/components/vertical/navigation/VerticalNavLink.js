@@ -96,7 +96,6 @@ const VerticalNavLink = ({
         }
       }
   }
-
   const isNavLinkActive = () => {
     if (router.pathname === item.path || handleURLQueries(router, item.path)) {
       return true

@@ -111,7 +111,7 @@ const ManagerDeviceEdit = (props) => {
               <Grid container spacing={5}>
                 {/* <Grid item xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel id='form-layouts-tabs-select-label'>가맹점명</InputLabel>
+                    <InputLabel id='form-layouts-tabs-select-label'>가맹점상호</InputLabel>
                     <Select
                       label='Country'
                       id='form-layouts-tabs-select'
@@ -137,7 +137,7 @@ const ManagerDeviceEdit = (props) => {
                       setValues({ ...values, mcht_id: item?.id });
                     }}
                     options={mchtList && mchtList.map((option) => option.user_name)}
-                    renderInput={(params) => <TextField {...params} label="가맹점명" />}
+                    renderInput={(params) => <TextField {...params} label="가맹점상호" />}
                   />
                 </Grid>
                 <Grid item xs={12}>

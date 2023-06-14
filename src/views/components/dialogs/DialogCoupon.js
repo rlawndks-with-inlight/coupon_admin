@@ -10,13 +10,14 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import MuiDialog from '@mui/material/Dialog'
 import { styled } from '@mui/material/styles'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 const Dialog = styled(MuiDialog)({
   '& .MuiBackdrop-root': {
     backdropFilter: 'blur(2px)'
   },
 })
 const DialogCoupon = (props) => {
-  const { open, handleClose, data, onKeepGoing, head } = props;
+  const { open, handleClose, data, onKeepGoing, head, couponSelectValue, setCouponSelectValue } = props;
   const [clickCount, setClickCount] = useState(0);
   useEffect(() => {
     setClickCount(0);
@@ -31,14 +32,38 @@ const DialogCoupon = (props) => {
             {head?.sub_title}
           </DialogContentText>
           <DialogContent>
-            <TextField sx={{ marginBottom: '12px' }} id='user-name' autoComplete='new-password' autoFocus fullWidth label={head?.label} />
-            {head?.label2 ?
+            {head?.label && head?.label.map((item, idx) => (
               <>
-                <TextField sx={{ marginBottom: '12px' }} id='label2' autoComplete='new-password' autoFocus fullWidth label={head?.label2} />
+                {item?.type == 'input' ?
+                  <TextField sx={{ marginBottom: '12px' }} id={`${item?.id}`} autoComplete='new-password' fullWidth label={item?.label} />
+                  :
+                  ''
+                }
+                {item?.type == 'select' ?
+                  <FormControl fullWidth>
+                    <InputLabel id={item?.id}>{item?.label}</InputLabel>
+                    <Select
+                      label={item?.label}
+                      id={item?.id}
+                      labelId={item?.id}
+                      className={item?.id}
+                      onChange={(e) => {
+                        setCouponSelectValue({ ...couponSelectValue, [item?.id]: e.target.value });
+                      }}
+                      defaultValue={couponSelectValue[item?.id]}
+                      value={couponSelectValue[item?.id]}
+                    >
+                      {item?.list && item?.list.map((itm, idx) => {
+                        return <MenuItem value={itm?.value} key={idx}>{itm?.label}</MenuItem>
+                      })}
+
+                    </Select>
+                  </FormControl>
+                  :
+                  ''
+                }
               </>
-              :
-              <>
-              </>}
+            ))}
           </DialogContent>
           <DialogActions className='dialog-actions-dense'>
             <Button sx={{ ml: "auto" }} type='submit' variant='contained' onClick={() => {

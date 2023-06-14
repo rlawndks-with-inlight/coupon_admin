@@ -62,13 +62,19 @@ const project_navigation = [
       {
         title: '쿠폰모델관리',
         menu_depth: 1,
-        path: '/manager/couponModels',
+        path: '/manager/coupon-models',
         level: 10
       },
       {
         title: '쿠폰관리',
         menu_depth: 1,
         path: '/manager/coupons',
+        level: 10
+      },
+      {
+        title: '쿠폰사용내역',
+        menu_depth: 1,
+        path: '/manager/coupons-histories',
         level: 10
       },
     ]
