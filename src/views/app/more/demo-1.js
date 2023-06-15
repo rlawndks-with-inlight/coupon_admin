@@ -38,7 +38,7 @@ const More1 = (props) => {
   }
   const onLogout = (is_true) => {
     if (is_true) {
-      handleLogout(router, '/app')
+      handleLogout(router, '/app/login')
     }
   }
   return (

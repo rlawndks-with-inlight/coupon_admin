@@ -4600,6 +4600,13 @@ react-light-barcode@^1.0.1:
   resolved "https://registry.npmjs.org/react-light-barcode/-/react-light-barcode-1.0.1.tgz"
   integrity sha512-QY1pDyIqJk4U/Ukn8vTvH+rgUU+7GS9DFdK46GjhhNo0wSM+PG7WQUY8wwJpPqh6A0wljEW/GOi1wH/qEOhDYQ==
 
+react-native-safearea-height@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/react-native-safearea-height/-/react-native-safearea-height-1.0.6.tgz"
+  integrity sha512-cO58Ew/NG7XcxwcSMNc0PxKiPEXYt3Fzql9UshXWXmPZ+XFXWEifYwKKqwaKExHvep8mk8wCbY0qy00pmfciIg==
+  dependencies:
+    react "^16.9.0"
+
 react-naver-maps@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/react-naver-maps/-/react-naver-maps-0.1.2.tgz"
@@ -4744,6 +4751,15 @@ react-use@^17.3.1:
     throttle-debounce "^3.0.1"
     ts-easing "^0.2.0"
     tslib "^2.1.0"
+
+react@^16.9.0:
+  version "16.14.0"
+  resolved "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 react@18.2.0:
   version "18.2.0"
