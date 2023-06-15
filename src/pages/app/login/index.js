@@ -120,6 +120,9 @@ const Login = ({ dns_data }) => {
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
           setIsIos(event?.data?.os == 'ios');
+          if (event?.data?.token) {
+            await new Promise((r) => setTimeout(r, 1000));
+          }
           let result = await onSignIn({
             token: (event?.data?.token ?? "").toString(),
             login_type: (event?.data?.login_type ?? "0").toString(),
