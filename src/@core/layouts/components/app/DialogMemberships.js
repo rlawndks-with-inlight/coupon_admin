@@ -107,7 +107,7 @@ const CouponContetnt = (props) => {
                 />
               </>}
           </div>
-          <div style={{ margin: '0 auto', fontSize: themeObj.font_size.font3, maxWidth: '376px', textAlign: 'end', width: '95%' }}>
+          <div style={{ margin: '0 auto', fontSize: themeObj.font_size.font3, maxWidth: '376px', textAlign: 'end', width: '95%', color: themeObj.grey[500] }}>
             잔액: {commarNumber(item?.balance)}원
           </div>
         </CardContent>
