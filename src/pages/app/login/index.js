@@ -120,13 +120,17 @@ const Login = ({ dns_data }) => {
       } else if (event.method == 'logined') {// 로그인 정보 불러오기
         try {
           setIsIos(event?.data?.os == 'ios');
-          let result = await onSignIn({
-            token: (event?.data?.token ?? "").toString(),
-            login_type: (event?.data?.login_type ?? "0").toString(),
-            phone_num: (event?.data?.phone ?? "").toString()
-          })
+          setTimeout(async () => {
+            let result = await onSignIn({
+              token: (event?.data?.token ?? "").toString(),
+              login_type: (event?.data?.login_type ?? "0").toString(),
+              phone_num: (event?.data?.phone ?? "").toString()
+            })
+          }, 1300)
         } catch (err) {
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1300)
         }
       } else if (event.method == 'mode') {
         saveSettings({ ...settings, mode: event?.data?.mode ?? "light" });
