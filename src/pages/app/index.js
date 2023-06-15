@@ -21,7 +21,7 @@ import { getCookie } from 'src/@core/utils/react-cookie'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import Loading from 'src/@core/layouts/components/app/Loading'
-
+import { onPostWebview } from 'src/@core/utils/webview-connect'
 
 const Index = ({ dns_data }) => {
   // ** State
@@ -32,13 +32,33 @@ const Index = ({ dns_data }) => {
     brand_id: 0
   })
   const [dnsData, setDnsData] = useState({})
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // ** Hook
   const theme = useTheme();
   const router = useRouter();
   useEffect(() => {
-    settings();
+    if (window.ReactNativeWebView) {
+      onPostWebview('app_initial');
+    } else {
+      settings();
+    }
+    const onMessageHandler = async (e) => {
+      const event = JSON.parse(e.data)
+      if (event.method == 'app_initial') {
+        settings();
+      }
+    }
+    const isUIWebView = () => {
+      return navigator.userAgent
+        .toLowerCase()
+        .match(/\(ip.*applewebkit(?!.*(version|crios))/)
+    }
+    const receiver = isUIWebView() ? window : document
+    receiver.addEventListener('message', onMessageHandler)
+    return () => {
+      receiver.removeEventListener('message', onMessageHandler)
+    }
   }, [])
 
   const settings = async () => {

@@ -176,7 +176,6 @@ const LoginV1 = ({ dns_data }) => {
 
     }
   }
-
   return (
     <>
       {loading ?

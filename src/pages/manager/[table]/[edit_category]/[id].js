@@ -55,7 +55,6 @@ const Edit = ({ dns_data }) => {
     user_data = JSON.parse(user_data ?? "{}") ?? {};
     setUserData(user_data);
   }
-
   const renderPage = (common) => {
     if (router.query?.table == 'users')
       return <ManagerUserEdit {...common} />
@@ -82,7 +81,6 @@ const Edit = ({ dns_data }) => {
     else
       return <div>없는 페이지 입니다.</div>
   }
-
   const editItem = async (obj_) => {
     handleEditConfirmClose();
     try {
