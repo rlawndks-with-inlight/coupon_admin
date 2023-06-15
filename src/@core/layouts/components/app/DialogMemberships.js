@@ -21,7 +21,7 @@ import { commarNumber, detetimeFormat } from 'src/@core/utils/function'
 import Barcode from 'react-barcode'
 import QRCode from 'qrcode.react'
 import styled from 'styled-components'
-import { DialogContent } from '@mui/material';
+import { Chip, DialogContent } from '@mui/material';
 
 const CustomizedDialogContent = styled(DialogContent)(({ theme }) => ({
   paddingTop: '0px !important'
@@ -70,7 +70,24 @@ const CouponContetnt = (props) => {
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`
         }}>
           <img src={item?.coupon_img} style={{ margin: '0 auto', width: '200px', borderRadius: '8px', boxShadow: `4px 4px 8px #00000055` }} />
-          <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold' }}>{item?.name}</div>
+          <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold' }}>{item?.coupon_name}</div>
+          {item?.spot_type == 1 ?
+            <>
+
+              <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold', alignItems: 'center', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                {item?.mchts && item?.mchts.map((itm, idx) => (
+                  <>
+                    <Chip label={itm?.mcht_name} sx={{ margin: '2px' }} variant='outlined' />
+                  </>
+                ))}
+              </div>
+            </>
+            :
+            <>
+              <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold', alignItems: 'center', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Chip label={'모든가맹점'} sx={{ margin: '2px' }} variant='outlined' />
+              </div>
+            </>}
           <div style={{ margin: '0.25rem auto 0.5rem auto', fontSize: themeObj.font_size.font3 }}>
             {item?.valid_e_dt} ~ {item?.valid_s_dt}
           </div>
@@ -90,7 +107,9 @@ const CouponContetnt = (props) => {
                 />
               </>}
           </div>
-
+          <div style={{ margin: '0 auto', fontSize: themeObj.font_size.font3, maxWidth: '376px', textAlign: 'end', width: '95%' }}>
+            잔액: {commarNumber(item?.balance)}원
+          </div>
         </CardContent>
       </CardContainer>
     </>
@@ -192,7 +211,7 @@ const DialogMemberships = (props) => {
   const [tabValue, setTabValue] = useState('')
   return (
     <div>
-      <MakeDialogFullScreen onClose={handleClose} open={open}>
+      <Dialog onClose={handleClose} open={open} fullScreen>
         <div style={{ ...style, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <DialogTitle id='full-screen-dialog-title' style={{ paddingBottom: '1rem' }}>
             <Typography variant='h6' component='span' style={{ display: 'flex' }}>
@@ -261,7 +280,7 @@ const DialogMemberships = (props) => {
           </CustomizedDialogContent>
         </div>
         <Toaster position={'top-right'} toastOptions={{ className: 'react-hot-toast' }} />
-      </MakeDialogFullScreen>
+      </Dialog>
     </div>
   )
 }
