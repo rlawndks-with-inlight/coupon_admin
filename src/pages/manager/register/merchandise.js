@@ -530,15 +530,15 @@ const Register = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={5} sx={{ mt: '0' }} className='input-user-info'>
-              <Grid item xs={12} sm={6} >
+            <Grid container spacing={5} sx={{ margin: '0', width: '100% !important' }} className='input-user-info'>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px  !important' }}>
                 <TextField fullWidth label='유저아이디' placeholder='유저아이디를 입력해 주세요.' className='user_name' inputProps={{
                 }} onChange={handleChange('user_name')} onFocus={closeTour} defaultValue={values?.user_name} value={values?.user_name} error={isTryRegister && !values?.user_name} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px  !important' }}>
                 <TextField fullWidth label='대표자명' placeholder='대표자명을 입력해 주세요.' onFocus={closeTour} className='nick_name' onChange={handleChange('nick_name')} defaultValue={values?.nick_name} value={values?.nick_name} error={isTryRegister && !values?.nick_name} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <FormControl fullWidth sx={{ mb: 1.5 }}>
                   <InputLabel htmlFor='auth-login-password'>비밀번호</InputLabel>
                   <OutlinedInput
@@ -564,7 +564,7 @@ const Register = () => {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <FormControl fullWidth sx={{ mb: 1.5 }}>
                   <InputLabel htmlFor='auth-login-password-check'>비밀번호확인</InputLabel>
                   <OutlinedInput
@@ -601,33 +601,32 @@ const Register = () => {
                 </FormControl>
 
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <TextField
                   fullWidth label='가맹점 상호' error={isTryRegister && !values?.mcht_name} onFocus={closeTour} placeholder='가맹점 상호를 입력해 주세요. ex)홍길동덮밥 수원점' className='mcht_name' onChange={handleChange('mcht_name')} defaultValue={values?.mcht_name} value={values?.mcht_name} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <TextField fullWidth label='휴대폰번호' error={isTryRegister && !values?.phone_num} onFocus={closeTour} inputProps={{ maxLength: '11' }} placeholder='휴대폰번호를 입력해 주세요.' className='phone_num' onChange={handleChange('phone_num')} defaultValue={values?.phone_num} value={values?.phone_num} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <TextField fullWidth label='가맹점 주소' error={isTryRegister && !values?.addr} onFocus={closeTour} placeholder='가맹점 주소를 입력해 주세요.' className='addr' onChange={handleChange('addr')} inputProps={{
                   readOnly: true,
                 }} defaultValue={values?.addr} value={values?.addr}
                   onClick={onSelectAddressOpen}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <TextField fullWidth label='가맹점 상세주소' error={isTryRegister && !values?.detail_addr} onFocus={closeTour} placeholder='가맹점 상세주소를 입력해 주세요. ex)101호' className='detail_addr' onChange={handleChange('detail_addr')} defaultValue={values?.detail_addr} value={values?.detail_addr} />
               </Grid>
-              <Grid item xs={12} sm={6} />
             </Grid>
-            <Grid container spacing={5} sx={{ mt: '0' }} >
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={5} sx={{ margin: '0', width: '100% !important' }} >
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <FormControl fullWidth
                   error={isTryRegister && (values?.stamp_flag == 0 && values?.point_flag == 0)}
                 >
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>스탬프 사용여부</InputLabel>
                   <Select
-                    label='Country'
+                    label='스탬프 사용여부'
                     id='form-layouts-tabs-select'
                     labelId='form-layouts-tabs-select-label'
                     className='stamp_flag'
@@ -640,12 +639,8 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} className='stamp-info'>
-
-              </Grid>
-            </Grid>
-            <Grid container spacing={5} sx={{ mt: '0' }} >
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} className='stamp-info' sx={{ padding: '10px !important' }} />
+              <Grid item xs={12} sm={6} sx={{ padding: '10px !important' }}>
                 <FormControl fullWidth
                   error={isTryRegister && (values?.stamp_flag == 0 && values?.point_flag == 0)}
                 >
@@ -664,7 +659,7 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} className='point-info'>
+              <Grid item xs={12} sm={6} className='point-info' sx={{ padding: '10px !important' }}>
                 {values?.point_flag == 1 ?
                   <>
                     <TextField
