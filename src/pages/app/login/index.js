@@ -74,13 +74,18 @@ const Login = ({ dns_data }) => {
   const isMobile = useMediaQuery('(max-width: 350px)')
   const [verificationCode, setVerificationCode] = useState("");
   useEffect(() => {
-    onSettings();
+    if (window.ReactNativeWebView) {
+      onPostWebview('app_initial');
+    } else {
+      onSettings();
+    }
   }, [])
   useEffect(() => {
     const onMessageHandler = async (e) => {
       const event = JSON.parse(e.data)
-
-      if (event.method == 'kakao_login') {
+      if (event.method == 'app_initial') {
+        onSettings();
+      } else if (event.method == 'kakao_login') {
         if (event?.data?.id) {
           if (event?.data?.phone) {//기기에 폰번호 저장시
             onSnsLogin({
