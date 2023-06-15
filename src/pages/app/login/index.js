@@ -121,7 +121,7 @@ const Login = ({ dns_data }) => {
         try {
           setIsIos(event?.data?.os == 'ios');
           if (event?.data?.token) {
-            await new Promise((r) => setTimeout(r, 1000));
+            await new Promise((r) => setTimeout(r, 1300));
           }
           let result = await onSignIn({
             token: (event?.data?.token ?? "").toString(),
