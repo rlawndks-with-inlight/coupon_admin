@@ -126,8 +126,8 @@ const Header = (props) => {
     saveSettings({ ...settings, mode: mode })
   }
   const handleModeToggle = async (is_true) => {
+    let mode = '';
     if (is_true) {
-      let mode = '';
       if (settings.mode === 'light') {
         mode = 'dark';
       } else {
