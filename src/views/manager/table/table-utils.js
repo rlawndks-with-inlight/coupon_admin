@@ -75,7 +75,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
 
       if (column?.type_option?.is_profile) {
         style = {
-          height: '50px', width: '50px'
+          height: '50px', width: '50px', margin: 'auto'
         }
         result = <Avatar alt='John Doe' src={item} sx={{ ...style, borderRadius: '50%' }} />
       }

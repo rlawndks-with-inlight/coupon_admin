@@ -51,7 +51,6 @@ const Detail = () => {
           <ItemContainer>
             <ItemDetailCard item={item} />
             <ProductExplain theme={theme}>
-
             </ProductExplain>
           </ItemContainer>
         </ContentWrapper>

@@ -240,6 +240,23 @@ const ManagerBrandEdit = (props) => {
                         <Grid item xs={12}>
                           <TextField fullWidth label='DNS 명' placeholder='DNS 명을 입력해 주세요.' className='dns' onChange={handleChangeValue('dns')} defaultValue={values?.dns} value={values?.dns} />
                         </Grid>
+                        {/* <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label'>기본 경로 선택</InputLabel>
+                            <Select
+                              label='기본 경로 선택'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='mbr_type'
+                              onChange={handleChangeValue('mbr_type')}
+                              defaultValue={values?.mbr_type ?? 0}
+                              value={values?.mbr_type}
+                            >
+                              <MenuItem value='0'>유입된 가맹점에서만 사용</MenuItem>
+                              <MenuItem value='1'>모든 가맹점에서 사용</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <TextField fullWidth label='대표자 명' placeholder='대표자 명을 입력해 주세요.' className='ceo_nm' onChange={handleChangeValue('ceo_nm')} defaultValue={values?.ceo_nm} value={values?.ceo_nm} />
                         </Grid>

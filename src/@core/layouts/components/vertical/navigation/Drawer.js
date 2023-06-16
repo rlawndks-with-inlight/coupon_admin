@@ -1,6 +1,9 @@
 // ** MUI Imports
+import { Icon } from '@iconify/react'
+import { IconButton } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer'
+import { useEffect } from 'react'
 
 const SwipeableDrawer = styled(MuiSwipeableDrawer)({
   overflowX: 'hidden',
@@ -15,7 +18,7 @@ const SwipeableDrawer = styled(MuiSwipeableDrawer)({
   '& .MuiDrawer-paper': {
     left: 'unset',
     right: 'unset',
-    overflowX: 'hidden',
+    overflowY: 'unset',
     transition: 'width .25s ease-in-out, box-shadow .25s ease-in-out'
   }
 })
@@ -28,20 +31,25 @@ const Drawer = props => {
     navHover,
     navWidth,
     settings,
+    saveSettings,
     navVisible,
     setNavHover,
     navMenuProps,
     setNavVisible,
     collapsedNavWidth,
-    navigationBorderWidth
+    navigationBorderWidth,
+    menuLockedIcon: userMenuLockedIcon,
+    navMenuBranding: userNavMenuBranding,
+    menuUnlockedIcon: userMenuUnlockedIcon
   } = props
 
   // ** Hook
   const theme = useTheme()
-
   // ** Vars
   const { mode, skin, navCollapsed } = settings
   let flag = true
+
+  const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
 
   const drawerColors = () => {
     if (mode === 'semi-dark') {
@@ -94,6 +102,11 @@ const Drawer = props => {
   delete userNavMenuProps.sx
   delete userNavMenuProps.PaperProps
 
+  const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='tabler:chevron-left' style={{ fontSize: '1.125rem' }} />
+  const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:chevron-right' style={{ fontSize: '1.125rem' }} />
+  useEffect(() => {
+
+  }, [])
   return (
     <SwipeableDrawer
       className='layout-vertical-nav'
@@ -105,16 +118,46 @@ const Drawer = props => {
           ...(!hidden && skin !== 'bordered' && { boxShadow: 6 }),
           width: navCollapsed && !navHover ? collapsedNavWidth : navWidth,
           borderRight: navigationBorderWidth === 0 ? 0 : `${navigationBorderWidth}px solid ${theme.palette.divider}`,
-          ...userNavMenuPaperStyle
+          ...userNavMenuPaperStyle,
+          boxShadow: 'none',
+          borderRight: `1px dashed rgba(51, 48, 60, 0.12)`
         },
         ...navMenuProps?.PaperProps
       }}
       sx={{
-        width: navCollapsed ? collapsedNavWidth : navWidth,
-        ...userNavMenuStyle
+        width: navCollapsed && !navHover ? collapsedNavWidth : navWidth,
+        ...userNavMenuStyle,
       }}
       {...userNavMenuProps}
     >
+      {window.innerWidth <= 1200 || (navCollapsed && !navHover) ?
+        <>
+        </>
+        :
+        <>
+          <IconButton
+            disableRipple
+            disableFocusRipple
+            onClick={() => saveSettings({ ...settings, navCollapsed: !navCollapsed })}
+            sx={{
+              p: '2px',
+              '& svg': {
+                fontSize: '1.25rem',
+                ...menuCollapsedStyles,
+                transition: 'opacity .25s ease-in-out'
+              },
+              position: 'absolute',
+              right: '-12px',
+              top: '1rem',
+              color: theme.palette.grey[500],
+              backgroundColor: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`,
+              borderRadius: '50%',
+              border: `1px dashed ${theme.palette.grey[300]}`,
+            }}
+          >
+            {navCollapsed ? MenuUnlockedIcon() : MenuLockedIcon()}
+          </IconButton>
+        </>}
       {children}
     </SwipeableDrawer>
   )

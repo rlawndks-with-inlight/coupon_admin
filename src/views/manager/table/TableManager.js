@@ -144,6 +144,7 @@ const TableManager = (props) => {
                 sx={{
                   borderTop: 'none',
                   backgroundColor: `${theme.palette.mode == 'dark' ? 'rgb(74, 80, 114)' : 'rgb(246, 246, 247)'}`,
+                  padding: '1rem 0.3rem 1rem 0.5rem',
                 }}>
                 {objDataGridColumns[param_table]?.head_columns && objDataGridColumns[param_table]?.head_columns.map((item, idx) => (
                   <>
@@ -228,10 +229,11 @@ const TableManager = (props) => {
                         {}).show_flag
                       ?
                       <>
-                        <TableCell align='left'
+                        <TableCell align='center'
                           sx={{
                             maxWidth: '300px',
-                            position: 'relative'
+                            position: 'relative',
+                            padding: '1rem 0.1rem',
                           }}>
                           <div style={{
                             position: 'absolute',

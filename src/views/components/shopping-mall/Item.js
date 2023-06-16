@@ -25,7 +25,6 @@ const Wrapper = styled.div`
 const Name = styled.div`
 font-weight: bold;
 font-size:${props => props.theme.palette.font_size.font2};
-
 `
 const Price = styled.div`
 font-size:${props => props.theme.palette.font_size.font2};

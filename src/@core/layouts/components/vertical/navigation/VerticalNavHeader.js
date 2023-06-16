@@ -102,14 +102,16 @@ const VerticalNavHeader = props => {
   }
   const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='tabler:circle-dot' />
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:circle' />
-
+  useEffect(() => {
+    console.log(navCollapsed)
+  }, [navCollapsed])
   return (
     <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft(), ...conditionalColors() }}>
       <div style={{ width: '20px' }} />
       {userNavMenuBranding ? (
         userNavMenuBranding(props)
       ) : (
-        <LinkStyled href='/manager/users' style={{ marginLeft: `${navCollapsed ? '5px' : ''}` }}>
+        <LinkStyled href='/manager/users' >
           {navCollapsed && !navHover ?
             <>
               <img src={dnsData?.favicon_img} style={{ height: '22px', width: '22px' }} />
@@ -120,39 +122,7 @@ const VerticalNavHeader = props => {
             </>}
         </LinkStyled>
       )}
-
-      {hidden ? (
-        <IconButton
-          disableRipple
-          disableFocusRipple
-          onClick={toggleNavVisibility}
-          sx={{
-            p: 0,
-            backgroundColor: 'transparent !important',
-            color: `${mode === 'semi-dark' ? `rbga(${theme.palette.customColors.dark}, 0.6)` : theme.palette.text.secondary
-              } !important`
-          }}
-        >
-          <Icon icon='tabler:x' fontSize='1.25rem' />
-        </IconButton>
-      ) : userMenuLockedIcon === null && userMenuUnlockedIcon === null ? null : (
-        <IconButton
-          disableRipple
-          disableFocusRipple
-          onClick={() => saveSettings({ ...settings, navCollapsed: !navCollapsed })}
-          sx={{
-            p: 0,
-            backgroundColor: 'transparent !important',
-            '& svg': {
-              fontSize: '1.25rem',
-              ...menuCollapsedStyles,
-              transition: 'opacity .25s ease-in-out'
-            }
-          }}
-        >
-          {navCollapsed ? MenuUnlockedIcon() : MenuLockedIcon()}
-        </IconButton>
-      )}
+      <div style={{ width: '20px' }} />
     </MenuHeaderWrapper>
   )
 }

@@ -381,11 +381,13 @@ const TrManager = (props) => {
                   },
                     {})?.show_flag ?
                   <>
-                    <TableCell align='left'
+                    <TableCell align='center'
                       style={{
                         maxWidth: '300px',
                         color: `${theme.palette.mode == 'dark' ? '#eeeeee' : '#222222'}`,
-                        whiteSpace: 'pre-wrap'
+                        whiteSpace: 'pre-wrap',
+                        padding: '1rem 0.1rem',
+                        margin: '0'
                       }}>
                       {getItemByType(post, col, router.query?.table, false, userData, {
                         goTo: goTo,
