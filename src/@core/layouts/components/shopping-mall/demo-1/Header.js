@@ -11,8 +11,8 @@ import { axiosIns } from "src/@fake-db/backend";
 import { toast } from "react-hot-toast";
 import { getBackgroundColor, handleLogout, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
-import ModeToggler from "../shared-components/ModeToggler";
-import DrawerMenu from "./DrawerMenu";
+import ModeToggler from "../../shared-components/ModeToggler";
+import DrawerMenu from "../DrawerMenu";
 
 const TopWrapper = styled.header`
 width:90%;

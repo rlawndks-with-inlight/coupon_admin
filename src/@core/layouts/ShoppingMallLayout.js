@@ -1,54 +1,28 @@
 // ** MUI Imports
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import Fab from '@mui/material/Fab'
-import { Icon } from '@iconify/react'
+
 import { useTheme } from '@emotion/react'
-import Header from './components/shopping-mall/Header'
-import Footer from './components/shopping-mall/Footer'
-import ScrollToTop from 'src/@core/components/scroll-to-top'
-import { useEffect } from 'react'
+import ShoppingMallLayout1 from './components/shopping-mall/demo-1/layout-demo-1'
+import { useState } from 'react'
 // Styled component for Blank Layout component
-const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
-  minHeight: '100vh',
-  // For V1 Blank layout pages
-  '& .content-center': {
-    display: 'flex',
-    minHeight: '100vh',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing(5)
-  },
-
-  // For V2 Blank layout pages
-  '& .content-right': {
-    display: 'flex',
-    minHeight: '100vh',
-    overflowX: 'hidden',
-    position: 'relative'
-  }
-}))
-
+const getDemo = (num, common) => {
+  if (num == 1)
+    return <ShoppingMallLayout1 {...common} />
+}
 const ShoppingMallLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
+
+  const [layoutDemoNum, setLayoutDemoNum] = useState(1);
   return (
-    <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
-      <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        <Header />
-        {children}
-        <Footer />
-      </Box>
-      {scrollToTop ? (
-        scrollToTop(props)
-      ) : (
-        <ScrollToTop className='mui-fixed'>
-          <Fab color='primary' size='small' aria-label='scroll back to top'>
-            <Icon icon='tabler:arrow-up' />
-          </Fab>
-        </ScrollToTop>
-      )}
-    </BlankLayoutWrapper>
+    <>
+      {getDemo(layoutDemoNum, {
+        data: {
+        },
+        func: {
+        },
+        children,
+        scrollToTop
+      })}
+    </>
   )
 }
-
 export default ShoppingMallLayout
