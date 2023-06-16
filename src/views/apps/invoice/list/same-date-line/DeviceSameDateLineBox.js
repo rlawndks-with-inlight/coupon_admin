@@ -16,17 +16,20 @@ const DeviceSameDateLineBox = (props) => {
   const [loading, setLoading] = useState(false);
   const [statusList, setStatusList] = useState([]);
   const router = useRouter();
+  const loading_condition = typeof searchObj?.appr_status == 'number';
   useEffect(() => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.appr_status == 'number') {
+    if (loading_condition) {
       setLoading(false);
     }
   }, [searchObj])
 
   const settings = async () => {
-    setLoading(true);
+    if (!loading_condition) {
+      setLoading(true);
+    }
 
     let z_status = [
       { appr_status: -1, name: '전체' },

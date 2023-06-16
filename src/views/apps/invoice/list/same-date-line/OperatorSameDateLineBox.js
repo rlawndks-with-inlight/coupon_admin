@@ -24,17 +24,20 @@ const OperatorSameDateLineBox = (props) => {
     { name: '협력사', level: 45 },
     { name: '개발사', level: 50 },
   ]
+  const loading_condition = typeof searchObj?.level == 'number' && userLevelList.length > 0
   useEffect(() => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.level == 'number' && userLevelList.length > 0) {
+    if (loading_condition) {
       setLoading(false);
     }
   }, [searchObj, userLevelList])
 
   const settings = async () => {
-    setLoading(true);
+    if (!loading_condition) {
+      setLoading(true);
+    }
     let pub_type_list = [
       { name: '전체', level: -1 },
       { name: '본사', level: 40 },

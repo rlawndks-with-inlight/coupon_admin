@@ -22,17 +22,21 @@ const CouponsHistoriesSameDateLineBox = (props) => {
     { name: '승인', is_cancel: 0 },
     { name: '승인취소', is_cancel: 1 },
   ]
+  const loading_condition = typeof searchObj?.is_cancel == 'number';
+
   useEffect(() => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.is_cancel == 'number') {
+    if (loading_condition) {
       setLoading(false);
     }
   }, [searchObj])
 
   const settings = async () => {
-    setLoading(true);
+    if (!loading_condition) {
+      setLoading(true);
+    }
   }
 
   return (

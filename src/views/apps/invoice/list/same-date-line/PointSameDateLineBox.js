@@ -22,17 +22,20 @@ const PointSameDateLineBox = (props) => {
     { name: '발행', is_cancel: 0 },
     { name: '발행취소', is_cancel: 1 },
   ]
+  const loading_condition = typeof searchObj?.is_cancel == 'number'
   useEffect(() => {
     settings();
   }, [router.query])
   useEffect(() => {
-    if (typeof searchObj?.is_cancel == 'number') {
+    if (loading_condition) {
       setLoading(false);
     }
   }, [searchObj])
 
   const settings = async () => {
-    setLoading(true);
+    if (!loading_condition) {
+      setLoading(true);
+    }
   }
 
   return (
