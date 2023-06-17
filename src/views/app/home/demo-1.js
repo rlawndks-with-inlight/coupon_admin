@@ -288,7 +288,6 @@ const Home1 = (props) => {
   const [mchtLoading, setMchtLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-
   const [options, setOptions] = useState({
 
   })

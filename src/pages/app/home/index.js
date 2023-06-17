@@ -129,7 +129,7 @@ const Home = () => {
       if (pageStack.includes(pag)) {
         return;
       }
-      if ((pag) * PAGE_SIZE > data?.mchts?.total) {
+      if ((pag) * PAGE_SIZE > data?.total) {
         setIsDataEnd(true);
         return;
       }
@@ -147,7 +147,6 @@ const Home = () => {
       } else {
         setMchts(prePost => [...prePost, ...response?.data?.content]);
       }
-
       setLoading(false);
     } catch (err) {
       let push_lick = await processCatch(err);
