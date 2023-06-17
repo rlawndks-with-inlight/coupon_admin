@@ -417,7 +417,6 @@ const Register = () => {
       delete obj['passwordCheck'];
       delete obj['showPasswordCheck'];
       const response = await axiosIns().post('/api/v1/auth/sign-up/merchandise', obj);
-      console.log(response)
       setToken(response?.data?.access_token);
       let result = await handleLogout(router, '#')
       await setCookie('o', response?.data?.access_token, {

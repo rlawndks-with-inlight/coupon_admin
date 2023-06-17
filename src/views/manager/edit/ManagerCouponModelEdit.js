@@ -49,7 +49,7 @@ const ManagerCouponModelEdit = (props) => {
     coupon_type: 0,
     product_amount: 0,
     product_id: 0,
-    spot_type: 0,
+    spot_type: 1,
     mcht_ids: [],
     barcode_type: 0,
     valid_s_dt: returnMoment(false, new Date()).substring(0, 10),
@@ -95,7 +95,6 @@ const ManagerCouponModelEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
       const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`)
-      console.log(res_products?.data?.content)
       setProductList([...res_products?.data?.content]);
       const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       if (res_mchts?.data?.mcht_id.length <= 0) {
@@ -325,12 +324,12 @@ const ManagerCouponModelEdit = (props) => {
                           defaultValue={values?.spot_type ?? 0}
                           value={values?.spot_type}
                         >
-                          <MenuItem value={0}>{'모든가맹점'}</MenuItem>
-                          <MenuItem value={1}>{'지정가맹점'}</MenuItem>
+                          <MenuItem value={0}>{'지정가맹점'}</MenuItem>
+                          <MenuItem value={1}>{'모든가맹점'}</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
-                    {values?.spot_type == 1 ?
+                    {values?.spot_type == 0 ?
                       <>
                         <Grid item xs={12}>
                           <FormControl fullWidth>

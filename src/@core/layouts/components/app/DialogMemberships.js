@@ -69,9 +69,9 @@ const CouponContetnt = (props) => {
         <CardContent style={{
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`
         }}>
-          <img src={item?.coupon_img} style={{ margin: '0 auto', width: '200px', borderRadius: '8px', boxShadow: `4px 4px 8px #00000055` }} />
-          <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold' }}>{item?.coupon_name}</div>
-          {item?.spot_type == 1 ?
+          <img src={item?.coupon_model?.coupon_img} style={{ margin: '0 auto', width: '200px', borderRadius: '8px', boxShadow: `4px 4px 8px #00000055` }} />
+          <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold' }}>{item?.coupon_model?.coupon_name}</div>
+          {item?.coupon_model?.spot_type == 0 ?
             <>
 
               <div style={{ margin: '1rem auto 0 auto', fontWeight: 'bold', alignItems: 'center', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -89,10 +89,10 @@ const CouponContetnt = (props) => {
               </div>
             </>}
           <div style={{ margin: '0.25rem auto 0.5rem auto', fontSize: themeObj.font_size.font3 }}>
-            {item?.valid_e_dt} ~ {item?.valid_s_dt}
+            {item?.coupon_model?.valid_e_dt} ~ {item?.coupon_model?.valid_s_dt}
           </div>
           <div style={{ width: '100%', display: 'flex' }} className='membership-barcode'>
-            {item?.barcode_type == 1 ?
+            {item?.coupon_model?.barcode_type == 1 ?
               <>
                 <QRCode value={item?.barcode_num} style={{ margin: '0.75rem auto 0.5rem auto', width: '84px', height: 'auto' }} />
               </>
@@ -126,8 +126,7 @@ const getPointHistoryString = (item) => {
 
 }
 const PointContetnt = (props) => {
-  const { item, idx, dnsData, pointType } = props;
-
+  const { item, idx, dnsData, pointType, } = props;
   const getPointItem = (item) => {
     if (item?.type == 1) {
       return (
@@ -137,7 +136,7 @@ const PointContetnt = (props) => {
             <div style={{ marginLeft: 'auto', color: themeObj.blue }}>+{commarNumber(item?.point)}P</div>
           </Row>
           <Row style={{ color: themeObj.grey[500] }}>
-            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.updated_at.substring(0, 16)}</div>
+            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.created_at.substring(0, 16)}</div>
             <div style={{ paddingLeft: '0.25rem' }}>적립</div>
             <Row style={{ marginLeft: 'auto' }}>
               <div>잔액포인트:</div>
@@ -155,7 +154,7 @@ const PointContetnt = (props) => {
             <div style={{ marginLeft: 'auto', color: themeObj.red }}>-{commarNumber(item?.point)}P</div>
           </Row>
           <Row style={{ color: themeObj.grey[500] }}>
-            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.updated_at.substring(0, 16)}</div>
+            <div style={{ borderRight: `1px solid ${themeObj.grey[300]}`, paddingRight: '0.25rem' }}>{item?.created_at.substring(0, 16)}</div>
             <div style={{ paddingLeft: '0.25rem' }}>사용</div>
             <Row style={{ marginLeft: 'auto' }}>
               <div>잔액포인트:</div>
@@ -246,7 +245,7 @@ const DialogMemberships = (props) => {
                     사용
                   </MakeButton>
                 </Row>
-                {data?.points && data?.points.map((item, idx) => (
+                {data?.point_history && data?.point_history.map((item, idx) => (
                   <>
                     <PointContetnt
                       item={item}

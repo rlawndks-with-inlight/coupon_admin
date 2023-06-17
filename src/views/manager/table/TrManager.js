@@ -195,7 +195,6 @@ const TrManager = (props) => {
       let api_obj = {
 
       }
-      console.log(couponSelectValue)
       for (var i = 0; i < returnCouponIcon()?.label.length; i++) {
         let req_item = returnCouponIcon()?.label[i];
 

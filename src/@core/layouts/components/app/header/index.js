@@ -168,7 +168,6 @@ const Header = (props) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const handleSearchClose = () => setSearchOpen(false);
   const handleSearchOpen = (is_true) => {
-    console.log(is_true)
     if (is_true) {
       setSearchOpen(true)
     }

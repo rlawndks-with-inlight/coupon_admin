@@ -37,13 +37,11 @@ const Index1 = (props) => {
   const [resignOpen, setResignOpen] = useState(false);
   const [resignCategory, setResignCategory] = useState('point')
   const handleResignClose = (is_true) => {
-    console.log(is_true)
     if (is_true) {
       setResignOpen(false)
     }
   };
   const handleResignOpen = (is_true) => {
-    console.log(is_true)
     if (is_true) {
       setResignOpen(true)
     }

@@ -276,10 +276,10 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       )
     }
     if (column?.type == 'spot_type') {
-      if (item == 0) {
+      if (item == 1) {
         result = '모든 가맹점';
         if (!is_excel) result = <Chip label={result} />
-      } else if (item == 1) {
+      } else if (item == 0) {
         result = '지정 가맹점';
         if (!is_excel) result = <Chip label={result} variant='outlined' />
       } else {

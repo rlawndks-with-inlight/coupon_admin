@@ -10,6 +10,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import $ from 'jquery';
+import _ from 'lodash';
 const BannerContainerPc = styled.div`
 max-width:1200px;
 margin:0 auto 1rem auto;
@@ -148,15 +149,15 @@ const getProfileImg = (theme, item) => {
   }
 }
 const Merchandise = (props) => {
-
-  const { item, theme, router, idx, dnsData, setIsVisible } = props;
-
+  const { item, theme, router, idx, dnsData, setIsVisible, membershipObj } = props;
   const goToLink = (is_true) => {
     if (is_true) {
       setIsVisible(false);
       router.push({
         pathname: `/app/merchandise/detail/${item?.id}`,
-        query: { item: JSON.stringify(item) }
+        query: {
+          item: JSON.stringify(item),
+        }
       })
     }
   }
@@ -201,30 +202,45 @@ const Merchandise = (props) => {
           <Font2 style={{ fontWeight: 'bold' }}>{item?.mcht_name}</Font2>
           <Font4 style={{ color: theme.palette.grey[400] }}>{commarNumber(item?.dist)}km</Font4>
           <Row style={{ margin: '0', alignItems: 'center' }}>
-            {(item?.count?.point || typeof item?.count?.point == 'number') && item?.point_flag ?
+            {item?.point_flag ?
               <>
                 <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.point))}</div>
+                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(
+                  (item?.mbr_type == 1 ?
+                    (_.sumBy(membershipObj?.points?.brands?.[item?.brand_id], function (o) { return o.save_amount; })
+                      -
+                      _.sumBy(membershipObj?.points?.brands?.[item?.brand_id], function (o) { return o.use_amount; })
+                    )
+                    :
+                    (_.sumBy(membershipObj?.points?.mchts?.[item?.id], function (o) { return o.save_amount; })
+                      -
+                      _.sumBy(membershipObj?.points?.mchts?.[item?.id], function (o) { return o.use_amount; })
+                    )
+                  )
+                ))}</div>
               </>
               :
               <>
               </>}
-            {(item?.count?.stamp || typeof item?.count?.stamp == 'number') && item?.stamp_flag ?
+            {item?.stamp_flag ?
               <>
                 <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.stamp))}</div>
+                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(
+                  (item?.mbr_type == 1 ?
+                    _.filter(membershipObj?.stamps?.brands?.[item?.brand_id], { use_at: null }).length
+                    :
+                    _.filter(membershipObj?.stamps?.mchts?.[item?.id], { use_at: null }).length
+                  )
+                ))}</div>
               </>
               :
               <>
               </>}
-            {item?.count?.coupon || typeof item?.count?.coupon == 'number' || true ?
-              <>
-                <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
-                <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(item?.count?.coupon))}</div>
-              </>
-              :
-              <>
-              </>}
+            <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: '1rem' }} />
+            <div style={{ margin: '0 0.5rem 0 0.1rem' }}>{commarNumber(useCountNum(
+              (membershipObj?.coupons?.brands?.[item?.brand_id]?.length ?? 0) +
+              (membershipObj?.coupons?.mchts?.[item?.id]?.length ?? 0)
+            ))}</div>
           </Row>
         </MerchandiseExplain>
         <MerchandiseImgContainer>
@@ -257,8 +273,9 @@ const Home1 = (props) => {
       page,
       dnsData,
       isDataEnd,
-      total,
-      location
+      totalContent,
+      location,
+      membershipObj
     },
     func: {
       onClickMembershipCategory,
@@ -314,17 +331,17 @@ const Home1 = (props) => {
                 <Row style={{ alignItems: 'center', width: '33.33%' }}>
                   <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                   <div>포인트</div>
-                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.point)}</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(totalContent?.point_amt)}</div>
                 </Row>
                 <Row style={{ alignItems: 'center', width: '33.33%' }}>
                   <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                   <div >스탬프</div>
-                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.stamp)}</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(totalContent?.stamp_amt)}</div>
                 </Row>
                 <Row style={{ alignItems: 'center', width: '33.33%' }}>
                   <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.2rem' }} />
                   <div>쿠폰</div>
-                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(total?.coupon)}</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(totalContent?.coupon_amt)}</div>
                 </Row>
               </Row>
               <Row style={{ justifyContent: 'space-between', marginTop: '0.5rem' }}>
@@ -343,6 +360,7 @@ const Home1 = (props) => {
                     router={router}
                     dnsData={dnsData}
                     setIsVisible={setIsVisible}
+                    membershipObj={membershipObj}
                   />
                 })}
               </MerchandiseContainer>

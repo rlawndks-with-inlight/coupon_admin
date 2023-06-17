@@ -17,7 +17,7 @@ import { styled } from '@mui/material/styles'
 import { useTheme } from '@emotion/react'
 import { useSettings } from 'src/@core/hooks/useSettings'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
-import { LOCALSTORAGE } from 'src/data/data'
+import { LOCALSTORAGE, zRedirectType } from 'src/data/data'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -59,15 +59,16 @@ const ManagerBrandEdit = (props) => {
     phone_num: '',
     fax_num: '',
     mbr_type: 0,
+    redirect_type: 0,
     guide_type: 0,
     theme_css: {
       main_color: '#7367f0',
     },
     options: {
       app: {
-        is_use_coupon: 0,
-        is_use_gift: 0,
-        is_use_order: 0,
+        is_use_coupon: 0,//쿠폰 탭  사용할지
+        is_use_gift: 0,//선물하기 탭 사용할지
+        is_use_order: 0,//주문 탭 사용할지
         dark_background_color: '#000',//다크모드 배경색
         dark_box_color: '#000',// 다크모드 컨텐츠 색
         dark_font_color: '#fff',// 다크모드 폰트 색
@@ -141,6 +142,7 @@ const ManagerBrandEdit = (props) => {
     local_dns_data = JSON.parse(local_dns_data);
     local_dns_data['theme_css'] = values['theme_css'];
     local_dns_data['options'] = values['options'];
+    local_dns_data['redirect_type'] = values['redirect_type'];
     setLocalStorage(LOCALSTORAGE.DNS_DATA, local_dns_data);
     editItem(obj);
   }
@@ -240,23 +242,7 @@ const ManagerBrandEdit = (props) => {
                         <Grid item xs={12}>
                           <TextField fullWidth label='DNS 명' placeholder='DNS 명을 입력해 주세요.' className='dns' onChange={handleChangeValue('dns')} defaultValue={values?.dns} value={values?.dns} />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label'>기본 경로 선택</InputLabel>
-                            <Select
-                              label='기본 경로 선택'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='mbr_type'
-                              onChange={handleChangeValue('mbr_type')}
-                              defaultValue={values?.mbr_type ?? 0}
-                              value={values?.mbr_type}
-                            >
-                              <MenuItem value='0'>유입된 가맹점에서만 사용</MenuItem>
-                              <MenuItem value='1'>모든 가맹점에서 사용</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </Grid> */}
+
                         <Grid item xs={12}>
                           <TextField fullWidth label='대표자 명' placeholder='대표자 명을 입력해 주세요.' className='ceo_nm' onChange={handleChangeValue('ceo_nm')} defaultValue={values?.ceo_nm} value={values?.ceo_nm} />
                         </Grid>
@@ -302,6 +288,24 @@ const ManagerBrandEdit = (props) => {
                             >
                               <MenuItem value='0'>유입된 가맹점에서만 사용</MenuItem>
                               <MenuItem value='1'>모든 가맹점에서 사용</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label'>기본 uri 이동 경로</InputLabel>
+                            <Select
+                              label='기본 uri 이동 경로'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='redirect_type'
+                              onChange={handleChangeValue('redirect_type')}
+                              defaultValue={values?.redirect_type ?? 0}
+                              value={values?.redirect_type}
+                            >
+                              {zRedirectType.map((item, idx) => {
+                                return <MenuItem value={item.val}>{item.name}</MenuItem>
+                              })}
                             </Select>
                           </FormControl>
                         </Grid>

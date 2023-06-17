@@ -9,6 +9,12 @@ import { getLocalStorage } from "src/@core/utils/local-storage"
 import { axiosIns } from "src/@fake-db/backend"
 import { LOCALSTORAGE } from "src/data/data"
 import Items from "src/views/components/shopping-mall/Items"
+import ItemList1 from "src/views/shop/item/list/demo-1"
+
+const getDemo = (num, common) => {
+  if (num == 1)
+    return <ItemList1 {...common} />
+}
 
 const List = () => {
 

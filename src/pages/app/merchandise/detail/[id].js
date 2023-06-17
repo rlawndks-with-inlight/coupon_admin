@@ -8,7 +8,7 @@ import { useTheme } from "@emotion/react"
 import Merchandise1 from "src/views/app/merchandise/detail/demo-1"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
-
+import _ from 'lodash'
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -24,8 +24,10 @@ const Merchandise = (props) => {
   const [history, setHistory] = useState({
     stamps: [],
     points: [],
+    point_history: [],
     coupons: [],
   })
+  const [couponHistory, setCouponHistory] = useState([]);
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
     setLoading(true);
@@ -33,53 +35,58 @@ const Merchandise = (props) => {
     dns_data = JSON.parse(dns_data);
     dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     setDnsData(dns_data)
-    setMcht(JSON.parse(router.query?.item))
-    getMerchandiseHistory(dns_data, JSON.parse(router.query?.item))
+    let mcht = JSON.parse(router.query?.item);
+    setMcht(mcht)
+    let membership_obj = getLocalStorage(LOCALSTORAGE.USER_APP_MEMBERSHIP_OBJ);
+    if (typeof membership_obj == 'string') {
+      membership_obj = JSON.parse(membership_obj)
+    }
+    let z_coupon = [];
+    let z_stamp = [];
+    let z_point = [];
+    if (mcht?.mbr_type == 0) {//특정가맹점
+      z_point = membership_obj?.points?.mchts[mcht?.id] ?? []
+      z_stamp = membership_obj?.stamps?.mchts[mcht?.id] ?? []
+    } else if (mcht?.mbr_type == 1) {//모든 가맹점
+      z_point = membership_obj?.points?.brands[mcht?.brand_id] ?? []
+      z_stamp = membership_obj?.stamps?.brands[mcht?.brand_id] ?? []
+    }
+    z_coupon = [...membership_obj?.coupons?.brands[mcht?.brand_id] ?? [], ...membership_obj?.coupons?.mchts[mcht?.id] ?? []]
+
+
+    let point_history = [...z_point];
+    let point_results = [];
+    let sum_point = 0;
+    for (var i = point_history.length - 1; i >= 0; i--) {//1->적립, -1->사용
+      if (point_history[i]?.save_amount > 0) {
+        sum_point += point_history[i]?.save_amount;
+        point_results.push({
+          ...point_history[i],
+          sum_point: sum_point,
+          type: 1,
+          point: point_history[i]?.save_amount
+        })
+      }
+      if (point_history[i]?.use_amount > 0) {
+        sum_point -= point_history[i]?.use_amount;
+        point_results.push({
+          ...point_history[i],
+          sum_point: sum_point,
+          type: -1,
+          point: point_history[i]?.use_amount
+        })
+      }
+    }
+    point_results = point_results.reverse();
+    setHistory({
+      stamps: z_stamp,
+      points: z_point,
+      coupons: z_coupon,
+      point_history: point_results
+    });
+    setLoading(false);
   }, [])
 
-  const getMerchandiseHistory = async (dns_data, mcht) => {
-    try {
-      let obj = {
-        mcht_id: router.query?.id,
-        brand_id: dns_data?.id,
-        mbr_type: mcht?.mbr_type,
-        point_flag: (mcht?.point_flag == 1 && mcht?.count?.point > 0) ? 1 : 0,
-        stamp_flag: (mcht?.stamp_flag == 1 && mcht?.count?.stamp > 0) ? 1 : 0,
-        coupon_flag: mcht?.count?.coupon > 0 ? 1 : 0,
-      }
-      let query = objToQuery(obj);
-      const response = await axiosIns().get(`/api/v1/app/membership${query}`);
-      setLoading(false);
-      let point_history = [...response?.data?.points ?? []];
-      let point_results = [];
-      let sum_point = 0;
-      for (var i = point_history.length - 1; i >= 0; i--) {//1->적립, -1->사용
-        if (point_history[i]?.save_amount > 0) {
-          sum_point += point_history[i]?.save_amount;
-          point_results.push({
-            ...point_history[i],
-            sum_point: sum_point,
-            type: 1,
-            point: point_history[i]?.save_amount
-          })
-        }
-        if (point_history[i]?.use_amount > 0) {
-          sum_point -= point_history[i]?.use_amount;
-          point_results.push({
-            ...point_history[i],
-            sum_point: sum_point,
-            type: -1,
-            point: point_history[i]?.use_amount
-          })
-        }
-      }
-      point_results = point_results.reverse();
-      let result_data = Object.assign(history, Object.assign(response?.data, { points: point_results }))
-      setHistory(result_data)
-    } catch (err) {
-      console.log(err)
-    }
-  }
   return (
     <>
       {loading ?
@@ -96,7 +103,8 @@ const Merchandise = (props) => {
           dnsData,
           theme,
           history,
-          loading
+          loading,
+          couponHistory
         },
         func: {
           router,

@@ -1,7 +1,4 @@
 import ShoppingMallLayout from "src/@core/layouts/ShoppingMallLayout"
-import { ContentWrapper, Wrapper } from "src/@core/layouts/components/shopping-mall/style-component"
-import { useKeenSlider } from 'keen-slider/react'
-import { Box } from "@mui/material"
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import { processCatch } from "src/@core/utils/function"
@@ -9,11 +6,14 @@ import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import { axiosIns } from "src/@fake-db/backend"
 import { useSettings } from "src/@core/hooks/useSettings"
-import Slider from 'react-slick'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Items from "src/views/components/shopping-mall/Items"
 import FallbackSpinner from "src/@core/components/spinner"
+import Home1 from "src/views/shop/home/demo-1"
+
+const getDemo = (num, common) => {
+  if (num == 1)
+    return <Home1 {...common} />
+}
+
 const Home = () => {
   const {
     settings: { direction }
@@ -49,41 +49,26 @@ const Home = () => {
       }
     }
   }
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    autoplay: true,
-    autoplaySpeed: 2500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+
   return (
     <>
-      <Wrapper>
-        {loading ?
-          <>
-            <FallbackSpinner sx={{ height: '300px' }} />
-          </>
-          :
-          <>
-            <Slider {...settings}>
-              {ads.length > 0 && ads.map((item, idx) => (
-                <>
-                  <img
-                    effect="blur"
-                    className="banner-img"
-                    src={item?.ad_img} alt={item?.ad_name}
-                  />
-                </>
-              ))}
-            </Slider>
-            <ContentWrapper>
-              <Items items={items} />
-            </ContentWrapper>
-          </>}
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '85vh' }} second={0} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: {
+              ads,
+              items
+            },
+            func: {
 
-      </Wrapper>
+            }
+          })}
+        </>}
+
     </>
   )
 }

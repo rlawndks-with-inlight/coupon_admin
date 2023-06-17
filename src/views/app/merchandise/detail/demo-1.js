@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FallbackSpinner from 'src/@core/components/spinner';
 
 import DialogMemberships from 'src/@core/layouts/components/app/DialogMemberships';
@@ -39,15 +39,18 @@ const Merchandise1 = (props) => {
       dnsData,
       theme,
       history,
-      loading
+      loading,
     },
     func: {
       router,
     } } = props;
-
   const [mapLoading, setMapLoading] = useState(true);
   const [membershipOpen, setMembershipOpen] = useState(false);
   const [membershipCategory, setMembershipCategory] = useState('point')
+  useEffect(() => {
+
+
+  }, [])
   const handleMembershipClose = () => setMembershipOpen(false);
   const handleMembershipOpen = () => {
     setMembershipOpen(true)
@@ -87,7 +90,12 @@ const Merchandise1 = (props) => {
                     <Row style={{ alignItems: 'center', width: '33.33%' }}>
                       <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                       <div>포인트</div>
-                      <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.point)}</div>
+                      <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(
+                        (_.sumBy(history?.points, function (o) { return o.save_amount; })
+                          -
+                          _.sumBy(history?.points, function (o) { return o.use_amount; })
+                        )
+                      )}</div>
                     </Row>
                   </>
                   :
@@ -98,7 +106,9 @@ const Merchandise1 = (props) => {
                     <Row style={{ alignItems: 'center', width: '33.33%' }}>
                       <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                       <div >스탬프</div>
-                      <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.stamp)}</div>
+                      <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(
+                        _.filter(history?.stamps, { use_at: null }).length
+                      )}</div>
                     </Row>
                   </>
                   :
@@ -107,7 +117,7 @@ const Merchandise1 = (props) => {
                 <Row style={{ alignItems: 'center', width: '33.33%' }}>
                   <Icon icon='mdi:coupon' style={{ color: themeObj.red, marginRight: '0.25rem', fontSize: '1.6rem' }} />
                   <div>쿠폰</div>
-                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(mcht?.count?.coupon)}</div>
+                  <div style={{ margin: '0 0.5rem 0 auto' }}>{commarNumber(history?.coupons?.length)}</div>
                 </Row>
               </Row>
               <Row style={{ justifyContent: 'space-between', borderBottom: `1px solid ${themeObj.grey[500]}`, paddingBottom: '1rem', alignItems: 'center' }}>

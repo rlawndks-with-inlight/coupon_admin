@@ -7,7 +7,7 @@ import { useRouter } from "next/router"
 import FallbackSpinner from "src/@core/components/spinner"
 import { useTheme } from "@emotion/react"
 import { useRef } from "react"
-import { getLocalStorage } from "src/@core/utils/local-storage"
+import { getLocalStorage, setLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import { onPostWebview } from "src/@core/utils/webview-connect"
 
@@ -23,13 +23,15 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
-  const [total, setTotal] = useState({})
+  const [totalContent, setTotalContent] = useState({})
   const [mchts, setMchts] = useState([]);
   const [page, setPage] = useState(1);
   const [pageStack, setPageStack] = useState([]);
   const [dnsData, setDnsData] = useState({});
   const [isDataEnd, setIsDataEnd] = useState(false);
   const [location, setLocation] = useState({});
+  const [mchtCoupons, setMcthCoupons] = useState({});
+  const [membershipObj, setMembershipObj] = useState({});
   const PAGE_SIZE = 10;
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
@@ -40,7 +42,7 @@ const Home = () => {
       dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];
     }
     setDnsData(dns_data)
-    getTotalCount(dns_data)
+    getTotalContent(dns_data)
     getLocate(dns_data)
     const onMessageHandler = async (e) => {
       const event = JSON.parse(e.data)
@@ -61,11 +63,53 @@ const Home = () => {
       receiver.removeEventListener('message', onMessageHandler)
     }
   }, [])
-  const getTotalCount = async (dns_data) => {
+  const getTotalContent = async (dns_data) => {
     try {
       setLoading(true);
-      const response = await axiosIns().get(`/api/v1/app/total?brand_id=${dns_data?.id}`);
-      setTotal(response?.data);
+      const response = await axiosIns().get(`/api/v1/app/total-content?brand_id=${dns_data?.id}`);
+
+      //coupon 계산
+
+
+      let z_membership_category = ['coupons', 'points', 'stamps']
+      let membership_obj = {
+      }
+      for (var i = 0; i < z_membership_category.length; i++) {
+        let membership = z_membership_category[i];
+        membership_obj[membership] = {
+          brands: {
+          },
+          mchts: {
+          }
+        };
+        let z_all_spot = response?.data[membership]?.all_spot;
+        let z_spec_spot = response?.data[membership]?.spec_spot;
+        for (var j = 0; j < z_all_spot.length; j++) {
+          if (!membership_obj[membership].brands[z_all_spot[j]?.brand_id]) {
+            membership_obj[membership].brands[z_all_spot[j]?.brand_id] = [];
+          }
+          membership_obj[membership].brands[z_all_spot[j]?.brand_id].push(z_all_spot[j]);
+        }
+        for (var j = 0; j < z_spec_spot.length; j++) {
+          if (z_spec_spot[j]?.mcht_id >= 0) {
+            if (!membership_obj[membership].mchts[z_spec_spot[j]?.mcht_id]) {
+              membership_obj[membership].mchts[z_spec_spot[j]?.mcht_id] = [];
+            }
+            membership_obj[membership].mchts[z_spec_spot[j]?.mcht_id].push(z_spec_spot[j]);
+          } else {
+            let use_mcths = z_spec_spot[j]?.mchts ?? [];
+            for (var k = 0; k < use_mcths.length; k++) {
+              if (!membership_obj[membership].mchts[use_mcths[k]?.id]) {
+                membership_obj[membership].mchts[use_mcths[k]?.id] = [];
+              }
+              membership_obj[membership].mchts[use_mcths[k]?.id].push(z_spec_spot[j]);
+            }
+          }
+        }
+      }
+      setMembershipObj(membership_obj);
+      setLocalStorage(LOCALSTORAGE.USER_APP_MEMBERSHIP_OBJ, JSON.stringify(membership_obj));
+      setTotalContent(response?.data);
     } catch (err) {
       console.log(err)
     }
@@ -99,10 +143,11 @@ const Home = () => {
       const response = await axiosIns().get(`/api/v1/app/home?latitude=${location?.latitude}&longitude=${location?.longitude}&radius=100&page=${pag}&page_size=${PAGE_SIZE}&brand_id=${dnsData?.id || dns_data?.id}`);
       if (is_first) {
         setData(response?.data);
-        setMchts(response?.data?.mchts?.content);
+        setMchts(response?.data?.content);
       } else {
-        setMchts(prePost => [...prePost, ...response?.data?.mchts?.content]);
+        setMchts(prePost => [...prePost, ...response?.data?.content]);
       }
+
       setLoading(false);
     } catch (err) {
       let push_lick = await processCatch(err);
@@ -135,8 +180,9 @@ const Home = () => {
               page: page,
               dnsData: dnsData,
               isDataEnd: isDataEnd,
-              total, total,
-              location: location
+              totalContent, totalContent,
+              location: location,
+              membershipObj
             },
             func: {
               onClickMembershipCategory,
