@@ -24,6 +24,8 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { useRouter } from 'next/router'
 import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 import { toast } from 'react-hot-toast'
+import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 const Excel = (props) => {
   const { open, setOpen, handleClickOpen, handleClose, data, saveUploadExcel } = props;
 
@@ -33,10 +35,14 @@ const Excel = (props) => {
   const [count, setCount] = useState(0);
   const [isAbleAdd, setIsAbleAdd] = useState(false);
   const [rowObj, setRowObj] = useState({
-
   })
   const [errorObj, setErrorObj] = useState({});
+  const [userData, setUserData] = useState({});
   useEffect(() => {
+    let user_data = getLocalStorage(LOCALSTORAGE.USER_DATA);
+    user_data = JSON.parse(user_data);
+    setUserData(user_data);
+
     let obj = {};
     for (var i = 0; i < Object.keys(excelUploadTableObj).length; i++) {
       obj = { ...obj, [Object.keys(excelUploadTableObj)[i]]: [] };
@@ -165,6 +171,12 @@ const Excel = (props) => {
   const onEditConfirmOpen = (obj) => {
     setEditConfirmOpen(true);
   }
+  const isShowTab = (item) => {
+    if (userData?.level == 45 && item == 'points') {
+      return false;
+    }
+    return true;
+  }
   return (
     <>
       <DialogConfirm
@@ -197,7 +209,9 @@ const Excel = (props) => {
           <TabContext value={tabValue}>
             <TabList centered onChange={handleChangeTabChange} aria-label='simple tabs example' variant='fullWidth'>
               {excelUploadTableObj && Object.keys(excelUploadTableObj).map((item) => {
-                return <Tab value={item} label={excelUploadTableObj[item]?.breadcrumb} />
+                if (isShowTab(item)) {
+                  return <Tab value={item} label={excelUploadTableObj[item]?.breadcrumb} />
+                }
               })}
             </TabList>
             <Box sx={{ padding: '24px 24px 0 24px', display: 'flex', flexWrap: 'wrap' }}>

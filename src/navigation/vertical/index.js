@@ -29,7 +29,7 @@ const project_navigation = [
         title: '장비관리',
         menu_depth: 1,
         path: '/manager/devices',
-        level: 40
+        level: 10
       },
     ]
   },
@@ -63,13 +63,13 @@ const project_navigation = [
         title: '쿠폰모델관리',
         menu_depth: 1,
         path: '/manager/coupon-models',
-        level: 10
+        level: 35
       },
       {
         title: '쿠폰관리',
         menu_depth: 1,
         path: '/manager/coupons',
-        level: 10
+        level: 35
       },
       {
         title: '쿠폰사용내역',

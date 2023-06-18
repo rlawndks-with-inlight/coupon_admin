@@ -197,9 +197,10 @@ export const MakeInput = (props) => {
   const {
     id, label, size = 'size2', type, className, style, dnsData, placeholder,
     onFocus, onBlur, onChange, endAdornment,
-    endButtonProps
+    endButtonProps,
+    common
   } = props;
-
+  console.log(common)
   const theme = useTheme();
 
   const size_style_obj = {

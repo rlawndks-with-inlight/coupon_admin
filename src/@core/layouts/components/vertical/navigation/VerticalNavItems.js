@@ -48,13 +48,34 @@ const VerticalNavItems = props => {
         return false;
       }
     }
+    if (item?.table == "products") {
+      if (userData?.level == 10) {
+        return false;
+      }
+    }
     if (userData?.level == 45) {
-      let z_can_show_table = ['users', 'merchandises', 'users', 'brands'];
-      let z_can_show_path = ['/manager/merchandises', '/manager/devices', '/manager/users', '/manager/points']
+      let z_can_show_table = ['users', 'merchandises', 'users', 'brands', 'coupons', 'uploads', 'products'];
+      let z_can_show_path = [
+        '/manager/merchandises',
+        '/manager/devices',
+        '/manager/users',
+        '/manager/points',
+        '/manager/coupon-models',
+        '/manager/coupons',
+        '/manager/coupons-histories',
+        '/manager/categories',
+        '/manager/products',
+      ]
       if (z_can_show_table.includes(item?.table) || z_can_show_path.includes(item?.path)) {
         return true;
       } else {
         return false;
+      }
+    }
+
+    if (userData?.level == 10) {
+      if (item?.table == "coupons") {
+        return true;
       }
     }
     if (userData?.level >= item?.level) {

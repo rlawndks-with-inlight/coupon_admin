@@ -26,6 +26,15 @@ import draftToHtml from "draftjs-to-html";
 import MuiTabList from '@mui/lab/TabList'
 import { styled } from '@mui/material/styles'
 
+import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic'
+import { react_quill_data } from 'src/data/manager-data'
+import { base64toFile } from 'src/@core/utils/function'
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
+
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
   '& .MuiTabs-indicator': {
@@ -62,9 +71,8 @@ const ManagerProductEdit = (props) => {
     origin_nm: '',
     mfg_nm: '',
     model_nm: '',
-    content: EditorState.createEmpty(),
+    content: '',
   }
-  const [content, setContent] = useState(EditorState.createEmpty())
   const [values, setValues] = useState(defaultObj);
   const [options, setOptions] = useState([]);
 
@@ -133,13 +141,8 @@ const ManagerProductEdit = (props) => {
   }
   const onEditItem = () => {
     let img_key_list = ['product_img'];
-    let editor_key_list = ['content'];
-
     let obj = { ...values };
 
-    for (var i = 0; i < editor_key_list.length; i++) {
-      obj[editor_key_list[i]] = convertToRaw(obj[editor_key_list[i]].getCurrentContent())
-    }
     for (var i = 0; i < img_key_list.length; i++) {
       if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
         delete obj[img_key_list[i]];
@@ -147,8 +150,6 @@ const ManagerProductEdit = (props) => {
         obj[img_key_list[i]] = obj[img_key_list[i]][0];
       }
     }
-    return;
-
     editItem(obj);
   }
   return (
@@ -235,23 +236,45 @@ const ManagerProductEdit = (props) => {
                       <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>상품정보</InputLabel>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
-                          <EditorWrapper>
-                            <ReactDraftWysiwyg
-                              editorClassName='editor-edit'
-                              editorState={values.content}
-                              onEditorStateChange={data => {
-                                setValues({ ...values, ['content']: data })
-                              }}
-                            />
-                          </EditorWrapper>
-
+                          <ReactQuill
+                            theme={'snow'}
+                            id={'content'}
+                            placeholder={''}
+                            value={values.content}
+                            modules={react_quill_data.modules}
+                            formats={react_quill_data.formats}
+                            onChange={async (e) => {
+                              console.log(e)
+                              let note = e;
+                              if (e.includes('<img src="') && e.includes('base64,')) {
+                                let base64_list = e.split('<img src="');
+                                for (var i = 0; i < base64_list.length; i++) {
+                                  if (base64_list[i].includes('base64,')) {
+                                    let img_src = base64_list[i];
+                                    img_src = await img_src.split(`"></p>`);
+                                    let base64 = img_src[0];
+                                    img_src = await base64toFile(img_src[0], 'note.png');
+                                    console.log(img_src)
+                                    let formData = new FormData();
+                                    formData.append('file', img_src);
+                                    let config = {
+                                      headers: {
+                                        'Content-Type': "multipart/form-data",
+                                      }
+                                    };
+                                    const response = await axiosIns().post('/api/v1/manager/posts/upload', formData, config);
+                                    note = await note.replace(base64, response?.data?.file)
+                                  }
+                                }
+                              }
+                              setValues({ ...values, ['content']: note })
+                            }} />
                         </Grid>
                       </Grid>
                     </CardContent>
                   </Card>
                 </Grid>
               </Grid>
-
             </TabPanel>
             <TabPanel sx={{ p: 0 }} value='tab-2'>
               <Card>
@@ -287,8 +310,6 @@ const ManagerProductEdit = (props) => {
                         </Grid>
                       </>
                     ))}
-
-
                   </Grid>
                 </CardContent>
               </Card>

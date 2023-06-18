@@ -14,6 +14,7 @@ const getDemo = (num, common) => {
   if (num == 1)
     return <Merchandise1 {...common} />
 }
+
 const Merchandise = (props) => {
   const router = useRouter();
   const theme = useTheme();

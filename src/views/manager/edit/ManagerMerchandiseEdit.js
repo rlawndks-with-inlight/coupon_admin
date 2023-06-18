@@ -48,6 +48,9 @@ const ManagerMerchandiseEdit = (props) => {
   const [bDt, setBDt] = useState(new Date())
   const [mchtList, setMchtList] = useState([]);
   const [userList, setUserList] = useState([]);
+
+  const [brandList, setBrandList] = useState([]);
+
   const defaultObj = {
     profile_img: undefined,
     user_name: '',
@@ -62,6 +65,7 @@ const ManagerMerchandiseEdit = (props) => {
     point_flag: 0,
     stamp_save_count: 0,
     point_rate: 0,
+    brand_id: JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.id
   }
   const [values, setValues] = useState(defaultObj)
   useEffect(() => {
@@ -70,6 +74,12 @@ const ManagerMerchandiseEdit = (props) => {
 
   const settingPage = async () => {
     try {
+
+      if (window.location.host == process.env.MAIN_FRONT_URL || process.env.IS_TEST) {
+        const response = await axiosIns().get(`/api/v1/manager/brands?page=1&page_size=100000`);
+        setBrandList(response?.data?.content)
+      }
+
       const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       let user_list = [...response?.data?.mcht_id ?? []];
       for (var i = 0; i < user_list.length; i++) {
@@ -178,6 +188,31 @@ const ManagerMerchandiseEdit = (props) => {
             <CardContent>
               <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
               <Grid container spacing={5}>
+                {window.location.host == process.env.MAIN_FRONT_URL || process.env.IS_TEST ?
+                  <>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>브랜드선택</InputLabel>
+                        <Select
+                          label='브랜드선택'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='brand_id'
+                          onChange={handleChangeValue('brand_id')}
+                          defaultValue={values?.brand_id}
+                          value={values?.brand_id}
+                        >
+                          {brandList && brandList.map((item, idx) => {
+                            return <MenuItem value={item?.id}>{item?.name}</MenuItem>
+                          })}
+
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </>
+                  :
+                  <>
+                  </>}
                 <Grid item xs={12}>
                   <TextField fullWidth label='가맹점 아이디' placeholder='가맹점 아이디를 입력해 주세요.' className='user_name' inputProps={{
                     readOnly: (editCategory == 'edit')

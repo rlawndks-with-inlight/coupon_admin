@@ -48,5 +48,6 @@ module.exports = {
     NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
     BACK_URL: process.env.BACK_URL,
     NOTI_URL: process.env.NOTI_URL,
+    IS_TEST: process.env.IS_TEST,
   }
 }

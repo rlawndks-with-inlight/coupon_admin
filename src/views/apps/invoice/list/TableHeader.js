@@ -191,7 +191,7 @@ const TableHeader = props => {
       }
     }
     if (param_table == 'points') {
-      if (user_data?.level == 45 || user_data?.level < objDataGridColumns[param_table]?.is_see_add_condition) {
+      if ((user_data?.level == 45 || user_data?.level < objDataGridColumns[param_table]?.is_see_add_condition) && user_data?.level != 10) {
         return false;
       } else {
         return true;

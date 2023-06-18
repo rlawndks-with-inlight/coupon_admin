@@ -34,7 +34,7 @@ import DialogLoading from 'src/@core/layouts/components/app/DialogLoading'
 import { useMediaQuery } from '@mui/material'
 import { Icon } from '@iconify/react'
 import { useSettings } from 'src/@core/hooks/useSettings'
-
+import $ from 'jquery'
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '25rem' }
@@ -278,7 +278,17 @@ const Login = ({ dns_data }) => {
     login_type: 0,
   });
   const handleLoginClose = () => setLoginOpen(false);
-  const handleLoginOpen = () => setLoginOpen(true);
+  const handleLoginOpen = () => {
+    setLoginOpen(true)
+    if (!$('#phone_num').val()) {
+      $('#phone_num').focus();
+      return;
+    }
+    if (!$('#phone_check').val()) {
+      $('#phone_check').focus();
+      return;
+    }
+  };
   const onClickKakaoButton = () => {
     onPostWebview('kakao_login');
   }

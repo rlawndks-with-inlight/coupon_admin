@@ -43,6 +43,11 @@ const isShowCell = (data, func) => {
         result_obj['show_flag'] = false;
       }
     }
+    if (user_data?.level == 45) {
+      if (column == 'on_connect_user_coupon' || column == 'on_use_coupon' || column == 'on_use_coupon_cxl') {
+        result_obj['show_flag'] = false;
+      }
+    }
   }
   if (param_table == 'coupon-models') {
     if (user_data?.level < 50) {
@@ -50,9 +55,12 @@ const isShowCell = (data, func) => {
         result_obj['show_flag'] = false;
       }
     }
+    if (user_data?.level == 45) {
+
+    }
   }
   if (param_table == 'brands') {
-    if (user_data?.level < 40) {
+    if (user_data?.level < 40 || user_data?.level == 45) {
       if (['edit'].includes(column)) {
         result_obj['show_flag'] = false;
       }
@@ -65,12 +73,18 @@ const isShowCell = (data, func) => {
       }
     }
   }
+  if (param_table == 'users') {
+    if (user_data?.level < 35) {
+      if (column == 'edit') {
+        result_obj['show_flag'] = false;
+      }
+    }
+  }
   // const {} = func;
   return result_obj;
 }
 const isShowDeleteButton = (param_table, user_data) => {
   let ans = true;
-
 }
 const settingColumnName = (col_, user_data, param_table) => {
   let col = col_;
@@ -105,7 +119,6 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
       size--;
     }
   }
-
   return size;
 }
 const TableManager = (props) => {
@@ -132,7 +145,6 @@ const TableManager = (props) => {
       />
     )
   }, []);
-
 
   return (
     <TableContainer className={`table-container${theme.palette.mode == 'dark' ? '-dark' : ''}`} component={Paper}>

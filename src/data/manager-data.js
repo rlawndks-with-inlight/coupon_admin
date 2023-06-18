@@ -339,7 +339,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'devices',
     breadcrumb: '장비',
     is_add: true,
-    is_see_add_condition: 40,
+    is_see_add_condition: 10,
     search_placeholder: '맥주소, 가맹점상호 검색',
     columns: [
       managerListFormat('장비ID', 'id', 'number', ''),
@@ -423,3 +423,41 @@ export const excelUploadTableObj = {
   },
 }
 
+export const react_quill_data = {
+  modules: {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
+      ['link', 'image', 'video'],
+      ['clean'],
+    ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false,
+    },
+  },
+  formats: [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'video',
+    'color'
+  ]
+}

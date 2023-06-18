@@ -87,14 +87,14 @@ const DialogLoginForm = (props) => {
     is_exist: false,
   })
   const [isSendSms, setIsSendSms] = useState(false);
-  const [isCheckPhone, setIsCheckPhone] = useState(false);
+  const [isCheckPhone, setIsCheckPhone] = useState(0);
 
   const isMobile = useMediaQuery('(max-width: 350px)')
 
   useEffect(() => {
     if (open) {
       setIsSendSms(false)
-      setIsCheckPhone(false)
+      setIsCheckPhone(0)
     }
   }, [open])
   useEffect(() => {
@@ -123,7 +123,8 @@ const DialogLoginForm = (props) => {
       setValues({ ...values, ['is_exist']: response?.data?.is_exist })
       $('.rand_num').focus();
       toast.success("인증번호가 성공적으로 전송 되었습니다.");
-      setIsCheckPhone(false);
+      $('#phone_check').focus();
+      setIsCheckPhone(0);
       setTimeLeft(180);
     } catch (err) {
       console.log(err)
@@ -131,6 +132,10 @@ const DialogLoginForm = (props) => {
     }
   }
   const requestVerify = async () => {
+    if (isCheckPhone > 0) {
+      return;
+    }
+    setIsCheckPhone(1)
     try {
       const response = await axiosIns().post(`/api/v1/app/auth/verify`, {
         rand_num: values.rand_num,
@@ -146,8 +151,9 @@ const DialogLoginForm = (props) => {
         sameSite: process.env.COOKIE_SAME_SITE,
       });
       toast.success("인증번호가 일치합니다.");
-      setIsCheckPhone(true)
+      setIsCheckPhone(2)
     } catch (err) {
+      setIsCheckPhone(0)
       toast.error(err?.response?.data?.message);
     }
   }
@@ -157,7 +163,7 @@ const DialogLoginForm = (props) => {
       toast.error('휴대폰 인증번호를 발송해 주세요.');
       return;
     }
-    if (!isCheckPhone) {
+    if (isCheckPhone != 2) {
       toast.error('휴대폰 인증을 완료해 주세요.');
       return;
     }
@@ -286,14 +292,14 @@ const DialogLoginForm = (props) => {
                 }}
                 onChange={handleChange('rand_num')}
                 endButtonProps={{
-                  text: isCheckPhone ? '확인 완료' : '인증번호 확인',
+                  text: isCheckPhone == 2 ? '확인 완료' : '인증번호 확인',
                   onClick: requestVerify,
                   style: {
-                    background: `${isCheckPhone ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400])}`,
+                    background: `${isCheckPhone == 2 ? themeObj.green : (focusItem == 'rand_num' ? dnsData?.theme_css?.main_color : themeObj.grey[400])}`,
                   }
                 }}
               />
-              {isSendSms && !isCheckPhone ?
+              {isSendSms && !isCheckPhone == 2 ?
                 <>
                   <Countdown
                     seconds={180}
@@ -332,7 +338,7 @@ const DialogLoginForm = (props) => {
               height: '50px',
               width: '90%',
               maxWidth: '500px',
-              background: `${isCheckPhone ? dnsData?.theme_css?.main_color : ''}`,
+              background: `${isCheckPhone == 2 ? dnsData?.theme_css?.main_color : ''}`,
             }} >
             로그인
           </Button>

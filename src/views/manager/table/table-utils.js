@@ -1,32 +1,13 @@
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import { objDataGridColumns } from 'src/data/manager-data'
 import { commarNumber, getUserLevelByNumber, processCatch } from 'src/@core/utils/function'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import { toast } from "react-hot-toast";
 import CustomChip from 'src/@core/components/mui/chip'
-
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
-import { useRouter } from 'next/router'
-import { axiosIns } from 'src/@fake-db/backend'
-import { useEffect, useState } from 'react'
-import { useTheme } from '@emotion/react'
 import Avatar from '@mui/material/Avatar'
-import DialogForm from 'src/views/components/dialogs/DialogForm'
-import $ from 'jquery'
-import DialogConfirm from 'src/views/components/dialogs/DialogConfirm'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import DialogCouponModel from 'src/views/components/dialogs/DialogCouponModel'
 import { Chip } from '@mui/material'
-import DialogImage from 'src/views/components/dialogs/DialogImage'
-import Barcode from 'react-barcode'
+
 export const getItemByType = (data, column, table, is_excel, user_data, func) => {
   try {
     let result = "---";
@@ -207,15 +188,21 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
     if (column?.type == 'edit') {
       result = (
         <>
-          <Tooltip title='수정'>
-            <IconButton
-              size='small'
-              sx={{ color: 'text.secondary' }}
-              onClick={() => { goTo(`/manager/${table}/edit/${data?.id}`) }}
-            >
-              <Icon icon='tabler:edit' />
-            </IconButton>
-          </Tooltip>
+          {isShowEditButton(table, user_data) ?
+            <>
+              <Tooltip title='수정'>
+                <IconButton
+                  size='small'
+                  sx={{ color: 'text.secondary' }}
+                  onClick={() => { goTo(`/manager/${table}/edit/${data?.id}`) }}
+                >
+                  <Icon icon='tabler:edit' />
+                </IconButton>
+              </Tooltip>
+            </>
+            :
+            <>
+            </>}
           {isShowDeleteButton(table, user_data) ?
             <>
               <Tooltip title='삭제'>
@@ -400,5 +387,9 @@ export const isShowDeleteButton = (param_table, user_data) => {
   if (param_table == 'merchandises' && user_data?.level < 11) {
     return false;
   }
+  return true;
+}
+export const isShowEditButton = (param_table, user_data) => {
+
   return true;
 }
