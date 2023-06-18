@@ -138,6 +138,7 @@ const BottomMenu = (props) => {
                 {isShowMenu(dnsData, item) ?
                   <>
                     <OneMenuContainer
+                      href='javascript:void(0);'
                       onClick={() => router.push(item.link)}
                       style={{
                         color: `${getColor(menuIndex == idx, theme.palette.mode)}`
