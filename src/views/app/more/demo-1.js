@@ -58,7 +58,8 @@ const More1 = (props) => {
                 <>
                   {isShowMenu(dnsData, item) ?
                     <>
-                      <Menu onClick={() => goToLink(item.link, isPc())}
+                      <Menu
+                        onClick={() => goToLink(item.link, isPc())}
                         onTouchEnd={() => goToLink(item.link, !isPc())}
                       >
                         <Icon icon={item.icon} style={{ fontSize: themeObj.font_size.font1 }} />
@@ -75,7 +76,8 @@ const More1 = (props) => {
               }
             </>
           ))}
-          <Menu onClick={() => goToLink('/app/auth/privacy?type=0', isPc())}
+          <Menu
+            onClick={() => goToLink('/app/auth/privacy?type=0', isPc())}
             onTouchEnd={() => goToLink('/app/auth/privacy?type=0', !isPc())}
           >
             <Icon icon='icon-park-outline:message-privacy' style={{ fontSize: themeObj.font_size.font1, fontWeight: 'bold' }} />

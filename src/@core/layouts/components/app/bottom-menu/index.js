@@ -139,7 +139,6 @@ const BottomMenu = (props) => {
                   <>
                     <OneMenuContainer
                       onClick={() => router.push(item.link)}
-                      onTouchEnd={() => router.push(item.link)}
                       style={{
                         color: `${getColor(menuIndex == idx, theme.palette.mode)}`
                       }} key={idx}>
