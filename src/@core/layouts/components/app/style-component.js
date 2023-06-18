@@ -6,6 +6,7 @@ import { useState } from "react";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { Transition, TransitionGroup } from "react-transition-group";
+
 const TIMEOUT = 100;
 const getTransitionStyles = {
   entering: {

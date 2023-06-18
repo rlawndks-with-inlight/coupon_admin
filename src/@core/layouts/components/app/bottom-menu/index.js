@@ -50,7 +50,6 @@ const OneMenuContainer = styled.a`
 const OneMenuName = styled.div`
 font-weight: 400;
 font-size:${themeObj.font_size.font4};
-cursor:pointer;
 margin-bottom:auto;
   @media screen and (max-width:330px) {
     font-size:0.7rem;
@@ -134,26 +133,27 @@ const BottomMenu = (props) => {
               background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
             }}>
             <MenuContainer style={menuContainerStyle}>
-              {zBottomMenu.map((item, idx) => (<>
-                {isShowMenu(dnsData, item) ?
-                  <>
-                    <OneMenuContainer
-                      href='javascript:void(0);'
-                      onClick={() => router.push(item.link)}
-                      style={{
-                        color: `${getColor(menuIndex == idx, theme.palette.mode)}`
-                      }} key={idx}>
-                      <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem', cursor: 'pointer' }} />
-                      <OneMenuName>
-                        {item.title}
-                      </OneMenuName>
-                    </OneMenuContainer>
-                  </>
-                  :
-                  <>
-                  </>}
-              </>
-              ))}
+              {zBottomMenu.map((item, idx) => {
+                return <>
+                  {isShowMenu(dnsData, item) ?
+                    <>
+                      <OneMenuContainer
+                        href='javascript:void(0);'
+                        onClick={() => router.push(item.link)}
+                        style={{
+                          color: `${getColor(menuIndex == idx, theme.palette.mode)}`
+                        }} key={idx}>
+                        <Icon icon={item.icon} style={{ marginTop: 'auto', fontSize: '1.5rem' }} />
+                        <OneMenuName>
+                          {item.title}
+                        </OneMenuName>
+                      </OneMenuContainer>
+                    </>
+                    :
+                    <>
+                    </>}
+                </>
+              })}
             </MenuContainer>
           </Container>
         </>}

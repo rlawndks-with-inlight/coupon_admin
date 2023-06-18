@@ -1,5 +1,4 @@
 // ** MUI Imports
-import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import { Icon } from '@iconify/react'
@@ -14,9 +13,11 @@ import { PageTransition } from './components/app/style-component'
 import { useState } from 'react'
 import { getLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
-// Styled component for Blank Layout component
+import { styled } from '@mui/material/styles'
+
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
-  minHeight: '100vh',
+  height: '100vh',
+
   // For V1 Blank layout pages
   '& .content-center': {
     display: 'flex',
@@ -34,6 +35,7 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
     position: 'relative'
   }
 }))
+// Styled component for Blank Layout component
 
 const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
@@ -95,7 +97,7 @@ const AppLayout = ({ children, scrollToTop }) => {
     }
   };
   return (
-    <BlankLayoutWrapper className='layout-wrapper' style={{
+    <BlankLayoutWrapper style={{
       color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
       background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
     }}>
@@ -103,12 +105,10 @@ const AppLayout = ({ children, scrollToTop }) => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         className='app-content'
-        sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        <PageTransition router={router}>
-          <Header isHeaderShow={isHeaderShow} isGoBack={isGoBack} />
-          {children}
-          <Footer />
-        </PageTransition>
+        style={{ position: 'relative' }}>
+        <Header isHeaderShow={isHeaderShow} isGoBack={isGoBack} />
+        {children}
+        <Footer />
         <BottomMenu isGoBack={isGoBack} />
       </Box>
       {scrollToTop ? (

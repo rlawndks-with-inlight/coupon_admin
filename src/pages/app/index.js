@@ -53,12 +53,10 @@ const Index = ({ dns_data }) => {
       let obj = {};
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       obj = JSON.parse(dns_data);
-
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
-
     } catch (err) {
       console.log(err);
       //toast.error(err?.response?.data?.message || err?.message);

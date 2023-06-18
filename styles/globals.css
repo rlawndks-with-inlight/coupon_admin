@@ -1,8 +1,6 @@
 body {
   margin: 0 !important;
 }
-#__next {
-}
 .editor-edit {
   min-height: 800px !important;
   max-height: 800px !important;
