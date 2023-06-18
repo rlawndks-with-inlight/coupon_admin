@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import DialogResign from "src/@core/layouts/components/app/DialogResign";
 import { ContentWrapper, Font1, Font2, Row, Wrapper, themeObj } from "src/@core/layouts/components/app/style-component";
-import { isShowMenu } from "src/@core/layouts/utils";
-import { handleLogout, isPc } from "src/@core/utils/function";
-import { zBottomMenu } from "src/data/data";
 import styled from "styled-components";
 
 const Menu = styled.div`
@@ -65,10 +62,7 @@ const Index1 = (props) => {
           <Menu
             className="pointer"
             onClick={() => {
-              handleResignOpen(isPc());
-            }}
-            onTouchEnd={() => {
-              handleResignOpen(!isPc());
+              handleResignOpen(true);
             }}
           >
             <Icon icon='material-symbols:cancel-outline' style={{ fontSize: themeObj.font_size.font1 }} />

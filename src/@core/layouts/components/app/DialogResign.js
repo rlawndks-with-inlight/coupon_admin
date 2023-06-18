@@ -24,7 +24,6 @@ import { LOCALSTORAGE } from 'src/data/data'
 
 import Slide from '@mui/material/Slide'
 import { useEffect } from 'react'
-import { isPc } from 'src/@core/utils/function'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='left' ref={ref} {...props} />
 })
@@ -56,8 +55,7 @@ const DialogResign = (props) => {
             </Typography>
             <IconButton
               aria-label='close'
-              onClick={() => handleClose(isPc())}
-              onTouchEnd={() => handleClose(!isPc())}
+              onClick={() => handleClose(true)}
               sx={{ top: 18, left: 10, position: 'absolute', color: 'grey.500' }}
             >
               <Icon icon='ooui:previous-ltr' style={{ fontSize: themeObj.font_size.font1 }} />
@@ -72,7 +70,7 @@ const DialogResign = (props) => {
               <br />
               재가입은 탈퇴일로부터 30일 후 가능합니다.
             </Title>
-            <Button type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 24px auto', height: '50px', width: '90%', maxWidth: '500px' }} >
+            <Button type='submit' variant='contained' sx={{ mr: 2, margin: 'auto auto 8rem auto', height: '50px', width: '90%', maxWidth: '500px' }} >
               탈퇴
             </Button>
           </DialogContent>

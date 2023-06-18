@@ -7,7 +7,6 @@ import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { Icon } from '@iconify/react'
 import { themeObj } from '../style-component'
 import { isShowMenu } from 'src/@core/layouts/utils'
-import { isPc } from 'src/@core/utils/function'
 import { toast } from 'react-hot-toast'
 const Container = styled.div`
     position: fixed;

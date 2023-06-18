@@ -127,8 +127,7 @@ const Merchandise1 = (props) => {
               {mcht?.point_flag == 1 ?
                 <>
                   <Menu
-                    onTouchEnd={() => { onOpenMembershipDialog('points', isPc()) }}
-                    onClick={() => { onOpenMembershipDialog('points', !isPc()) }}
+                    onClick={() => { onOpenMembershipDialog('points', true) }}
                   >
                     <Icon icon='mdi:alpha-p-box' style={{ color: themeObj.yellow, fontSize: themeObj.font_size.font1 }} />
                     <MenuTitle>포인트 자세히보기</MenuTitle>
@@ -140,8 +139,7 @@ const Merchandise1 = (props) => {
               {mcht?.stamp_flag == 1 ?
                 <>
                   <Menu
-                    onTouchEnd={() => { onOpenMembershipDialog('stamps', isPc()) }}
-                    onClick={() => { onOpenMembershipDialog('stamps', !isPc()) }}
+                    onClick={() => { onOpenMembershipDialog('stamps', true) }}
                   >
                     <Icon icon='ph:stamp-fill' style={{ color: themeObj.green, fontSize: themeObj.font_size.font1 }} />
                     <MenuTitle>스탬프 자세히보기</MenuTitle>
@@ -151,8 +149,7 @@ const Merchandise1 = (props) => {
                 <>
                 </>}
               <Menu
-                onTouchEnd={() => { onOpenMembershipDialog('coupons', isPc()) }}
-                onClick={() => { onOpenMembershipDialog('coupons', !isPc()) }}
+                onClick={() => { onOpenMembershipDialog('coupons', true) }}
               >
                 <Icon icon='mdi:coupon' style={{ color: themeObj.red, fontSize: themeObj.font_size.font1 }} />
                 <MenuTitle>쿠폰 자세히보기</MenuTitle>

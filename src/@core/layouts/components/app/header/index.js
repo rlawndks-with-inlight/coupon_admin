@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import styled from "styled-components"
 import $ from 'jquery';
 import { FormControl, Grid, IconButton, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { Icon } from "@iconify/react";
@@ -8,14 +7,25 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE, zBottomMenu } from "src/data/data";
 import { useTheme } from "@emotion/react";
 import { axiosIns } from "src/@fake-db/backend";
-import { getBackgroundColor, isPc, processCatch } from "src/@core/utils/function";
+import { getBackgroundColor, processCatch } from "src/@core/utils/function";
 import { useSettings } from "src/@core/hooks/useSettings";
 import DialogSearchMobile from "./DialogSearchMobile";
 import { isShowMenu } from "src/@core/layouts/utils";
 import { onPostWebview } from "src/@core/utils/webview-connect";
 import { themeObj } from "../style-component";
+import Box from "@mui/material/Box";
+import { StyledEngineProvider } from "@mui/material";
+import styled from "styled-components"
 
-const TopWrapper = styled.div`
+const HeaderWrappers = styled(Box)`
+width: 100%;
+position: fixed;
+top: 0;
+display: flex;
+flex-direction: column;
+z-index: 10;
+`
+const TopWrapper = styled(Box)`
 width:90%;
 max-width:1200px;
 margin:0 auto;
@@ -32,10 +42,8 @@ const Logo = styled.img`
 max-height:3rem;
 max-width:8rem;
 cursor: pointer;
-@media (max-width: 1200px) {
-}
 `
-const MenuList = styled.div`
+const MenuList = styled(Box)`
 display: flex;
 max-width: 350px;
 width: 30%;
@@ -52,7 +60,7 @@ z-index:10;
   font-weight:bold;
 }
 `
-const Menu = styled.div`
+const Menu = styled(Box)`
 cursor: pointer;
 margin:0 auto;
 font-weight: bold;
@@ -62,13 +70,13 @@ font-weight: bold;
   border-bottom: 1px solid ${props => props.theme.palette.grey[300]};
 }
 `
-const SearchPc = styled.div`
+const SearchPc = styled(Box)`
   display:flex;
   @media (max-width: 1200px) {
     display:none;
   }
 `
-const Icons = styled.div`
+const Icons = styled(Box)`
 display:flex;
 
   @media (max-width: 1200px) {
@@ -76,13 +84,13 @@ display:flex;
     right: 5%;
 }
 `
-const MobileSide = styled.div`
+const MobileSide = styled(Box)`
 display:none;
   @media (max-width: 1200px) {
     display:flex;
 }
 `
-const PaddingTop = styled.div`
+const PaddingTop = styled(Box)`
 padding-top:5rem;
 @media (max-width: 1200px) {
   padding-top:3.5rem;
@@ -208,9 +216,13 @@ const Header = (props) => {
           </>
         ))}
       </MenuList>
-
     </>
   }
+  //#__next > div.layout-wrapper.MuiBox-root.css-33gw4 > div.app-content.MuiBox-root.css-0 > div.sc-ivnCJf.fOswQb.header-wrapper.asfjkhsdfijksadnvakjsvn.MuiBox-root.css-0
+  ////*[@id="__next"]/div[2]/div[1]/div[2]
+
+  //#__next > div.layout-wrapper.MuiBox-root.css-33gw4 > div.app-content.MuiBox-root.css-0 > div.sc-fmSAUk.ijuQDS.header-wrapper.asfjkhsdfijksadnvakjsvn.MuiBox-root.css-0
+  ////*[@id="__next"]/div[2]/div[1]/div[2]
   return (
     <>
       <DialogSearchMobile
@@ -221,16 +233,11 @@ const Header = (props) => {
           background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
         }}
       />
-      <header style={{
-        width: '100%',
-        position: 'fixed',
-        top: '0',
-        display: `flex`,
-        flexDirection: 'column',
-        zIndex: '10',
+      <HeaderWrappers style={{
         color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
         background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
-      }} className="header-wrapper">
+      }} className="header-wrapper"
+      >
         <TopWrapper>
           {window.innerWidth > 1200 || !isGoBack ?
             <>
@@ -243,16 +250,16 @@ const Header = (props) => {
                   color='inherit'
                   aria-haspopup='true'
                   className="pointer"
-                  onClick={() => handleSearchOpen(isPc())}
-                  onTouchEnd={() => handleSearchOpen(!isPc())}>
+                  onClick={() => handleSearchOpen(true)}
+                >
                   <Icon icon='tabler:search' style={{ fontSize: '1.3rem' }} />
                 </IconButton>
                 <IconButton
                   color='inherit'
                   aria-haspopup='true'
                   className="pointer"
-                  onClick={() => handleModeToggle(isPc())}
-                  onTouchEnd={() => handleModeToggle(!isPc())}>
+                  onClick={() => handleModeToggle(true)}
+                >
                   <Icon fontSize='1.3rem' icon={settings.mode === 'dark' ? 'tabler:sun' : 'tabler:moon-stars'} />
                 </IconButton>
               </Icons>
@@ -270,7 +277,7 @@ const Header = (props) => {
               <div />
             </>}
         </TopWrapper>
-      </header >
+      </HeaderWrappers >
       <PaddingTop />
     </>
   )

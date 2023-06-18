@@ -6,8 +6,9 @@ import { useState } from "react";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { Transition, TransitionGroup } from "react-transition-group";
+import { Box } from "@mui/material";
 
-const TIMEOUT = 100;
+const TIMEOUT = 1000;
 const getTransitionStyles = {
   entering: {
     position: `absolute`,
@@ -29,14 +30,9 @@ const getTransitionStyles = {
   }
 };
 export const PageTransition = ({ children, router, }) => {
-  const [isUseAnimation, setIsUseAnimation] = useState(false);
+  const [isUseAnimation, setIsUseAnimation] = useState(true);
   const [path, setPath] = useState("");
   useEffect(() => {
-    if (router.asPath.includes('/app/merchandise/detail/') || path.includes('/app/merchandise/detail/')) {
-      setIsUseAnimation(true)
-    } else {
-      setIsUseAnimation(false)
-    }
     setPath(router.asPath);
   }, [router])
   return (
@@ -52,7 +48,7 @@ export const PageTransition = ({ children, router, }) => {
           {(status) => (
             <div
               style={{
-                ...getTransitionStyles[`${isUseAnimation ? status : 'none'}`],
+                ...getTransitionStyles[status],
               }}
             >
               {children}
@@ -64,7 +60,7 @@ export const PageTransition = ({ children, router, }) => {
   );
 };
 
-export const WrapperStyle = styled.div`
+export const WrapperStyle = styled(Box)`
 display:flex;
 flex-direction:column;
 min-height:90vh;
@@ -87,12 +83,12 @@ export const Wrapper = (props) => {
     </>
   )
 }
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled(Box)`
 max-width:1200px;
 width:90%;
 margin: 1rem auto;
 `
-export const Row = styled.div`
+export const Row = styled(Box)`
 display:flex;
 `
 export const themeObj = {
@@ -125,39 +121,39 @@ export const themeObj = {
     A700: '#616161'
   },
 }
-export const Font1 = styled.div`
+export const Font1 = styled(Box)`
   font-size:${themeObj.font_size.font1};
   @media (max-width: 850px) {
     font-size:${themeObj.font_size.font2};
 
   }
 `
-export const Font2 = styled.div`
+export const Font2 = styled(Box)`
 font-size:${themeObj.font_size.font2};
 @media (max-width: 850px) {
 font-size:${themeObj.font_size.font3};
 
 }
 `
-export const Font3 = styled.div`
+export const Font3 = styled(Box)`
 font-size:${themeObj.font_size.font3};
 @media (max-width: 850px) {
 font-size:${themeObj.font_size.font4};
 
 }
 `
-export const Font4 = styled.div`
+export const Font4 = styled(Box)`
 font-size:${themeObj.font_size.font4};
 @media (max-width: 850px) {
 font-size:${themeObj.font_size.font5};
 
 }
 `
-export const Font5 = styled.div`
+export const Font5 = styled(Box)`
 font-size:${themeObj.font_size.font5};
 `
 
-export const InputLabel = styled.div`
+export const InputLabel = styled(Box)`
 
 @media (max-width: 350px) {
   font-size:${themeObj.font_size.font4};
@@ -165,7 +161,7 @@ export const InputLabel = styled.div`
   }
 `
 
-const InputContainer = styled.div`
+const InputContainer = styled(Box)`
 position:relative;
 `
 const InputStyle = styled.input`
@@ -190,7 +186,7 @@ font-size:${themeObj.font_size.font4};
 padding:0 2px;
 cursor:text;
 `
-const Placeholder = styled.div`
+const Placeholder = styled(Box)`
 position: absolute;
 transition-duration: 200ms;
 `
@@ -352,7 +348,7 @@ export const MakeButton = (props) => {
   )
 }
 
-const DialogBackground = styled.div`
+const DialogBackground = styled(Box)`
 position:fixed;
 top:0;
 width:100vw;
@@ -360,7 +356,7 @@ height:100vh;
 z-index: 9999 !important;
 transition-duration: 200ms;
 `
-const DialogFullScreenStyle = styled.div`
+const DialogFullScreenStyle = styled(Box)`
 position:fixed;
 top:0;
 width:100vw;

@@ -8,9 +8,12 @@ import FallbackSpinner from 'src/@core/components/spinner';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import $ from 'jquery';
 import _ from 'lodash';
+import Header from 'src/@core/layouts/components/app/header';
+import Footer from 'src/@core/layouts/components/app/footer';
+import BottomMenu from 'src/@core/layouts/components/app/bottom-menu';
 const BannerContainerPc = styled.div`
 max-width:1200px;
 margin:0 auto 1rem auto;
@@ -21,7 +24,7 @@ border-radius:10px;
   display:none;
 }
 `
-const BannerContainerMobile = styled.div`
+const BannerContainerMobile = styled(Box)`
 max-width:1200px;
 margin:0 auto 1rem auto;
 width:100%;
@@ -30,7 +33,7 @@ display:none;
   display:block;
 }
 `
-const MerchandiseContainer = styled.div`
+const MerchandiseContainer = styled(Box)`
 width: 100%;
 display: flex;
 flex-wrap:wrap;
@@ -49,7 +52,7 @@ margin:2rem auto;
   row-gap: 1rem;
 }
 `
-const MerchandiseImgContainer = styled.div`
+const MerchandiseImgContainer = styled(Box)`
 width: 100%;
 height: 70%;
 margin:0 auto;
@@ -76,7 +79,7 @@ border-radius:10px;
   height:65%;
 }
 `
-const MerchandiseExplain = styled.div`
+const MerchandiseExplain = styled(Box)`
 width: 90%;
 height: 20%;
 margin: auto auto 5% auto;
@@ -92,7 +95,7 @@ justify-content:space-between;
   margin: auto;
 }
 `
-const MerchandiseName = styled.div`
+const MerchandiseName = styled(Box)`
 font-size:${themeObj.font_size.font4};
 width: 80%;
 margin:0.5rem auto 0 auto;
@@ -109,7 +112,7 @@ margin: 4rem 0;
   display:none;
 }
 `
-const GrowUpCount = styled.div`
+const GrowUpCount = styled(Box)`
 animation: count 1s linear forwards;
 @keyframes count {
   from {
@@ -187,10 +190,10 @@ const Merchandise = (props) => {
     <>
       <motion.div
         whileHover={{ scale: 1.01, transform: `translateY(-0.5rem)` }}
-        onClick={() => goToLink(isPc())}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchMove}
+        onClick={() => goToLink(true)}
+        // onTouchStart={handleTouchStart}
+        // onTouchMove={handleTouchMove}
+        // onTouchEnd={handleTouchMove}
         // onPointerEnter={() => goToLink(window.innerWidth < 1000)}
         // onClick={() => goToLink(window.innerWidth >= 1000)}
         style={{
@@ -318,7 +321,6 @@ const Home1 = (props) => {
   }, [mchts])
   return (
     <>
-
       <Wrapper dns_data={dnsData}>
         {isVisible ?
           <>

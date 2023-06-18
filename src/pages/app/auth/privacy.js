@@ -6,6 +6,8 @@ import { ContentWrapper, Wrapper, themeObj } from "src/@core/layouts/components/
 import AppLayout from "src/@core/layouts/AppLayout";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
+import Header from "src/@core/layouts/components/app/header";
+import BottomMenu from "src/@core/layouts/components/app/bottom-menu";
 const Title = styled.div`
 font-weight:bold;
 font-size:${themeObj.font_size.font1};
@@ -44,6 +46,8 @@ const Policy = (props) => {
 
   return (
     <>
+      <Header isGoBack={false} />
+      <BottomMenu isGoBack={false} />
       <Wrapper style={{ margin: `${type >= 0 ? '0' : ''}` }}>
         <ContentWrapper>
 

@@ -10,6 +10,9 @@ import { useRef } from "react"
 import { getLocalStorage, setLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import { onPostWebview } from "src/@core/utils/webview-connect"
+import BlankLayout from "src/@core/layouts/BlankLayout"
+import Header from "src/@core/layouts/components/app/header"
+import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
 
 
 const getDemo = (num, common) => {
@@ -17,7 +20,8 @@ const getDemo = (num, common) => {
     return <Home1 {...common} />
 }
 
-const Home = () => {
+const Home = (props) => {
+
   const router = useRouter();
   const theme = useTheme();
 
@@ -166,6 +170,8 @@ const Home = () => {
   }
   return (
     <>
+      <Header isGoBack={false} />
+      <BottomMenu isGoBack={false} />
       {loading ?
         <>
           <FallbackSpinner sx={{ height: '85vh' }} second={0} />
@@ -181,7 +187,7 @@ const Home = () => {
               isDataEnd: isDataEnd,
               totalContent, totalContent,
               location: location,
-              membershipObj
+              membershipObj,
             },
             func: {
               onClickMembershipCategory,

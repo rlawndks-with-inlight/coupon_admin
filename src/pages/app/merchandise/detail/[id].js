@@ -9,6 +9,9 @@ import Merchandise1 from "src/views/app/merchandise/detail/demo-1"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import _ from 'lodash'
+import Header from "src/@core/layouts/components/app/header"
+import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
+import { PageTransition } from "src/@core/layouts/components/app/style-component"
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -90,27 +93,30 @@ const Merchandise = (props) => {
 
   return (
     <>
-      {loading ?
-        <>
-          <FallbackSpinner sx={{ height: '85vh' }} second={500} />
-        </>
-        :
-        <>
-        </>}
-      {getDemo(1, {
-        data: {
-          data,
-          mcht,
-          dnsData,
-          theme,
-          history,
-          loading,
-          couponHistory
-        },
-        func: {
-          router,
-        }
-      })}
+      <PageTransition router={router}>
+        <Header isGoBack={true} />
+        {loading ?
+          <>
+            <FallbackSpinner sx={{ height: '85vh' }} second={500} />
+          </>
+          :
+          <>
+          </>}
+        {getDemo(1, {
+          data: {
+            data,
+            mcht,
+            dnsData,
+            theme,
+            history,
+            loading,
+            couponHistory
+          },
+          func: {
+            router,
+          }
+        })}
+      </PageTransition>
     </>
   )
 }

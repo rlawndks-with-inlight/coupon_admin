@@ -9,12 +9,13 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 import { cloneElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import BottomMenu from './components/app/bottom-menu'
-import { PageTransition } from './components/app/style-component'
 import { useState } from 'react'
 import { getLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import { styled } from '@mui/material/styles'
-
+import { Button } from '@mui/material'
+import { toast } from 'react-hot-toast'
+import { StyledEngineProvider } from "@mui/material";
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',
 
@@ -35,13 +36,11 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
     position: 'relative'
   }
 }))
-// Styled component for Blank Layout component
 
 const AppLayout = ({ children, scrollToTop }) => {
   const theme = useTheme();
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
-  const [isHeaderShow, setIsHeaderShow] = useState(true);
   const [isMoveBack, setIsMoveBack] = useState(false);
 
   const [isGoBack, setIsGoBack] = useState(false);
@@ -96,33 +95,38 @@ const AppLayout = ({ children, scrollToTop }) => {
       }
     }
   };
+
   return (
-    <BlankLayoutWrapper style={{
-      color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
-      background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
-    }}>
-      <Box
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        className='app-content'
-        style={{ position: 'relative' }}>
-        <Header isHeaderShow={isHeaderShow} isGoBack={isGoBack} />
-        {children}
-        <Footer />
-        <BottomMenu isGoBack={isGoBack} />
-      </Box>
-      {scrollToTop ? (
-        scrollToTop(props)
-      ) : (
-        <ScrollToTop className='mui-fixed'>
-          <Fab color='primary' size='small' aria-label='scroll back to top' style={{
-            bottom: '3rem'
-          }}>
-            <Icon icon='tabler:arrow-up' />
-          </Fab>
-        </ScrollToTop>
-      )}
-    </BlankLayoutWrapper>
+    <StyledEngineProvider injectFirst>
+      <BlankLayoutWrapper
+        className='layout-wrapper'
+        style={{
+          color: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_font_color ?? "#fff" : '#000'}`,
+          background: `${theme.palette.mode == 'dark' ? dnsData?.options?.app?.dark_background_color ?? "#000" : '#fff'}`,
+        }}>
+        <Box
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          className='app-content'
+          style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}>
+          {/* <Header isGoBack={isGoBack} /> */}
+          {/* <BottomMenu isGoBack={isGoBack} /> */}
+          {children}
+        </Box>
+        {/* <Footer /> */}
+        {scrollToTop ? (
+          scrollToTop(props)
+        ) : (
+          <ScrollToTop className='mui-fixed'>
+            <Fab color='primary' size='small' aria-label='scroll back to top' style={{
+              bottom: '3rem'
+            }}>
+              <Icon icon='tabler:arrow-up' />
+            </Fab>
+          </ScrollToTop>
+        )}
+      </BlankLayoutWrapper>
+    </StyledEngineProvider>
   )
 }
 

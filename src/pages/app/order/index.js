@@ -6,6 +6,8 @@ import { useTheme } from "@emotion/react"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import Order1 from "src/views/app/order/demo-1"
+import Header from "src/@core/layouts/components/app/header"
+import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -38,6 +40,8 @@ const More = () => {
 
   return (
     <>
+      <Header isGoBack={false} />
+      <BottomMenu isGoBack={false} />
       {loading ?
         <>
           <FallbackSpinner sx={{ height: '85vh' }} />

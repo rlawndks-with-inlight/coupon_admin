@@ -6,6 +6,8 @@ import { useTheme } from "@emotion/react"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { LOCALSTORAGE } from "src/data/data"
 import Index1 from "src/views/app/auth/index/demo-1"
+import Header from "src/@core/layouts/components/app/header"
+import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -38,6 +40,8 @@ const Index = () => {
 
   return (
     <>
+      <Header isGoBack={false} />
+      <BottomMenu isGoBack={false} />
       {loading ?
         <>
           <FallbackSpinner sx={{ height: '85vh' }} />

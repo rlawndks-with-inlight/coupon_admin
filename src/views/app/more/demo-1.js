@@ -46,8 +46,7 @@ const More1 = (props) => {
       <Wrapper dns_data={dnsData}>
         <ContentWrapper>
           <Font1 style={{ fontWeight: 'bold', margin: '0.75rem 0' }}>{user?.user_name || user?.phone_num} 님</Font1>
-          <Menu onClick={() => goToLink('/app/auth/', isPc())}
-            onTouchEnd={() => goToLink('/app/auth/', !isPc())}
+          <Menu onClick={() => goToLink('/app/auth/', true)}
           >
             <Icon icon='material-symbols:settings-outline' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>계정설정</MenuTitle>
@@ -59,8 +58,7 @@ const More1 = (props) => {
                   {isShowMenu(dnsData, item) ?
                     <>
                       <Menu
-                        onClick={() => goToLink(item.link, isPc())}
-                        onTouchEnd={() => goToLink(item.link, !isPc())}
+                        onClick={() => goToLink(item.link, true)}
                       >
                         <Icon icon={item.icon} style={{ fontSize: themeObj.font_size.font1 }} />
                         <MenuTitle>{item.title}</MenuTitle>
@@ -77,20 +75,17 @@ const More1 = (props) => {
             </>
           ))}
           <Menu
-            onClick={() => goToLink('/app/auth/privacy?type=0', isPc())}
-            onTouchEnd={() => goToLink('/app/auth/privacy?type=0', !isPc())}
+            onClick={() => goToLink('/app/auth/privacy?type=0', true)}
           >
             <Icon icon='icon-park-outline:message-privacy' style={{ fontSize: themeObj.font_size.font1, fontWeight: 'bold' }} />
             <MenuTitle>이용약관</MenuTitle>
           </Menu>
-          <Menu onClick={() => goToLink('/app/auth/privacy?type=1', isPc())}
-            onTouchEnd={() => goToLink('/app/auth/privacy?type=1', !isPc())}
+          <Menu onClick={() => goToLink('/app/auth/privacy?type=1', true)}
           >
             <Icon icon='ic:outline-privacy-tip' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>개인정보처리방침</MenuTitle>
           </Menu>
-          <Menu onClick={() => goToLink('/app/auth/privacy?type=2', isPc())}
-            onTouchEnd={() => goToLink('/app/auth/privacy?type=2', !isPc())}
+          <Menu onClick={() => goToLink('/app/auth/privacy?type=2', true)}
           >
             <Icon icon='icon-park-outline:personal-privacy' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>저작권정책</MenuTitle>
@@ -101,8 +96,7 @@ const More1 = (props) => {
             <MenuTitle>고객센터</MenuTitle>
           </Menu> */}
           <Menu
-            onClick={() => onLogout(isPc())}
-            onTouchEnd={() => onLogout(!isPc())}
+            onClick={() => onLogout(true)}
           >
             <Icon icon='ri:logout-circle-r-line' style={{ fontSize: themeObj.font_size.font1 }} />
             <MenuTitle>로그아웃</MenuTitle>
