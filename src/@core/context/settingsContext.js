@@ -3,6 +3,9 @@ import { createContext, useState, useEffect } from 'react'
 
 // ** ThemeConfig Import
 import themeConfig from 'src/configs/themeConfig'
+import { getLocalStorage } from '../utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
+
 
 const initialSettings = {
   themeColor: 'primary',
@@ -18,7 +21,7 @@ const initialSettings = {
   contentWidth: themeConfig.contentWidth,
   toastPosition: themeConfig.toastPosition,
   verticalNavToggleType: themeConfig.verticalNavToggleType,
-  appBar: themeConfig.layout === 'horizontal' && themeConfig.appBar === 'hidden' ? 'fixed' : themeConfig.appBar
+  appBar: themeConfig.layout === 'horizontal' && themeConfig.appBar === 'hidden' ? 'fixed' : themeConfig.appBar,
 }
 
 const staticSettings = {
@@ -69,12 +72,21 @@ export const SettingsProvider = ({ children, pageSettings }) => {
   const [settings, setSettings] = useState({ ...initialSettings })
   useEffect(() => {
     const restoredSettings = restoreSettings()
+    let obj = {};
     if (restoredSettings) {
-      setSettings({ ...restoredSettings })
+      obj = { ...restoredSettings }
     }
     if (pageSettings) {
-      setSettings({ ...settings, ...pageSettings })
+      obj = { ...settings, ...pageSettings }
     }
+    obj['dnsData'] = JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA));
+    if (typeof obj['dnsData']?.theme_css == 'string') {
+      obj['dnsData'].theme_css = JSON.parse(obj['dnsData'].theme_css)
+    }
+    if (typeof obj['dnsData']?.options == 'string') {
+      obj['dnsData'].options = JSON.parse(obj['dnsData'].options)
+    }
+    setSettings(obj)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSettings])
   useEffect(() => {

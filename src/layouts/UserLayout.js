@@ -98,5 +98,4 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     </>
   )
 }
-
 export default UserLayout

@@ -37,7 +37,6 @@ const Merchandise = (props) => {
     setLoading(true);
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     setDnsData(dns_data)
     let mcht = JSON.parse(router.query?.item);
     setMcht(mcht)

@@ -152,7 +152,6 @@ const Header = (props) => {
     try {
       let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
       dns_data = JSON.parse(dns_data);
-      dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
 
       let query_keys = Object.keys(router.query);
       if (router.query['dark_background_color']) {

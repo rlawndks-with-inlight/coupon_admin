@@ -73,7 +73,6 @@ const BottomMenu = (props) => {
     let move_idx = -1;
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
     let query_keys = Object.keys(router.query);
     if (query_keys.includes('dark_background_color')) {
       for (var i = 0; i < query_keys.length; i++) {

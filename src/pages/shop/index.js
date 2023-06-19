@@ -49,7 +49,6 @@ const Home = () => {
       }
     }
   }
-
   return (
     <>
       {loading ?
@@ -64,7 +63,6 @@ const Home = () => {
               items
             },
             func: {
-
             }
           })}
         </>}

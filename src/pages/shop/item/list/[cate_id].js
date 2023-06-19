@@ -50,19 +50,20 @@ const List = () => {
   }
   return (
     <>
-      <Wrapper>
-        {loading ?
-          <>
-            <FallbackSpinner sx={{ height: '300px' }} />
-          </>
-          :
-          <>
-            <ContentWrapper>
-              <Items items={items} />
-            </ContentWrapper>
-          </>}
-
-      </Wrapper>
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '85vh' }} second={0} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: {
+              items
+            },
+            func: {
+            }
+          })}
+        </>}
     </>
   )
 }

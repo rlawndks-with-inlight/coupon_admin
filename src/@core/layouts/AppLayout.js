@@ -48,7 +48,6 @@ const AppLayout = ({ children, scrollToTop }) => {
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
     let query_keys = Object.keys(router.query);
     if (router.query['dark_background_color']) {
       for (var i = 0; i < query_keys.length; i++) {
@@ -109,8 +108,6 @@ const AppLayout = ({ children, scrollToTop }) => {
           onTouchMove={handleTouchMove}
           className='app-content'
           style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}>
-          {/* <Header isGoBack={isGoBack} /> */}
-          {/* <BottomMenu isGoBack={isGoBack} /> */}
           {children}
         </Box>
         {/* <Footer /> */}

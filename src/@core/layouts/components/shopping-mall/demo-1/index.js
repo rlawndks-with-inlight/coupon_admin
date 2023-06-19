@@ -11,31 +11,48 @@ import { useEffect } from 'react'
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
-  // For V1 Blank layout pages
-  '& .content-center': {
-    display: 'flex',
-    minHeight: '100vh',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing(5)
-  },
-
-  // For V2 Blank layout pages
-  '& .content-right': {
-    display: 'flex',
-    minHeight: '100vh',
-    overflowX: 'hidden',
-    position: 'relative'
-  }
 }))
 
-const ShoppingMallLayout1 = ({ ...common }) => {
-  const { children, scrollToTop } = common;
+const ShoppingMallLayout1 = (props) => {
+  const {
+    data: {
+      dnsData,
+      keyword,
+      menuDisplay,
+      userData,
+      query,
+      categoryList,
+      paddingTop
+    },
+    func: {
+      getCategoryColor,
+      setKeyword,
+      setMenuDisplay,
+      setQuery
+    },
+    children, scrollToTop,
+  } = props;
   const theme = useTheme();
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{ background: `${theme.palette.mode == 'dark' ? '' : '#fff'}` }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        <Header />
+        <Header
+          data={{
+            dnsData,
+            keyword,
+            menuDisplay,
+            userData,
+            query,
+            categoryList,
+            paddingTop
+          }}
+          func={{
+            getCategoryColor,
+            setKeyword,
+            setMenuDisplay,
+            setQuery
+          }}
+        />
         {children}
         <Footer />
       </Box>

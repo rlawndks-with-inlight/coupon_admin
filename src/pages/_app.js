@@ -78,7 +78,7 @@ const App = props => {
         const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
         dns_data = response?.data;
         if (typeof dns_data['theme_css'] == 'string') {
-          dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
+          dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
         }
         setDnsData(dns_data);
         setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
@@ -86,6 +86,7 @@ const App = props => {
         let dns_data = dns_data_;
         if (typeof dns_data['theme_css'] == 'string') {
           dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
+          dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
         }
         setDnsData(dns_data);
         setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));

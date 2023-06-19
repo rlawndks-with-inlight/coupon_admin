@@ -34,7 +34,6 @@ const Index = () => {
     serUser(user_data);
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     setDnsData(dns_data);
   }
 

@@ -1,31 +1,28 @@
 import { useTheme } from "@emotion/react"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import FallbackSpinner from "src/@core/components/spinner"
 import ShoppingMallLayout from "src/@core/layouts/ShoppingMallLayout"
-import { ContentWrapper, Wrapper } from "src/@core/layouts/components/shopping-mall/style-component"
 import { processCatch } from "src/@core/utils/function"
 import { axiosIns } from "src/@fake-db/backend"
-import ItemDetailCard from "src/views/components/shopping-mall/ItemDetailCard"
-import styled from "styled-components"
+import ItemDetail1 from "src/views/shop/item/detail/id/demo-1"
 
-const ItemContainer = styled.div`
-display:flex;
-flex-direction:column;
-`
-const ProductExplain = styled.div`
-margin-top:2rem;
-border-top: 1px solid ${props => props.theme.palette.grey[300]};
-`
+const getDemo = (num, common) => {
+  if (num == 1)
+    return <ItemDetail1 {...common} />
+}
 const Detail = () => {
 
   const router = useRouter();
   const theme = useTheme();
   const [item, setItem] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getItem();
   }, [])
   const getItem = async () => {
+    setLoading(true);
     try {
       if (!router.query?.id) {
         router.push('/shop');
@@ -33,6 +30,7 @@ const Detail = () => {
       }
       const response = await axiosIns().get(`api/v1/shop/items/${router.query?.id}`);
       setItem(response?.data);
+      setLoading(false);
     } catch (err) {
       let push_lick = await processCatch(err);
       if (push_lick == -1) {
@@ -46,15 +44,21 @@ const Detail = () => {
   }
   return (
     <>
-      <Wrapper>
-        <ContentWrapper>
-          <ItemContainer>
-            <ItemDetailCard item={item} />
-            <ProductExplain theme={theme}>
-            </ProductExplain>
-          </ItemContainer>
-        </ContentWrapper>
-      </Wrapper>
+      {loading ?
+        <>
+          <FallbackSpinner sx={{ height: '85vh' }} second={0} />
+        </>
+        :
+        <>
+          {getDemo(1, {
+            data: {
+              item,
+              theme
+            },
+            func: {
+            }
+          })}
+        </>}
     </>
   )
 }

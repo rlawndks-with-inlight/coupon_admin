@@ -72,6 +72,9 @@ const ManagerBrandEdit = (props) => {
         dark_background_color: '#000',//다크모드 배경색
         dark_box_color: '#000',// 다크모드 컨텐츠 색
         dark_font_color: '#fff',// 다크모드 폰트 색
+      },
+      shop: {
+        demo_num: 1 //쇼핑몰 데모숫자
       }
     },
     company_nm: '',
@@ -163,6 +166,7 @@ const ManagerBrandEdit = (props) => {
               <Tab value='tab-1' label='기본정보' sx={{ mr: 2 }} />
               <Tab value='tab-3' label='계약정보' sx={{ mr: 2 }} />
               <Tab value='tab-5' label='어플정보' sx={{ mr: 2 }} />
+              <Tab value='tab-7' label='쇼핑몰정보' sx={{ mr: 2 }} />
             </TabList>
             <TabPanel sx={{ p: 0 }} value='tab-1'>
               <Grid container spacing={6}>
@@ -630,6 +634,17 @@ const ManagerBrandEdit = (props) => {
                             value={values?.options?.app?.dark_font_color} />
                         </Grid>
                       </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+            </TabPanel>
+            <TabPanel sx={{ p: 0 }} value='tab-7'>
+              <Grid container spacing={6}>
+                <Grid item xs={12} md={12}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+
                     </CardContent>
                   </Card>
                 </Grid>

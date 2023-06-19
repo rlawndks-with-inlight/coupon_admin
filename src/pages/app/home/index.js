@@ -40,7 +40,6 @@ const Home = (props) => {
   useEffect(() => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? '{"app":{}}');
     let query_keys = Object.keys(router.query);
     for (var i = 0; i < query_keys.length; i++) {
       dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];

@@ -40,7 +40,7 @@ const Item = (props) => {
       <Wrapper
 
         onClick={() => {
-          router.push(`/shop/item/detail?id=${item?.id}`)
+          router.push(`/shop/item/detail/${item?.id}`)
         }}
       >
         <LazyLoadImage src={item?.product_img}

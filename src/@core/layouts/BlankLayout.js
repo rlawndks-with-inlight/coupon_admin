@@ -38,7 +38,6 @@ const BlankLayout = ({ children }) => {
     let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
     dns_data = "{}"
     dns_data = JSON.parse(dns_data);
-    dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
     setDnsData(dns_data)
   }, [])
   useEffect(() => {
@@ -48,7 +47,6 @@ const BlankLayout = ({ children }) => {
         if (!dnsData?.options) {
           dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
           dns_data = JSON.parse(dns_data);
-          dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
         } else {
           dns_data = dnsData;
         }
