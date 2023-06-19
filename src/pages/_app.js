@@ -48,6 +48,7 @@ import Script from 'next/script'
 import Head from 'next/head'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useSettings } from 'src/@core/hooks/useSettings'
+import FallbackSpinner from 'src/@core/components/spinner'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -151,6 +152,7 @@ const App = props => {
         </>
         :
         <>
+          <FallbackSpinner />
         </>
       }
     </>

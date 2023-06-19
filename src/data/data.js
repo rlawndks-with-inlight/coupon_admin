@@ -24,7 +24,7 @@ export const zBottomMenu = [
   { icon: 'noto:hamburger', title: '더보기', link: '/app/more/' },
 ]
 export const zRedirectType = [
-  { val: 0, name: '관리자', uri: '/manager' },
-  { val: 1, name: '어플', uri: '/app' },
+  { val: 0, name: '관리자', uri: '/manager/login' },
+  { val: 1, name: '어플', uri: '/app/login' },
   { val: 2, name: '쇼핑몰', uri: '/shop' },
 ]
