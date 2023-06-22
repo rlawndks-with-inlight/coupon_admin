@@ -44,7 +44,8 @@ const ShoppingMallLayout3 = (props) => {
       getCategoryColor,
       setKeyword,
       setMenuDisplay,
-      setQuery
+      setQuery,
+      router,
     },
     children, scrollToTop,
   } = props;
@@ -70,7 +71,13 @@ const ShoppingMallLayout3 = (props) => {
           }}
         />
         {children}
-        <Footer />
+        <Footer
+          data={{
+          }}
+          func={{
+            router
+          }}
+        />
       </Box>
       {scrollToTop ? (
         scrollToTop(props)

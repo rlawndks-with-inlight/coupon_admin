@@ -95,6 +95,7 @@ const ShoppingMallLayout = ({ children, scrollToTop }) => {
     }
     return obj;
   }
+
   return (
     <>
       <StyledEngineProvider injectFirst>
@@ -113,6 +114,7 @@ const ShoppingMallLayout = ({ children, scrollToTop }) => {
             setKeyword,
             setMenuDisplay,
             setQuery,
+            router,
           },
           children,
           scrollToTop

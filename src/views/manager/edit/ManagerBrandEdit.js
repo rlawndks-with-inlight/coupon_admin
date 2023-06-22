@@ -69,12 +69,15 @@ const ManagerBrandEdit = (props) => {
         is_use_coupon: 0,//쿠폰 탭  사용할지
         is_use_gift: 0,//선물하기 탭 사용할지
         is_use_order: 0,//주문 탭 사용할지
-        dark_background_color: '#000',//다크모드 배경색
-        dark_box_color: '#000',// 다크모드 컨텐츠 색
-        dark_font_color: '#fff',// 다크모드 폰트 색
+        dark_background_color: '#000000',//다크모드 배경색
+        dark_box_color: '#222224',// 다크모드 컨텐츠 색
+        dark_font_color: '#ffffff',// 다크모드 폰트 색
       },
       shop: {
-        demo_num: 1 //쇼핑몰 데모숫자
+        demo_num: 1, //쇼핑몰 데모숫자,
+        dark_background_color: '#000000',//다크모드 배경색
+        dark_box_color: '#222224',// 다크모드 컨텐츠 색
+        dark_font_color: '#ffffff',// 다크모드 폰트 색
       }
     },
     company_nm: '',
@@ -641,10 +644,68 @@ const ManagerBrandEdit = (props) => {
             </TabPanel>
             <TabPanel sx={{ p: 0 }} value='tab-7'>
               <Grid container spacing={6}>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <Card sx={{ height: '100%' }}>
                     <CardContent>
-
+                      <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label' sx={{ background: `${theme.palette.mode == 'dark' ? '#2f3349f2' : '#fff'}`, pr: '4px' }}>쇼핑몰데모버전</InputLabel>
+                            <Select
+                              label='쇼핑몰데모'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='is_use_gift'
+                              onChange={(e) => {
+                                let obj = { ...values };
+                                obj['options']['shop'].demo_num = e.target.value
+                                setValues(obj);
+                              }}
+                              defaultValue={values?.options?.shop?.demo_num}
+                              value={values?.options?.shop?.demo_num}
+                            >
+                              <MenuItem value='1'>데모1</MenuItem>
+                              <MenuItem value='2'>데모2</MenuItem>
+                              <MenuItem value='3'>데모3</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+                      <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='다크모드 배경색' type={'color'} placeholder='다크모드 배경색을 입력해 주세요.' className='dark_background_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['shop'].dark_background_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.shop.dark_background_color}
+                            value={values?.options?.shop.dark_background_color} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='다크모드 컨텐츠 배경색' type={'color'} placeholder='다크모드 컨텐츠 배경색을 입력해 주세요.' className='dark_box_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['shop'].dark_box_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.shop.dark_box_color}
+                            value={values?.options?.shop.dark_box_color} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='다크모드 폰트색' type={'color'} placeholder='다크모드 폰트색을 입력해 주세요.' className='dark_font_color' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['shop'].dark_font_color = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.shop?.dark_font_color}
+                            value={values?.options?.shop?.dark_font_color} />
+                        </Grid>
+                      </Grid>
                     </CardContent>
                   </Card>
                 </Grid>

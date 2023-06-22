@@ -7,7 +7,6 @@ export default class RootDocument extends Document {
         <Head>
         </Head>
         <body onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} onSelectStart={(e) => e.preventDefault()} style={{
-          cursor: 'pointer'
         }}>
           <div onClick={() => {
             void (0);

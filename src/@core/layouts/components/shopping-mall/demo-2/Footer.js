@@ -23,8 +23,14 @@ margin-right:0.5rem;
 const marginRight = styled.div`
 margin-right:0.5rem;
 `
-const Footer = () => {
-
+const Footer = (props) => {
+  const {
+    data: {
+    },
+    func: {
+      router
+    },
+  } = props;
   const theme = useTheme();
 
   return (
@@ -33,8 +39,8 @@ const Footer = () => {
         <ContentWrapper>
           <Row>
             <Bold style={{ marginRight: '1rem', cursor: 'pointer' }}>회사소개</Bold>
-            <Bold style={{ marginRight: '1rem', cursor: 'pointer' }}>서비스이용약관</Bold>
-            <Bold style={{ cursor: 'pointer' }}>개인정보처리방침</Bold>
+            <Bold style={{ marginRight: '1rem', cursor: 'pointer' }} onClick={() => { router.push('/shop/auth/policy?type=0') }}>서비스이용약관</Bold>
+            <Bold style={{ cursor: 'pointer' }} onClick={() => { router.push('/shop/auth/policy?type=1') }}>개인정보처리방침</Bold>
           </Row>
           <Row>
             <Bold>회사명</Bold>
