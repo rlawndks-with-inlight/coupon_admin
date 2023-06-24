@@ -102,7 +102,6 @@ const App = props => {
   const setConfig = Component.setConfig ?? undefined;
   return (
     <>
-
       <Head>
         <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
         <meta
@@ -152,9 +151,13 @@ const App = props => {
     </>
   )
 }
-App.getInitialProps = async (context) => {
-  const { ctx, Component } = context;
+
+App.getInitialProps = async ({ Component, ctx }) => {
+  let pageProps = {};
   try {
+    if (Component.getInitialProps) {
+      pageProps = (await Component.getInitialProps(ctx)) || {};
+    }
     if (ctx.req?.headers) {
       const host = ctx.req.headers.host.split(':')[0];
       const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
@@ -164,13 +167,17 @@ App.getInitialProps = async (context) => {
       }
     } else {
       return {
-        dns_data: {}
+        dns_data: {},
+        pageProps
+
       }
     }
   } catch (err) {
     return {
-      dns_data: {}
+      dns_data: {},
+      pageProps
     }
   }
 }
+
 export default App
