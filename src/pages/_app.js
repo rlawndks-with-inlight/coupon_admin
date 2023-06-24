@@ -102,9 +102,8 @@ const App = props => {
   const setConfig = Component.setConfig ?? undefined;
   return (
     <>
-      {(typeof window != 'undefined' && dnsData?.name) || typeof window == 'undefined' ?
-        <>
-          <Head>
+
+      {/* <Head>
             <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
             <meta
               name='description'
@@ -125,63 +124,57 @@ const App = props => {
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
             <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
             <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
-          </Head>
-          <Provider store={store}>
-            <CacheProvider value={emotionCache}>
-              <Script
-                strategy="beforeInteractive"
-                src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
-              ></Script>
-              <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-                <SettingsConsumer>
-                  {({ settings }) => {
-                    return (
-                      <ThemeComponent settings={settings}>
-                        <WindowWrapper>
-                          {getLayout(<Component {...pageProps} />)}
-                        </WindowWrapper>
-                        <ReactHotToast>
-                          <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                        </ReactHotToast>
-                      </ThemeComponent>
-                    )
-                  }}
-                </SettingsConsumer>
-              </SettingsProvider>
-            </CacheProvider>
-          </Provider>
-        </>
-        :
-        <>
-          <FallbackSpinner />
-        </>
-      }
+          </Head> */}
+      <Provider store={store}>
+        <CacheProvider value={emotionCache}>
+          <Script
+            strategy="beforeInteractive"
+            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
+          ></Script>
+          <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+            <SettingsConsumer>
+              {({ settings }) => {
+                return (
+                  <ThemeComponent settings={settings}>
+                    <WindowWrapper>
+                      {getLayout(<Component {...pageProps} />)}
+                    </WindowWrapper>
+                    <ReactHotToast>
+                      <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                    </ReactHotToast>
+                  </ThemeComponent>
+                )
+              }}
+            </SettingsConsumer>
+          </SettingsProvider>
+        </CacheProvider>
+      </Provider>
     </>
   )
 }
-if (typeof window == 'undefined') {
-  App.getInitialProps = async ({ Component, ctx }) => {
-    try {
-      const pageProps = Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : {};
-      if (ctx.req?.headers) {
-        const host = ctx.req.headers.host.split(':')[0];
-        const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
-        const json = (await res.json());
-        return {
-          dns_data: json
-        }
-      } else {
-        return {
-          dns_data: {}
-        }
-      }
-    } catch (err) {
-      return {
-        dns_data: {}
-      }
-    }
-  }
-}
+// if (typeof window == 'undefined') {
+//   App.getInitialProps = async ({ Component, ctx }) => {
+//     try {
+//       const pageProps = Component.getInitialProps
+//         ? await Component.getInitialProps(ctx)
+//         : {};
+//       if (ctx.req?.headers) {
+//         const host = ctx.req.headers.host.split(':')[0];
+//         const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
+//         const json = (await res.json());
+//         return {
+//           dns_data: json
+//         }
+//       } else {
+//         return {
+//           dns_data: {}
+//         }
+//       }
+//     } catch (err) {
+//       return {
+//         dns_data: {}
+//       }
+//     }
+//   }
+// }
 export default App
