@@ -1,8 +1,25 @@
 {
-  "crons": [
+  "version": 2,
+  "builds": [
     {
-      "path": "/api/cron",
-      "schedule": "0 10 * * *"
+      "src": "next.config.js",
+      "use": "@vercel/next",
+      "config": {
+        "staticOptimization": false
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/_next/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
