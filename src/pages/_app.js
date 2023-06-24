@@ -114,11 +114,7 @@ const App = props => {
             <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
             <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            {/* <meta property="og:type" content="website" />
-            <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
-            <meta property="og:image" content={(dns_data?.og_img || dnsData?.og_img) ?? ""} />
-            <meta property="og:url" content={'https:' + (dns_data?.dns || dnsData?.dns) ?? ""} />
-            <meta property="og:description" content={(dns_data?.og_description || dnsData?.og_description) ?? ""} /> */}
+
             <meta name="author" content="purplevery" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=0" />
             <meta name="apple-mobile-web-app-capable" content="yes" />
