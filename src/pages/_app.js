@@ -159,29 +159,29 @@ const App = props => {
     </>
   )
 }
-if (typeof window == 'undefined') {
-  App.getInitialProps = async ({ Component, ctx }) => {
-    try {
-      const pageProps = Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : {};
-      if (ctx.req?.headers) {
-        const host = ctx.req.headers.host.split(':')[0];
-        const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
-        const json = (await res.json());
-        return {
-          dns_data: json
-        }
-      } else {
-        return {
-          dns_data: {}
-        }
-      }
-    } catch (err) {
-      return {
-        dns_data: {}
-      }
-    }
-  }
-}
+// if (typeof window == 'undefined') {
+//   App.getInitialProps = async ({ Component, ctx }) => {
+//     try {
+//       const pageProps = Component.getInitialProps
+//         ? await Component.getInitialProps(ctx)
+//         : {};
+//       if (ctx.req?.headers) {
+//         const host = ctx.req.headers.host.split(':')[0];
+//         const res = await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`);
+//         const json = (await res.json());
+//         return {
+//           dns_data: json
+//         }
+//       } else {
+//         return {
+//           dns_data: {}
+//         }
+//       }
+//     } catch (err) {
+//       return {
+//         dns_data: {}
+//       }
+//     }
+//   }
+// }
 export default App
