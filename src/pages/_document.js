@@ -1,9 +1,9 @@
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class RootDocument extends Document {
   render() {
     return (
-      <html>
+      <Html>
         <Head>
         </Head>
         <body onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} onSelectStart={(e) => e.preventDefault()} style={{
@@ -16,7 +16,7 @@ export default class RootDocument extends Document {
 
           </div>
         </body>
-      </html>
+      </Html>
     );
   }
 }

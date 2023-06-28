@@ -14,7 +14,7 @@ const getDemo = (num, common) => {
     return <Home1 {...common} />
 }
 
-const Home = () => {
+const Home = ({ dns_data }) => {
   const {
     settings: { direction }
   } = useSettings()
