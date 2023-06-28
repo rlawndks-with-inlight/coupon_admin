@@ -27,7 +27,6 @@ import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 
 // ** Utils Imports
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
-import fetch from 'isomorphic-unfetch';
 // ** Prismjs Styles
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -48,10 +47,7 @@ import Script from 'next/script'
 import Head from 'next/head'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useSettings } from 'src/@core/hooks/useSettings'
-
 const clientSideEmotionCache = createEmotionCache()
-
-const isServerReq = req => !req.url.startsWith('/_next');
 
 // ** Configure JSS & ClassName
 const App = props => {
@@ -111,7 +107,7 @@ const App = props => {
         <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
         <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
         <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
         <meta property="og:image" content={(dns_data?.og_img || dnsData?.og_img) ?? ""} />
@@ -151,15 +147,18 @@ const App = props => {
     </>
   )
 }
+
+
 App.getInitialProps = async ({ ctx }) => {
   try {
     const host = ctx.req.headers.host.split(':')[0];
-    const res = isServerReq(ctx.req) ? await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`) : null;
+    const res = ctx.req ? await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`) : null;
     const json = (await res.json());
     return {
       dns_data: json
     }
   } catch (err) {
+    console.log(err)
     return {
       dns_data: {},
     }

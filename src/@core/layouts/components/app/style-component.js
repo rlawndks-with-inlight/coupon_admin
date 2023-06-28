@@ -197,7 +197,6 @@ export const MakeInput = (props) => {
     endButtonProps,
     common
   } = props;
-  console.log(common)
   const theme = useTheme();
 
   const size_style_obj = {
