@@ -155,10 +155,10 @@ App.getInitialProps = async ({ ctx }) => {
     const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
 
     const res = await fetch(url);
-    const json = await res.json();
+    const dns_data = await res.json();
 
     return {
-      dns_data: json,
+      dns_data,
     };
   } catch (err) {
     console.log(err);
