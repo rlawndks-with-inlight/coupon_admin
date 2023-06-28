@@ -1,62 +1,30 @@
 import Head from "next/head";
-import { getLocalStorage } from "src/@core/utils/local-storage";
-import { LOCALSTORAGE } from "src/data/data";
-import { useEffect, useState } from "react";
-import { axiosIns } from "src/@fake-db/backend";
-import { returnMoment } from "src/@core/utils/function";
-const HeadContent = (props) => {
-  const [dnsData, setDnsData] = useState({});
-  const { title, dns_data } = props;
-
-  useEffect(() => {
-    getDnsData(dns_data);
-  }, [])
-
-  const getDnsData = async (dns_data_) => {
-    try {
-      if (!dns_data_) {
-        let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-        dns_data = JSON.parse(dns_data);
-        if (!dns_data?.name) {
-          const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-          setDnsData(response?.data);
-        } else {
-          setDnsData(dns_data);
-        }
-      } else {
-        setDnsData(dns_data_)
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+const HeadContent = ({ dns_data }) => {
   return (
     <>
       <Head>
-        <title>{`${(dns_data?.name || dnsData?.name) ?? ""}${title ? ` - ${title}` : ''}`}</title>
+        <title>{dns_data?.name}</title>
         <meta
           name='description'
-          content={(dns_data?.og_description || dnsData?.og_description) ?? ""}
+          content={dns_data?.og_description}
         />
-        <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
-        <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel='shortcut icon' href={dns_data?.favicon_img} />
+        <link rel="apple-touch-icon" sizes="180x180" href={dns_data?.favicon_img} />
+        <meta name='keywords' content={dns_data?.name} />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
-        <meta property="og:image" content={(dns_data?.og_img || dnsData?.og_img) ?? ""} />
-        <meta property="og:url" content={'https:' + (dns_data?.dns || dnsData?.dns) ?? ""} />
-        <meta property="og:description" content={(dns_data?.og_description || dnsData?.og_description) ?? ""} />
+        <meta property="og:title" content={dns_data?.name} />
+        <meta property="og:image" content={dns_data?.og_img} />
+        <meta property="og:url" content={'https:' + dns_data?.dns} />
+        <meta property="og:description" content={dns_data?.og_description} />
         <meta name="author" content="purplevery" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
+        <meta name="apple-mobile-web-app-title" content={dns_data?.name} />
         <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
-        <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
       </Head>
     </>
   )
 }
-
-
 export default HeadContent;

@@ -22,6 +22,7 @@ import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE, zRedirectType } from 'src/data/data'
 import Loading from 'src/@core/layouts/components/app/Loading'
 import FallbackSpinner from 'src/@core/components/spinner';
+import HeadContent from 'src/@core/components/head';
 
 const Index = ({ dns_data }) => {
   // ** State
@@ -72,7 +73,6 @@ const Index = ({ dns_data }) => {
     </>
   )
 }
-
 
 Index.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
