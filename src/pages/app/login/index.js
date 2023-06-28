@@ -66,6 +66,7 @@ const Login = ({ dns_data }) => {
     } else {
       onSettings();
     }
+    console.log(theme)
   }, [])
   useEffect(() => {
     const onMessageHandler = async (e) => {

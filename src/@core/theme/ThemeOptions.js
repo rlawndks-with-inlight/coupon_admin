@@ -50,6 +50,10 @@ const themeOptions = settings => {
       shape: {
         borderRadius: 6
       },
+      dns_data: {
+        a: 1,
+        b: 2
+      },
       mixins: {
         toolbar: {
           minHeight: 64
