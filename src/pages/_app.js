@@ -54,43 +54,9 @@ const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
 
-  const saveDnsData = () => {
-    setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-  }
   useEffect(() => {
-    if (typeof window == 'undefined') {
-      saveDnsData();
-      getDnsData(dns_data);
-    } else {
-      getDnsData(false);
-    }
+    setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
   }, [])
-  const [dnsData, setDnsData] = useState({});
-
-  const getDnsData = async (dns_data_) => {
-    try {
-      if (!dns_data_) {
-        let dns_data = undefined;
-        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-        dns_data = response?.data;
-        if (typeof dns_data['theme_css'] == 'string') {
-          dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
-        }
-        setDnsData(dns_data);
-        setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-      } else {
-        let dns_data = dns_data_;
-        if (typeof dns_data['theme_css'] == 'string') {
-          dns_data['theme_css'] = JSON.parse(dns_data['theme_css'] ?? "{}");
-          dns_data['options'] = JSON.parse(dns_data['options'] ?? "{}");
-        }
-        setDnsData(dns_data);
-        setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =
@@ -99,25 +65,25 @@ const App = props => {
   return (
     <>
       <Head>
-        <title>{`${(dns_data?.name || dnsData?.name) ?? ""}`}</title>
+        <title>{dns_data?.name}</title>
         <meta
           name='description'
-          content={(dns_data?.og_description || dnsData?.og_description) ?? ""}
+          content={dns_data?.og_description}
         />
-        <link rel='shortcut icon' href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
-        <link rel="apple-touch-icon" sizes="180x180" href={(dns_data?.favicon_img || dnsData?.favicon_img) ?? ""} />
-        <meta name='keywords' content={(dns_data?.name || dnsData?.name)} />
+        <link rel='shortcut icon' href={dns_data?.favicon_img} />
+        <link rel="apple-touch-icon" sizes="180x180" href={dns_data?.favicon_img} />
+        <meta name='keywords' content={dns_data?.name} />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={(dns_data?.name || dnsData?.name) ?? ""} />
-        <meta property="og:image" content={(dns_data?.og_img || dnsData?.og_img) ?? ""} />
-        <meta property="og:url" content={'https:' + (dns_data?.dns || dnsData?.dns) ?? ""} />
-        <meta property="og:description" content={(dns_data?.og_description || dnsData?.og_description) ?? ""} />
+        <meta property="og:title" content={dns_data?.name} />
+        <meta property="og:image" content={dns_data?.og_img} />
+        <meta property="og:url" content={'https:' + dns_data?.dns} />
+        <meta property="og:description" content={dns_data?.og_description} />
         <meta name="author" content="purplevery" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content={(dns_data?.name || dnsData?.name) ?? ""} />
+        <meta name="apple-mobile-web-app-title" content={dns_data?.name} />
         <meta name="theme-color" content={JSON.parse(dns_data?.theme_css ?? "{}")?.main_color || "#7367f0"} />
       </Head>
       <Provider store={store}>
@@ -156,7 +122,6 @@ App.getInitialProps = async ({ ctx }) => {
 
     const res = await fetch(url);
     const dns_data = await res.json();
-
     return {
       dns_data,
     };
