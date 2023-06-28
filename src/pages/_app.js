@@ -18,7 +18,7 @@ import ThemeComponent from 'src/@core/theme/ThemeComponent'
 import WindowWrapper from 'src/@core/components/window-wrapper'
 
 // ** Spinner Import
-
+import fetch from 'isomorphic-unfetch';
 // ** Contexts
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
 
@@ -151,17 +151,21 @@ const App = props => {
 
 App.getInitialProps = async ({ ctx }) => {
   try {
-    const host = ctx.req.headers.host.split(':')[0];
-    const res = ctx.req ? await fetch(`${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`) : null;
-    const json = (await res.json());
+    const host = ctx.req ? ctx.req.headers.host.split(':')[0] : '';
+    const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
     return {
-      dns_data: json
-    }
+      dns_data: json,
+    };
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return {
       dns_data: {},
-    }
+    };
   }
-}
+};
+
 export default App
