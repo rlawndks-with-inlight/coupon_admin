@@ -57,6 +57,7 @@ const Index = ({ dns_data }) => {
           return;
         }
       }
+      router.push('/manager');
     } catch (err) {
       //toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
