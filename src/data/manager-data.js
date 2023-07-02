@@ -60,6 +60,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('유저아이디', 'user_name', 'text', ''),
       managerListFormat('유저레벨', 'level', 'user_level', ''),
       managerListFormat('휴대폰번호', 'phone_num', 'text', ''),
+      managerListFormat('API KEY', 'api_key', 'text', ''),
+      managerListFormat('API KEY 발급', 'api_key_pub', 'api_key_pub', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),

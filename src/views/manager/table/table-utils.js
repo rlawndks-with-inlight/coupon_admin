@@ -17,7 +17,8 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       openChangePasswordPopUp,
       onChangeOnCouponModelPopUp,
       onChangeOnCouponPopUp,
-      onClickImage
+      onClickImage,
+      onApiKeyPubOpen,
     } = func;
     let item = data[column?.column];
     if (column?.column && column?.column.includes('-obj-')) {
@@ -363,6 +364,22 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
               onClick={() => { onChangeOnCouponPopUp(data, 'cancel') }}
             >
               <Icon icon='material-symbols:cancel-outline' />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+      if (is_excel) result = '---';
+    }
+    if (column?.type == 'api_key_pub') {
+      result = (
+        <>
+          <Tooltip title='api key 발급'>
+            <IconButton
+              size='small'
+              sx={{ color: 'text.secondary' }}
+              onClick={() => { onApiKeyPubOpen(data) }}
+            >
+              <Icon icon='ic:outline-publish' />
             </IconButton>
           </Tooltip>
         </>

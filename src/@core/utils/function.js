@@ -245,7 +245,7 @@ export const getBackgroundColor = (theme) => {
   }
 }
 export const handleLogout = async (router, link_) => {
-  let link = link_ ?? '/';
+  let link = link_ ?? `/${router.asPath.split('/')[1]}/login`;
   try {
     const response = await axiosIns().post('/api/v1/auth/sign-out', {
       headers: {

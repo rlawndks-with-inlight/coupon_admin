@@ -17,6 +17,7 @@ import DialogCouponModel from 'src/views/components/dialogs/DialogCouponModel'
 import DialogImage from 'src/views/components/dialogs/DialogImage'
 import { getItemByType } from './table-utils'
 import DialogCoupon from 'src/views/components/dialogs/DialogCoupon'
+import DialogApiKey from 'src/views/components/dialogs/DialogApiKey';
 
 const TrManager = (props) => {
   const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table } = props;
@@ -300,6 +301,26 @@ const TrManager = (props) => {
     }
     return obj
   }
+
+  const [apiKeyOpen, setApiKeyOpen] = useState(false);
+  const [apiKeyOpenData, setApiKeyOpenData] = useState({});
+  const onApiKeyPubOpen = (data) => {
+    setApiKeyOpenData(data);
+    setApiKeyOpen(true);
+  }
+  const onApiKeyPub = async () => {
+    try {
+      console.log(apiKeyOpenData)
+      const response = await axiosIns().post(`/api/v1/manager/operators/${apiKeyOpenData.id}/api-key`);
+      if (response?.status == 201) {
+        toast.success("성공적으로 발급 되었습니다.")
+        changePage(page);
+      }
+    } catch (err) {
+      let push_lick = await processCatch(err);
+    }
+    setApiKeyOpen(false);
+  }
   return (
     <>
       <DialogConfirm
@@ -347,6 +368,16 @@ const TrManager = (props) => {
         setCouponSelectValue={setCouponSelectValue}
         couponSelectValue={couponSelectValue}
       />
+      <DialogApiKey
+        open={apiKeyOpen}
+        handleClose={() => { setApiKeyOpen(false) }}
+        onKeepGoing={onApiKeyPub}
+        text={'정말 발급 하시겠습니까?'}
+        subText={''}
+        saveText={'발급'}
+        headIcon={<Icon icon='ic:outline-publish' style={{ fontSize: '40px' }} />}
+        data={deleteData}
+      />
       <TableRow
         key={index}
         className={`table-cell-hover-${theme.palette.mode}`}
@@ -384,6 +415,7 @@ const TrManager = (props) => {
                         onChangeOnCouponModelPopUp: onChangeOnCouponModelPopUp,
                         onChangeOnCouponPopUp: onChangeOnCouponPopUp,
                         onClickImage: onClickImage,
+                        onApiKeyPubOpen: onApiKeyPubOpen
                       })}
                     </TableCell>
                   </>

@@ -267,6 +267,7 @@ const ManagerProductEdit = (props) => {
                                   }
                                 }
                               }
+                              console.log(note)
                               setValues({ ...values, ['content']: note })
                             }} />
                         </Grid>

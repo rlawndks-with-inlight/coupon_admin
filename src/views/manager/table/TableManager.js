@@ -80,6 +80,13 @@ const isShowCell = (data, func) => {
       }
     }
   }
+  if (param_table == 'operators') {
+    if (user_data?.level < 50) {
+      if (column == 'api_key' || column == 'api_key_pub') {
+        result_obj['show_flag'] = false;
+      }
+    }
+  }
   // const {} = func;
   return result_obj;
 }
