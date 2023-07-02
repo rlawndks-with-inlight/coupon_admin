@@ -21,7 +21,10 @@ import { objDataGridColumns } from "src/data/manager-data";
 import { useTheme } from "@emotion/react";
 import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
+import { useSettings } from "src/@core/hooks/useSettings";
 const List = ({ dns_data }) => {
+
+  const { settings } = useSettings();
   const router = useRouter();
   const [params, setParams] = useState({});
   const [page, setPage] = useState(1);

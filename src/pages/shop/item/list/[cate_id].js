@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import FallbackSpinner from "src/@core/components/spinner"
+import { useSettings } from "src/@core/hooks/useSettings"
 import ShoppingMallLayout from "src/@core/layouts/ShoppingMallLayout"
 import { processCatch } from "src/@core/utils/function"
 import { getLocalStorage } from "src/@core/utils/local-storage"
@@ -15,6 +16,7 @@ const getDemo = (num, common) => {
 
 const List = () => {
 
+  const { settings } = useSettings();
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);

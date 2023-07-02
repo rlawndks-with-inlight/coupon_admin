@@ -9,6 +9,7 @@ import { LOCALSTORAGE } from "src/data/data";
 import Header from "src/@core/layouts/components/app/header";
 import BottomMenu from "src/@core/layouts/components/app/bottom-menu";
 import ShoppingMallLayout from "src/@core/layouts/ShoppingMallLayout";
+import { useSettings } from "src/@core/hooks/useSettings";
 const Title = styled.div`
 font-weight:bold;
 font-size:${themeObj.font_size.font1};
@@ -26,15 +27,14 @@ line-height:20px;
 `
 const Policy = (props) => {
 
+  const { settings } = useSettings();
   const { type } = props;
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [dnsData, setDnsData] = useState({});
 
   useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
-    setDnsData(dns_data)
+    setDnsData(settings.dnsData)
     if (router.query?.type == 0) {
       setTitle("이용약관");
     } else if (router.query?.type == 1) {

@@ -22,6 +22,7 @@ const initialSettings = {
   toastPosition: themeConfig.toastPosition,
   verticalNavToggleType: themeConfig.verticalNavToggleType,
   appBar: themeConfig.layout === 'horizontal' && themeConfig.appBar === 'hidden' ? 'fixed' : themeConfig.appBar,
+  dnsData: themeConfig.dnsData
 }
 
 const staticSettings = {
