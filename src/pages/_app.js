@@ -48,23 +48,36 @@ import Head from 'next/head'
 import { axiosIns } from 'src/@fake-db/backend'
 import { useSettings } from 'src/@core/hooks/useSettings'
 import HeadContent from 'src/@core/components/head'
+import FallbackSpinner from 'src/@core/components/spinner'
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Configure JSS & ClassName
 const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
+
+  const [loading, setLoading] = useState(true);
+
   const [dnsData, setDnsData] = useState({});
 
   useEffect(() => {
     setDnsData(dns_data);
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
+    setLoading(false);
   }, [])
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =
     Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
   const setConfig = Component.setConfig ?? undefined;
+
+  if (loading) {
+    return (
+      <>
+        <FallbackSpinner />
+      </>
+    )
+  }
   return (
     <>
       <HeadContent dns_data={dns_data?.name ? dns_data : dnsData} />
