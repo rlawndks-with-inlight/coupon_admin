@@ -26,9 +26,15 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
     }
     if (column?.type == 'text') {//
       result = item;
+      if (!item) {
+        result = "---";
+      }
     }
     if (column?.type == 'bold') {//
       result = item;
+      if (!item) {
+        result = "---";
+      }
       if (!is_excel) result = <div style={{ fontWeight: 'bold' }}>{result}</div>
     }
     if (column?.type == 'number') {//
