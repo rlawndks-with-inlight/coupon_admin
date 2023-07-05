@@ -263,7 +263,6 @@ const TableHeader = props => {
               dateFormat="yyyy-MM-dd"
               id='month-year-dropdown'
               popperPlacement={popperPlacement}
-              style={{ padding: '8.5px 32px' }}
 
               onChange={async (date) => {
                 try {
