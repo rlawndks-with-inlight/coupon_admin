@@ -65,6 +65,7 @@ const OperatorSameDateLineBox = (props) => {
           <FormControl sx={{ minWidth: '110px' }}>
             <InputLabel id='demo-simple-select-outlined-label'>유저레벨</InputLabel>
             <Select
+              size='small'
               label='사용여부'
               value={searchObj?.level}
               id='demo-simple-select-outlined'

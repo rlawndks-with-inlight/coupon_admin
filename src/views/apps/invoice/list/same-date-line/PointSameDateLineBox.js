@@ -48,6 +48,7 @@ const PointSameDateLineBox = (props) => {
           <FormControl sx={{ minWidth: '110px' }}>
             <InputLabel id='demo-simple-select-outlined-label'>사용여부</InputLabel>
             <Select
+              size='small'
               label='사용여부'
               value={searchObj?.is_cancel}
               id='demo-simple-select-outlined'

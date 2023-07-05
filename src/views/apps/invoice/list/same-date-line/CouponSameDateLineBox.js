@@ -50,6 +50,7 @@ const CouponSameDateLineBox = (props) => {
           <FormControl sx={{ minWidth: '110px' }}>
             <InputLabel id='demo-simple-select-outlined-label'>발행타입</InputLabel>
             <Select
+              size='small'
               label='발행타입'
               value={searchObj?.status}
               id='demo-simple-select-outlined'

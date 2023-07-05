@@ -18,7 +18,7 @@ import DatePicker from 'react-datepicker'
 import UserOptionBox from './option-box/UserOptionBox'
 import PointOptionBox from './option-box/PointOptionBox'
 import DeviceOptionBox from './option-box/DeviceOptionBox'
-import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInput'
+import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInputSmall'
 import { Divider } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import $ from 'jquery';
