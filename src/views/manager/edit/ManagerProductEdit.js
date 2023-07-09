@@ -72,6 +72,7 @@ const ManagerProductEdit = (props) => {
     mfg_nm: '',
     model_nm: '',
     content: '',
+    code: ''
   }
   const [values, setValues] = useState(defaultObj);
   const [options, setOptions] = useState([]);
@@ -187,6 +188,25 @@ const ManagerProductEdit = (props) => {
                           />
                         </Grid>
                         <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <InputLabel id='form-layouts-tabs-select-label'>카테고리</InputLabel>
+                            <Select
+                              label='Country'
+                              id='form-layouts-tabs-select'
+                              labelId='form-layouts-tabs-select-label'
+                              className='level'
+                              onChange={handleChangeValue('cate_id')}
+                              defaultValue={values?.cate_id}
+                              value={values?.cate_id}
+                            >
+                              {categoryList && categoryList.map((item, idx) => {
+                                return <MenuItem value={item?.id} key={idx}>{item?.name}</MenuItem>
+                              })}
+
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
                           <TextField fullWidth label='상품명' placeholder='상품명을 입력해 주세요.' className='name' onChange={handleChangeValue('name')} defaultValue={values?.name} value={values?.name} />
                         </Grid>
                         <Grid item xs={12}>
@@ -208,23 +228,7 @@ const ManagerProductEdit = (props) => {
                           <TextField fullWidth label='모델명' placeholder='모델명을 입력해 주세요.' className='model_nm' onChange={handleChangeValue('model_nm')} defaultValue={values?.model_nm} value={values?.model_nm} />
                         </Grid>
                         <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <InputLabel id='form-layouts-tabs-select-label'>카테고리</InputLabel>
-                            <Select
-                              label='Country'
-                              id='form-layouts-tabs-select'
-                              labelId='form-layouts-tabs-select-label'
-                              className='level'
-                              onChange={handleChangeValue('cate_id')}
-                              defaultValue={values?.cate_id}
-                              value={values?.cate_id}
-                            >
-                              {categoryList && categoryList.map((item, idx) => {
-                                return <MenuItem value={item?.id} key={idx}>{item?.name}</MenuItem>
-                              })}
-
-                            </Select>
-                          </FormControl>
+                          <TextField fullWidth label='상품코드' placeholder='상품코드를 입력해 주세요.' className='code' onChange={handleChangeValue('code')} defaultValue={values?.code} value={values?.code} />
                         </Grid>
                       </Grid>
                     </CardContent>

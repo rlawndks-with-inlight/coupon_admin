@@ -289,6 +289,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('No.', 'id', 'number', ''),
       managerListFormat('카테고리명', 'category_name', 'text', ''),
       managerListFormat('상품명', 'name', 'text', ''),
+      managerListFormat('상품코드', 'code', 'text', ''),
       managerListFormat('상품이미지', 'product_img', 'img', ''),
       managerListFormat('가격', 'item_pr', 'number', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
