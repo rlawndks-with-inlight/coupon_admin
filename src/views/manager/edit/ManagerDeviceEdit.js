@@ -74,6 +74,7 @@ const ManagerDeviceEdit = (props) => {
       }
       setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
     } catch (err) {
+      console.log(err)
       console.log(err);
     }
   }
@@ -159,6 +160,7 @@ const ManagerDeviceEdit = (props) => {
                       onChange={handleChangeValue('partner_id')}
                       defaultValue={values?.partner_id ?? 0}
                       value={values?.partner_id}
+                      placeholder='협력사를 선택해 주세요.'
                     >
                       {partnerList.length == 0 &&
                         <>
