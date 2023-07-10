@@ -96,7 +96,7 @@ const ManagerCouponModelEdit = (props) => {
       user = JSON.parse(user);
       const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
       setProductList([...res_products?.data?.content]);
-      const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
+      const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
       if (res_mchts?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();

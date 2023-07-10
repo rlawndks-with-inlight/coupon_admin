@@ -85,7 +85,6 @@ const ManagerMerchandiseEdit = (props) => {
       for (var i = 0; i < user_list.length; i++) {
         user_list[i]['group_id'] = user_list[i]['id'];
       }
-      setUserList(user_list);
       let obj = await getOneItem();
       setValues({ ...obj, 'group_id': user_list[0]['group_id'] });
     } catch (err) {

@@ -56,7 +56,7 @@ const ManagerPointEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
 
       setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
       if (response?.data?.mcht_id.length <= 0) {
