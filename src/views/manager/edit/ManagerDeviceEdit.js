@@ -30,6 +30,8 @@ const ManagerDeviceEdit = (props) => {
     partner_id: partnerList[0]?.id ?? 0,
     mac_addr: '',
     comment: ' ',
+    device_type: 0,
+    pos_code: ''
   })
   useEffect(() => {
     if (mchtList.length > 0) {
@@ -161,6 +163,26 @@ const ManagerDeviceEdit = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField fullWidth label='맥주소' placeholder='맥주소를 입력해 주세요.' className='mac_addr' onChange={handleChangeValue('mac_addr')} defaultValue={values?.mac_addr} value={values?.mac_addr} />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id='form-layouts-tabs-select-label'>장비타입</InputLabel>
+                    <Select
+                      label='장비타입'
+                      id='form-layouts-tabs-select'
+                      labelId='form-layouts-tabs-select-label'
+                      className='device_type'
+                      onChange={handleChangeValue('device_type')}
+                      defaultValue={values?.device_type ?? 0}
+                      value={values?.device_type}
+                    >
+                      <MenuItem value={0}>{'키오스크'}</MenuItem>
+                      <MenuItem value={1}>{'POS'}</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='pos코드' placeholder='pos코드를 입력해 주세요.' className='pos_code' onChange={handleChangeValue('pos_code')} defaultValue={values?.pos_code} value={values?.pos_code} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

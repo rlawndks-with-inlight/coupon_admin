@@ -356,6 +356,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('스탬프사용여부', 'stamp_flag', 'use_status', ''),
       managerListFormat('스탬프저장갯수', 'stamp_save_count', 'number', ''),
       managerListFormat('맥주소', 'mac_addr', 'text', ''),
+      managerListFormat('장비타입', 'device_type', 'device_type', ''),
+      managerListFormat('pos코드', 'pos_code', 'text', ''),
       managerListFormat('비고', 'comment', 'text', ''),
       managerListFormat('발행시간', 'created_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),

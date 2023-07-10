@@ -280,6 +280,17 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         result = '---';
       }
     }
+    if (column?.type == 'device_type') {
+      if (item == 1) {
+        result = 'POS';
+        if (!is_excel) result = <Chip label={result} />
+      } else if (item == 0) {
+        result = '키오스크';
+        if (!is_excel) result = <Chip label={result} variant='outlined' />
+      } else {
+        result = '---';
+      }
+    }
     if (column?.type == 'on_pub') {
       result = (
         <>
