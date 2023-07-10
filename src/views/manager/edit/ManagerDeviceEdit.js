@@ -27,7 +27,7 @@ const ManagerDeviceEdit = (props) => {
 
   const [values, setValues] = useState({
     mcht_id: mchtList[0]?.id ?? 0,
-    partner_id: partnerList[0]?.id ?? null,
+    partner_id: null,
     mac_addr: '',
     comment: ' ',
     device_type: 0,
@@ -70,7 +70,7 @@ const ManagerDeviceEdit = (props) => {
       if (item) {
         setValues({ ...item });
       } else {
-        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'], 'partner_id': partner_list[0]['id'] });
+        setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
       }
       setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
     } catch (err) {
@@ -166,7 +166,7 @@ const ManagerDeviceEdit = (props) => {
                         <>
                           <MenuItem value={null}>미존재</MenuItem>
                         </>}
-                      {partnerList && partnerList.map((item, idx) => {
+                      {partnerList && [...[{ id: null, user_name: '미존재' }], ...partnerList].map((item, idx) => {
                         return <MenuItem value={item?.id} key={idx}>{item?.user_name}</MenuItem>
                       })}
 
