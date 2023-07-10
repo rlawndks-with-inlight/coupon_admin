@@ -162,9 +162,6 @@ const ManagerDeviceEdit = (props) => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='맥주소' placeholder='맥주소를 입력해 주세요.' className='mac_addr' onChange={handleChangeValue('mac_addr')} defaultValue={values?.mac_addr} value={values?.mac_addr} />
-                </Grid>
-                <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel id='form-layouts-tabs-select-label'>장비타입</InputLabel>
                     <Select
@@ -181,9 +178,20 @@ const ManagerDeviceEdit = (props) => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField fullWidth label='pos코드' placeholder='pos코드를 입력해 주세요.' className='pos_code' onChange={handleChangeValue('pos_code')} defaultValue={values?.pos_code} value={values?.pos_code} />
-                </Grid>
+                {values?.device_type == 0 &&
+                  <>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='맥주소' placeholder='맥주소를 입력해 주세요.' className='mac_addr' onChange={handleChangeValue('mac_addr')} defaultValue={values?.mac_addr} value={values?.mac_addr} />
+                    </Grid>
+                  </>}
+
+                {values?.device_type == 1 &&
+                  <>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='POS코드' placeholder='pos코드를 입력해 주세요.' className='pos_code' onChange={handleChangeValue('pos_code')} defaultValue={values?.pos_code} value={values?.pos_code} />
+                    </Grid>
+                  </>}
+
                 <Grid item xs={12}>
                   <TextField
                     sx={{ width: '100%' }}
