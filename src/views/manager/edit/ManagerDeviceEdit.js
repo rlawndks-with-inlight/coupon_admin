@@ -162,10 +162,6 @@ const ManagerDeviceEdit = (props) => {
                       value={values?.partner_id}
                       placeholder='협력사를 선택해 주세요.'
                     >
-                      {partnerList.length == 0 &&
-                        <>
-                          <MenuItem value={null}>미존재</MenuItem>
-                        </>}
                       {partnerList && [...[{ id: null, user_name: '미존재' }], ...partnerList].map((item, idx) => {
                         return <MenuItem value={item?.id} key={idx}>{item?.user_name}</MenuItem>
                       })}
