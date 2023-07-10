@@ -49,7 +49,7 @@ const ManagerDeviceEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1&partner=1`);
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1&partner=1`);
       if (response?.data?.partner_id.length <= 0) {
         toast.error("협력사를 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
