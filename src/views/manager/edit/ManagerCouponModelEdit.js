@@ -94,7 +94,7 @@ const ManagerCouponModelEdit = (props) => {
       setLoading(true);
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
-      const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`)
+      const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
       setProductList([...res_products?.data?.content]);
       const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
       if (res_mchts?.data?.mcht_id.length <= 0) {
@@ -112,7 +112,7 @@ const ManagerCouponModelEdit = (props) => {
       if (item) {
         setSDt(new Date(item?.valid_s_dt));
         setEDt(new Date(item?.valid_e_dt));
-        item['mcht_ids'] = item?.mchts.map(item => { return item?.id })
+        item['mcht_ids'] = item?.mchts.map(item => { return item?.id });
         delete item['mchts'];
 
         if (item['mcht_ids'].length == 0) {

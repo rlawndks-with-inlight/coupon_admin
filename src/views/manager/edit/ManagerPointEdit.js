@@ -57,12 +57,12 @@ const ManagerPointEdit = (props) => {
     try {
       setLoading(true);
       const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
+
       setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
       if (response?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
       }
-      setUserList(response?.data?.user_id?.normals);
       let item = await getItem();
       if (item) {
         let obj = {};
@@ -118,16 +118,19 @@ const ManagerPointEdit = (props) => {
 
   const onSaveItem = async (obj_) => {
     let obj = obj_;
-
-    let user_idx = userList.map(item => {
-      return item?.phone_num
-    }).findIndex((e) => e == values?.phone_num);
-    if (user_idx < 0) {
-      toast.error('유저아이디를 찾을 수 없습니다.');
-      return;
+    let find_user_obj = {
+      user: 1,
+      mcht: 0,
+      phone_num: values?.phone_num
+    }
+    console.log()
+    const res_find_user = await axiosIns().post(`/api/v1/manager/utils/search`, find_user_obj)
+    if (res_find_user?.data?.users.length > 0) {
+      obj['user_id'] = res_find_user?.data?.users[0]?.id
+      //user_id
     } else {
-      obj['user_id'] = userList[user_idx]?.id;
-      delete obj['phone_num'];
+      toast.error(`유저가 존재하지 않습니다.`);
+      return;
     }
     editItem(obj);
   }

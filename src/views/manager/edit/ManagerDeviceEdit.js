@@ -27,7 +27,7 @@ const ManagerDeviceEdit = (props) => {
 
   const [values, setValues] = useState({
     mcht_id: mchtList[0]?.id ?? 0,
-    partner_id: partnerList[0]?.id ?? 0,
+    partner_id: partnerList[0]?.id ?? null,
     mac_addr: '',
     comment: ' ',
     device_type: 0,
@@ -49,16 +49,22 @@ const ManagerDeviceEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1`);
-      let partner_list = [...response?.data?.user_id?.partners];
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?user=1&mcht=1&partner=1`);
+      if (response?.data?.partner_id.length <= 0) {
+        toast.error("협력사를 등록하셔야 장비를 추가하실 수 있습니다.");
+        router.back();
+        return;
+      }
+      let partner_list = [...response?.data?.partner_id];
       let mcht_list = _.sortBy(response?.data?.mcht_id, 'user_name');
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
-      setPartnerList(response?.data?.user_id?.partners);
+      setPartnerList(partner_list);
       if (response?.data?.mcht_id.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
+        return;
       }
       let item = await getItem();
       if (item) {
@@ -154,6 +160,10 @@ const ManagerDeviceEdit = (props) => {
                       defaultValue={values?.partner_id ?? 0}
                       value={values?.partner_id}
                     >
+                      {partnerList.length == 0 &&
+                        <>
+                          <MenuItem value={null}>미존재</MenuItem>
+                        </>}
                       {partnerList && partnerList.map((item, idx) => {
                         return <MenuItem value={item?.id} key={idx}>{item?.user_name}</MenuItem>
                       })}
