@@ -89,7 +89,7 @@ export const SettingsProvider = ({ children, pageSettings }) => {
   const getDnsData = async () => {
     try {
       let obj = {};
-      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${window.location.hostname}`);
       obj = { ...response?.data };
       if (typeof obj?.theme_css == 'string') {
         obj.theme_css = JSON.parse(obj.theme_css)
