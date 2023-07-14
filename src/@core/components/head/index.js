@@ -24,10 +24,7 @@ const HeadContent = ({ dns_data }) => {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={dns_data?.name} />
         <meta name="theme-color" content={dns_data?.theme_css?.main_color || "#7367f0"} />
-        <Script
-          strategy="beforeInteractive"
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
-        ></Script>
+
       </Head>
     </>
   )

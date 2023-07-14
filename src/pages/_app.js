@@ -80,6 +80,10 @@ const App = props => {
                 return (
                   <ThemeComponent settings={settings}>
                     <WindowWrapper>
+                      <Script
+                        strategy='beforeInteractive'
+                        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
+                      ></Script>
                       {getLayout(<Component {...pageProps} />)}
                     </WindowWrapper>
                     <ReactHotToast>
