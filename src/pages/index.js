@@ -47,12 +47,12 @@ const Index = ({ dns_data }) => {
   const setSettings = async () => {
     setLoading(true);
     await checkDns();
+
   }
 
   const checkDns = async () => {
     try {
       let dns_data = settings.dnsData
-      dns_data = JSON.parse(dns_data);
       for (var i = 0; i < zRedirectType.length; i++) {
         if (dns_data?.redirect_type == zRedirectType[i].val) {
           router.push(zRedirectType[i].uri);
