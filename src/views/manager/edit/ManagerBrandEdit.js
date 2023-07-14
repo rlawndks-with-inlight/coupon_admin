@@ -134,7 +134,7 @@ const ManagerBrandEdit = (props) => {
   const onReset = () => {
     setValues(defaultObj)
   }
-  const onEditItem = () => {
+  const onEditItem = async () => {
     let img_key_list = ['logo_img', 'dark_logo_img', 'favicon_img', 'passbook_img', 'contract_img', 'id_img', 'og_img', 'bsin_lic_img', 'map_marker_img'];
     let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css'] ?? {}), ['options']: JSON.stringify(values['options'] ?? {}) };
     for (var i = 0; i < img_key_list.length; i++) {
@@ -144,12 +144,10 @@ const ManagerBrandEdit = (props) => {
         delete obj[img_key_list[i]];
       }
     }
-    let local_dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    local_dns_data = JSON.parse(local_dns_data);
+    let local_dns_data = settings.dnsData;
     local_dns_data['theme_css'] = values['theme_css'];
     local_dns_data['options'] = values['options'];
     local_dns_data['redirect_type'] = values['redirect_type'];
-    setLocalStorage(LOCALSTORAGE.DNS_DATA, local_dns_data);
     editItem(obj);
   }
   return (

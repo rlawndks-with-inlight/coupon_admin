@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import { Button } from '@mui/material'
 import { toast } from 'react-hot-toast'
 import { StyledEngineProvider } from "@mui/material";
+import { useSettings } from '../hooks/useSettings'
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',
 
@@ -38,6 +39,8 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 }))
 
 const AppLayout = ({ children, scrollToTop }) => {
+
+  const { settings } = useSettings();
   const theme = useTheme();
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
@@ -46,8 +49,7 @@ const AppLayout = ({ children, scrollToTop }) => {
   const [isGoBack, setIsGoBack] = useState(false);
 
   useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     let query_keys = Object.keys(router.query);
     if (router.query['dark_background_color']) {
       for (var i = 0; i < query_keys.length; i++) {

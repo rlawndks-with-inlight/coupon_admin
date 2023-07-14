@@ -5,6 +5,7 @@ import VerticalNavSectionTitle from './VerticalNavSectionTitle'
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const resolveNavItemComponent = (item, user_data) => {
 
@@ -15,6 +16,7 @@ const resolveNavItemComponent = (item, user_data) => {
 
 const VerticalNavItems = props => {
   // ** Props
+  const { settings } = useSettings()
   const { verticalNavItems } = props
   const [userData, setUserData] = useState({});
   const [dnsData, setDnsData] = useState({});
@@ -23,8 +25,7 @@ const VerticalNavItems = props => {
     getUserData();
   }, [])
   const getUserData = async () => {
-    let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData
     setDnsData(dns_data);
     let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user_data = JSON.parse(user_data);

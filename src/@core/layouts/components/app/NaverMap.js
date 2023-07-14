@@ -13,9 +13,7 @@ const NaverMap = (props) => {
       return;
     }
     let dns_data = dnsData;
-    if (typeof dns_data == 'string') {
-      dns_data = JSON.parse(dns_data);
-    }
+    console.log(dns_data)
     const location = new naver.maps.LatLng(center?.lat, center?.lng);
     //지도 그리기
     const map = (mapRef.current = new naver.maps.Map('map', {

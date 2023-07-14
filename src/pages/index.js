@@ -23,9 +23,11 @@ import { LOCALSTORAGE, zRedirectType } from 'src/data/data'
 import Loading from 'src/@core/layouts/components/app/Loading'
 import FallbackSpinner from 'src/@core/components/spinner';
 import HeadContent from 'src/@core/components/head';
+import { useSettings } from 'src/@core/hooks/useSettings';
 
 const Index = ({ dns_data }) => {
   // ** State
+  const { settings } = useSettings();
   const [values, setValues] = useState({
     id: '',
     password: '',
@@ -39,21 +41,20 @@ const Index = ({ dns_data }) => {
   const theme = useTheme();
   const router = useRouter();
   useEffect(() => {
-    settings();
+    setSettings();
   }, [])
 
-  const settings = async () => {
+  const setSettings = async () => {
     setLoading(true);
     await checkDns();
   }
 
   const checkDns = async () => {
     try {
-      let obj = {};
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      obj = JSON.parse(dns_data);
+      let dns_data = settings.dnsData
+      dns_data = JSON.parse(dns_data);
       for (var i = 0; i < zRedirectType.length; i++) {
-        if (obj?.redirect_type == zRedirectType[i].val) {
+        if (dns_data?.redirect_type == zRedirectType[i].val) {
           router.push(zRedirectType[i].uri);
           return;
         }

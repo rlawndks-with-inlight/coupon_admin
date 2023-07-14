@@ -13,6 +13,7 @@ import { onPostWebview } from "src/@core/utils/webview-connect"
 import BlankLayout from "src/@core/layouts/BlankLayout"
 import Header from "src/@core/layouts/components/app/header"
 import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
+import { useSettings } from "src/@core/hooks/useSettings"
 
 
 const getDemo = (num, common) => {
@@ -22,6 +23,7 @@ const getDemo = (num, common) => {
 
 const Home = (props) => {
 
+  const { settings } = useSettings();
   const router = useRouter();
   const theme = useTheme();
 
@@ -38,8 +40,7 @@ const Home = (props) => {
   const [membershipObj, setMembershipObj] = useState({});
   const PAGE_SIZE = 10;
   useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     let query_keys = Object.keys(router.query);
     for (var i = 0; i < query_keys.length; i++) {
       dns_data['options']['app'][query_keys[i]] = router.query[query_keys[i]];

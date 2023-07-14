@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react'
 import { themeObj } from '../style-component'
 import { isShowMenu } from 'src/@core/layouts/utils'
 import { toast } from 'react-hot-toast'
+import { useSettings } from 'src/@core/hooks/useSettings'
 const Container = styled.div`
     position: fixed;
     right: 0;
@@ -58,7 +59,7 @@ margin-bottom:auto;
 const BottomMenu = (props) => {
 
   const { isGoBack } = props;
-
+  const { settings } = useSettings();
   const router = useRouter();
   const [colorList, setColorList] = useState([]);
   const [dnsData, setDnsData] = useState({});
@@ -71,8 +72,7 @@ const BottomMenu = (props) => {
   useEffect(() => {
     let color_list = [];
     let move_idx = -1;
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData
     let query_keys = Object.keys(router.query);
     if (query_keys.includes('dark_background_color')) {
       for (var i = 0; i < query_keys.length; i++) {

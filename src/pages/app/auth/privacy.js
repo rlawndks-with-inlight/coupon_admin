@@ -8,6 +8,7 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import Header from "src/@core/layouts/components/app/header";
 import BottomMenu from "src/@core/layouts/components/app/bottom-menu";
+import { useSettings } from "src/@core/hooks/useSettings";
 const Title = styled.div`
 font-weight:bold;
 font-size:${themeObj.font_size.font1};
@@ -25,6 +26,7 @@ line-height:20px;
 `
 const Policy = (props) => {
 
+  const { settings } = useSettings();
   const { type } = props;
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -32,8 +34,7 @@ const Policy = (props) => {
 
   useEffect(() => {
 
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     setDnsData(dns_data)
     if (router.query?.type == 0) {
       setTitle("이용약관");

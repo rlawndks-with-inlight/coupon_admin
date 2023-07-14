@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { useSettings } from '../hooks/useSettings'
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
@@ -30,26 +31,19 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 }))
 
 const BlankLayout = ({ children }) => {
+  const { settings } = useSettings();
   const theme = useTheme();
   const router = useRouter();
   const [backgroundColor, setBackgroundColor] = useState("");
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = "{}"
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     setDnsData(dns_data)
   }, [])
   useEffect(() => {
     if (theme.palette.mode == 'dark') {
       if (router.asPath.includes('/app/')) {
-        let dns_data = {};
-        if (!dnsData?.options) {
-          dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-          dns_data = JSON.parse(dns_data);
-        } else {
-          dns_data = dnsData;
-        }
+        let dns_data = settings.dnsData;
         setBackgroundColor(dns_data?.options?.app?.dark_background_color ?? "#000");
       } else {
         setBackgroundColor('');

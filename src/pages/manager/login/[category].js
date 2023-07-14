@@ -39,6 +39,7 @@ import { getCookie, setCookie } from 'src/@core/utils/react-cookie'
 import { getLocalStorage, setLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
 import { processCatch } from 'src/@core/utils/function'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -60,6 +61,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 const LoginV1 = ({ dns_data }) => {
   // ** State
+  const { settings } = useSettings();
   const [values, setValues] = useState({
     id: '',
     password: '',
@@ -73,10 +75,10 @@ const LoginV1 = ({ dns_data }) => {
   const theme = useTheme();
   const router = useRouter();
   useEffect(() => {
-    settings();
+    setSettings();
   }, [])
 
-  const settings = async () => {
+  const setSettings = async () => {
     setLoading(true);
     await checkDns();
     await checkAuth();
@@ -87,10 +89,7 @@ const LoginV1 = ({ dns_data }) => {
   const checkDns = async () => {
     try {
       let obj = {};
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      obj = JSON.parse(dns_data);
-      if (typeof obj['theme_css'] == 'string') obj['theme_css'] = JSON.parse(obj['theme_css']);
-      if (typeof obj['options'] == 'string') obj['options'] = JSON.parse(obj['options']);
+      let dns_data = settings.dnsData;
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
       obj = { ...response?.data };
       setDnsData(obj);

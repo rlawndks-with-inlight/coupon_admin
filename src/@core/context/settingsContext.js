@@ -3,8 +3,9 @@ import { createContext, useState, useEffect } from 'react'
 
 // ** ThemeConfig Import
 import themeConfig from 'src/configs/themeConfig'
-import { getLocalStorage } from '../utils/local-storage'
+import { getLocalStorage, setLocalStorage } from '../utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { axiosIns } from 'src/@fake-db/backend'
 
 
 const initialSettings = {
@@ -80,16 +81,28 @@ export const SettingsProvider = ({ children, pageSettings }) => {
     if (pageSettings) {
       obj = { ...settings, ...pageSettings }
     }
-    obj['dnsData'] = JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA));
-    if (typeof obj['dnsData']?.theme_css == 'string') {
-      obj['dnsData'].theme_css = JSON.parse(obj['dnsData'].theme_css)
-    }
-    if (typeof obj['dnsData']?.options == 'string') {
-      obj['dnsData'].options = JSON.parse(obj['dnsData'].options)
-    }
     setSettings(obj)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSettings])
+  useEffect(() => {
+    getDnsData();
+  }, [])
+  const getDnsData = async () => {
+    try {
+      let obj = {};
+      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
+      obj = { ...response?.data };
+      if (typeof obj?.theme_css == 'string') {
+        obj.theme_css = JSON.parse(obj.theme_css)
+      }
+      if (typeof obj?.options == 'string') {
+        obj.options = JSON.parse(obj.options)
+      }
+      setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(obj));
+      setSettings({ ...settings, dnsData: obj });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
     if (settings.layout === 'horizontal' && settings.mode === 'semi-dark') {
       saveSettings({ ...settings, mode: 'light' })

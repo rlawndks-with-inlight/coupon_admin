@@ -150,9 +150,7 @@ const Header = (props) => {
   }
   const getCategoryList = async () => {
     try {
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      dns_data = JSON.parse(dns_data);
-
+      let dns_data = settings.dnsData;
       let query_keys = Object.keys(router.query);
       if (router.query['dark_background_color']) {
         for (var i = 0; i < query_keys.length; i++) {
@@ -184,9 +182,19 @@ const Header = (props) => {
     return <>
       {dnsData?.logo_img ?
         <>
-          <Logo src={dnsData[theme.palette.mode == 'dark' ? 'dark_logo_img' : 'logo_img']} onClick={() => {
-            router.push('/app/home')
-          }} />
+          <Logo
+            src={dnsData[theme.palette.mode == 'dark' ? 'dark_logo_img' : 'logo_img']}
+            onError={(e) => {
+              setDnsData({
+                ...dnsData, ...{
+                  dark_logo_img: '',
+                  logo_img: '',
+                }
+              })
+            }}
+            onClick={() => {
+              router.push('/app/home')
+            }} />
         </>
         :
         <>

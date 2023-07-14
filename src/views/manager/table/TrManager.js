@@ -310,7 +310,6 @@ const TrManager = (props) => {
   }
   const onApiKeyPub = async () => {
     try {
-      console.log(apiKeyOpenData)
       const response = await axiosIns().post(`/api/v1/manager/operators/${apiKeyOpenData.id}/api-key`);
       if (response?.status == 201) {
         toast.success("성공적으로 발급 되었습니다.")

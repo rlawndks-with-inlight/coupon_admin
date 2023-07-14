@@ -8,6 +8,7 @@ import { LOCALSTORAGE } from "src/data/data"
 import Order1 from "src/views/app/order/demo-1"
 import Header from "src/@core/layouts/components/app/header"
 import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
+import { useSettings } from "src/@core/hooks/useSettings"
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -15,6 +16,7 @@ const getDemo = (num, common) => {
 }
 const More = () => {
 
+  const { settings } = useSettings();
   const router = useRouter();
   const theme = useTheme();
 
@@ -32,8 +34,7 @@ const More = () => {
     let user_data = getLocalStorage(LOCALSTORAGE.USER_DATA);
     user_data = JSON.parse(user_data);
     serUser(user_data);
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     setDnsData(dns_data);
   }
 

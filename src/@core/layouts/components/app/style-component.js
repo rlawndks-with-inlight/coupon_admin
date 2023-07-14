@@ -7,6 +7,7 @@ import { getLocalStorage } from "src/@core/utils/local-storage";
 import { LOCALSTORAGE } from "src/data/data";
 import { Transition, TransitionGroup } from "react-transition-group";
 import { Box } from "@mui/material";
+import { useSettings } from "src/@core/hooks/useSettings";
 
 const TIMEOUT = 1000;
 const getTransitionStyles = {
@@ -335,10 +336,11 @@ const ButtonStyle = styled.button`
 `
 export const MakeButton = (props) => {
   const { children, style, dnsData, onClick } = props;
+  const { settings } = useSettings();
   return (
     <>
       <ButtonStyle style={{
-        background: `${dnsData ? dnsData?.theme_css?.main_color : JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.theme_css?.main_color}`,
+        background: `${dnsData ? dnsData?.theme_css?.main_color : settings.dnsData?.theme_css?.main_color}`,
         ...style,
       }}
         onClick={onClick}
@@ -367,7 +369,7 @@ right:-100vw;
 export const MakeDialogFullScreen = (props) => {
   const { children, open, onClose, dnsData, style } = props;
   const theme = useTheme();
-
+  const { settings } = useSettings();
   const [startX, setStartX] = useState(null);
   const handleTouchStart = (event) => {
     setStartX(event.touches[0].clientX);
@@ -385,11 +387,8 @@ export const MakeDialogFullScreen = (props) => {
     }
   };
   const getLocalStorageDnsData = () => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    if (typeof dns_data == 'string') {
-      dns_data = JSON.parse(dns_data);
-    }
-    return;
+    let dns_data = settings.dnsData;
+    return dns_data
   }
   return (
     <>

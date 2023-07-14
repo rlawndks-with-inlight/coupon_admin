@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import { LOCALSTORAGE } from 'src/data/data'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const CustomBox = styled(Box)(({ theme }) => ({
   '@media (max-width: 700px)': {
@@ -38,11 +39,11 @@ const CustomRightGrid = styled(Grid)(({ theme }) => ({
   }
 }))
 const Index = () => {
+  const { settings } = useSettings();
   const router = useRouter();
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     setDnsData(dns_data);
   }, [])
   return (

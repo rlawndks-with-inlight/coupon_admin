@@ -55,38 +55,25 @@ const clientSideEmotionCache = createEmotionCache()
 const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
-
-  const [loading, setLoading] = useState(true);
-
+  const { settings, saveSettings } = useSettings();
   const [dnsData, setDnsData] = useState({});
-
   useEffect(() => {
-    setDnsData(dns_data);
+    saveSettings({
+      ...settings,
+      ['dnsData']: dns_data
+    })
     setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-    setLoading(false);
   }, [])
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =
     Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
   const setConfig = Component.setConfig ?? undefined;
-
-  if (loading) {
-    return (
-      <>
-        <FallbackSpinner />
-      </>
-    )
-  }
   return (
     <>
-      <HeadContent dns_data={dns_data?.name ? dns_data : dnsData} />
+      <HeadContent dns_data={dns_data} />
       <Provider store={store}>
         <CacheProvider value={emotionCache}>
-          <Script
-            strategy="beforeInteractive"
-            src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_CLIENT_ID}`}
-          ></Script>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
               {({ settings }) => {
@@ -112,20 +99,18 @@ const App = props => {
 
 App.getInitialProps = async ({ ctx }) => {
   let dns_data = {};
-  try {
-    const host = ctx.req ? ctx.req.headers.host.split(':')[0] : '';
-    const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
-    const res = await fetch(url);
-    dns_data = await res.json();
-    return {
-      dns_data,
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      dns_data,
-    };
+  const host = ctx.req ? ctx.req.headers.host.split(':')[0] : '';
+  const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
+  const res = await fetch(url);
+  dns_data = await res.json();
+  if (typeof dns_data?.theme_css == 'string') {
+    dns_data.theme_css = JSON.parse(dns_data.theme_css)
   }
+  if (typeof dns_data?.options == 'string') {
+    dns_data.options = JSON.parse(dns_data.options)
+  }
+  return {
+    dns_data,
+  };
 };
-
 export default App

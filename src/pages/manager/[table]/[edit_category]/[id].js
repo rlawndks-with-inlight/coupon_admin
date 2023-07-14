@@ -30,7 +30,10 @@ import { LOCALSTORAGE } from 'src/data/data'
 import ManagerCategoryEdit from 'src/views/manager/edit/ManagerCategoryEdit'
 import ManagerProductEdit from 'src/views/manager/edit/ManagerProductEdit'
 import ManagerCouponModelEdit from 'src/views/manager/edit/ManagerCouponModelEdit'
+import { useSettings } from 'src/@core/hooks/useSettings'
 const Edit = ({ dns_data }) => {
+
+  const { settings, saveSettings } = useSettings();
   const [editSetting, setEditSetting] = useState({
     posts: {}
   })

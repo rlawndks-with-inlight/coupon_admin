@@ -23,6 +23,7 @@ import { axiosIns } from 'src/@fake-db/backend'
 import { useTheme } from '@emotion/react'
 
 import DialogAddress from 'src/views/components/dialogs/DialogAddress'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   borderBottom: '0 !important',
@@ -42,6 +43,7 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 const ManagerMerchandiseEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory, userData } = props;
 
+  const { settings } = useSettings();
   const theme = useTheme();
 
   const [tabValue, setTabValue] = useState('tab-1')
@@ -65,7 +67,7 @@ const ManagerMerchandiseEdit = (props) => {
     point_flag: 0,
     stamp_save_count: 0,
     point_rate: 0,
-    brand_id: JSON.parse(getLocalStorage(LOCALSTORAGE.DNS_DATA))?.id
+    brand_id: settings.dnsData?.id
   }
   const [values, setValues] = useState(defaultObj)
   useEffect(() => {
@@ -102,8 +104,7 @@ const ManagerMerchandiseEdit = (props) => {
       }
       setValues({ ...obj });
     } else {
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      dns_data = JSON.parse(dns_data);
+      let dns_data = settings.dnsData;
       obj = { ...values, point_flag: dns_data?.point_flag, point_rate: dns_data?.point_rate, stamp_flag: dns_data?.stamp_flag, stamp_save_count: dns_data?.stamp_save_count };
       setValues({ ...obj });
     }

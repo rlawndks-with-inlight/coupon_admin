@@ -16,6 +16,7 @@ import logoSrc, { LOCALSTORAGE } from 'src/data/data'
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from 'src/@core/utils/local-storage'
 import $ from 'jquery';
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 
 // ** Styled Components
@@ -59,6 +60,7 @@ const VerticalNavHeader = props => {
 
   // ** Hooks & Vars
   const theme = useTheme()
+
   const { mode, navCollapsed } = settings
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
 
@@ -68,9 +70,8 @@ const VerticalNavHeader = props => {
   }, [])
 
   const getDnsData = async () => {
-    let data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    data = JSON.parse(data);
-    setDnsData(data);
+    let dns_data = settings.dnsData;
+    setDnsData(dns_data);
   }
 
   const menuHeaderPaddingLeft = () => {

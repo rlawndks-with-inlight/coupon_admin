@@ -12,6 +12,7 @@ import _ from 'lodash'
 import Header from "src/@core/layouts/components/app/header"
 import BottomMenu from "src/@core/layouts/components/app/bottom-menu"
 import { PageTransition } from "src/@core/layouts/components/app/style-component"
+import { useSettings } from "src/@core/hooks/useSettings"
 
 const getDemo = (num, common) => {
   if (num == 1)
@@ -19,6 +20,8 @@ const getDemo = (num, common) => {
 }
 
 const Merchandise = (props) => {
+
+  const { settings } = useSettings();
   const router = useRouter();
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
@@ -35,8 +38,7 @@ const Merchandise = (props) => {
   const [dnsData, setDnsData] = useState({});
   useEffect(() => {
     setLoading(true);
-    let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
-    dns_data = JSON.parse(dns_data);
+    let dns_data = settings.dnsData;
     setDnsData(dns_data)
     let mcht = JSON.parse(router.query?.item);
     setMcht(mcht)

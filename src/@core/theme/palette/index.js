@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { useSettings } from "src/@core/hooks/useSettings"
 import { returnMoment } from "src/@core/utils/function"
 import { getLocalStorage } from "src/@core/utils/local-storage"
 import { axiosIns } from "src/@fake-db/backend"
@@ -15,7 +16,7 @@ const DefaultPalette = (mode, skin) => {
   const mainColor = mode === 'light' ? lightColor : darkColor
 
   const router = useRouter();
-
+  const { settings } = useSettings();
   const defaultBgColor = () => {
     let dark_color = '#25293C';
     let dark_paper_color = '#2F3349';
@@ -30,22 +31,15 @@ const DefaultPalette = (mode, skin) => {
   const [dnsData, setDnsData] = useState({});
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    getDnsData();
-  }, [])
+    if (settings.dnsData) {
+      getDnsData();
+    }
+  }, [settings.dnsData])
   const getDnsData = async () => {
     try {
       setLoading(true);
-      let obj = {};
-      let dns_data = await getLocalStorage(LOCALSTORAGE.DNS_DATA);
-      obj = JSON.parse(dns_data);
-      if (!obj?.name) {
-        const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-        obj = { ...response?.data };
-      }
-      if (typeof obj['theme_css'] == 'string') {
-        obj['theme_css'] = JSON.parse(obj['theme_css'] ?? "{}");
-      }
-      setDnsData(obj);
+      let dns_data = settings.dnsData;
+      setDnsData(dns_data);
       setLoading(false);
     } catch (err) {
       console.log(err);
