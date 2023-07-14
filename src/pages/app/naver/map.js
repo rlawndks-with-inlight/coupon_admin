@@ -15,7 +15,7 @@ const Map = (props) => {
         markers={[
           { lat: router.query?.lat, lng: router.query?.lng, }
         ]}
-        dnsData={router.query?.dns_data}
+        dnsData={JSON.parse(router.query?.dns_data)}
       />
     </>
   )

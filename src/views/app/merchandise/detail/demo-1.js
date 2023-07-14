@@ -168,7 +168,7 @@ const Merchandise1 = (props) => {
               </Row>
             </ContentWrapper>
 
-            {window.location.host == process.env.MAIN_FRONT_URL ?
+            {window.location.host == process.env.MAIN_FRONT_URL || process.env.IS_TEST ?
               <>
                 <NaverMap
                   center={{
