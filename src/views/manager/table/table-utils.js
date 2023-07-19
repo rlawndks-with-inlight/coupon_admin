@@ -7,6 +7,8 @@ import Icon from 'src/@core/components/icon'
 import Avatar from '@mui/material/Avatar'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Chip } from '@mui/material'
+import { getLocalStorage } from 'src/@core/utils/local-storage'
+import { LOCALSTORAGE } from 'src/data/data'
 
 export const getItemByType = (data, column, table, is_excel, user_data, func) => {
   try {
@@ -19,6 +21,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       onChangeOnCouponPopUp,
       onClickImage,
       onApiKeyPubOpen,
+      onChangeUserUnsubscribe
     } = func;
     let item = data[column?.column];
     if (column?.column && column?.column.includes('-obj-')) {
@@ -402,6 +405,29 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         </>
       )
       if (is_excel) result = '---';
+    }
+    if (column?.type == 'user_unsubscribes') {
+      let dns_data = getLocalStorage(LOCALSTORAGE.DNS_DATA);
+      dns_data = JSON.parse(dns_data);
+      console.log(dns_data)
+      result = (
+        <>
+          <Tooltip title={`수신거부 ${data?.unsubscribe == 1 ? '취소하기' : '하기'}`}>
+            <IconButton
+              size='small'
+              onClick={() => { onChangeUserUnsubscribe(data?.unsubscribe == 1 ? 0 : 1, data) }}
+            >
+              <Icon icon={data?.unsubscribe == 1 ? 'ic:outline-toggle-off' : 'ic:outline-toggle-on'}
+                style={{
+                  fontSize: '2rem',
+                  color: `${data?.unsubscribe == 1 ? `${dns_data?.theme_css?.main_color ?? "green"}` : ''}`
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+      if (is_excel) result = data?.unsubscribe;
     }
     if (!result && typeof result != 'number') {
       return '---';

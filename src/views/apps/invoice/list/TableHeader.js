@@ -34,6 +34,7 @@ import { toast } from 'react-hot-toast'
 import DialogExcelUpload from 'src/views/components/dialogs/DialogExcelUpload'
 import CouponSameDateLineBox from './same-date-line/CouponSameDateLineBox'
 import CouponsHistoriesSameDateLineBox from './same-date-line/CouponsHistoriesSameDateLineBox'
+import UserSameDateLineBox from './same-date-line/UserSameDateLineBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -56,6 +57,7 @@ const SameDateLineBox = (common) => {
       {common.param_table == 'coupons-histories' ? <CouponsHistoriesSameDateLineBox {...common} /> : ''}
       {common.param_table == 'operators' ? <OperatorSameDateLineBox {...common} /> : ''}
       {common.param_table == 'coupons' ? <CouponSameDateLineBox {...common} /> : ''}
+      {common.param_table == 'users' ? <UserSameDateLineBox {...common} /> : ''}
     </>
   )
 }
@@ -67,6 +69,9 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   }
   if (param_table == 'points') {
     result.value['is_cancel'] = -1;
+  }
+  if (param_table == 'users') {
+    result.value['unsubscribe'] = -1;
   }
   if (param_table == 'operators') {
     result.value['level'] = -1;
@@ -113,6 +118,7 @@ const TableHeader = props => {
     let add_obj = await getOptionBoxBySameLineDate(router.query?.table);
     add_obj = add_obj?.value;
     obj = { ...obj, ...add_obj };
+
     let query_key_list = Object.keys(router.query);
     for (var i = 0; i < query_key_list.length; i++) {
       if (query_key_list != 'table') {

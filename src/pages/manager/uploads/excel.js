@@ -237,7 +237,7 @@ const Excel = (props) => {
                   </Button>
                 </label>
                 <input type={'file'} onChange={uploadExcel} id='excel_upload' style={{ display: 'none' }} />
-                <Button sx={{ mb: 2, ml: 2 }} href={"/file/정보 대량등록 양식_v1_2023-06-12.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
+                <Button sx={{ mb: 2, ml: 2 }} href={"/file/정보 대량등록 양식_v1_2023-07-19.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
                   양식추출
                 </Button>
               </Grid>

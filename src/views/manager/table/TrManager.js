@@ -23,7 +23,7 @@ const TrManager = (props) => {
   const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table } = props;
   const router = useRouter();
   const theme = useTheme();
-
+  const [data, setData] = useState(post);
   const goTo = (link, state) => {
     router.push(link);
   }
@@ -72,6 +72,16 @@ const TrManager = (props) => {
     }
   }
 
+  const onChangeUserUnsubscribe = async (num, user) => {
+    try {
+      const response = await axiosIns().post(`/api/v1/manager/users/subscribe/${user?.id}`, {
+        is_subscribe: num
+      })
+      setData({ ...data, unsubscribe: num });
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const [deleteOpen, setDeleteOpen] = useState(false);
   const onDeleteOpen = (id) => {
     setDeleteOpen(true);
@@ -98,7 +108,6 @@ const TrManager = (props) => {
       }
     }
   }
-
 
   const [couponModelOpen, setCouponModelOpen] = useState(false);
   const [couponModelSubApiStr, setCouponModelSubApiStr] = useState('');
@@ -407,14 +416,15 @@ const TrManager = (props) => {
                         padding: '1rem 0.1rem',
                         margin: '0'
                       }}>
-                      {getItemByType(post, col, router.query?.table, false, userData, {
+                      {getItemByType(data, col, router.query?.table, false, userData, {
                         goTo: goTo,
                         onDeleteOpen: onDeleteOpen,
                         openChangePasswordPopUp: openChangePasswordPopUp,
                         onChangeOnCouponModelPopUp: onChangeOnCouponModelPopUp,
                         onChangeOnCouponPopUp: onChangeOnCouponPopUp,
                         onClickImage: onClickImage,
-                        onApiKeyPubOpen: onApiKeyPubOpen
+                        onApiKeyPubOpen: onApiKeyPubOpen,
+                        onChangeUserUnsubscribe: onChangeUserUnsubscribe
                       })}
                     </TableCell>
                   </>

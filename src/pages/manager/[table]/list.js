@@ -124,6 +124,12 @@ const List = ({ dns_data }) => {
         search_obj = { ...insert_search_obj, page: num };
       }
       setSearchObj({ ...search_obj });
+      // let search_obj_key_list = Object.keys(search_obj);
+      // for (var i = 0; i < search_obj_key_list.length; i++) {
+      //   if (!search_obj[search_obj_key_list[i]] || (search_obj[search_obj_key_list[i]] == -1 && typeof search_obj[search_obj_key_list[i]] == 'number')) {
+      //     delete search_obj[search_obj_key_list[i]];
+      //   }
+      // }
       let query_str = await objToQuery(search_obj);
 
       const response = await axiosIns().get(`/api/v1/manager/${objDataGridColumns[router.query?.table]?.table}${query_str}`, {

@@ -38,6 +38,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('보유스탬프', 'stamp_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유쿠폰갯수', 'coupon_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('포인트이력', 'point_history', 'point_history', ''),// 검색 level == 0일 경우에만
+      managerListFormat('수신거부', 'user_unsubscribes', 'user_unsubscribes', ''),// 검색 level == 0일 경우에만
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
@@ -367,7 +368,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
   },
 }
 export const excelUploadTableObj = {
-  merchandises: {
+  'merchandises': {
     breadcrumb: '가맹점',
     caution: [
       '포인트 및 스탬프 사용여부는 1,0(사용,사용안함)으로 표기합니다.',
@@ -386,7 +387,7 @@ export const excelUploadTableObj = {
       { column: 'stamp_save_count', name: '상품당 스탬프 저장개수', type: 'number' },
     ]
   },
-  devices: {
+  'devices': {
     breadcrumb: '장비',
     caution: [
       '맥주소는 중복될 수 없습니다.',
@@ -399,7 +400,7 @@ export const excelUploadTableObj = {
       { column: 'comment', name: '비고', type: 'text' },
     ]
   },
-  users: {
+  'users': {
     breadcrumb: '유저',
     caution: [
       '가맹점당 고유한 휴대폰 번호가 중복되어 저장될 수 없으므로 이점 유의 부탁드립니다. \n(멤버쉽 적용 타입이 "유입된 가맹점에서만 사용" 옵션인 브랜드에 한함)',
@@ -409,7 +410,7 @@ export const excelUploadTableObj = {
       { column: 'nick_name', name: '유저 닉네임', type: 'text' },
     ]
   },
-  points: {
+  'points': {
     breadcrumb: '포인트',
     caution: [
       '상품 총금액, 사용된 포인트, 포인트 적립 비율은 숫자만 입력합니다.',
@@ -426,6 +427,18 @@ export const excelUploadTableObj = {
       { column: 'is_cancel', name: '취소 여부', type: 'number' },
     ]
   },
+  'user-unsubscribes': {
+    breadcrumb: '수신거부',
+    caution: [
+      '상품 총금액, 사용된 포인트, 포인트 적립 비율은 숫자만 입력합니다.',
+      '적립 포인트는 "(구매금액 - 사용포인트) * 적립비율%" 수식으로 적립됩니다.(소수점 버림)',
+      '취소 여부 1,0(적립취소, 적립)으로 표기합니다.',
+      '취소 여부 기본 값: 0(적립)',
+    ],
+    columns: [
+      { column: 'phone_num', name: '유저휴대폰번호', type: 'text' },
+    ]
+  }
 }
 
 export const react_quill_data = {
