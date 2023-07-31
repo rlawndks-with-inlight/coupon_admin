@@ -44,7 +44,13 @@ const Policy = (props) => {
       setTitle("저작권정책");
     }
   }, [router.query])
+  if (!settings.dnsData?.id) {
+    return (
+      <>
 
+      </>
+    )
+  }
   return (
     <>
       <Header isGoBack={false} />

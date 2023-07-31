@@ -145,7 +145,7 @@ const Login = ({ dns_data }) => {
   const checkDns = async () => {
     try {
       let obj = {};
-      let dns_data = await settings.dnsData;
+      let dns_data = settings.dnsData;
       obj = dns_data;
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });

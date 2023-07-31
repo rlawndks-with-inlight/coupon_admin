@@ -53,6 +53,13 @@ const BlankLayout = ({ children }) => {
     }
 
   }, [router.asPath])
+  if (!settings.dnsData?.id) {
+    return (
+      <>
+
+      </>
+    )
+  }
   return (
     <BlankLayoutWrapper className='layout-wrapper' style={{ background: backgroundColor }}>
       <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
