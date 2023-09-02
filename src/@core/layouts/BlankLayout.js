@@ -36,6 +36,7 @@ const BlankLayout = ({ children }) => {
   const router = useRouter();
   const [backgroundColor, setBackgroundColor] = useState("");
   const [dnsData, setDnsData] = useState({});
+
   useEffect(() => {
     let dns_data = settings.dnsData;
     setDnsData(dns_data)
@@ -53,7 +54,7 @@ const BlankLayout = ({ children }) => {
     }
 
   }, [router.asPath])
-  if (!settings.dnsData?.id) {
+  if (!dnsData?.id) {
     return (
       <>
 
