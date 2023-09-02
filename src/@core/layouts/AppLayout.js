@@ -96,7 +96,9 @@ const AppLayout = ({ children, scrollToTop }) => {
       }
     }
   };
-
+  if (!settings.dnsData?.id) {
+    return null
+  }
   return (
     <StyledEngineProvider injectFirst>
       <BlankLayoutWrapper

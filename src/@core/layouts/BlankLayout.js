@@ -36,10 +36,14 @@ const BlankLayout = ({ children }) => {
   const router = useRouter();
   const [backgroundColor, setBackgroundColor] = useState("");
   const [dnsData, setDnsData] = useState({});
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let dns_data = settings.dnsData;
     setDnsData(dns_data)
-  }, [])
+    if (settings.dnsData?.id > 0) {
+      setLoading(false);
+    }
+  }, [settings.dnsData])
   useEffect(() => {
     if (theme.palette.mode == 'dark') {
       if (router.asPath.includes('/app/')) {
@@ -53,19 +57,21 @@ const BlankLayout = ({ children }) => {
     }
 
   }, [router.asPath])
-  if (!settings.dnsData?.id) {
-    return (
-      <>
 
-      </>
-    )
-  }
   return (
-    <BlankLayoutWrapper className='layout-wrapper' style={{ background: backgroundColor }}>
-      <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
-        {children}
-      </Box>
-    </BlankLayoutWrapper>
+    <>
+      {loading ?
+        <>
+        </>
+        :
+        <>
+          <BlankLayoutWrapper className='layout-wrapper' style={{ background: backgroundColor }}>
+            <Box className='app-content' sx={{ overflow: 'hidden', minHeight: '100vh', position: 'relative' }}>
+              {children}
+            </Box>
+          </BlankLayoutWrapper>
+        </>}
+    </>
   )
 }
 

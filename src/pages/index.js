@@ -70,7 +70,6 @@ const Index = ({ dns_data }) => {
 
   return (
     <>
-      <FallbackSpinner />
     </>
   )
 }

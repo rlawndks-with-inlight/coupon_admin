@@ -71,7 +71,7 @@ const Home = (props) => {
     try {
       setLoading(true);
       const response = await axiosIns().get(`/api/v1/app/total-content?brand_id=${dns_data?.id}`);
-
+      console.log(response)
       //coupon 계산
 
 

@@ -89,9 +89,7 @@ const LoginV1 = ({ dns_data }) => {
   const checkDns = async () => {
     try {
       let obj = {};
-      let dns_data = settings.dnsData;
-      const response = await axiosIns().get(`/api/v1/auth/domain?dns=${location.hostname}`);
-      obj = { ...response?.data };
+      obj = settings.dnsData;
       setDnsData(obj);
       setValues({ ...values, ['brand_id']: obj.id });
 
@@ -177,94 +175,83 @@ const LoginV1 = ({ dns_data }) => {
   }
   return (
     <>
-      {loading ?
-        <>
-        </>
-        :
-        <>
-          <Box className='content-center'>
-            {/* <AuthIllustrationV1Wrapper> */}
-            <Card>
-              <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
-                <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
-                  <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
-                    {themeConfig.templateName}
-                  </Typography>
-                </Box>
-                <Box sx={{ mb: 6 }}>
-                  <Typography variant='h6' sx={{ mb: 1.5 }}>
-                    {`Welcome ${themeConfig.templateName}! 👋🏻`}
-                  </Typography>
-                </Box>
-                <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} autoComplete='new-password' onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
-                <FormControl fullWidth sx={{ mb: 1.5 }}>
-                  <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
-                  <OutlinedInput
-                    label='Password'
-                    value={values.password}
-                    id='auth-login-password'
-                    onChange={handleChange('password')}
-                    onKeyPress={(e) => { e.key == 'Enter' ? onLogin() : '' }}
-                    type={values.showPassword ? 'text' : 'password'}
-                    autoComplete='new-password'
-                    endAdornment={
-                      <InputAdornment position='end'>
-                        <IconButton
-                          edge='end'
-                          onClick={handleClickShowPassword}
-                          aria-label='toggle password visibility'
-                        >
-                          <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                <Box
-                  sx={{
-                    mb: '1rem',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
-              <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
-                </Box>
-                <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
-                  if (!loading) {
-                    onLogin();
-                  }
-                }}>
-                  {loading ?
-                    <>
-                      Loading...
-                    </>
-                    :
-                    <>
-                      로그인
-                    </>}
-                </Button>
-                {window.location.host == process.env.MAIN_FRONT_URL
-                  || true
-                  ?
-                  <>
-                    <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                      <Typography sx={{ color: 'text.secondary', mr: 2 }}>처음 방문하셨나요?</Typography>
-                      <Typography>
-                        <LinkStyled href={`/manager/register${router.query?.category ? `?category=${router.query?.category}` : ''}`} sx={{ fontSize: '1rem' }}>
-                          회원가입하기
-                        </LinkStyled>
-                      </Typography>
-                    </Box>
-                  </>
-                  :
-                  <>
-                  </>}
 
-                {/* <Divider
+      <Box className='content-center'>
+        {/* <AuthIllustrationV1Wrapper> */}
+        <Card>
+          <CardContent sx={{ p: theme => `${theme.spacing(10.5, 8, 8)} !important` }}>
+            <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={dnsData?.logo_img} style={{ maxWidth: '256px' }} />
+              <Typography sx={{ ml: 2.5, fontWeight: 600, fontSize: '1.625rem', lineHeight: 1.385 }}>
+                {themeConfig.templateName}
+              </Typography>
+            </Box>
+            <Box sx={{ mb: 6 }}>
+              <Typography variant='h6' sx={{ mb: 1.5 }}>
+                {`Welcome ${themeConfig.templateName}! 👋🏻`}
+              </Typography>
+            </Box>
+            <TextField autoFocus fullWidth id='id' label='ID' sx={{ mb: 4 }} onChange={handleChange('id')} autoComplete='new-password' onKeyPress={(e) => { e.key == 'Enter' ? $('#auth-login-password').focus() : '' }} />
+            <FormControl fullWidth sx={{ mb: 1.5 }}>
+              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+              <OutlinedInput
+                label='Password'
+                value={values.password}
+                id='auth-login-password'
+                onChange={handleChange('password')}
+                onKeyPress={(e) => { e.key == 'Enter' ? onLogin() : '' }}
+                type={values.showPassword ? 'text' : 'password'}
+                autoComplete='new-password'
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={handleClickShowPassword}
+                      aria-label='toggle password visibility'
+                    >
+                      <Icon icon={values.showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <Box
+              sx={{
+                mb: '1rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              {/* <FormControlLabel control={<Checkbox />} label='로그인 상태 유지' />
+              <LinkStyled href='/pages/auth/forgot-password-v1'>비밀번호 찾기</LinkStyled> */}
+            </Box>
+            <Button fullWidth size='large' type='submit' variant='contained' style={{ cursor: `${!loading ? 'pointer' : 'default'}` }} sx={{ mb: 4 }} onClick={() => {
+              if (!loading) {
+                onLogin();
+              }
+            }}>
+              로그인
+            </Button>
+            {window.location.host == process.env.MAIN_FRONT_URL
+              || true
+              ?
+              <>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Typography sx={{ color: 'text.secondary', mr: 2 }}>처음 방문하셨나요?</Typography>
+                  <Typography>
+                    <LinkStyled href={`/manager/register${router.query?.category ? `?category=${router.query?.category}` : ''}`} sx={{ fontSize: '1rem' }}>
+                      회원가입하기
+                    </LinkStyled>
+                  </Typography>
+                </Box>
+              </>
+              :
+              <>
+              </>}
+
+            {/* <Divider
                 sx={{
                   fontSize: '0.875rem',
                   color: 'text.disabled',
@@ -274,7 +261,7 @@ const LoginV1 = ({ dns_data }) => {
               >
                 or
               </Divider> */}
-                {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />
                 </IconButton>
@@ -293,12 +280,10 @@ const LoginV1 = ({ dns_data }) => {
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box> */}
-              </CardContent>
-            </Card>
-            {/* </AuthIllustrationV1Wrapper> */}
-          </Box>
-        </>}
-
+          </CardContent>
+        </Card>
+        {/* </AuthIllustrationV1Wrapper> */}
+      </Box>
     </>
   )
 }
