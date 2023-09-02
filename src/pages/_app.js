@@ -102,20 +102,28 @@ const App = props => {
 }
 
 
-App.getInitialProps = async ({ ctx }) => {
-  let dns_data = {};
-  const host = ctx.req ? ctx.req.headers.host.split(':')[0] : '';
-  const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
-  const res = await fetch(url);
-  dns_data = await res.json();
-  if (typeof dns_data?.theme_css == 'string') {
-    dns_data.theme_css = JSON.parse(dns_data.theme_css)
+App.getInitialProps = async (context) => {
+  const { ctx } = context;
+  try {
+    let dns_data = {}
+    const host = ctx?.req?.headers?.host ? ctx?.req?.headers.host.split(':')[0] : '';
+    if (host) {
+      const url = `${process.env.BACK_URL}/api/v1/auth/domain?dns=${host}`;
+      const res = await fetch(url);
+      dns_data = await res.json();
+      return {
+        dns_data,
+      }
+    } else {
+      return {
+        dns_data: {},
+      }
+    }
+  } catch (err) {
+    console.log(err)
+    return {
+      dns_data: {},
+    }
   }
-  if (typeof dns_data?.options == 'string') {
-    dns_data.options = JSON.parse(dns_data.options)
-  }
-  return {
-    dns_data,
-  };
 };
 export default App
