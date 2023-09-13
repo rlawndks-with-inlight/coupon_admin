@@ -30,8 +30,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     head_columns: [
     ],
     columns: [
+      managerListFormat('가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('유저ID', 'id', 'number', ''),
-      // managerListFormat('브랜드명', 'brand_name', 'text', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
       managerListFormat('보유포인트', 'point_amt', 'number', ''),// 검색 level == 0일 경우에만

@@ -79,6 +79,11 @@ const isShowCell = (data, func) => {
         result_obj['show_flag'] = false;
       }
     }
+    if (!(search_obj?.mcht_id > 0)) {
+      if (column == 'mcht_name') {
+        result_obj['show_flag'] = false;
+      }
+    }
   }
   if (param_table == 'operators') {
     if (user_data?.level < 50) {
