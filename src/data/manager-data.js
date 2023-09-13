@@ -80,7 +80,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       { title: '포인트정보', size: 2 },
       { title: '스탬프정보', size: 2 },
       { title: '결제정보', size: 2 },
-      { title: '', size: 3 },
+      { title: '', size: 4 },
     ],
     search_placeholder: '가맹점상호, 유저명 검색',//검색 placeholder
     columns: [
@@ -98,6 +98,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('저장갯수', 'stamp_save_count', 'number', '', { search_option_label: '스탬프' }),// 검색 level == 10일 경우에만
       managerListFormat('정기결제일', 'bill_key_pay_day', 'text', ''),
       managerListFormat('최근결제일', 'last_pay_dt', 'text', ''),
+      managerListFormat('회원목록', 'mcht_user_list', 'mcht_user_list', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),

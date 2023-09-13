@@ -436,6 +436,24 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       )
       if (is_excel) result = data?.unsubscribe;
     }
+    if (column?.type == 'mcht_user_list') {
+      result = (
+        <>
+          <IconButton
+            size='small'
+            sx={{ color: 'text.secondary' }}
+            onClick={() => {
+              goTo({
+                pathname: `/manager/users`,
+                query: { mcht_id: data?.id }
+              })
+            }}
+          >
+            <Icon icon='tabler:list' />
+          </IconButton>
+        </>
+      )
+    }
     if (!result && typeof result != 'number') {
       return '---';
     } else {

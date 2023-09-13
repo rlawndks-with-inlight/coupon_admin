@@ -373,3 +373,6 @@ export default function useCountNum(end, start = 0, duration = 2000) {
 export const isPc = () => {
   return window.innerWidth > 1000;
 }
+export const isConditionNumber = (num) => {
+  return typeof num == 'number' || !isNaN(parseInt(num))
+}

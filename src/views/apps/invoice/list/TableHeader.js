@@ -72,6 +72,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   }
   if (param_table == 'users') {
     result.value['unsubscribe'] = -1;
+    result.value['mcht_id'] = -1;
   }
   if (param_table == 'operators') {
     result.value['level'] = -1;
@@ -260,10 +261,11 @@ const TableHeader = props => {
             flexWrap: 'wrap',
             alignItems: 'center',
             rowGap: 2,
+            columnGap: 4
           }}
           className='manager-table-header'
         >
-          <div style={{ marginRight: '1rem' }} >
+          <div >
             <DatePicker
               selected={sDt}
               dateFormat="yyyy-MM-dd"
@@ -285,7 +287,7 @@ const TableHeader = props => {
 
             />
           </div>
-          <div style={{ marginRight: '1rem' }}>
+          <div>
             <DatePicker
               selected={eDt}
 
