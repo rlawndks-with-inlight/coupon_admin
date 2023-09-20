@@ -487,7 +487,7 @@ const Register = () => {
         auth_no: authNo,
         card_pw: cardPw
       }
-      const response = await notiAxiosIns().post(`/api/v2/comagain/billkey/subscribe${param}`, obj);
+      const response = await notiAxiosIns().post(`/api/v1/billkey/subscribe${param}`, obj);
       if (response?.status == 200) {
         toast.success("성공적으로 카드가 저장 되었습니다.")
         setActiveStep(activeStep + 1);

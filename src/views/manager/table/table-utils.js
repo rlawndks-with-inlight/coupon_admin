@@ -26,7 +26,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
     } = func;
     let item = data[column?.column];
     if (column?.column && column?.column.includes('-obj-')) {
-      item = data[column?.column.split('-obj-')[0]][column?.column.split('-obj-')[1]]
+      item = data[`${column?.column.split('-obj-')[0]}`][`${column?.column.split('-obj-')[1]}`]
     }
     if (column?.type == 'text') {//
       result = item;

@@ -19,8 +19,8 @@ module.exports = {
         destination: `${process.env.BACK_URL}/api/v1/:path*`,
       },
       {
-        source: "/api/v2/comagain/:path*",
-        destination: `${process.env.NOTI_URL}/api/v2/comagain/:path*`,
+        source: "/api/v2/:path*",
+        destination: `${process.env.NOTI_URL}/api/v2/:path*`,
       }
     ]
   },
