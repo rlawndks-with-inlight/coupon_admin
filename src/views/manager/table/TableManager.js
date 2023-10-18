@@ -10,6 +10,7 @@ import { objDataGridColumns } from 'src/data/manager-data'
 import { useCallback, useEffect, useState } from 'react'
 import TrManager from './TrManager'
 import { useTheme } from '@emotion/react'
+import { axiosIns } from 'src/@fake-db/backend'
 
 
 const isShowCell = (data, func) => {
@@ -134,10 +135,9 @@ const getTopMenuSize = (head_columns, item, idx, columns, notSearchOption, param
   return size;
 }
 const TableManager = (props) => {
-  const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption, onlyTeamSeeColumn } = props;
+  const { userData, param_table, posts, columns, changePage, page, searchObj, notSearchOption, onlyTeamSeeColumn, mchtList } = props;
   const theme = useTheme();
-  useEffect(() => {
-  }, [posts])
+
 
   const renderCard = useCallback((post, index, columns) => {
     return (
@@ -154,6 +154,7 @@ const TableManager = (props) => {
         userData={userData}
         onlyTeamSeeColumn={onlyTeamSeeColumn}
         param_table={param_table}
+        mchtList={mchtList}
       />
     )
   }, []);

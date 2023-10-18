@@ -37,6 +37,7 @@ const List = ({ dns_data }) => {
   const page_size_list = [10, 20, 25, 50, 100];
   const [notSearchOption, setNotSearchOption] = useState({});
   const [userData, setUserData] = useState({});
+  const [mchtList, setMchtList] = useState([]);
   const theme = useTheme()
   const { direction } = theme
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
@@ -59,11 +60,19 @@ const List = ({ dns_data }) => {
     // }
     getUserData();
     setParams(router?.query);
+    if (router?.query?.table == 'coupons') {
+      getMchtList();
+    }
   }, [router?.query?.table]);
   const getUserData = async () => {
     let user_data = await getLocalStorage(LOCALSTORAGE.USER_DATA);
     user_data = JSON.parse(user_data);
     setUserData(user_data);
+  }
+  const getMchtList = async () => {
+    const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
+
+    setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
   }
   const changeNotSearchOption = async () => {
     setLoading(true);
@@ -221,6 +230,7 @@ const List = ({ dns_data }) => {
                   notSearchOption={notSearchOption}
                   userData={userData}
                   onlyTeamSeeColumn={onlyTeamSeeColumn}
+                  mchtList={mchtList}
                 />
               </>}
             <Box

@@ -20,16 +20,13 @@ import DialogCoupon from 'src/views/components/dialogs/DialogCoupon'
 import DialogApiKey from 'src/views/components/dialogs/DialogApiKey';
 
 const TrManager = (props) => {
-  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table } = props;
+  const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table, mchtList } = props;
   const router = useRouter();
   const theme = useTheme();
   const [data, setData] = useState(post);
   const goTo = (link, state) => {
     router.push(link);
   }
-  useEffect(() => {
-
-  }, [searchObj])
 
   const isShowCellReturn = async (param_table, col, search_obj) => {
     let result = await isShowCell(param_table, col, search_obj);
@@ -197,6 +194,9 @@ const TrManager = (props) => {
     setCouponId(data?.id)
     setCouponSubApiStr(str);
     handleOpenCoupon();
+    setCouponSelectValue({
+      vendor_code: null
+    })
   }
   const onCouponActive = async () => {
 
@@ -214,7 +214,7 @@ const TrManager = (props) => {
           handleCloseCoupon();
           return;
         }
-        if (req_item?.id.includes('user') || req_item?.id.includes('mcht')) {//유저나 가맹점 찾을때
+        if (req_item?.id.includes('user')) {//유저나 가맹점 찾을때
           let type_name = req_item?.id.split('_')[0];
           if (req_item?.id.includes('user')) {
             find_user_obj = {
@@ -242,6 +242,8 @@ const TrManager = (props) => {
             api_obj[req_item?.id] = $(`#${req_item?.id}`).val();
           } else if (req_item?.type == 'select') {
             api_obj[req_item?.id] = couponSelectValue[req_item?.id]
+          } else if (req_item?.type == 'autocomplete') {
+            api_obj[req_item?.id] = couponSelectValue[req_item?.id]
           }
         }
       }
@@ -252,6 +254,7 @@ const TrManager = (props) => {
         changePage(page);
       }
     } catch (err) {
+
       handleCloseCoupon();
       let push_lick = await processCatch(err);
       if (push_lick == -1) {
@@ -285,7 +288,7 @@ const TrManager = (props) => {
       obj['icon'] = <Icon icon='ic:outline-verified-user' style={{ fontSize: '40px' }} />
       obj['title'] = '쿠폰 사용하기'
       obj['label'] = [
-        { label: '가맹점상호', id: 'mcht_name', type: 'input' },
+        { label: '가맹점상호', id: 'mcht_id', type: 'autocomplete', list: mchtList, show_column: 'user_name' },
         { label: '사용할금액', id: 'use_amount', type: 'input' },
         {
           label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [

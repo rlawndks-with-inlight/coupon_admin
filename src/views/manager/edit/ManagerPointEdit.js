@@ -123,7 +123,6 @@ const ManagerPointEdit = (props) => {
       mcht: 0,
       phone_num: values?.phone_num
     }
-    console.log()
     const res_find_user = await axiosIns().post(`/api/v1/manager/utils/search`, find_user_obj)
     if (res_find_user?.data?.users.length > 0) {
       obj['user_id'] = res_find_user?.data?.users[0]?.id

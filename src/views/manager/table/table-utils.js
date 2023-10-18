@@ -262,7 +262,9 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       if (is_excel) result = '---';
     }
     if (column?.type == 'mcht_names') {
-      result = data?.mchts.join()
+      result = (data?.mchts ?? []).map(item => {
+        return item?.mcht_name
+      }).join()
       if (!is_excel) result = (
         <>
           {data?.mchts && data?.mchts.map((item, idx) => (

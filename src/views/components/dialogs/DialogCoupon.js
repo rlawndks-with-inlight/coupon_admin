@@ -10,7 +10,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import MuiDialog from '@mui/material/Dialog'
 import { styled } from '@mui/material/styles'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 const Dialog = styled(MuiDialog)({
   '& .MuiBackdrop-root': {
     backdropFilter: 'blur(2px)'
@@ -34,12 +34,22 @@ const DialogCoupon = (props) => {
           <DialogContent>
             {head?.label && head?.label.map((item, idx) => (
               <>
-                {item?.type == 'input' ?
-                  <TextField sx={{ marginBottom: '12px' }} id={`${item?.id}`} autoComplete='new-password' fullWidth label={item?.label} />
-                  :
-                  ''
+                {item?.type == 'input' &&
+                  <TextField sx={{ marginBottom: '12px' }} id={`${item?.id}`} autoComplete='new-password' fullWidth label={item?.label} />}
+                {item?.type == 'autocomplete' &&
+                  <Autocomplete
+                    sx={{ marginBottom: '12px' }}
+                    id="mcht_id"
+                    defaultValue={_.find(item?.list, { id: couponSelectValue[item?.id] })?.[item?.show_column] ?? ""}
+                    onChange={(e, value) => {
+                      let itm = _.find(item?.list, { [item?.show_column]: value });
+                      setCouponSelectValue({ ...couponSelectValue, [item?.id]: itm?.id });
+                    }}
+                    options={item?.list && item?.list.map((option) => option[item?.show_column])}
+                    renderInput={(params) => <TextField {...params} label="가맹점상호" />}
+                  />
                 }
-                {item?.type == 'select' ?
+                {item?.type == 'select' &&
                   <FormControl fullWidth>
                     <InputLabel id={item?.id}>{item?.label}</InputLabel>
                     <Select
@@ -58,10 +68,7 @@ const DialogCoupon = (props) => {
                       })}
 
                     </Select>
-                  </FormControl>
-                  :
-                  ''
-                }
+                  </FormControl>}
               </>
             ))}
           </DialogContent>
