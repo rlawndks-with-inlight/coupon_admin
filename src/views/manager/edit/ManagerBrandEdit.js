@@ -78,6 +78,13 @@ const ManagerBrandEdit = (props) => {
         dark_background_color: '#000000',//다크모드 배경색
         dark_box_color: '#222224',// 다크모드 컨텐츠 색
         dark_font_color: '#ffffff',// 다크모드 폰트 색
+      },
+      bonaeja: {
+        api_key: "",
+        user_id: "",
+        sender_phone: "",
+        receive_phone: "",
+        min_balance_limit: 5
       }
     },
     company_nm: '',
@@ -168,6 +175,7 @@ const ManagerBrandEdit = (props) => {
               <Tab value='tab-3' label='계약정보' sx={{ mr: 2 }} />
               <Tab value='tab-5' label='어플정보' sx={{ mr: 2 }} />
               <Tab value='tab-7' label='쇼핑몰정보' sx={{ mr: 2 }} />
+              <Tab value='tab-8' label='문자정보' sx={{ mr: 2 }} />
             </TabList>
             <TabPanel sx={{ p: 0 }} value='tab-1'>
               <Grid container spacing={6}>
@@ -702,6 +710,72 @@ const ManagerBrandEdit = (props) => {
                           }}
                             defaultValue={values?.options?.shop?.dark_font_color}
                             value={values?.options?.shop?.dark_font_color} />
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+            </TabPanel>
+            <TabPanel sx={{ p: 0 }} value='tab-8'>
+              <Grid container spacing={6}>
+                <Grid item xs={12} md={6}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+                      <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='API KEY' placeholder='' className='api_key' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['bonaeja'].api_key = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.bonaeja?.api_key}
+                            value={values?.options?.bonaeja?.api_key} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='USER ID' placeholder='' className='user_id' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['bonaeja'].user_id = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.bonaeja?.user_id}
+                            value={values?.options?.bonaeja?.user_id} />
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Card sx={{ height: '100%' }}>
+                    <CardContent>
+                      <Grid container spacing={5}>
+
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='발송번호' placeholder='' className='sender_phone' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['bonaeja'].sender_phone = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.bonaeja?.sender_phone}
+                            value={values?.options?.bonaeja?.sender_phone} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='수신번호' placeholder='' className='receive_phone' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['bonaeja'].receive_phone = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.bonaeja?.receive_phone}
+                            value={values?.options?.bonaeja?.receive_phone} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='최소잔액알림한도' type='number' placeholder='' className='min_balance_limit' onChange={(e) => {
+                            let obj = { ...values };
+                            obj['options']['bonaeja'].min_balance_limit = e.target.value
+                            setValues(obj);
+                          }}
+                            defaultValue={values?.options?.bonaeja?.min_balance_limit}
+                            value={values?.options?.bonaeja?.min_balance_limit} />
                         </Grid>
                       </Grid>
                     </CardContent>
