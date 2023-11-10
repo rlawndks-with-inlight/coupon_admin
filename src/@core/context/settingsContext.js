@@ -87,8 +87,9 @@ export const SettingsProvider = ({ children, pageSettings }) => {
     getDnsData();
   }, [])
   const getDnsData = async () => {
+    let dnsData = {};
+    let mchts = [];
     try {
-      let dnsData = {};
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${window.location.hostname}`);
       dnsData = { ...response?.data };
       if (typeof dnsData?.theme_css == 'string') {
@@ -97,7 +98,7 @@ export const SettingsProvider = ({ children, pageSettings }) => {
       if (typeof dnsData?.options == 'string') {
         dnsData.options = JSON.parse(dnsData.options)
       }
-      let mchts = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=100000`);
+      mchts = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=100000`);
       mchts = mchts?.data?.content ?? [];
       mchts = mchts.sort((a, b) => {
         if (a.mcht_name > b.mcht_name) return 1;
@@ -105,10 +106,11 @@ export const SettingsProvider = ({ children, pageSettings }) => {
         return 0;
       });
       setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dnsData));
-      setSettings({ ...settings, dnsData, mchts });
     } catch (err) {
       console.log(err);
     }
+    setSettings({ ...settings, dnsData, mchts });
+
   }
   useEffect(() => {
     if (settings.layout === 'horizontal' && settings.mode === 'semi-dark') {

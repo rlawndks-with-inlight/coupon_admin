@@ -97,7 +97,7 @@ const LoginV1 = ({ dns_data }) => {
       console.log(err);
       //toast.error(err?.response?.data?.message || err?.message);
       if (err?.response?.status == 409) {
-        router.push('/404');
+        window.location.href = ('/404');
       }
     }
 
@@ -118,9 +118,9 @@ const LoginV1 = ({ dns_data }) => {
           && response_auth?.level == 10
           //&& window.location.host == process.env.MAIN_FRONT_URL
         ) {
-          router.push('/manager/register/merchandise');
+          window.location.href = ('/manager/register/merchandise');
         } else {
-          router.push('/manager/users');
+          window.location.href = ('/manager/users');
         }
       }
     } catch (err) {
@@ -155,9 +155,9 @@ const LoginV1 = ({ dns_data }) => {
           && response?.data?.user?.level == 10
           //&& window.location.host == process.env.MAIN_FRONT_URL
         ) {
-          router.push('/manager/register/merchandise');
+          window.location.href = ('/manager/register/merchandise');
         } else {
-          router.push('/manager/users');
+          window.location.href = ('/manager/users');
         }
       }
     } catch (err) {
@@ -167,7 +167,7 @@ const LoginV1 = ({ dns_data }) => {
         router.back();
       } else {
         if (push_lick) {
-          router.push(push_lick);
+          window.location.href = (push_lick);
         }
       }
 
