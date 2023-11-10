@@ -1,4 +1,4 @@
-import { commarNumber, getUserLevelByNumber, processCatch } from 'src/@core/utils/function'
+import { commarNumber, getUserLevelByNumber } from 'src/@core/utils/function'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import CustomChip from 'src/@core/components/mui/chip'
@@ -42,13 +42,13 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       if (!is_excel) result = <div style={{ fontWeight: 'bold' }}>{result}</div>
     }
     if (column?.type == 'number') {//
-      if (typeof item != 'number') {
+      if (isNaN(parseInt(item))) {
         return "---";
       }
       result = commarNumber(item);
     }
     if (column?.type == 'percent') {//
-      if (!item && typeof item != 'number') {
+      if (isNaN(parseInt(item))) {
         return "---";
       }
       result = commarNumber(item) + '%';
@@ -414,17 +414,17 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       dns_data = JSON.parse(dns_data);
       result = (
         <>
-          {data?.unsubscribe != 'loading' ?
+          {data?.is_subscribe != 'loading' ?
             <>
-              <Tooltip title={`수신거부 ${data?.unsubscribe == 1 ? '취소하기' : '하기'}`}>
+              <Tooltip title={`수신 ${data?.is_subscribe == 1 ? '거부하기' : '하기'}`}>
                 <IconButton
                   size='small'
-                  onClick={() => { onChangeUserUnsubscribe(data?.unsubscribe == 1 ? 0 : 1, data) }}
+                  onClick={() => { onChangeUserUnsubscribe(data?.is_subscribe == 1 ? 0 : 1, data) }}
                 >
-                  <Icon icon={data?.unsubscribe == 1 ? 'ic:outline-toggle-off' : 'ic:outline-toggle-on'}
+                  <Icon icon={data?.is_subscribe == 1 ? 'ic:outline-toggle-off' : 'ic:outline-toggle-on'}
                     style={{
                       fontSize: '2rem',
-                      color: `${data?.unsubscribe == 1 ? `${dns_data?.theme_css?.main_color ?? "green"}` : ''}`
+                      color: `${data?.is_subscribe == 1 ? `${dns_data?.theme_css?.main_color ?? "green"}` : ''}`
                     }}
                   />
                 </IconButton>
@@ -436,7 +436,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
             </>}
         </>
       )
-      if (is_excel) result = data?.unsubscribe;
+      if (is_excel) result = data?.is_subscribe;
     }
     if (column?.type == 'mcht_user_list') {
       result = (
@@ -456,7 +456,7 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         </>
       )
     }
-    if (!result && typeof result != 'number') {
+    if (!result && isNaN(parseInt(item))) {
       return '---';
     } else {
       return result;

@@ -88,17 +88,24 @@ export const SettingsProvider = ({ children, pageSettings }) => {
   }, [])
   const getDnsData = async () => {
     try {
-      let obj = {};
+      let dnsData = {};
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${window.location.hostname}`);
-      obj = { ...response?.data };
-      if (typeof obj?.theme_css == 'string') {
-        obj.theme_css = JSON.parse(obj.theme_css)
+      dnsData = { ...response?.data };
+      if (typeof dnsData?.theme_css == 'string') {
+        dnsData.theme_css = JSON.parse(dnsData.theme_css)
       }
-      if (typeof obj?.options == 'string') {
-        obj.options = JSON.parse(obj.options)
+      if (typeof dnsData?.options == 'string') {
+        dnsData.options = JSON.parse(dnsData.options)
       }
-      setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(obj));
-      setSettings({ ...settings, dnsData: obj });
+      let mchts = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=100000`);
+      mchts = mchts?.data?.content ?? [];
+      mchts = mchts.sort((a, b) => {
+        if (a.mcht_name > b.mcht_name) return 1;
+        if (a.mcht_name < b.mcht_name) return -1;
+        return 0;
+      });
+      setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dnsData));
+      setSettings({ ...settings, dnsData, mchts });
     } catch (err) {
       console.log(err);
     }

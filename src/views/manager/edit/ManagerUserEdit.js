@@ -16,16 +16,20 @@ import CustomInput from '/src/views/forms/form-elements/pickers/PickersCustomInp
 import { returnMoment, useEditPageImg } from 'src/@core/utils/function'
 import { LOCALSTORAGE } from 'src/data/data'
 import { useRouter } from 'next/router'
+import { useSettings } from 'src/@core/hooks/useSettings'
+import { Autocomplete } from '@mui/material'
 
 
 const ManagerUserEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory } = props;
+  const { settings } = useSettings();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
   const [bDt, setBDt] = useState(new Date());
   const [userData, setUserData] = useState();
+  const [mchtList, setMchtList] = useState([]);
 
   const defaultObj = {
     profile_img: undefined,
@@ -66,6 +70,7 @@ const ManagerUserEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
+      setMchtList(settings?.mchts ?? []);
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
@@ -157,6 +162,18 @@ const ManagerUserEdit = (props) => {
                   <InputLabel id='form-layouts-tabs-select-label' sx={{ mb: 4 }}>기본정보</InputLabel>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
+                      <Autocomplete
+                        id="mcht_id"
+                        defaultValue={_.find(mchtList, { id: values?.mcht_id })?.mcht_name ?? ""}
+                        onChange={(e, value) => {
+                          let item = _.find(mchtList, { mcht_name: value });
+                          setValues({ ...values, mcht_id: item?.id });
+                        }}
+                        options={mchtList && mchtList.map((option) => option.mcht_name)}
+                        renderInput={(params) => <TextField {...params} label="가맹점상호" />}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
                       <TextField
                         fullWidth
                         label='유저휴대폰번호'
@@ -212,6 +229,7 @@ const ManagerUserEdit = (props) => {
                         }}
                       />
                     </Grid>
+
                   </Grid>
                 </CardContent>
               </Card>

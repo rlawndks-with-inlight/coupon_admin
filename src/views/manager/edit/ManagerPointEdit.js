@@ -175,12 +175,12 @@ const ManagerPointEdit = (props) => {
                 <Grid item xs={12}>
                   <Autocomplete
                     id="mcht_id"
-                    defaultValue={_.find(mchtList, { id: values?.mcht_id })?.user_name ?? ""}
+                    defaultValue={_.find(mchtList, { id: values?.mcht_id })?.mcht_name ?? ""}
                     onChange={(e, value) => {
-                      let item = _.find(mchtList, { user_name: value });
+                      let item = _.find(mchtList, { mcht_name: value });
                       setValues({ ...values, mcht_id: item?.id, point_rate: item?.point_rate });
                     }}
-                    options={mchtList && mchtList.map((option) => option.user_name)}
+                    options={mchtList && mchtList.map((option) => option.mcht_name)}
                     renderInput={(params) => <TextField {...params} label="가맹점상호" />}
                   />
                 </Grid>

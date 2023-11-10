@@ -71,7 +71,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
     result.value['is_cancel'] = -1;
   }
   if (param_table == 'users') {
-    result.value['unsubscribe'] = -1;
+    result.value['is_subscribe'] = -1;
     result.value['mcht_id'] = -1;
   }
   if (param_table == 'operators') {

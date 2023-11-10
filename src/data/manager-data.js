@@ -30,7 +30,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     head_columns: [
     ],
     columns: [
-      managerListFormat('가맹점명', 'mcht_name', 'text', ''),
+      managerListFormat('유입가맹점명', 'mcht_name', 'text', ''),
       managerListFormat('유저ID', 'id', 'number', ''),
       managerListFormat('유저프로필', 'profile_img', 'img', '', { is_profile: true }),
       managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
@@ -38,7 +38,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('보유스탬프', 'stamp_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('보유쿠폰갯수', 'coupon_amt', 'number', ''),// 검색 level == 0일 경우에만
       managerListFormat('포인트이력', 'point_history', 'point_history', ''),// 검색 level == 0일 경우에만
-      managerListFormat('수신거부', 'user_unsubscribes', 'user_unsubscribes', ''),// 검색 level == 0일 경우에만
+      managerListFormat('수신여부', 'user_unsubscribes', 'user_unsubscribes', ''),// 검색 level == 0일 경우에만
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),
@@ -423,7 +423,7 @@ export const excelUploadTableObj = {
     ]
   },
   'user-unsubscribes': {
-    breadcrumb: '수신거부',
+    breadcrumb: '수신여부',
     caution: [
       '상품 총금액, 사용된 포인트, 포인트 적립 비율은 숫자만 입력합니다.',
       '적립 포인트는 "(구매금액 - 사용포인트) * 적립비율%" 수식으로 적립됩니다.(소수점 버림)',

@@ -13,21 +13,25 @@ import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { axiosIns } from 'src/@fake-db/backend'
 import { isConditionNumber } from 'src/@core/utils/function'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const UserSameDateLineBox = (props) => {
+
+  const { settings } = useSettings();
+  console.log(settings)
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
   const router = useRouter();
 
   const pub_type_list = [
-    { name: '전체', unsubscribe: -1 },
-    { name: '수신', unsubscribe: 0 },
-    { name: '수신거부', unsubscribe: 1 },
+    { name: '전체', is_subscribe: -1 },
+    { name: '수신', is_subscribe: 1 },
+    { name: '수신거부', is_subscribe: 0 },
   ]
-  const loading_condition = isConditionNumber(searchObj?.unsubscribe) && isConditionNumber(searchObj?.mcht_id)
+  const loading_condition = isConditionNumber(searchObj?.is_subscribe) && isConditionNumber(searchObj?.mcht_id)
   useEffect(() => {
-    settings();
+    onSettings();
   }, [router.query])
   useEffect(() => {
     if (loading_condition) {
@@ -35,25 +39,13 @@ const UserSameDateLineBox = (props) => {
     }
   }, [searchObj])
 
-  const settings = async () => {
+  const onSettings = async () => {
     if (!loading_condition) {
       setLoading(true);
     }
-    let mchts = [];
-    try {
-      mchts = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
-      mchts = mchts?.data?.mcht_id ?? []
-    } catch (err) {
-
-    }
-    mchts.unshift({
-      id: -1,
-      mcht_name: '전체',
-      user_name: '전체'
-    })
-    setMchtList(mchts)
+    let mchts = settings?.mchts;
+    setMchtList(mchts);
   }
-
   return (
     <>
       {loading ?
@@ -66,13 +58,13 @@ const UserSameDateLineBox = (props) => {
             <Select
               size='small'
               label='수신여부'
-              value={searchObj?.unsubscribe}
+              value={searchObj?.is_subscribe}
               id='demo-simple-select-outlined'
               labelId='demo-simple-select-outlined-label'
               onChange={async (e) => {
                 try {
                   setLoading(true)
-                  let obj = await handleChange('unsubscribe', e.target.value);
+                  let obj = await handleChange('is_subscribe', e.target.value);
                   changePage(1, false, obj);
                 } catch (err) {
                   console.log(err);
@@ -81,7 +73,7 @@ const UserSameDateLineBox = (props) => {
               }}
             >
               {pub_type_list && pub_type_list.map((item, idx) => {
-                return <MenuItem key={idx} value={parseInt(item?.unsubscribe)}>{item?.name}</MenuItem>
+                return <MenuItem key={idx} value={parseInt(item?.is_subscribe)}>{item?.name}</MenuItem>
               }
               )}
             </Select>

@@ -71,11 +71,11 @@ const TrManager = (props) => {
 
   const onChangeUserUnsubscribe = async (num, user) => {
     try {
-      setData({ ...data, unsubscribe: 'loading' });
+      setData({ ...data, is_subscribe: 'loading' });
       const response = await axiosIns().post(`/api/v1/manager/users/subscribe/${user?.id}`, {
         is_subscribe: num
       })
-      setData({ ...data, unsubscribe: num });
+      setData({ ...data, is_subscribe: num });
     } catch (err) {
       console.log(err)
     }
