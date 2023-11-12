@@ -42,7 +42,7 @@ const UserSameDateLineBox = (props) => {
         </>
         :
         <>
-          <FormControl sx={{ minWidth: '110px' }}>
+          <FormControl sx={{ minWidth: '110px' }} size='small'>
             <InputLabel id='demo-simple-select-outlined-label'>수신여부</InputLabel>
             <Select
               size='small'
@@ -74,7 +74,7 @@ const UserSameDateLineBox = (props) => {
             defaultValue={_.find(mchts, { id: parseInt(searchObj?.mcht_id) })?.user_name ?? ""}
             onChange={async (e, value) => {
               let item = _.find(mchts, { user_name: value });
-              let obj = await handleChange('mcht_id', item?.id);
+              let obj = await handleChange('mcht_id', item?.id ?? -1);
               changePage(1, false, obj);
             }}
             options={mchts && mchts.map((option) => option.user_name)}

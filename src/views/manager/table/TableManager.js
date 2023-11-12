@@ -51,7 +51,7 @@ const isShowCell = (data, func) => {
     }
   }
   if (param_table == 'coupon-models') {
-    if (user_data?.level < 50) {
+    if (user_data?.level < 40) {
       if (['on_pub', 'on_pub_cxl', 'on_pub_del', 'edit'].includes(column)) {
         result_obj['show_flag'] = false;
       }
