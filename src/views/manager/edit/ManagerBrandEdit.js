@@ -116,16 +116,6 @@ const ManagerBrandEdit = (props) => {
         let key = Object.keys(values)[i];
         obj[key] = item[key];
       }
-      if (!obj['theme_css']) {
-        obj['theme_css'] = "{}";
-      }
-      obj['theme_css'] = JSON.parse(obj['theme_css']);
-      obj['theme_css'] = Object.assign(defaultObj.theme_css, obj['theme_css']);
-      if (!obj['options']) {
-        obj['options'] = "{}";
-      }
-      obj['options'] = JSON.parse(obj['options']);
-      obj['options'] = Object.assign(defaultObj.options, obj['options']);
       setValues({ ...obj });
     }
   }
