@@ -18,6 +18,7 @@ import DialogImage from 'src/views/components/dialogs/DialogImage'
 import { getItemByType } from './table-utils'
 import DialogCoupon from 'src/views/components/dialogs/DialogCoupon'
 import DialogApiKey from 'src/views/components/dialogs/DialogApiKey';
+import DialogCouponMMS from 'src/views/components/dialogs/DialogCouponMMS';
 
 const TrManager = (props) => {
   const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table, mchtList } = props;
@@ -333,6 +334,25 @@ const TrManager = (props) => {
     }
     setApiKeyOpen(false);
   }
+  const [couponMmsOpen, setCouponMmsOpen] = useState(false);
+  const [couponMmsData, setCouponMmsData] = useState({});
+  const handleChangeMmsOpen = (row) => {
+    setCouponMmsOpen(true);
+    setCouponMmsData({ ...couponMmsData, cp_mod_id: row?.id, coupon_name: row?.coupon_name });
+  };
+  const handleChangeMmsClose = () => setCouponMmsOpen(false);
+  const onSendMmsCoupons = async () => {
+    try {
+      const response = await axiosIns().post(`/api/v1/manager/coupon-models/mms-send-reservation`, couponMmsData);
+      if (response?.status == 201) {
+        toast.success("성공적으로 발송 되었습니다.(순차적으로 발송됩니다.)")
+        changePage(page);
+      }
+    } catch (err) {
+      let push_lick = await processCatch(err);
+    }
+    setCouponMmsOpen(false);
+  }
   return (
     <>
       <DialogConfirm
@@ -361,6 +381,16 @@ const TrManager = (props) => {
         handleClickOpen={handleChangeImageOpen}
         imageSrc={openImageSrc}
         imageType={openImageType}
+      />
+      <DialogCouponMMS
+        open={couponMmsOpen}
+        setOpen={setCouponMmsOpen}
+        handleClose={handleChangeMmsClose}
+        handleClickOpen={handleChangeMmsOpen}
+        onKeepGoing={onSendMmsCoupons}
+        couponMmsData={couponMmsData}
+        setCouponMmsData={setCouponMmsData}
+        head={<Icon icon='ic:outline-mms' style={{ fontSize: '40px' }} />}
       />
       <DialogCouponModel
         open={couponModelOpen}
@@ -421,14 +451,15 @@ const TrManager = (props) => {
                         margin: '0'
                       }}>
                       {getItemByType(data, col, router.query?.table, false, userData, {
-                        goTo: goTo,
-                        onDeleteOpen: onDeleteOpen,
-                        openChangePasswordPopUp: openChangePasswordPopUp,
-                        onChangeOnCouponModelPopUp: onChangeOnCouponModelPopUp,
-                        onChangeOnCouponPopUp: onChangeOnCouponPopUp,
-                        onClickImage: onClickImage,
-                        onApiKeyPubOpen: onApiKeyPubOpen,
-                        onChangeUserUnsubscribe: onChangeUserUnsubscribe
+                        goTo,
+                        onDeleteOpen,
+                        openChangePasswordPopUp,
+                        onChangeOnCouponModelPopUp,
+                        onChangeOnCouponPopUp,
+                        onClickImage,
+                        onApiKeyPubOpen,
+                        onChangeUserUnsubscribe,
+                        handleChangeMmsOpen,
                       })}
                     </TableCell>
                   </>

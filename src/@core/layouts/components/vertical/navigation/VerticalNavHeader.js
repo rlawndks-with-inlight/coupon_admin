@@ -61,18 +61,8 @@ const VerticalNavHeader = props => {
   // ** Hooks & Vars
   const theme = useTheme()
 
-  const { mode, navCollapsed } = settings
+  const { mode, navCollapsed, dnsData } = settings
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
-
-  const [dnsData, setDnsData] = useState({})
-  useEffect(() => {
-    getDnsData();
-  }, [])
-
-  const getDnsData = async () => {
-    let dns_data = settings.dnsData;
-    setDnsData(dns_data);
-  }
 
   const menuHeaderPaddingLeft = () => {
     if (navCollapsed && !navHover) {
@@ -101,8 +91,6 @@ const VerticalNavHeader = props => {
       }
     }
   }
-  const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='tabler:circle-dot' />
-  const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='tabler:circle' />
   useEffect(() => {
   }, [navCollapsed])
   return (

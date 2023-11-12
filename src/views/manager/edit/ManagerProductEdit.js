@@ -258,7 +258,6 @@ const ManagerProductEdit = (props) => {
                                     img_src = await img_src.split(`"></p>`);
                                     let base64 = img_src[0];
                                     img_src = await base64toFile(img_src[0], 'note.png');
-                                    console.log(img_src)
                                     let formData = new FormData();
                                     formData.append('file', img_src);
                                     let config = {
@@ -271,7 +270,6 @@ const ManagerProductEdit = (props) => {
                                   }
                                 }
                               }
-                              console.log(note)
                               setValues({ ...values, ['content']: note })
                             }} />
                         </Grid>

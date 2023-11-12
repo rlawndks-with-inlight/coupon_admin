@@ -22,7 +22,8 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       onChangeOnCouponPopUp,
       onClickImage,
       onApiKeyPubOpen,
-      onChangeUserUnsubscribe
+      onChangeUserUnsubscribe,
+      handleChangeMmsOpen
     } = func;
     let item = data[column?.column];
     if (column?.column && column?.column.includes('-obj-')) {
@@ -339,6 +340,22 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
               onClick={() => { onChangeOnCouponModelPopUp(data, '-destory') }}
             >
               <Icon icon='material-symbols:delete-forever-outline' />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+      if (is_excel) result = '---';
+    }
+    if (column?.type == 'on_coupon_many_mms') {
+      result = (
+        <>
+          <Tooltip title='쿠폰 MMS 대량발송'>
+            <IconButton
+              size='small'
+              sx={{ color: 'text.secondary' }}
+              onClick={() => { handleChangeMmsOpen(data) }}
+            >
+              <Icon icon='ic:outline-mms' />
             </IconButton>
           </Tooltip>
         </>

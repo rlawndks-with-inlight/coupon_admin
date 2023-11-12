@@ -17,6 +17,7 @@ const DefaultPalette = (mode, skin) => {
 
   const router = useRouter();
   const { settings } = useSettings();
+  const { dnsData } = settings;
   const defaultBgColor = () => {
     let dark_color = '#25293C';
     let dark_paper_color = '#2F3349';
@@ -28,23 +29,7 @@ const DefaultPalette = (mode, skin) => {
       return '#F8F7FA'
     } else return dark_color
   }
-  const [dnsData, setDnsData] = useState({});
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (settings.dnsData) {
-      getDnsData();
-    }
-  }, [settings.dnsData])
-  const getDnsData = async () => {
-    try {
-      setLoading(true);
-      let dns_data = settings.dnsData;
-      setDnsData(dns_data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }
   return {
     customColors: {
       dark: darkColor,

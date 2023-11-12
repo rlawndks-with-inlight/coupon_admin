@@ -258,14 +258,14 @@ export const handleLogout = async (router, link_) => {
     if (response?.status == 200) {
       await deleteCookie('o');
       await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
-      router.push(link);
+      window.location.href = (link);
     }
   } catch (err) {
     //toast.error(err?.response?.data?.message || err?.message);
     if ([401, 403, 409].includes(err?.response?.status)) {
       await deleteCookie('o');
       await deleteLocalStorage(LOCALSTORAGE.USER_DATA);
-      router.push(link);
+      window.location.href = (link);
     }
   }
 }

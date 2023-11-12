@@ -174,7 +174,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       { title: '발행취소', size: 2 },
       { title: '지급완료', size: 2 },
       { title: '사용', size: 2 },
-      { title: '', size: 6 },
+      { title: '', size: 7 },
     ],
     columns: [
       managerListFormat('No.', 'id', 'number', ''),
@@ -198,6 +198,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('발행하기', 'on_pub', 'on_pub', ''),
       managerListFormat('발행취소하기', 'on_pub_cxl', 'on_pub_cxl', ''),
       managerListFormat('발행삭제하기', 'on_pub_del', 'on_pub_del', ''),
+      managerListFormat('쿠폰MMS발송예약', 'on_coupon_many_mms', 'on_coupon_many_mms', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       managerListFormat('수정/삭제', 'edit', 'edit', ''),

@@ -55,15 +55,7 @@ const clientSideEmotionCache = createEmotionCache()
 const App = props => {
 
   const { Component, emotionCache = clientSideEmotionCache, pageProps, dns_data } = props
-  const { settings, saveSettings } = useSettings();
-  const [dnsData, setDnsData] = useState({});
-  useEffect(() => {
-    saveSettings({
-      ...settings,
-      ['dnsData']: dns_data
-    })
-    setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dns_data));
-  }, [])
+
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
   const getLayout =

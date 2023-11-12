@@ -47,7 +47,6 @@ const Index = ({ dns_data }) => {
   const setSettings = async () => {
     setLoading(true);
     await checkDns();
-
   }
 
   const checkDns = async () => {

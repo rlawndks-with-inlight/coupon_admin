@@ -18,7 +18,7 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 const UserSameDateLineBox = (props) => {
 
   const { settings } = useSettings();
-  console.log(settings)
+  const { mchts = [] } = settings;
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
@@ -30,22 +30,12 @@ const UserSameDateLineBox = (props) => {
     { name: '수신거부', is_subscribe: 0 },
   ]
   const loading_condition = isConditionNumber(searchObj?.is_subscribe) && isConditionNumber(searchObj?.mcht_id)
-  useEffect(() => {
-    onSettings();
-  }, [router.query])
+
   useEffect(() => {
     if (loading_condition) {
       setLoading(false);
     }
   }, [searchObj])
-
-  const onSettings = async () => {
-    if (!loading_condition) {
-      setLoading(true);
-    }
-    let mchts = settings?.mchts;
-    setMchtList(mchts);
-  }
   return (
     <>
       {loading ?
@@ -82,13 +72,13 @@ const UserSameDateLineBox = (props) => {
             size='small'
             sx={{ minWidth: '250px' }}
             id="mcht_id"
-            defaultValue={_.find(mchtList, { id: parseInt(searchObj?.mcht_id) })?.user_name ?? ""}
+            defaultValue={_.find(mchts, { id: parseInt(searchObj?.mcht_id) })?.user_name ?? ""}
             onChange={async (e, value) => {
-              let item = _.find(mchtList, { user_name: value });
+              let item = _.find(mchts, { user_name: value });
               let obj = await handleChange('mcht_id', item?.id);
               changePage(1, false, obj);
             }}
-            options={mchtList && mchtList.map((option) => option.user_name)}
+            options={mchts && mchts.map((option) => option.user_name)}
             renderInput={(params) => <TextField {...params} label="가맹점상호" />}
           />
         </>}

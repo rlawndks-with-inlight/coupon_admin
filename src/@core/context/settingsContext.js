@@ -85,32 +85,39 @@ export const SettingsProvider = ({ children, pageSettings }) => {
   }, [pageSettings])
   useEffect(() => {
     getDnsData();
+    //getMchtData();
   }, [])
+  useEffect(() => {
+  }, [settings])
   const getDnsData = async () => {
     let dnsData = {};
     let mchts = [];
     try {
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${window.location.hostname}`);
       dnsData = { ...response?.data };
-      if (typeof dnsData?.theme_css == 'string') {
-        dnsData.theme_css = JSON.parse(dnsData.theme_css)
-      }
-      if (typeof dnsData?.options == 'string') {
-        dnsData.options = JSON.parse(dnsData.options)
-      }
-      mchts = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=100000`);
-      mchts = mchts?.data?.content ?? [];
-      mchts = mchts.sort((a, b) => {
-        if (a.mcht_name > b.mcht_name) return 1;
-        if (a.mcht_name < b.mcht_name) return -1;
-        return 0;
-      });
       setLocalStorage(LOCALSTORAGE.DNS_DATA, JSON.stringify(dnsData));
     } catch (err) {
       console.log(err);
     }
-    setSettings({ ...settings, dnsData, mchts });
+    setSettings({ ...settings, dnsData });
+    try {
+      let user = getLocalStorage(LOCALSTORAGE.USER_DATA);
+      user = JSON.parse(user);
+      if (user?.level > 0) {
+        mchts = await axiosIns().get(`/api/v1/manager/merchandises?page=1&page_size=100000`);
+        mchts = mchts?.data?.content ?? [];
+        mchts = mchts.sort((a, b) => {
+          if (a.mcht_name > b.mcht_name) return 1;
+          if (a.mcht_name < b.mcht_name) return -1;
+          return 0;
+        });
+      } else {
 
+      }
+    } catch (err) {
+
+    }
+    setSettings({ ...settings, dnsData, mchts });
   }
   useEffect(() => {
     if (settings.layout === 'horizontal' && settings.mode === 'semi-dark') {
