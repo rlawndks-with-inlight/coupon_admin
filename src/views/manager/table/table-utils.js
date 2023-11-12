@@ -42,6 +42,14 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
       }
       if (!is_excel) result = <div style={{ fontWeight: 'bold' }}>{result}</div>
     }
+    if (column?.type == 'json_string') {//
+      console.log(item)
+      result = JSON.stringify(item);
+      if (!item) {
+        result = "---";
+      }
+      if (!is_excel) result = <div style={{ fontWeight: 'bold' }}>{result}</div>
+    }
     if (column?.type == 'number') {//
       if (isNaN(parseInt(item))) {
         return "---";
@@ -89,6 +97,14 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
         :
         <CustomChip rounded label='사용안함' skin='light' color='error' />;
       if (is_excel) result = (item == 1 ? '사용' : '사용안함');
+
+    }
+    if (column?.type == 'message_status') {//
+      result = item == 1000 ?
+        <CustomChip rounded label='성공' skin='light' color='success' />
+        :
+        <CustomChip rounded label='실패' skin='light' color='error' />;
+      if (is_excel) result = (item == 1 ? '성공' : '실패');
 
     }
     if (column?.type == 'barcode_type') {//

@@ -362,6 +362,23 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
+  bonaejas: {
+    table: 'bonaejas',
+    breadcrumb: '메세지',
+    is_add: false,
+    is_see_add_condition: 60,
+    search_placeholder: '',
+    columns: [
+      managerListFormat('결과코드', 'code', 'message_status', ''),
+      managerListFormat('메세지타입', 'type', 'text', ''),
+      managerListFormat('발신자전화번호', 'sender', 'text', ''),
+      managerListFormat('수신자전화번호', 'receiver', 'text', ''),
+      managerListFormat('메세지내용', 'msg', 'json_string', ''),
+      managerListFormat('발송시간', 'created_at', 'datetime', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
 }
 export const excelUploadTableObj = {
   'merchandises': {

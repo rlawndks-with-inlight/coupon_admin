@@ -30,9 +30,6 @@ const DialogCouponMMS = (props) => {
       setCouponMmsData({});
     }
   }, [open])
-  useEffect(() => {
-    console.log(couponMmsData)
-  }, [couponMmsData])
   const uploadExcel = (e) => {
     e.preventDefault();
     var files = e.target.files, f = files[0];
