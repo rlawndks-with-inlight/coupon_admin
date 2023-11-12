@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
 import { Box, Chip } from '@mui/material'
 import _ from 'lodash'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -35,6 +36,7 @@ const ManagerCouponModelEdit = (props) => {
   const { getItem, editItem, popperPlacement, editCategory } = props;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { settings } = useSettings();
   const [tabValue, setTabValue] = useState('tab-0')
   const [userLevelList, setUserLevelList] = useState([]);
   const [sDt, setSDt] = useState(new Date());
@@ -54,6 +56,7 @@ const ManagerCouponModelEdit = (props) => {
     barcode_type: 0,
     valid_s_dt: returnMoment(false, new Date()).substring(0, 10),
     valid_e_dt: returnMoment(false, new Date()).substring(0, 10),
+    issuance_cash_receipt: 1,
   }
   const [values, setValues] = useState(defaultObj)
 
@@ -96,12 +99,8 @@ const ManagerCouponModelEdit = (props) => {
       user = JSON.parse(user);
       const res_products = await axiosIns().get(`/api/v1/manager/products?page=1&page_size=1000000&s_dt=1900-01-01&e_dt=2500-01-01`);
       setProductList([...res_products?.data?.content]);
-      const res_mchts = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
-      if (res_mchts?.data?.mcht_id.length <= 0) {
-        toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
-        router.back();
-      }
-      let mcht_list = [...res_mchts?.data?.mcht_id];
+
+      let mcht_list = settings?.mchts;
       let mcht_id_obj = {};
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_id_obj[mcht_list[i]?.id] = mcht_list[i];
@@ -345,14 +344,14 @@ const ManagerCouponModelEdit = (props) => {
                               renderValue={selected => (
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                   {selected.map((item, idx) => (
-                                    <Chip key={idx} label={mchtIdObj[item]?.user_name} sx={{ m: 0.75 }} />
+                                    <Chip key={idx} label={mchtIdObj[item]?.mcht_name} sx={{ m: 0.75 }} />
                                   ))}
                                 </Box>
                               )}
                             >
                               {mchtList && mchtList.map((item, idx) => (
                                 <MenuItem key={idx} value={item?.id}>
-                                  {item?.user_name}
+                                  {item?.mcht_name}
                                 </MenuItem>
                               ))}
                             </Select>
@@ -377,6 +376,23 @@ const ManagerCouponModelEdit = (props) => {
                         >
                           <MenuItem value={0} >{'바코드'}</MenuItem>
                           <MenuItem value={1} >{'QR코드'}</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='form-layouts-tabs-select-label'>세금계산서 발행여부</InputLabel>
+                        <Select
+                          label='세금계산서 발행여부'
+                          id='form-layouts-tabs-select'
+                          labelId='form-layouts-tabs-select-label'
+                          className='issuance_cash_receipt'
+                          onChange={handleChangeValue('issuance_cash_receipt')}
+                          defaultValue={values?.issuance_cash_receipt ?? 0}
+                          value={values?.issuance_cash_receipt}
+                        >
+                          <MenuItem value={1} >{'발행'}</MenuItem>
+                          <MenuItem value={0} >{'발행안함'}</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>

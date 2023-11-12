@@ -48,7 +48,6 @@ const ManagerMerchandiseEdit = (props) => {
 
   const [tabValue, setTabValue] = useState('tab-1')
   const [bDt, setBDt] = useState(new Date())
-  const [mchtList, setMchtList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   const [brandList, setBrandList] = useState([]);

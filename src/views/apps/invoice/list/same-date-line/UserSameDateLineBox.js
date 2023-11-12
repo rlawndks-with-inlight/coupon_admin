@@ -21,7 +21,6 @@ const UserSameDateLineBox = (props) => {
   const { mchts = [] } = settings;
   const { changePage, page, handleChange, searchObj, setSearchObj, defaultSearchObj } = props;
   const [loading, setLoading] = useState(false);
-  const [mchtList, setMchtList] = useState([]);
   const router = useRouter();
 
   const pub_type_list = [

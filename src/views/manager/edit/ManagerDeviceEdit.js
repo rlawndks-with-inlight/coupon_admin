@@ -15,10 +15,12 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { Autocomplete } from '@mui/material'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const ManagerDeviceEdit = (props) => {
   const { getItem, editItem } = props;
 
+  const { settings } = useSettings();
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -49,19 +51,20 @@ const ManagerDeviceEdit = (props) => {
       let user = await getLocalStorage(LOCALSTORAGE.USER_DATA);
       user = JSON.parse(user);
 
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1&partner=1`);
+      const response = await axiosIns().get(`/api/v1/manager/utils/users?partner=1`);
+
       if (response?.data?.partner_id.length <= 0) {
         toast.error("협력사를 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
         return;
       }
       let partner_list = [...response?.data?.partner_id];
-      let mcht_list = _.sortBy(response?.data?.mcht_id, 'user_name');
+      let mcht_list = _.sortBy(settings?.mchts, 'mcht_name');
       for (var i = 0; i < mcht_list.length; i++) {
         mcht_list[i]['mcht_id'] = mcht_list[i]['id'];
       }
       setPartnerList(partner_list);
-      if (response?.data?.mcht_id.length <= 0) {
+      if (mcht_list.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
         return;
@@ -72,7 +75,7 @@ const ManagerDeviceEdit = (props) => {
       } else {
         setValues({ ...values, 'mcht_id': mcht_list[0]['mcht_id'] });
       }
-      setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
+      setMchtList(_.sortBy(mcht_list, 'mcht_name'));
     } catch (err) {
       console.log(err)
       console.log(err);
@@ -140,12 +143,12 @@ const ManagerDeviceEdit = (props) => {
                 <Grid item xs={12}>
                   <Autocomplete
                     id="mcht_id"
-                    defaultValue={_.find(mchtList, { mcht_id: values?.mcht_id })?.user_name}
+                    defaultValue={_.find(mchtList, { mcht_id: values?.mcht_id })?.mcht_name}
                     onChange={(e, value) => {
-                      let item = _.find(mchtList, { user_name: value });
+                      let item = _.find(mchtList, { mcht_name: value });
                       setValues({ ...values, mcht_id: item?.id });
                     }}
-                    options={mchtList && mchtList.map((option) => option.user_name)}
+                    options={mchtList && mchtList.map((option) => option.mcht_name)}
                     renderInput={(params) => <TextField {...params} label="가맹점상호" />}
                   />
                 </Grid>

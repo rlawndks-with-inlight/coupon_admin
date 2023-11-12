@@ -17,12 +17,13 @@ import { useRouter } from 'next/router'
 import { Autocomplete } from '@mui/material'
 import _ from 'lodash'
 import { themeObj } from 'src/@core/layouts/components/app/style-component'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const ManagerPointEdit = (props) => {
   const { getItem, editItem, popperPlacement } = props;
 
   const router = useRouter();
-
+  const { settings } = useSettings();
   const [loading, setLoading] = useState(false);
   const [mchtList, setMchtList] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -56,10 +57,9 @@ const ManagerPointEdit = (props) => {
   const settingPage = async () => {
     try {
       setLoading(true);
-      const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
-
-      setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
-      if (response?.data?.mcht_id.length <= 0) {
+      let mcht_list = settings?.mchts;
+      setMchtList(_.sortBy(mcht_list, 'user_name'));
+      if (mcht_list.length <= 0) {
         toast.error("가맹점부터 등록하셔야 장비를 추가하실 수 있습니다.");
         router.back();
       }
@@ -72,7 +72,7 @@ const ManagerPointEdit = (props) => {
         }
         setValues({ ...obj });
       } else {
-        setValues({ ...values, 'mcht_id': _.sortBy(response?.data?.mcht_id, 'user_name')[0]?.id });
+        setValues({ ...values, 'mcht_id': _.sortBy(mcht_list, 'mcht_name')[0]?.id });
       }
     } catch (err) {
       console.log(err);

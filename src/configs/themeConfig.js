@@ -37,7 +37,8 @@ const themeConfig = {
   disableRipple: false /* true | false */,
   disableCustomizer: false /* true | false */,
   toastPosition: 'top-right' /* top-left | top-center | top-right | bottom-left | bottom-center | bottom-right */,
-  dnsData: undefined
+  dnsData: undefined,
+  mchts: [],
 }
 
 export default themeConfig

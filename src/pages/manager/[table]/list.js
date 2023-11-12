@@ -70,9 +70,7 @@ const List = ({ dns_data }) => {
     setUserData(user_data);
   }
   const getMchtList = async () => {
-    const response = await axiosIns().get(`/api/v1/manager/utils/users?mcht=1`);
-
-    setMchtList(_.sortBy(response?.data?.mcht_id, 'user_name'));
+    setMchtList(_.sortBy(settings.mchts, 'mcht_name'));
   }
   const changeNotSearchOption = async () => {
     setLoading(true);
