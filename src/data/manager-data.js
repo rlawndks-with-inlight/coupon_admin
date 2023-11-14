@@ -166,7 +166,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table: 'coupon-models',//ajax에 사용할 테이블
     breadcrumb: '쿠폰모델',//이름 사용할 것
     is_add: true,
-    is_see_add_condition: 50,
+    is_see_add_condition: 40,
     search_placeholder: '쿠폰 모델명 검색',//검색 placeholder
     head_columns: [
       { title: '쿠폰정보', size: 10 },
