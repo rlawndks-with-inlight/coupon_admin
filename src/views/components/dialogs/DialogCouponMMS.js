@@ -64,7 +64,7 @@ const DialogCouponMMS = (props) => {
           {couponMmsData?.phone_nums?.length > 0 &&
             <>
               <Row style={{ margin: 'auto' }}>
-                {couponMmsData?.phone_nums[0]}외 {commarNumber(couponMmsData?.phone_nums?.length)}명
+                {couponMmsData?.phone_nums[0]}외 {commarNumber(couponMmsData?.phone_nums?.length - 1)}명
               </Row>
             </>}
           <DialogContent style={{ display: 'flex', flexDirection: 'column', rowGap: '0.5rem' }}>
