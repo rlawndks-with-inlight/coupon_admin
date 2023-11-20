@@ -77,7 +77,7 @@ const getOptionBoxBySameLineDate = (param_table,) => {
     result.value['level'] = -1;
   }
   if (param_table == 'coupons') {
-    result.value['status'] = 0;
+    result.value['status'] = -1;
   }
   if (param_table == 'coupons-histories') {
     result.value['is_cancel'] = -1;

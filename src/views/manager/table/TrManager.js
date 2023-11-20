@@ -301,7 +301,7 @@ const TrManager = (props) => {
       obj['sub_title'] = '가맹점상호를 입력해 주세요.'
     } else if (couponSubApiStr == 'cancel') {
       obj['icon'] = <Icon icon='material-symbols:cancel-outline' style={{ fontSize: '40px' }} />
-      obj['title'] = '쿠폰 사용 취소하기'
+      obj['title'] = '쿠폰 취소하기'
       obj['label'] = [
         { label: '승인번호', id: 'appr_num', type: 'input' },
         // {

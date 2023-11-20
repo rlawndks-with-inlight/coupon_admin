@@ -33,6 +33,7 @@ const CouponSameDateLineBox = (props) => {
       setLoading(true);
     }
     let z_status = [
+      { status: -1, name: '전체' },
       { status: 0, name: '발행완료' },
       { status: 5, name: '발행취소' },
       { status: 7, name: '지급완료' },//이 아래일때, user_name, user_dt
