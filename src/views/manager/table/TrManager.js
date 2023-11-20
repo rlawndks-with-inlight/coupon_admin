@@ -291,12 +291,12 @@ const TrManager = (props) => {
       obj['label'] = [
         { label: '가맹점상호', id: 'mcht_id', type: 'autocomplete', list: mchtList, show_column: 'user_name' },
         { label: '사용할금액', id: 'use_amount', type: 'input' },
-        {
-          label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
-            { value: null, label: '선택안함' },
-            { value: 0, label: '푸드테크' },
-          ]
-        },
+        // {
+        //   label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
+        //     { value: null, label: '선택안함' },
+        //     { value: 0, label: '푸드테크' },
+        //   ]
+        // },
       ]
       obj['sub_title'] = '가맹점상호를 입력해 주세요.'
     } else if (couponSubApiStr == 'cancel') {
