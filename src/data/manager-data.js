@@ -229,7 +229,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('바코드번호', 'barcode_num', 'barcode_num', ''),
       managerListFormat('유저지급하기', 'on_connect_user_coupon', 'on_connect_user_coupon', ''),
       managerListFormat('사용하기', 'on_use_coupon', 'on_use_coupon', ''),
-      managerListFormat('사용취소하기', 'on_use_coupon_cxl', 'on_use_coupon_cxl', ''),
+      managerListFormat('취소하기', 'on_use_coupon_cxl', 'on_use_coupon_cxl', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
       //managerListFormat('수정/삭제', 'edit', 'edit', ''),
