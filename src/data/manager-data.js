@@ -211,7 +211,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     breadcrumb: '쿠폰',//이름 사용할 것
     is_add: false,
     is_see_add_condition: 35,
-    search_placeholder: '유저휴대폰번호 검색',//검색 placeholder
+    search_placeholder: '유저휴대폰번호, 바코드번호 검색',//검색 placeholder
     head_columns: [
     ],
     columns: [

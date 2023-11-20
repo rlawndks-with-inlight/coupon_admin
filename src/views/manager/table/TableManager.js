@@ -35,7 +35,7 @@ const isShowCell = (data, func) => {
       }
     }
     if (column == 'on_use_coupon') {
-      if (search_obj?.status != 7) {
+      if (search_obj?.status != 7 && search_obj?.status != 0) {
         result_obj['show_flag'] = false;
       }
     }
