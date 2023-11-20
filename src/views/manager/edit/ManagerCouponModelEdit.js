@@ -239,7 +239,7 @@ const ManagerCouponModelEdit = (props) => {
                         values={values}
                         value={values?.coupon_img}
                         sx={{ width: 'auto', height: '240px' }}
-                        placeholder={'max-width: 512px, 이상은 리사이징'}
+                        placeholder={'가로 330px 세로 280px'}
                       />
                     </Grid>
                   </Grid>
