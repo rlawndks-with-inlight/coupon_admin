@@ -304,12 +304,12 @@ const TrManager = (props) => {
       obj['title'] = '쿠폰 사용 취소하기'
       obj['label'] = [
         { label: '승인번호', id: 'appr_num', type: 'input' },
-        {
-          label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
-            { value: null, label: '선택안함' },
-            { value: 0, label: '푸드테크' },
-          ]
-        },
+        // {
+        //   label: '벤더사 코드', id: 'vendor_code', type: 'select', list: [
+        //     { value: null, label: '선택안함' },
+        //     { value: 0, label: '푸드테크' },
+        //   ]
+        // },
       ]
       obj['sub_title'] = '승인번호를 입력해 주세요.'
     }
