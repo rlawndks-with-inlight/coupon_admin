@@ -100,11 +100,23 @@ export const getItemByType = (data, column, table, is_excel, user_data, func) =>
 
     }
     if (column?.type == 'message_status') {//
-      result = item == 1000 ?
-        <CustomChip rounded label='성공' skin='light' color='success' />
-        :
-        <CustomChip rounded label='실패' skin='light' color='error' />;
-      if (is_excel) result = (item == 1 ? '성공' : '실패');
+
+      if (item == 1000) {
+        result = <CustomChip rounded label='성공' skin='light' color='success' />
+      } else if (item == 500) {
+        result = <CustomChip rounded label='전송중' skin='light' />
+      } else {
+        result = <CustomChip rounded label='실패' skin='light' color='error' />;
+      }
+      if (is_excel) {
+        if (item == 1000) {
+          result = '성공';
+        } else if (item == 500) {
+          result = '전송중';
+        } else {
+          result = '실패';
+        }
+      }
 
     }
     if (column?.type == 'barcode_type') {//
