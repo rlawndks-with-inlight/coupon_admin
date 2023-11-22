@@ -75,7 +75,7 @@ const DialogCouponMMS = (props) => {
                 </Button>
               </label>
               <input type={'file'} onChange={uploadExcel} id='excel_upload' style={{ display: 'none' }} />
-              <Button sx={{ mb: 2, ml: 2 }} href={"/file/쿠폰 대량발송 양식_v1_2023-11-12.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
+              <Button sx={{ mb: 2, ml: 2 }} href={"/file/쿠폰 대량발송 양식_v1.0.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
                 양식추출
               </Button>
             </Row>

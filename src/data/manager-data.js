@@ -410,6 +410,8 @@ export const excelUploadTableObj = {
       { column: 'user_name', name: '가맹점 아이디', type: 'text' },
       { column: 'partner_name', name: '협력사 아이디', type: 'text' },
       { column: 'mac_addr', name: '맥주소', type: 'text' },
+      { column: 'device_type', name: '장비타입(키오스크,POS 중)', type: 'device_text_to_type' },
+      { column: 'pos_code', name: 'POS코드', type: 'text' },
       { column: 'comment', name: '비고', type: 'text' },
     ]
   },

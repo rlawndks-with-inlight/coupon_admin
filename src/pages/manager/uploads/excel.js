@@ -126,6 +126,15 @@ const Excel = (props) => {
                 temp[k] = "";
               }
             }
+            if (excelUploadTableObj[obj_key_list[i]].columns[k].type == 'device_text_to_type') {
+              if (temp[k] == '키오스크') {
+                temp[k] = 0;
+              } else if (temp[k] == 'POS') {
+                temp[k] = 1;
+              } else {
+                temp[k] = "";
+              }
+            }
             arr_obj[excelUploadTableObj[obj_key_list[i]].columns[k].column] = temp[k];
           }
           if (is_null) {
@@ -237,7 +246,7 @@ const Excel = (props) => {
                   </Button>
                 </label>
                 <input type={'file'} onChange={uploadExcel} id='excel_upload' style={{ display: 'none' }} />
-                <Button sx={{ mb: 2, ml: 2 }} href={"/file/정보 대량등록 양식_v1_2023-07-19.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
+                <Button sx={{ mb: 2, ml: 2 }} href={"/file/정보 대량등록 양식_v1.1.xlsx"} download={true} variant='contained' startIcon={<Icon icon='uiw:file-excel' />}>
                   양식추출
                 </Button>
               </Grid>
