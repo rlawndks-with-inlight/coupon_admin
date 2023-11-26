@@ -34,6 +34,7 @@ import { toast } from 'react-hot-toast'
 import CouponSameDateLineBox from './same-date-line/CouponSameDateLineBox'
 import CouponsHistoriesSameDateLineBox from './same-date-line/CouponsHistoriesSameDateLineBox'
 import UserSameDateLineBox from './same-date-line/UserSameDateLineBox'
+import CouponsHistoriesContractSameDateLineBox from './same-date-line/CouponsHistoriesContractSameDateLineBox'
 
 const optionBox = (param_table, changePage, page, searchObj, setSearchObj, handleChange, defaultSearchObj) => {
 
@@ -57,6 +58,7 @@ const SameDateLineBox = (common) => {
       {common.param_table == 'operators' ? <OperatorSameDateLineBox {...common} /> : ''}
       {common.param_table == 'coupons' ? <CouponSameDateLineBox {...common} /> : ''}
       {common.param_table == 'users' ? <UserSameDateLineBox {...common} /> : ''}
+      {common.param_table == 'coupons-histories-contrast' ? <CouponsHistoriesContractSameDateLineBox {...common} /> : ''}
     </>
   )
 }
@@ -71,6 +73,10 @@ const getOptionBoxBySameLineDate = (param_table,) => {
   }
   if (param_table == 'users') {
     result.value['is_subscribe'] = -1;
+    result.value['mcht_id'] = -1;
+  }
+  if (param_table == 'coupons-histories-contrast') {
+    result.value['is_cancel'] = 0;
     result.value['mcht_id'] = -1;
   }
   if (param_table == 'operators') {

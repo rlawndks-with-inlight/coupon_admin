@@ -79,6 +79,12 @@ const navigation = () => {
           path: '/manager/coupons-histories',
           level: 10
         },
+        {
+          title: '결제금액대조',
+          menu_depth: 1,
+          path: '/manager/coupons-histories-contrast',
+          level: 10
+        },
       ]
     },
     {

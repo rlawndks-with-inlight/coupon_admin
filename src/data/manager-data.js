@@ -261,6 +261,30 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     table_width: '',
     default_search_obj: {}
   },
+  'coupons-histories-contrast': {//param
+    table: 'coupons-histories/contrast',//ajax에 사용할 테이블
+    breadcrumb: '결제금액대조',//이름 사용할 것
+    is_add: false,
+    is_see_add_condition: 35,
+    search_placeholder: '승인번호, 유저휴대폰번호 검색',//검색 placeholder
+    head_columns: [
+    ],
+    columns: [
+      managerListFormat('No.', 'id', 'number', ''),
+      managerListFormat('쿠폰 No.', 'coupon_id', 'number', ''),
+      managerListFormat('쿠폰명', 'coupon_name', 'text', ''),
+      managerListFormat('조회타입', 'is_cancel', 'is_appr', ''),
+      managerListFormat('사용가맹점', 'mcht_name', 'text', ''),
+      managerListFormat('유저휴대폰번호', 'phone_num', 'text', ''),
+      managerListFormat('승인번호', 'appr_num', 'bold', ''),
+      managerListFormat('쿠폰금액', 'product_amount', 'number', ''),
+      managerListFormat('사용금액', 'amount', 'number', ''),
+      managerListFormat('사용시간', 'created_at', 'datetime', ''),
+      //managerListFormat('수정/삭제', 'edit', 'edit', ''),
+    ],
+    table_width: '',
+    default_search_obj: {}
+  },
   categories: {
     table: 'categories',
     breadcrumb: '카테고리',
