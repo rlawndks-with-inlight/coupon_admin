@@ -381,9 +381,9 @@ const ManagerCouponModelEdit = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel id='form-layouts-tabs-select-label'>세금계산서 발행여부</InputLabel>
+                        <InputLabel id='form-layouts-tabs-select-label'>현금영수증 발행여부</InputLabel>
                         <Select
-                          label='세금계산서 발행여부'
+                          label='현금영수증 발행여부'
                           id='form-layouts-tabs-select'
                           labelId='form-layouts-tabs-select-label'
                           className='issuance_cash_receipt'
