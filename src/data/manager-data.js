@@ -394,6 +394,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     search_placeholder: '',
     columns: [
       managerListFormat('결과코드', 'code', 'message_status', ''),
+      managerListFormat('누적예치금액', 'cumulative_deposit', 'number', ''),
       managerListFormat('메세지타입', 'type', 'text', ''),
       managerListFormat('발신자전화번호', 'sender', 'text', ''),
       managerListFormat('수신자전화번호', 'receiver', 'text', ''),
