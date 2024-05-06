@@ -72,7 +72,7 @@ const DialogCouponMerchandiseMMS = (props) => {
             {couponMmsData?.coupon_name} <br />쿠폰을 선택하고 수량 입력후 저장해 주세요
           </DialogContentText>
           <DialogContent style={{ display: 'flex', flexDirection: 'column', rowGap: '0.5rem' }}>
-            <Autocomplete
+            {/* <Autocomplete
               id="mcht_id"
               defaultValue={_.find(mchtList, { mcht_id: couponMmsData?.mcht_id })?.mcht_name}
               onChange={(e, value) => {
@@ -81,7 +81,7 @@ const DialogCouponMerchandiseMMS = (props) => {
               }}
               options={mchtList && mchtList.map((option) => option.mcht_name)}
               renderInput={(params) => <TextField {...params} label="가맹점상호" />}
-            />
+            /> */}
             <FormControl fullWidth>
               <InputLabel id={couponMmsData?.cp_mod_id}>쿠폰모델선택</InputLabel>
               <Select
