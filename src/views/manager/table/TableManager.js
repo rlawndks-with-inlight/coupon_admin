@@ -88,6 +88,13 @@ const isShowCell = (data, func) => {
       }
     }
   }
+  if (param_table == 'merchandises') {
+    if (user_data?.level < 40) {
+      if (column == 'on_coupon_many_mcht_mms') {
+        result_obj['show_flag'] = false;
+      }
+    }
+  }
   // const {} = func;
   return result_obj;
 }
