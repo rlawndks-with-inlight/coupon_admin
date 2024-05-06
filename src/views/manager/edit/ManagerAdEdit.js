@@ -55,7 +55,6 @@ const ManagerAdEdit = (props) => {
       } else {
       }
     }
-    console.log(obj);
     editItem(obj);
   }
   return (
