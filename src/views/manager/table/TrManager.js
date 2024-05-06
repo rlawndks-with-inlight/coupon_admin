@@ -358,7 +358,7 @@ const TrManager = (props) => {
   const [couponMchtMmsData, setCouponMchtMmsData] = useState({});
   const handleChangeMchtMmsOpen = (row) => {
     setCouponMchtMmsOpen(true);
-    setCouponMchtMmsData({ ...couponMchtMmsData, mcht_id: row?.id });
+    setCouponMchtMmsData({ ...couponMchtMmsData, mcht_id: row?.id, inflow_user_count: row?.inflow_user_count });
   };
   const handleChangeMchtMmsClose = () => setCouponMchtMmsOpen(false);
   const onSendMchtMmsCoupons = async () => {

@@ -68,8 +68,8 @@ const DialogCouponMerchandiseMMS = (props) => {
         <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', width: '50vw', maxWidth: "600px" }}>
           <div style={{ margin: '0 auto' }}>{head?.icon}</div>
           <DialogTitle id='form-dialog-title' style={{ margin: "0 auto" }}>{data?.table} {data?.user_name} {head?.title}</DialogTitle>
-          <DialogContentText style={{ margin: "0 auto" }} >
-            {couponMmsData?.coupon_name} <br />쿠폰을 선택하고 수량 입력후 저장해 주세요
+          <DialogContentText style={{ margin: "0 auto", textAlign: 'center' }} >
+            <br />쿠폰을 선택하고 수량 입력후 저장해 주세요<br />(유저유입수: {couponMmsData?.inflow_user_count}명)
           </DialogContentText>
           <DialogContent style={{ display: 'flex', flexDirection: 'column', rowGap: '0.5rem' }}>
             {/* <Autocomplete
