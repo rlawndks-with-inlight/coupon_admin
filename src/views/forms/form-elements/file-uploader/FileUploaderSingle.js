@@ -35,7 +35,6 @@ const FileUploaderSingle = (props) => {
         setFiles((value ? value : []).map(file => Object.assign(file)))
       } else {
         if (typeof value == 'string') {
-          await setValues({ ...values, [`${className}`]: undefined })
           setUrl(value);
         }
       }
