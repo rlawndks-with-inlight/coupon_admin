@@ -19,6 +19,7 @@ import { getItemByType } from './table-utils'
 import DialogCoupon from 'src/views/components/dialogs/DialogCoupon'
 import DialogApiKey from 'src/views/components/dialogs/DialogApiKey';
 import DialogCouponMMS from 'src/views/components/dialogs/DialogCouponMMS';
+import DialogCouponMerchandiseMMS from 'src/views/components/dialogs/DialogCouponMerchandiseMMS';
 
 const TrManager = (props) => {
   const { post, index, columns, changePage, page, isShowCell, searchObj, notSearchOption, userData, onlyTeamSeeColumn, param_table, mchtList } = props;
@@ -126,8 +127,7 @@ const TrManager = (props) => {
         toast.error('개수를 입력해 주세요.');
         return;
       }
-      const response = await axiosIns().post(`/api/v1/manager/coupon-models/issuance${couponModelSubApiStr}`, {
-        cp_mod_id: couponModelId,
+      const response = await axiosIns().post(`/api/v1/manager/coupon-models/${couponModelId}/issuance${couponModelSubApiStr}`, {
         count: $('#coupon-number').val()
       })
       handleCloseCouponModel();
@@ -343,7 +343,7 @@ const TrManager = (props) => {
   const handleChangeMmsClose = () => setCouponMmsOpen(false);
   const onSendMmsCoupons = async () => {
     try {
-      const response = await axiosIns().post(`/api/v1/manager/coupon-models/mms-send-reservation`, couponMmsData);
+      const response = await axiosIns().post(`/api/v1/manager/coupon-models/${couponMmsData?.cp_mod_id}/mms-send-reservation`, couponMmsData);
       if (response?.status == 201) {
         toast.success("성공적으로 발송 되었습니다.(순차적으로 발송됩니다.)")
         changePage(page);
@@ -352,6 +352,26 @@ const TrManager = (props) => {
       let push_lick = await processCatch(err);
     }
     setCouponMmsOpen(false);
+  }
+
+  const [couponMchtMmsOpen, setCouponMchtMmsOpen] = useState(false);
+  const [couponMchtMmsData, setCouponMchtMmsData] = useState({});
+  const handleChangeMchtMmsOpen = (row) => {
+    setCouponMchtMmsOpen(true);
+    setCouponMchtMmsData({ ...couponMchtMmsData, mcht_id: row?.id });
+  };
+  const handleChangeMchtMmsClose = () => setCouponMchtMmsOpen(false);
+  const onSendMchtMmsCoupons = async () => {
+    try {
+      const response = await axiosIns().post(`/api/v1/manager/merchandises/${couponMchtMmsData?.mcht_id}/mms-send-reservation`, couponMchtMmsData);
+      if (response?.status == 201) {
+        toast.success("성공적으로 발송 되었습니다.(순차적으로 발송됩니다.)")
+        changePage(page);
+      }
+    } catch (err) {
+      let push_lick = await processCatch(err);
+    }
+    setCouponMchtMmsOpen(false);
   }
   return (
     <>
@@ -390,6 +410,16 @@ const TrManager = (props) => {
         onKeepGoing={onSendMmsCoupons}
         couponMmsData={couponMmsData}
         setCouponMmsData={setCouponMmsData}
+        head={<Icon icon='ic:outline-mms' style={{ fontSize: '40px' }} />}
+      />
+      <DialogCouponMerchandiseMMS
+        open={couponMchtMmsOpen}
+        setOpen={setCouponMchtMmsOpen}
+        handleClose={handleChangeMchtMmsClose}
+        handleClickOpen={handleChangeMchtMmsOpen}
+        onKeepGoing={onSendMchtMmsCoupons}
+        couponMmsData={couponMchtMmsData}
+        setCouponMmsData={setCouponMchtMmsData}
         head={<Icon icon='ic:outline-mms' style={{ fontSize: '40px' }} />}
       />
       <DialogCouponModel
@@ -460,6 +490,7 @@ const TrManager = (props) => {
                         onApiKeyPubOpen,
                         onChangeUserUnsubscribe,
                         handleChangeMmsOpen,
+                        handleChangeMchtMmsOpen,
                       })}
                     </TableCell>
                   </>

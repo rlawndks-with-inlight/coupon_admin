@@ -75,11 +75,11 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_add: true,
     is_see_add_condition: 35,
     head_columns: [
-      { title: '가맹점정보', size: 7 },
+      { title: '가맹점정보', size: 9 },
       { title: '포인트정보', size: 2 },
       { title: '스탬프정보', size: 2 },
       { title: '결제정보', size: 2 },
-      { title: '', size: 4 },
+      { title: '', size: 5 },
     ],
     search_placeholder: '가맹점상호, 유저명 검색',//검색 placeholder
     columns: [
@@ -90,6 +90,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('가맹점상호', 'mcht_name', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('가맹점주소', 'addr', 'text', ''),// 검색 level == 10일 경우에만
       managerListFormat('휴대폰번호', 'phone_num', 'text', ''),// 검색 level == 10일 경우에만
+      managerListFormat('유입고객수', 'inflow_user_count', 'number', ''),// 검색 level == 10일 경우에만
+      managerListFormat('포인트매출합계', 'total_point_sales', 'number', ''),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'point_flag', 'use_status', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
       managerListFormat('적립비율', 'point_rate', 'percent', '', { search_option_label: '포인트' }),// 검색 level == 10일 경우에만
       managerListFormat('사용여부', 'stamp_flag', 'use_status', '', { search_option_label: '스탬프' }),// 검색 level == 10일 경우에만
@@ -99,6 +101,7 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
       managerListFormat('회원목록', 'mcht_user_list', 'mcht_user_list', ''),
       managerListFormat('생성시간', 'created_at', 'datetime', ''),
       managerListFormat('최종수정시간', 'updated_at', 'datetime', ''),
+      managerListFormat('쿠폰MMS발송예약', 'on_coupon_many_mcht_mms', 'on_coupon_many_mcht_mms', ''),//미완
       managerListFormat('수정/삭제', 'edit_ch', 'edit', ''),
     ],
     table_width: '',

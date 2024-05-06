@@ -92,6 +92,7 @@ export const SettingsProvider = ({ children, pageSettings }) => {
   const getDnsData = async () => {
     let dnsData = {};
     let mchts = [];
+    let coupon_models = [];
     try {
       const response = await axiosIns().get(`/api/v1/auth/domain?dns=${window.location.hostname}`);
       dnsData = { ...response?.data };
@@ -111,13 +112,20 @@ export const SettingsProvider = ({ children, pageSettings }) => {
           if (a.mcht_name < b.mcht_name) return -1;
           return 0;
         });
+        coupon_models = await axiosIns().get(`/api/v1/manager/coupon-models?page=1&page_size=100000`);
+        coupon_models = coupon_models?.data?.content ?? [];
+        coupon_models = coupon_models.sort((a, b) => {
+          if (a.coupon_name > b.coupon_name) return 1;
+          if (a.coupon_name < b.coupon_name) return -1;
+          return 0;
+        });
       } else {
 
       }
     } catch (err) {
 
     }
-    setSettings({ ...settings, dnsData, mchts });
+    setSettings({ ...settings, dnsData, mchts, coupon_models });
   }
   useEffect(() => {
     if (settings.layout === 'horizontal' && settings.mode === 'semi-dark') {
