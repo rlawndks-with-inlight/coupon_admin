@@ -75,8 +75,8 @@ export const objDataGridColumns = {//리스트 페이지에 사용할 것
     is_add: true,
     is_see_add_condition: 35,
     head_columns: [
-      { title: '가맹점정보', size: 9 },
-      { title: '포인트정보', size: 2 },
+      { title: '가맹점정보', size: 8 },
+      { title: '포인트정보', size: 3 },
       { title: '스탬프정보', size: 2 },
       { title: '결제정보', size: 2 },
       { title: '', size: 5 },

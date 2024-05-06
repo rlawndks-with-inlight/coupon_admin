@@ -59,8 +59,8 @@ const ManagerCouponModelEdit = (props) => {
     valid_s_dt: returnMoment(false, new Date()).substring(0, 10),
     valid_e_dt: returnMoment(false, new Date()).substring(0, 10),
     issuance_cash_receipt: 1,
-    available_s_tm: undefined,
-    available_e_tm: undefined,
+    available_s_tm: null,
+    available_e_tm: null,
     available_days: [],
   }
   const days_list = [
@@ -224,6 +224,12 @@ const ManagerCouponModelEdit = (props) => {
           obj[make_json_string_list[i]] = [];
         }
         obj[make_json_string_list[i]] = JSON.stringify(obj[make_json_string_list[i]]);
+      }
+      if (!obj?.available_s_tm) {
+        delete obj.available_s_tm;
+      }
+      if (!obj?.available_e_tm) {
+        delete obj.available_e_tm;
       }
       editItem(obj);
     } catch (err) {
