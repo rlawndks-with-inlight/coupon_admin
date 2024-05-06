@@ -110,7 +110,7 @@ const DialogCouponMerchandiseMMS = (props) => {
               onChange={(e) => {
                 setCouponMmsData({
                   ...couponMmsData,
-                  send_count: e.target.value
+                  send_count: parseInt(e.target.value)
                 })
               }}
             />
