@@ -18,9 +18,11 @@ import { LOCALSTORAGE } from 'src/data/data'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { axiosIns } from 'src/@fake-db/backend'
-import { Box, Chip } from '@mui/material'
+import { Box, Chip, FormControlLabel, Switch } from '@mui/material'
 import _ from 'lodash'
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { TimePicker } from '@mui/lab'
+
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -57,7 +59,19 @@ const ManagerCouponModelEdit = (props) => {
     valid_s_dt: returnMoment(false, new Date()).substring(0, 10),
     valid_e_dt: returnMoment(false, new Date()).substring(0, 10),
     issuance_cash_receipt: 1,
+    available_s_tm: undefined,
+    available_e_tm: undefined,
+    available_days: [],
   }
+  const days_list = [
+    { text: '일', value: 0, },
+    { text: '월', value: 1, },
+    { text: '화', value: 2, },
+    { text: '수', value: 3, },
+    { text: '목', value: 4, },
+    { text: '금', value: 5, },
+    { text: '토', value: 6, },
+  ]
   const [values, setValues] = useState(defaultObj)
 
   useEffect(() => {
@@ -113,13 +127,10 @@ const ManagerCouponModelEdit = (props) => {
         setEDt(new Date(item?.valid_e_dt));
         item['mcht_ids'] = item?.mchts.map(item => { return item?.id });
         delete item['mchts'];
-
         if (item['mcht_ids'].length == 0) {
           item['mcht_ids'] = [];
         }
         setValues({ ...item, ['mcht_ids']: item['mcht_ids'] });
-      } else {
-        setValues({ ...values });
       }
     } catch (err) {
       console.log(err);
@@ -199,13 +210,13 @@ const ManagerCouponModelEdit = (props) => {
   const onEditItem = () => {
     try {
       let img_key_list = ['coupon_img'];
-      let make_json_string_list = ['mcht_ids'];
+      let make_json_string_list = ['mcht_ids', 'available_days'];
       let obj = { ...values };
       for (var i = 0; i < img_key_list.length; i++) {
-        if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
+        if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
+          obj[img_key_list[i].replace('_img', '_file')] = obj[img_key_list[i]][0];
           delete obj[img_key_list[i]];
         } else {
-          obj[img_key_list[i]] = obj[img_key_list[i]][0];
         }
       }
       for (var i = 0; i < make_json_string_list.length; i++) {
@@ -405,7 +416,6 @@ const ManagerCouponModelEdit = (props) => {
                         placeholderText='YYYY-MM-DD'
                         dateFormat={'yyyy-MM-dd'}
                         popperPlacement={popperPlacement}
-
                         onChange={async (date) => {
                           try {
                             setSDt(date);
@@ -435,6 +445,45 @@ const ManagerCouponModelEdit = (props) => {
                         }}
                         customInput={<CustomInput label='유효기간 종료일' />}
                       />
+                    </Grid>
+                    <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}>
+                      <TextField
+                        fullWidth
+                        label='사용시작시간'
+                        placeholder=''
+                        type='time'
+                        onChange={handleChangeValue('available_s_tm')} defaultValue={values?.available_s_tm} value={values?.available_s_tm}
+                      />
+                      <div>~</div>
+                      <TextField
+                        fullWidth
+                        label='사용종료시간'
+                        placeholder=''
+                        type='time'
+                        onChange={handleChangeValue('available_e_tm')} defaultValue={values?.available_e_tm} value={values?.available_e_tm}
+                      />
+                    </Grid>
+                    <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}>
+                      {days_list.map((itm, idx) => (
+                        <>
+                          <FormControlLabel control={<Switch checked={(values?.available_days ?? []).includes(itm?.value)} />} label={`${itm?.text}요일`}
+                            onChange={(e) => {
+                              console.log(values?.available_days)
+                              let available_days_list = [...values?.available_days];
+                              let find_idx = available_days_list.findIndex(el => el == itm?.value);
+                              if (find_idx >= 0) {
+                                available_days_list.splice(find_idx, 1);
+                              } else {
+                                available_days_list.push(itm?.value);
+                              }
+                              setValues({
+                                ...values,
+                                available_days: available_days_list,
+                              })
+                            }}
+                          />
+                        </>
+                      ))}
                     </Grid>
                   </Grid>
                 </CardContent>

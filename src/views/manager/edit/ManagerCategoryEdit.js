@@ -80,10 +80,10 @@ const ManagerCategoryEdit = (props) => {
     let img_key_list = ['category_img'];
     let obj = { ...values };
     for (var i = 0; i < img_key_list.length; i++) {
-      if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
+      if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
+        obj[img_key_list[i].replace('_img', '_file')] = obj[img_key_list[i]][0];
         delete obj[img_key_list[i]];
       } else {
-        obj[img_key_list[i]] = obj[img_key_list[i]][0];
       }
     }
     editItem(obj);

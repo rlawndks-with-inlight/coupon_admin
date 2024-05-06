@@ -132,7 +132,7 @@ const Edit = ({ dns_data }) => {
       if (router.query?.edit_category == 'edit' && router.query?.id) {
         const response = await axiosIns().get(`api/v1/manager/${objDataGridColumns[router.query?.table]?.table}/${router.query?.id}`);
 
-        return { ...response?.data };
+        return response?.data;
       } else {
         return false;
       }
@@ -177,16 +177,18 @@ const Edit = ({ dns_data }) => {
       />
       <DropzoneWrapper>
         <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
-          {renderPage({
-            posts: editSetting?.posts,
-            table: objDataGridColumns[router.query?.table]?.table,
-            editItem: onEditConfirmOpen,
-            getItem: getItem,
-            popperPlacement: popperPlacement,
-            breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`,
-            editCategory: router.query?.edit_category,
-            userData: userData
-          })}
+          {objDataGridColumns[router.query?.table]?.table && <>
+            {renderPage({
+              posts: editSetting?.posts,
+              table: objDataGridColumns[router.query?.table]?.table,
+              editItem: onEditConfirmOpen,
+              getItem: getItem,
+              popperPlacement: popperPlacement,
+              breadcrumb: `${objDataGridColumns[router.query?.table]?.breadcrumb} ${router.query?.edit_category == 'create' ? '추가' : '수정'}`,
+              editCategory: router.query?.edit_category,
+              userData: userData
+            })}
+          </>}
         </DatePickerWrapper>
       </DropzoneWrapper>
       {/* <DialogAlert

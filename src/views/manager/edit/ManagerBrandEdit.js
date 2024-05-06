@@ -136,9 +136,9 @@ const ManagerBrandEdit = (props) => {
     let obj = { ...values, ['theme_css']: JSON.stringify(values['theme_css'] ?? {}), ['options']: JSON.stringify(values['options'] ?? {}) };
     for (var i = 0; i < img_key_list.length; i++) {
       if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
-        obj[img_key_list[i]] = obj[img_key_list[i]][0];
-      } else {
+        obj[img_key_list[i].replace('_img', '_file')] = obj[img_key_list[i]][0];
         delete obj[img_key_list[i]];
+      } else {
       }
     }
     let local_dns_data = settings.dnsData;

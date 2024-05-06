@@ -87,7 +87,9 @@ const ManagerProductEdit = (props) => {
     settingPage();
     //getOneItem();
   }, [])
-
+  useEffect(() => {
+    console.log(values)
+  }, [values?.product_img])
   const settingPage = async () => {
     try {
       setLoading(true);
@@ -109,7 +111,6 @@ const ManagerProductEdit = (props) => {
       } else {
         setValues({ ...values, 'cate_id': response?.data?.content[0]?.id });
       }
-
     } catch (err) {
       console.log(err);
     }
@@ -124,7 +125,7 @@ const ManagerProductEdit = (props) => {
 
   const onReset = async () => {
     setBDt(new Date());
-    setValues({ ...defaultObj, level: userLevelList[0].level });
+    setValues(defaultObj);
   }
   const handleTabsChange = (event, newValue) => {
     setTabValue(newValue)
@@ -145,10 +146,11 @@ const ManagerProductEdit = (props) => {
     let obj = { ...values };
 
     for (var i = 0; i < img_key_list.length; i++) {
-      if (!obj[img_key_list[i]] || typeof obj[img_key_list[i]] != 'object') {
+      if (obj[img_key_list[i]] && typeof obj[img_key_list[i]] == 'object') {
+        obj[img_key_list[i].replace('_img', '_file')] = obj[img_key_list[i]][0];
         delete obj[img_key_list[i]];
       } else {
-        obj[img_key_list[i]] = obj[img_key_list[i]][0];
+
       }
     }
     editItem(obj);
